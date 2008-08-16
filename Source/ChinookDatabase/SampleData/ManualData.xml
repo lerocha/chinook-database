@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<DataSet xmlns="http://tempuri.org/DataSet.xsd">
+  <Customer>
+    <CustomerId>1</CustomerId>
+    <FirstName>Eduardo</FirstName>
+    <LastName>Martins</LastName>
+    <Company>Woodstock Discos</Company>
+    <Address>Rua Dr. Falcão Filho, 155</Address>
+    <City>São Paulo</City>
+    <State>SP</State>
+    <Country>Brazil</Country>
+    <PostalCode>01007-010</PostalCode>
+    <Phone>+55 (11) 3033-5446</Phone>
+    <Fax>+55 (11) 3033-4564</Fax>
+    <Email>eduardo@woodstock.com.br</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>2</CustomerId>
+    <FirstName>Alexandre</FirstName>
+    <LastName>Rocha</LastName>
+    <Company>Banco do Brasil S.A.</Company>
+    <Address>Av. Paulista, 2022</Address>
+    <City>São Paulo</City>
+    <State>SP</State>
+    <Country>Brazil</Country>
+    <PostalCode>01310-200</PostalCode>
+    <Phone>+55 (11) 3055-3278</Phone>
+    <Fax>+55 (11) 3055-8131</Fax>
+    <Email>alero@uol.com.br</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>3</CustomerId>
+    <FirstName>Paula</FirstName>
+    <LastName>Britto</LastName>
+    <Company>Embraer S.A.</Company>
+    <Address>Av. Brigadeiro Faria Lima, 2170</Address>
+    <City>São Jose dos Campos</City>
+    <State>SP</State>
+    <Country>Brazil</Country>
+    <PostalCode>12227-000</PostalCode>
+    <Phone>+55 (12) 3923-5555</Phone>
+    <Fax>+55 (12) 3923-5566</Fax>
+    <Email>paulab@embraer.com.br</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>4</CustomerId>
+    <FirstName>Roberto</FirstName>
+    <LastName>Almeida</LastName>
+    <Company>Riotur</Company>
+    <Address>Praça Pio X, 119</Address>
+    <City>Rio de Janeiro</City>
+    <State>RJ</State>
+    <Country>Brazil</Country>
+    <PostalCode>20040-020</PostalCode>
+    <Phone>+55 (21) 2271-7000</Phone>
+    <Fax>+55 (21) 2271-7070</Fax>
+    <Email>roberto.almeida@riotur.gov.br</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>5</CustomerId>
+    <FirstName>Fernanda</FirstName>
+    <LastName>Ramos</LastName>
+    <Company></Company>
+    <Address>Qe 7 Bloco G</Address>
+    <City>Brasília</City>
+    <State>DF</State>
+    <Country>Brazil</Country>
+    <PostalCode>71020-677</PostalCode>
+    <Phone>+55 (61) 3363-5547</Phone>
+    <Fax>+55 (61) 3363-7855</Fax>
+    <Email>fernadaramos4@uol.com.br</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>6</CustomerId>
+    <FirstName>Mark</FirstName>
+    <LastName>Philips</LastName>
+    <Company>Telus</Company>
+    <Address>8210 111 ST NW</Address>
+    <City>Edmonton</City>
+    <State>AB</State>
+    <Country>Canada</Country>
+    <PostalCode>T6G 2C7</PostalCode>
+    <Phone>+1 (780) 434-4554</Phone>
+    <Fax>+1 (780) 434-5565</Fax>
+    <Email>mphiol@shaw.ca</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>7</CustomerId>
+    <FirstName>Jennifer</FirstName>
+    <LastName>Peterson</LastName>
+    <Company>Rogers Canada</Company>
+    <Address>700 W Pender Street</Address>
+    <City>Vancouver</City>
+    <State>BC</State>
+    <Country>Canada</Country>
+    <PostalCode>V6C 1G8</PostalCode>
+    <Phone>+1 (604) 688-2255</Phone>
+    <Fax>+1 (604) 688-8756</Fax>
+    <Email>jenniferp@rogers.ca</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>8</CustomerId>
+    <FirstName>Frank</FirstName>
+    <LastName>Harris</LastName>
+    <Company>Google Inc.</Company>
+    <Address>1600 Amphitheatre Parkway</Address>
+    <City>Mountain View</City>
+    <State>CA</State>
+    <Country>USA</Country>
+    <PostalCode>94043-1351</PostalCode>
+    <Phone>+1 (650) 253-0000</Phone>
+    <Fax>+1 (650) 253-0000</Fax>
+    <Email>fharris@google.com</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>9</CustomerId>
+    <FirstName>Jack</FirstName>
+    <LastName>Smith</LastName>
+    <Company>Microsoft Corporation</Company>
+    <Address>1 Microsoft Way</Address>
+    <City>Redmond</City>
+    <State>WA</State>
+    <Country>USA</Country>
+    <PostalCode>98052-8300</PostalCode>
+    <Phone>+1 (425) 882-8080</Phone>
+    <Fax>+1 (425) 882-8081</Fax>
+    <Email>jacksmith@microsoft.com</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>10</CustomerId>
+    <FirstName>Michelle</FirstName>
+    <LastName>Brooks</LastName>
+    <Company></Company>
+    <Address>627 Broadway</Address>
+    <City>New York</City>
+    <State>NY</State>
+    <Country>USA</Country>
+    <PostalCode>10012-2612</PostalCode>
+    <Phone>+1 (212) 221-3546</Phone>
+    <Fax>+1 (212) 221-4679</Fax>
+    <Email>michelleb@aol.com</Email>
+  </Customer>
+  <Employee>
+    <EmployeeId>1</EmployeeId>
+    <LastName>Fuller</LastName>
+    <FirstName>Andrew</FirstName>
+    <Title>Dr.</Title>
+    <BirthDate>1962-02-18T00:00:00</BirthDate>
+    <HireDate>2002-08-14T00:00:00</HireDate>
+    <Address>908 W. Capital Way</Address>
+    <City>Tacoma</City>
+    <State>WA</State>
+    <Country>USA</Country>
+    <PostalCode>98401</PostalCode>
+    <Phone>(206) 555-9482</Phone>
+    <Fax>3457</Fax>
+    <Email>andrew@chinookcorp.com</Email>
+  </Employee>
+  <Employee>
+    <EmployeeId>2</EmployeeId>
+    <LastName>Davolio</LastName>
+    <FirstName>Nancy</FirstName>
+    <Title>Ms.</Title>
+    <ReportsTo>1</ReportsTo>
+    <BirthDate>1958-12-08T00:00:00</BirthDate>
+    <HireDate>2002-05-01T00:00:00</HireDate>
+    <Address>507 - 20th Ave. E. Apt. 2A</Address>
+    <City>Seattle</City>
+    <State>WA</State>
+    <Country>USA</Country>
+    <PostalCode>98122</PostalCode>
+    <Phone>(206) 555-9857</Phone>
+    <Fax>5467</Fax>
+    <Email>nancy@chinookcorp.com</Email>
+  </Employee>
+  <Employee>
+    <EmployeeId>3</EmployeeId>
+    <LastName>Leverling</LastName>
+    <FirstName>Janet</FirstName>
+    <Title>Ms.</Title>
+    <ReportsTo>2</ReportsTo>
+    <BirthDate>1973-08-29T00:00:00</BirthDate>
+    <HireDate>2002-04-01T00:00:00</HireDate>
+    <Address>722 Moss Bay Blvd.</Address>
+    <City>Kirkland</City>
+    <State>WA</State>
+    <Country>USA</Country>
+    <PostalCode>98033</PostalCode>
+    <Phone>(206) 555-3412</Phone>
+    <Fax>3355</Fax>
+    <Email>janet@chinookcorp.com</Email>
+  </Employee>
+  <Employee>
+    <EmployeeId>4</EmployeeId>
+    <LastName>Peacock</LastName>
+    <FirstName>Margaret</FirstName>
+    <Title>Mrs.</Title>
+    <ReportsTo>2</ReportsTo>
+    <BirthDate>1947-09-19T00:00:00</BirthDate>
+    <HireDate>2003-05-03T00:00:00</HireDate>
+    <Address>4110 Old Redmond Rd.</Address>
+    <City>Redmond</City>
+    <State>WA</State>
+    <Country>USA</Country>
+    <PostalCode>98052</PostalCode>
+    <Phone>(206) 555-8122</Phone>
+    <Fax>5176</Fax>
+    <Email>margaret@chinookcorp.com</Email>
+  </Employee>
+  <Employee>
+    <EmployeeId>5</EmployeeId>
+    <LastName>Buchanan</LastName>
+    <FirstName>Steven</FirstName>
+    <Title>Mr.</Title>
+    <ReportsTo>2</ReportsTo>
+    <BirthDate>1965-03-03T00:00:00</BirthDate>
+    <HireDate>2003-10-17T00:00:00</HireDate>
+    <Address>14 Garrett Hill</Address>
+    <City>London</City>
+    <State></State>
+    <Country>UK</Country>
+    <PostalCode>SW1 8JR</PostalCode>
+    <Phone>(71) 555-4848</Phone>
+    <Fax>3453</Fax>
+    <Email>steven@chinookcorp.com</Email>
+  </Employee>
+  <Employee>
+    <EmployeeId>6</EmployeeId>
+    <LastName>Suyama</LastName>
+    <FirstName>Michael</FirstName>
+    <Title>Mr.</Title>
+    <ReportsTo>5</ReportsTo>
+    <BirthDate>1973-07-01T00:00:00</BirthDate>
+    <HireDate>2003-10-17T00:00:00</HireDate>
+    <Address>Coventry House Miner Rd.</Address>
+    <City>London</City>
+    <State></State>
+    <Country>UK</Country>
+    <PostalCode>EC2 7JR</PostalCode>
+    <Phone>(71) 555-7773</Phone>
+    <Fax>428</Fax>
+    <Email>michael@chinookcorp.com</Email>
+  </Employee>
+  <Employee>
+    <EmployeeId>7</EmployeeId>
+    <LastName>King</LastName>
+    <FirstName>Robert</FirstName>
+    <Title>Mr.</Title>
+    <ReportsTo>5</ReportsTo>
+    <BirthDate>1970-05-29T00:00:00</BirthDate>
+    <HireDate>2004-01-02T00:00:00</HireDate>
+    <Address>Edgeham Hollow Winchester Way</Address>
+    <City>London</City>
+    <State></State>
+    <Country>UK</Country>
+    <PostalCode>RG1 9SP</PostalCode>
+    <Phone>(71) 555-5598</Phone>
+    <Fax>465</Fax>
+    <Email>robert@chinookcorp.com</Email>
+  </Employee>
+  <Employee>
+    <EmployeeId>8</EmployeeId>
+    <LastName>Callahan</LastName>
+    <FirstName>Laura</FirstName>
+    <Title>Ms.</Title>
+    <ReportsTo>2</ReportsTo>
+    <BirthDate>1968-01-09T00:00:00</BirthDate>
+    <HireDate>2004-03-04T00:00:00</HireDate>
+    <Address>4726 - 11th Ave. N.E.</Address>
+    <City>Seattle</City>
+    <State>WA</State>
+    <Country>USA</Country>
+    <PostalCode>98105</PostalCode>
+    <Phone>(206) 555-1189</Phone>
+    <Fax>2344</Fax>
+    <Email>laura@chinookcorp.com</Email>
+  </Employee>
+  <Employee>
+    <EmployeeId>9</EmployeeId>
+    <LastName>Dodsworth</LastName>
+    <FirstName>Anne</FirstName>
+    <Title>Ms.</Title>
+    <ReportsTo>5</ReportsTo>
+    <BirthDate>1976-01-27T00:00:00</BirthDate>
+    <HireDate>2004-11-14T00:00:00</HireDate>
+    <Address>7 Houndstooth Rd.</Address>
+    <City>London</City>
+    <State></State>
+    <Country>UK</Country>
+    <PostalCode>WG2 7LT</PostalCode>
+    <Phone>(71) 555-4444</Phone>
+    <Fax>452</Fax>
+    <Email>anne@chinookcorp.com</Email>
+  </Employee>
+</DataSet>

@@ -1,0 +1,1 @@
+sqlplus / as sysdba @ CreateDB.sql

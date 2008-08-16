@@ -1,0 +1,167 @@
+<#@ template language="C#" hostspecific="true"#>
+<#@ output extension="sql" #>
+<#@ assembly name="System.dll" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ assembly name="System.Data.dll" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ include file="..\..\T4Templates\DataSetHelper.tt" #>
+/*******************************************************************************
+   Chinook Database
+   Script: CreateDB.sql - Creates and populates the Chinook database.
+   DB Server: Oracle
+   License: http://www.codeplex.com/ChinookDatabase/license
+********************************************************************************/
+
+DROP USER chinook CASCADE;
+
+CREATE USER chinook
+IDENTIFIED BY passwd
+DEFAULT TABLESPACE users
+TEMPORARY TABLESPACE temp
+QUOTA 10M ON users;
+
+GRANT connect to chinook;
+GRANT resource to chinook;
+GRANT create session TO chinook;
+GRANT create table TO chinook;
+GRANT create view TO chinook;
+
+conn  chinook/passwd
+
+/*******************************************************************************
+   Create Tables
+********************************************************************************/
+<#
+    FileInfo thisFile = new FileInfo(Host.TemplateFile);
+    DataSet ds = new DataSet();
+    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\..\Schema\ChinookDataSet.xsd");
+    ds.ReadXml(thisFile.DirectoryName + @"\..\..\SampleData\ChinookData.xml");
+
+    foreach (DataTable table in ds.Tables)
+    {
+#>
+CREATE TABLE <#= table.TableName #> 
+( 
+<#
+        foreach (DataColumn col in table.Columns)
+        {
+#>
+    <#= col.ColumnName #> <#= GetOracleType(col) #> <#= (col.AllowDBNull ? "" : "NOT NULL") #><#= (IsLastCreateTableElement(table, col) ? "" : ",") #>
+<#
+		}	// foreach DataColumn
+		
+        foreach (Constraint constraint in table.Constraints)
+        {
+			if (constraint.GetType() == typeof(UniqueConstraint))
+			{
+				UniqueConstraint pk = (UniqueConstraint) constraint;
+#>
+    CONSTRAINT <#= pk.ConstraintName #> PRIMARY KEY (<#= pk.Columns[0].ColumnName #>)<#= (IsPKLastCreateTableElement(table, pk) ? "" : ",") #>
+<#
+			}
+        } // foreach Constraint
+#>
+) 
+/ 
+
+<#
+	}	// foreach DataTable
+#>
+
+/*******************************************************************************
+   Create Foreign Keys
+********************************************************************************/
+<#
+    foreach (DataTable table in ds.Tables)
+    {
+
+        foreach (Constraint constraint in table.Constraints)
+        {
+			if (constraint.GetType() == typeof(ForeignKeyConstraint))
+			{
+				ForeignKeyConstraint fk = (ForeignKeyConstraint) constraint;
+#>
+ALTER TABLE <#= table.TableName #> ADD CONSTRAINT <#= fk.ConstraintName #> FOREIGN KEY (<#= fk.Columns[0].ColumnName #>) REFERENCES <#= fk.RelatedTable.TableName #>(<#= fk.RelatedColumns[0].ColumnName #>);
+<#
+			}
+        } // foreach Constraint
+	}	// foreach DataTable
+#>
+
+
+/*******************************************************************************
+   Populate Tables
+********************************************************************************/
+<#
+    StringBuilder sbFields = new StringBuilder();
+    StringBuilder sbValues = new StringBuilder();
+
+    foreach (DataTable table in ds.Tables)
+    {
+#>
+begin
+<#
+        foreach (DataRow row in table.Rows)
+        {
+            sbFields.Length = 0;
+            sbValues.Length = 0;
+
+            foreach (DataColumn col in table.Columns)
+            {
+                string value = row[col.ColumnName].ToString();
+                if (value.Length==0) continue;
+                
+                if (sbFields.Length == 0)
+                {
+                    sbFields.Append("(");
+                    sbValues.Append("(");
+                }
+                else
+                {
+                    sbFields.Append(", ");
+                    sbValues.Append(", ");
+                }
+
+                if (col.DataType == typeof(DateTime))
+                {
+                    DateTime date = Convert.ToDateTime(value);
+                    value = string.Format("TO_DATE('{0}-{1}-{2} 00:00:00','yyyy-mm-dd hh24:mi:ss')", date.Year, date.Month, date.Day);
+                    //value = string.Format("'{0}/{1:0}/{2:0}'", date.Year, date.Month, date.Day);
+                    sbValues.Append(value);
+                }
+                else if (col.DataType == typeof(String))
+                {
+                    sbValues.Append("'");
+                    value = value.Replace("'", "'||chr(39)||'");
+                    value = value.Replace("&", "'||chr(38)||'");
+                    sbValues.Append(value);
+                    sbValues.Append("'");
+                }
+                else
+                {
+                    sbValues.Append(value);
+                }
+
+                sbFields.Append(col.ColumnName);
+            }
+
+            sbFields.Append(")");
+            sbValues.Append(")");
+#>
+<#= string.Format("INSERT INTO {0} {1} VALUES {2};", table.TableName, sbFields, sbValues) #>
+<#
+        }	// foreach DataRow
+#>
+commit;
+end;
+/
+
+<#
+    }	// foreach DataTable
+#>
+
+exit;

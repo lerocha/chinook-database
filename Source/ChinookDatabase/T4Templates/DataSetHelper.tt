@@ -1,0 +1,93 @@
+﻿<#@ assembly name="System.dll" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ assembly name="System.Data.dll" #>
+<#@ import namespace="System.Data" #>
+<#+
+private string GetOracleType (DataColumn col)
+{
+	switch (col.DataType.ToString())
+	{
+		case "System.String":
+			return string.Format("VARCHAR2({0})", col.MaxLength);
+		case "System.Int32":
+			return "NUMBER";
+		case "System.Decimal":
+			return "NUMBER";
+		case "System.DateTime":
+			return "DATE";
+		default:
+			return "error_" + col.DataType.ToString();
+	}
+}
+
+private string GetSqlServerType (DataColumn col)
+{
+	switch (col.DataType.ToString())
+	{
+		case "System.String":
+			return string.Format("VARCHAR({0})", col.MaxLength);
+		case "System.Int32":
+			return "INTEGER";
+		case "System.Decimal":
+			return "DECIMAL";
+		case "System.DateTime":
+			return "DATETIME";
+		default:
+			return "error_" + col.DataType.ToString();
+	}
+}
+
+private string GetMySqlType (DataColumn col)
+{
+	switch (col.DataType.ToString())
+	{
+		case "System.String":
+			return string.Format("VARCHAR({0})", col.MaxLength);
+		case "System.Int32":
+			return "INTEGER";
+		case "System.Decimal":
+			return "DECIMAL";
+		case "System.DateTime":
+			return "DATE";
+		default:
+			return "error_" + col.DataType.ToString();
+	}
+}
+
+private bool IsLastCreateTableElement (DataTable table, DataColumn col)
+{
+	if ((col == table.Columns[table.Columns.Count-1]) && (table.Constraints.Count == 0))
+		return true;
+	
+	return false;
+}
+
+private bool IsPKLastCreateTableElement (DataTable table, UniqueConstraint pk)
+{
+    for (int i = table.Constraints.IndexOf(pk)+1; i < table.Constraints.Count; i++)
+    {
+        Constraint next = table.Constraints[i];
+        if (next.GetType()==typeof(UniqueConstraint))
+        {
+            return false;
+        }
+    }
+    
+	return true;
+}
+
+private bool IsFKLastCreateTableElement (DataTable table, ForeignKeyConstraint fk)
+{
+    for (int i = table.Constraints.IndexOf(fk)+1; i < table.Constraints.Count; i++)
+    {
+        Constraint next = table.Constraints[i];
+        if (next.GetType()==typeof(ForeignKeyConstraint))
+        {
+            return false;
+        }
+    }
+    
+	return true;
+}
+
+#>
