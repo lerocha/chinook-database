@@ -19,7 +19,6 @@ namespace ChinookDatabase.Tests
         {
             FileInfo thisFile = new FileInfo(@"C:\Code\ChinookDatabase\Trunk\Source\ChinookDatabase\Tests\T4TemplatesFixture.cs");
             string filename = thisFile.DirectoryName + @"\..\SampleData\iTunes Music Library.xml";
-            Assert.That(File.Exists(filename));
 
             DataSet ds = new DataSet();
             ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\Schema\ChinookDataset.xsd");
@@ -30,6 +29,8 @@ namespace ChinookDatabase.Tests
             string name = "";
             int time = 0;
             int mediaTypeId = 0;
+            int genreId = 0;
+            string composer = null;
             int size = 0;
             bool skipTrack = false;
 
@@ -47,14 +48,16 @@ namespace ChinookDatabase.Tests
                     name = "";
                     time = 0;
                     mediaTypeId = 0;
+                    genreId = 0;
+                    composer = null;
                     size = 0;
                     skipTrack = false;
                     continue;
                 }
 
-                if (line == "\t\t</dict>" && !skipTrack && albumId!=null)
+                if (line == "\t\t</dict>" && !skipTrack && albumId != null)
                 {
-                    ds.Tables["Track"].Rows.Add(ds.Tables["Track"].Rows.Count + 1, name, albumId, mediaTypeId, time, size, 0.99);
+                    ds.Tables["Track"].Rows.Add(ds.Tables["Track"].Rows.Count + 1, name, albumId, mediaTypeId, genreId, composer, time, size, 0.99);
                     continue;
                 }
 
@@ -78,7 +81,7 @@ namespace ChinookDatabase.Tests
                     }
                     else
                     {
-                        artistId = (int) results[0]["ArtistId"];  
+                        artistId = (int)results[0]["ArtistId"];
                     }
                     continue;
                 }
@@ -97,7 +100,7 @@ namespace ChinookDatabase.Tests
                     }
                     else
                     {
-                        albumId = (int) results[0]["AlbumId"];  
+                        albumId = (int)results[0]["AlbumId"];
                     }
                     continue;
                 }
@@ -121,10 +124,36 @@ namespace ChinookDatabase.Tests
                     continue;
                 }
 
+                m = Regex.Match(line, "\t\t\t<key>Genre</key><string>(.*)</string>");
+                if (m.Success)
+                {
+                    string genre = m.Groups[1].ToString();
+
+                    DataRow[] results = ds.Tables["Genre"].Select("Name = '" + genre.Replace("'", "''") + "'");
+
+                    if (results == null || results.Length == 0)
+                    {
+                        genreId = ds.Tables["Genre"].Rows.Count + 1;
+                        ds.Tables["Genre"].Rows.Add(genreId, genre);
+                    }
+                    else
+                    {
+                        genreId = (int)results[0]["GenreId"];
+                    }
+                    continue;
+                }
+
                 m = Regex.Match(line, "\t\t\t<key>Name</key><string>(.*)</string>");
                 if (m.Success)
                 {
                     name = m.Groups[1].ToString();
+                    continue;
+                }
+
+                m = Regex.Match(line, "\t\t\t<key>Composer</key><string>(.*)</string>");
+                if (m.Success)
+                {
+                    composer = m.Groups[1].ToString();
                     continue;
                 }
 
@@ -138,12 +167,54 @@ namespace ChinookDatabase.Tests
                 m = Regex.Match(line, "\t\t\t<key>Total Time</key><integer>(\\d*)</integer>");
                 if (m.Success)
                 {
-                    if (!int.TryParse(m.Groups[1].ToString(), out time) || time==0)
+                    if (!int.TryParse(m.Groups[1].ToString(), out time) || time == 0)
                         skipTrack = true;
                 }
             }
 
-            //ds.WriteXml(@"C:\Code\ChinookDatabase\Trunk\Source\ChinookDatabase\SampleData\ChinookData.xml");
+            // Create sales data.
+            int maxTracksPerInvoice = 20;
+            Random random = new Random();
+
+            for (int year = DateTime.Now.Year-2; year < DateTime.Now.Year + 2; year++)
+            {
+                for (int month = 1; month <= 12; month++)
+                {
+                    int invoicesPerMonth = random.Next(2, 20);
+                    for (int invNum = 1; invNum <= invoicesPerMonth; invNum++)
+                    {
+                        int day = random.Next((28*(invNum-1))/invoicesPerMonth+1, (28*invNum)/invoicesPerMonth);
+                        int invoiceId = ds.Tables["Invoice"].Rows.Count + 1;
+                        int customerId = random.Next(1, ds.Tables["Customer"].Rows.Count);
+
+                        ds.Tables["Invoice"].Rows.Add(
+                            invoiceId, 
+                            customerId,
+                            null,
+                            DateTime.Parse(string.Format("{0}/{1}/{2}", year, month, day)),
+                            ds.Tables["Customer"].Rows[customerId]["Address"],
+                            ds.Tables["Customer"].Rows[customerId]["City"],
+                            ds.Tables["Customer"].Rows[customerId]["State"],
+                            ds.Tables["Customer"].Rows[customerId]["Country"],
+                            ds.Tables["Customer"].Rows[customerId]["PostalCode"]);
+
+                        for (int lineNum=1; lineNum < random.Next(1, maxTracksPerInvoice); lineNum++)
+                        {
+                            int invoiceLineId = ds.Tables["InvoiceLine"].Rows.Count + 1;
+                            int trackId = random.Next(1, ds.Tables["Track"].Rows.Count);
+
+                            ds.Tables["InvoiceLine"].Rows.Add(
+                                invoiceLineId,
+                                invoiceId,
+                                trackId,
+                                ds.Tables["Track"].Rows[trackId]["UnitPrice"],
+                                1);
+                        }
+                    }
+                }
+            }
+
+            //ds.WriteXml(@"C:\Code\ChinookDatabase\Trunk\Source\ChinookDatabase\SampleData\ChinookData2.xml");
 
             MemoryStream memstream = new MemoryStream();
             ds.WriteXml(memstream);
