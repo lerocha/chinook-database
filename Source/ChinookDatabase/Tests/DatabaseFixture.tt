@@ -1,0 +1,63 @@
+﻿<#@ template language="C#" hostspecific="true"#>
+<#@ output extension="cs" #>
+<#@ assembly name="System.dll" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ assembly name="System.Data.dll" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ include file="..\T4Templates\DataSetHelper.tt" #>
+/*******************************************************************************
+ * Chinook Database
+ * Description: Test fixture for Chinook database.
+ * DB Server: SQL Server
+ * Version: <#= GetVersionNumber() #>
+ * License: http://www.codeplex.com/ChinookDatabase/license
+ * 
+ * IMPORTANT: In order to run these test fixtures, you will need to:
+ *            1. Run the generated SQL script to create the database to be tested.
+ *            2. Verify that app.config has the proper connection string (user/password).
+ ********************************************************************************/
+using System.Data;
+using NUnit.Framework;
+using NUnit.Framework.SyntaxHelpers;
+
+namespace ChinookDatabase.Tests
+{
+    /// <summary>
+    /// Base class for Chinook database test fixture.
+    /// </summary>
+    public abstract class DatabaseFixture
+    {
+        /// <summary>
+        /// Method to execute a SQL query and return a dataset.
+        /// </summary>
+        /// <param name="query">Query string to be executed.</param>
+        /// <returns>DataSet with the query results.</returns>
+        protected abstract DataSet ExecuteQuery(string query);
+<#
+    FileInfo thisFile = new FileInfo(Host.TemplateFile);
+    DataSet ds = new DataSet();
+    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\Schema\ChinookDataSet.xsd");
+    ds.ReadXml(thisFile.DirectoryName + @"\..\SampleData\ChinookData.xml");
+
+    foreach (DataTable table in ds.Tables)
+    {
+#>
+
+        /// <summary>
+        /// Verifies that the <#= table.TableName #> table was populated properly.
+        /// </summary>
+        [Test]
+        public void <#= table.TableName #>TableShouldBePopulated()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT * FROM <#= table.TableName #>");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(<#= table.Rows.Count #>), "Total number of records mismatch.");
+        }
+<#
+    } // foreach table
+#>
+    }
+}

@@ -31,11 +31,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=5.1.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\nunit.framework.dll</HintPath>
+      <HintPath>..\Lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -62,9 +67,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataSetHelper.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tests\ChinookMySqlFixture.cs">
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Tests\ChinookOracleFixture.cs">
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Tests\ChinookSqlServerFixture.cs">
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Tests\DatabaseFixture.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseFixture.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tests\T4TemplatesFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="SampleData\ChinookData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookData.xml</LastGenOutput>
@@ -120,6 +146,10 @@
     <None Include="T4Templates\DataSetHelper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DataSetHelper.cs</LastGenOutput>
+    </None>
+    <None Include="Tests\DatabaseFixture.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DatabaseFixture.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
