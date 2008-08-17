@@ -3,6 +3,11 @@
 <#@ assembly name="System.Data.dll" #>
 <#@ import namespace="System.Data" #>
 <#+
+private string GetVersionNumber()
+{
+	return "1.0";
+}
+
 private string GetOracleType (DataColumn col)
 {
 	switch (col.DataType.ToString())

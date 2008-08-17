@@ -8,6 +8,12 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<#@ include file="..\T4Templates\DataSetHelper.tt" #><!--
+   Chinook Database
+   Version: <#= GetVersionNumber() #>
+   License: http://www.codeplex.com/ChinookDatabase/license
+-->
 <#
             FileInfo thisFile = new FileInfo(Host.TemplateFile);
             string filename = thisFile.DirectoryName + @"\..\SampleData\iTunes Music Library.xml";
@@ -213,5 +219,4 @@
             memstream.Position = 0;
             StreamReader sr = new StreamReader(memstream);
 #>
-<?xml version="1.0" encoding="ISO-8859-1"?>
 <#= sr.ReadToEnd() #>

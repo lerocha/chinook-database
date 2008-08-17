@@ -13,6 +13,7 @@
    Chinook Database
    Script: CreateDB.sql - Creates and populates the Chinook database.
    DB Server: SQL Server
+   Version: <#= GetVersionNumber() #>
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 
