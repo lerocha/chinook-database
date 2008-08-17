@@ -104,6 +104,9 @@
     <None Include="Schema\ChinookDataSet.xss">
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Scripts\CreateAll.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Scripts\MySql\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -173,4 +176,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>@echo off
+cd Scripts
+rem CreateAll.bat
+cd ..</PostBuildEvent>
+  </PropertyGroup>
 </Project>

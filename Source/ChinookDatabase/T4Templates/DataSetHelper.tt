@@ -30,7 +30,7 @@ private string GetSqlServerType (DataColumn col)
 	switch (col.DataType.ToString())
 	{
 		case "System.String":
-			return string.Format("VARCHAR({0})", col.MaxLength);
+			return string.Format("NVARCHAR({0})", col.MaxLength);
 		case "System.Int32":
 			return "INTEGER";
 		case "System.Decimal":

@@ -10,9 +10,11 @@
  ********************************************************************************/
 using System;
 using System.Data;
+using System.Diagnostics;
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
 using System.Configuration;
+using NUnit.Framework.SyntaxHelpers;
 
 namespace ChinookDatabase.Tests
 {

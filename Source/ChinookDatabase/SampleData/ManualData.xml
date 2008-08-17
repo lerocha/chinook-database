@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <DataSet xmlns="http://tempuri.org/DataSet.xsd">
+  <!--
+       !!!IMPORTANT!!! 
+       The first customer (CustomerId == 1) is used by 
+       the unit test RecordsWithProperUnicodeCharacters.
+       Please do not change this record. If you do so, 
+       then use Unicode characters to enable the Unicode testing.
+  -->
   <Customer>
     <CustomerId>1</CustomerId>
+    <FirstName>Luís</FirstName>
+    <LastName>Gonçalves</LastName>
+    <Company>Embraer - Empresa Brasileira de Aeronáutica S.A.</Company>
+    <Address>Av. Brigadeiro Faria Lima, 2170</Address>
+    <City>São José dos Campos</City>
+    <State>SP</State>
+    <Country>Brazil</Country>
+    <PostalCode>12227-000</PostalCode>
+    <Phone>+55 (12) 3923-5555</Phone>
+    <Fax>+55 (12) 3923-5566</Fax>
+    <Email>luisg@embraer.com.br</Email>
+  </Customer>
+  <Customer>
+    <CustomerId>2</CustomerId>
     <FirstName>Eduardo</FirstName>
     <LastName>Martins</LastName>
     <Company>Woodstock Discos</Company>
@@ -15,7 +36,7 @@
     <Email>eduardo@woodstock.com.br</Email>
   </Customer>
   <Customer>
-    <CustomerId>2</CustomerId>
+    <CustomerId>3</CustomerId>
     <FirstName>Alexandre</FirstName>
     <LastName>Rocha</LastName>
     <Company>Banco do Brasil S.A.</Company>
@@ -27,20 +48,6 @@
     <Phone>+55 (11) 3055-3278</Phone>
     <Fax>+55 (11) 3055-8131</Fax>
     <Email>alero@uol.com.br</Email>
-  </Customer>
-  <Customer>
-    <CustomerId>3</CustomerId>
-    <FirstName>Paula</FirstName>
-    <LastName>Britto</LastName>
-    <Company>Embraer S.A.</Company>
-    <Address>Av. Brigadeiro Faria Lima, 2170</Address>
-    <City>São Jose dos Campos</City>
-    <State>SP</State>
-    <Country>Brazil</Country>
-    <PostalCode>12227-000</PostalCode>
-    <Phone>+55 (12) 3923-5555</Phone>
-    <Fax>+55 (12) 3923-5566</Fax>
-    <Email>paulab@embraer.com.br</Email>
   </Customer>
   <Customer>
     <CustomerId>4</CustomerId>

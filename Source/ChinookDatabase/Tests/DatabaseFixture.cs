@@ -27,6 +27,30 @@ namespace ChinookDatabase.Tests
         /// <param name="query">Query string to be executed.</param>
         /// <returns>DataSet with the query results.</returns>
         protected abstract DataSet ExecuteQuery(string query);
+        
+        /// <summary>
+        /// Verifies that the Unicode characters are populated properly.
+        /// </summary>
+        [Test]
+        public void RecordsWithProperUnicodeCharacters()
+        {
+            // The first customer record is used to test for Unicode problems.
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 1");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Artist table or the SQL script did not use Unicode characters properly.");
+            
+            Assert.That(dataSet.Tables[0].Rows[0]["CustomerId"].ToString(), Is.EqualTo("1"), "CustomerId mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["FirstName"].ToString(), Is.EqualTo("Luís"), "FirstName mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["LastName"].ToString(), Is.EqualTo("Gonçalves"), "LastName mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["Company"].ToString(), Is.EqualTo("Embraer - Empresa Brasileira de Aeronáutica S.A."), "Company mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["Address"].ToString(), Is.EqualTo("Av. Brigadeiro Faria Lima, 2170"), "Address mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["City"].ToString(), Is.EqualTo("São José dos Campos"), "City mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["State"].ToString(), Is.EqualTo("SP"), "State mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["Country"].ToString(), Is.EqualTo("Brazil"), "Country mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["PostalCode"].ToString(), Is.EqualTo("12227-000"), "PostalCode mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["Phone"].ToString(), Is.EqualTo("+55 (12) 3923-5555"), "Phone mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["Fax"].ToString(), Is.EqualTo("+55 (12) 3923-5566"), "Fax mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["Email"].ToString(), Is.EqualTo("luisg@embraer.com.br"), "Email mismatch.");
+        }
 
         /// <summary>
         /// Verifies that the Genre table was populated properly.
@@ -105,7 +129,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Invoice");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(457), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(494), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -115,7 +139,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceLineTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM InvoiceLine");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1104), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1290), "Total number of records mismatch.");
         }
     }
 }

@@ -37,12 +37,30 @@ namespace ChinookDatabase.Tests
         /// <param name="query">Query string to be executed.</param>
         /// <returns>DataSet with the query results.</returns>
         protected abstract DataSet ExecuteQuery(string query);
+        
+        /// <summary>
+        /// Verifies that the Unicode characters are populated properly.
+        /// </summary>
+        [Test]
+        public void RecordsWithProperUnicodeCharacters()
+        {
+            // The first customer record is used to test for Unicode problems.
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 1");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Artist table or the SQL script did not use Unicode characters properly.");
+            
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
     DataSet ds = new DataSet();
     ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\Schema\ChinookDataSet.xsd");
     ds.ReadXml(thisFile.DirectoryName + @"\..\SampleData\ChinookData.xml");
 
+	foreach (DataColumn col in ds.Tables["Customer"].Columns)
+	{
+#>            Assert.That(dataSet.Tables[0].Rows[0]["<#= col.ColumnName #>"].ToString(), Is.EqualTo("<#= ds.Tables["Customer"].Rows[0][col.ColumnName] #>"), "<#= col.ColumnName #> mismatch.");
+<#
+	}
+#>        }
+<#
     foreach (DataTable table in ds.Tables)
     {
 #>

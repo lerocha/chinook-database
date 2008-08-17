@@ -158,7 +158,7 @@ GO
                 }
                 else if (col.DataType == typeof(String))
                 {
-                    sbValues.Append("'");
+                    sbValues.Append("N'");
                     value = value.Replace("'", "''");
                     sbValues.Append(value);
                     sbValues.Append("'");

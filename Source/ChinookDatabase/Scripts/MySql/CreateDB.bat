@@ -1,1 +1,2 @@
-mysql -h localhost -u root -p <CreateDB.sql
+@echo off
+mysql -h localhost -u root --password=p4ssw0rd <CreateDB.sql

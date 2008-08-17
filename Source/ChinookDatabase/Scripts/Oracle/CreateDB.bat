@@ -1,1 +1,2 @@
-sqlplus / as sysdba @ CreateDB.sql
+@echo off
+sqlplus -S / as sysdba @ CreateDB.sql

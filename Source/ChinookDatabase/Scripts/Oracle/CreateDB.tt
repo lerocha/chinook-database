@@ -20,7 +20,7 @@
 DROP USER chinook CASCADE;
 
 CREATE USER chinook
-IDENTIFIED BY passwd
+IDENTIFIED BY p4ssw0rd
 DEFAULT TABLESPACE users
 TEMPORARY TABLESPACE temp
 QUOTA 10M ON users;
@@ -31,7 +31,7 @@ GRANT create session TO chinook;
 GRANT create table TO chinook;
 GRANT create view TO chinook;
 
-conn  chinook/passwd
+conn  chinook/p4ssw0rd
 
 /*******************************************************************************
    Create Tables
