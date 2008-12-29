@@ -9,10 +9,10 @@
  *            2. Verify that app.config has the proper connection string (user/password).
  ********************************************************************************/
 using System;
+using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 using NUnit.Framework;
-using System.Configuration;
 
 namespace ChinookDatabase.Tests
 {
@@ -33,7 +33,7 @@ namespace ChinookDatabase.Tests
             // Creates an ADO.NET connection to the database, if not created yet.
             if (_connection == null)
             {
-                ConnectionStringsSection section = (ConnectionStringsSection) ConfigurationManager.GetSection("connectionStrings");
+                var section = (ConnectionStringsSection) ConfigurationManager.GetSection("connectionStrings");
                 foreach (ConnectionStringSettings entry in section.ConnectionStrings)
                 {
                     if (entry.Name == "ChinookOracle")
@@ -60,10 +60,10 @@ namespace ChinookDatabase.Tests
         /// <returns>DataSet with the query results.</returns>
         protected override DataSet ExecuteQuery(string query)
         {
-            DataSet dataset = new DataSet();
+            var dataset = new DataSet();
 
             // Verify if number of entities match number of records.
-            using (OleDbDataAdapter adapter = new OleDbDataAdapter())
+            using (var adapter = new OleDbDataAdapter())
             {
                 adapter.SelectCommand = new OleDbCommand(query, GetConnection());
                 adapter.Fill(dataset);

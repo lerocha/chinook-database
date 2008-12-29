@@ -9,10 +9,10 @@
  *            2. Verify that app.config has the proper connection string (user/password).
  ********************************************************************************/
 using System;
-using System.Data;
-using NUnit.Framework;
-using System.Data.SqlClient;
 using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using NUnit.Framework;
 
 namespace ChinookDatabase.Tests
 {
@@ -33,7 +33,7 @@ namespace ChinookDatabase.Tests
             // Creates an ADO.NET connection to the database, if not created yet.
             if (_sqlConnection == null)
             {
-                ConnectionStringsSection section = (ConnectionStringsSection) ConfigurationManager.GetSection("connectionStrings");
+                var section = (ConnectionStringsSection) ConfigurationManager.GetSection("connectionStrings");
 
                 foreach (ConnectionStringSettings entry in section.ConnectionStrings)
                 {
@@ -61,10 +61,10 @@ namespace ChinookDatabase.Tests
         /// <returns>DataSet with the query results.</returns>
         protected override DataSet ExecuteQuery(string query)
         {
-            DataSet dataset = new DataSet();
+            var dataset = new DataSet();
 
             // Verify if number of entities match number of records.
-            using (SqlDataAdapter adapter = new SqlDataAdapter())
+            using (var adapter = new SqlDataAdapter())
             {
                 adapter.SelectCommand = new SqlCommand(query, GetConnection());
                 adapter.Fill(dataset);

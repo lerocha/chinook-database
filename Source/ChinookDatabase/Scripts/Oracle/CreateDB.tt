@@ -39,7 +39,7 @@ conn  chinook/p4ssw0rd
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
     DataSet ds = new DataSet();
-    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\..\Schema\ChinookDataSet.xsd");
+    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\..\..\ChinookMetadata\Schema\ChinookDataSet.xsd");
     ds.ReadXml(thisFile.DirectoryName + @"\..\..\SampleData\ChinookData.xml");
 
     foreach (DataTable table in ds.Tables)
@@ -55,17 +55,8 @@ CREATE TABLE <#= table.TableName #>
 <#
 		}	// foreach DataColumn
 		
-        foreach (Constraint constraint in table.Constraints)
-        {
-			if (constraint.GetType() == typeof(UniqueConstraint))
-			{
-				UniqueConstraint pk = (UniqueConstraint) constraint;
 #>
-    CONSTRAINT <#= pk.ConstraintName #> PRIMARY KEY (<#= pk.Columns[0].ColumnName #>)<#= (IsPKLastCreateTableElement(table, pk) ? "" : ",") #>
-<#
-			}
-        } // foreach Constraint
-#>
+    CONSTRAINT <#= GetPrimaryKeyConstraintName (table) #> PRIMARY KEY (<#= GetPrimaryKeyString(table) #>)
 ) 
 / 
 

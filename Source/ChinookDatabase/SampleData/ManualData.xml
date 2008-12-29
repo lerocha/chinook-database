@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<DataSet xmlns="http://tempuri.org/DataSet.xsd">
+<ChinookDataSet xmlns="http://tempuri.org/DataSet.xsd">
   <!--
        !!!IMPORTANT!!! 
        The first customer (CustomerId == 1) is used by 
@@ -20,6 +20,7 @@
     <Phone>+55 (12) 3923-5555</Phone>
     <Fax>+55 (12) 3923-5566</Fax>
     <Email>luisg@embraer.com.br</Email>
+    <SupportRepId>3</SupportRepId>
   </Customer>
   <Customer>
     <CustomerId>2</CustomerId>
@@ -34,6 +35,7 @@
     <Phone>+55 (11) 3033-5446</Phone>
     <Fax>+55 (11) 3033-4564</Fax>
     <Email>eduardo@woodstock.com.br</Email>
+    <SupportRepId>4</SupportRepId>
   </Customer>
   <Customer>
     <CustomerId>3</CustomerId>
@@ -48,6 +50,7 @@
     <Phone>+55 (11) 3055-3278</Phone>
     <Fax>+55 (11) 3055-8131</Fax>
     <Email>alero@uol.com.br</Email>
+    <SupportRepId>5</SupportRepId>
   </Customer>
   <Customer>
     <CustomerId>4</CustomerId>
@@ -62,6 +65,7 @@
     <Phone>+55 (21) 2271-7000</Phone>
     <Fax>+55 (21) 2271-7070</Fax>
     <Email>roberto.almeida@riotur.gov.br</Email>
+    <SupportRepId>3</SupportRepId>
   </Customer>
   <Customer>
     <CustomerId>5</CustomerId>
@@ -76,6 +80,7 @@
     <Phone>+55 (61) 3363-5547</Phone>
     <Fax>+55 (61) 3363-7855</Fax>
     <Email>fernadaramos4@uol.com.br</Email>
+    <SupportRepId>4</SupportRepId>
   </Customer>
   <Customer>
     <CustomerId>6</CustomerId>
@@ -90,6 +95,7 @@
     <Phone>+1 (780) 434-4554</Phone>
     <Fax>+1 (780) 434-5565</Fax>
     <Email>mphiol@shaw.ca</Email>
+    <SupportRepId>5</SupportRepId>
   </Customer>
   <Customer>
     <CustomerId>7</CustomerId>
@@ -104,6 +110,7 @@
     <Phone>+1 (604) 688-2255</Phone>
     <Fax>+1 (604) 688-8756</Fax>
     <Email>jenniferp@rogers.ca</Email>
+    <SupportRepId>3</SupportRepId>
   </Customer>
   <Customer>
     <CustomerId>8</CustomerId>
@@ -118,6 +125,7 @@
     <Phone>+1 (650) 253-0000</Phone>
     <Fax>+1 (650) 253-0000</Fax>
     <Email>fharris@google.com</Email>
+    <SupportRepId>4</SupportRepId>
   </Customer>
   <Customer>
     <CustomerId>9</CustomerId>
@@ -132,6 +140,7 @@
     <Phone>+1 (425) 882-8080</Phone>
     <Fax>+1 (425) 882-8081</Fax>
     <Email>jacksmith@microsoft.com</Email>
+    <SupportRepId>5</SupportRepId>
   </Customer>
   <Customer>
     <CustomerId>10</CustomerId>
@@ -146,6 +155,7 @@
     <Phone>+1 (212) 221-3546</Phone>
     <Fax>+1 (212) 221-4679</Fax>
     <Email>michelleb@aol.com</Email>
+    <SupportRepId>3</SupportRepId>
   </Customer>
   <Employee>
     <EmployeeId>1</EmployeeId>
@@ -282,4 +292,4 @@
     <Fax>+1 (403) 467-8772</Fax>
     <Email>laura@chinookcorp.com</Email>
   </Employee>
-</DataSet>
+</ChinookDataSet>

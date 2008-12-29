@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<ChinookDataSet xmlns="http://tempuri.org/DataSet.xsd">
+  <Customer>
+    <CustomerId>1</CustomerId>
+    <FirstName>Luís</FirstName>
+    <LastName>Gonçalves</LastName>
+    <Company>Embraer - Empresa Brasileira de Aeronáutica S.A.</Company>
+    <Address>Av. Brigadeiro Faria Lima, 2170</Address>
+    <City>São José dos Campos</City>
+    <State>SP</State>
+    <Country>Brazil</Country>
+    <PostalCode>12227-000</PostalCode>
+    <Phone>+55 (12) 3923-5555</Phone>
+    <Fax>+55 (12) 3923-5566</Fax>
+    <Email>luisg@embraer.com.br</Email>
+    <SupportRepId>1</SupportRepId>
+  </Customer>
+  <Customer>
+    <CustomerId>2</CustomerId>
+    <FirstName>Eduardo</FirstName>
+    <LastName>Martins</LastName>
+    <Company>Woodstock Discos</Company>
+    <Address>Rua Dr. Falcão Filho, 155</Address>
+    <City>São Paulo</City>
+    <State>SP</State>
+    <Country>Brazil</Country>
+    <PostalCode>01007-010</PostalCode>
+    <Phone>+55 (11) 3033-5446</Phone>
+    <Fax>+55 (11) 3033-4564</Fax>
+    <Email>eduardo@woodstock.com.br</Email>
+    <SupportRepId>1</SupportRepId>
+  </Customer>
+  <Employee>
+    <EmployeeId>1</EmployeeId>
+    <LastName>Peacock</LastName>
+    <FirstName>Jane</FirstName>
+    <Title>Sales Support Agent</Title>
+    <BirthDate>1973-08-29T00:00:00</BirthDate>
+    <HireDate>2002-04-01T00:00:00</HireDate>
+    <Address>1111 6 Ave SW</Address>
+    <City>Calgary</City>
+    <State>AB</State>
+    <Country>Canada</Country>
+    <PostalCode>T2P 5M5</PostalCode>
+    <Phone>+1 (403) 262-3443</Phone>
+    <Fax>+1 (403) 262-6712</Fax>
+    <Email>jane@chinookcorp.com</Email>
+  </Employee>
+</ChinookDataSet>

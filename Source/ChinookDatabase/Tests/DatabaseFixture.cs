@@ -3,7 +3,7 @@
  * Chinook Database
  * Description: Test fixture for Chinook database.
  * DB Server: SQL Server
- * Version: 1.0
+ * Version: 1.1
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
@@ -50,6 +50,7 @@ namespace ChinookDatabase.Tests
             Assert.That(dataSet.Tables[0].Rows[0]["Phone"].ToString(), Is.EqualTo("+55 (12) 3923-5555"), "Phone mismatch.");
             Assert.That(dataSet.Tables[0].Rows[0]["Fax"].ToString(), Is.EqualTo("+55 (12) 3923-5566"), "Fax mismatch.");
             Assert.That(dataSet.Tables[0].Rows[0]["Email"].ToString(), Is.EqualTo("luisg@embraer.com.br"), "Email mismatch.");
+            Assert.That(dataSet.Tables[0].Rows[0]["SupportRepId"].ToString(), Is.EqualTo("3"), "SupportRepId mismatch.");
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace ChinookDatabase.Tests
         public void MediaTypeTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM MediaType");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(7), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(5), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace ChinookDatabase.Tests
         public void ArtistTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Artist");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(241), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(275), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace ChinookDatabase.Tests
         public void AlbumTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Album");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(308), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(347), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -99,17 +100,7 @@ namespace ChinookDatabase.Tests
         public void TrackTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Track");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3433), "Total number of records mismatch.");
-        }
-
-        /// <summary>
-        /// Verifies that the Customer table was populated properly.
-        /// </summary>
-        [Test]
-        public void CustomerTableShouldBePopulated()
-        {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(10), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3503), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -123,13 +114,23 @@ namespace ChinookDatabase.Tests
         }
 
         /// <summary>
+        /// Verifies that the Customer table was populated properly.
+        /// </summary>
+        [Test]
+        public void CustomerTableShouldBePopulated()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(10), "Total number of records mismatch.");
+        }
+
+        /// <summary>
         /// Verifies that the Invoice table was populated properly.
         /// </summary>
         [Test]
         public void InvoiceTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Invoice");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(494), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(546), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -139,7 +140,27 @@ namespace ChinookDatabase.Tests
         public void InvoiceLineTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM InvoiceLine");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1290), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1447), "Total number of records mismatch.");
+        }
+
+        /// <summary>
+        /// Verifies that the Playlist table was populated properly.
+        /// </summary>
+        [Test]
+        public void PlaylistTableShouldBePopulated()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Playlist");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(4), "Total number of records mismatch.");
+        }
+
+        /// <summary>
+        /// Verifies that the PlaylistTrack table was populated properly.
+        /// </summary>
+        [Test]
+        public void PlaylistTrackTableShouldBePopulated()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT * FROM PlaylistTrack");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(76), "Total number of records mismatch.");
         }
     }
 }

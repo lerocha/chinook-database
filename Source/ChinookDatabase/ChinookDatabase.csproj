@@ -55,13 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Schema\ChinookDataSet.cs">
-      <DependentUpon>ChinookDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Schema\ChinookDataSet.Designer.cs">
-      <DependentUpon>ChinookDataSet.cs</DependentUpon>
-    </Compile>
     <Compile Include="T4Templates\DataSetHelper.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,15 +87,6 @@
     <None Include="SampleData\ChinookData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookData.xml</LastGenOutput>
-    </None>
-    <None Include="Schema\ChinookDataSet.xsc">
-      <DependentUpon>ChinookDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Schema\ChinookDataSet.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Schema\ChinookDataSet.xss">
-      <DependentUpon>ChinookDataSet.xsd</DependentUpon>
     </None>
     <None Include="Scripts\CreateAll.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -167,6 +151,12 @@
     </Content>
     <Content Include="SampleData\iTunes Music Library.xml" />
     <Content Include="SampleData\ManualData.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChinookMetadata\ChinookMetadata.csproj">
+      <Project>{67E64402-FB7A-4D55-9E8E-B0818B693639}</Project>
+      <Name>ChinookMetadata</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

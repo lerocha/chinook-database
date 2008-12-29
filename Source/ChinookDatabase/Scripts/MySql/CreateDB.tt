@@ -27,7 +27,7 @@ USE Chinook;
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
     DataSet ds = new DataSet();
-    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\..\Schema\ChinookDataSet.xsd");
+    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\..\..\ChinookMetadata\Schema\ChinookDataSet.xsd");
     ds.ReadXml(thisFile.DirectoryName + @"\..\..\SampleData\ChinookData.xml");
 
     foreach (DataTable table in ds.Tables)
@@ -42,18 +42,8 @@ CREATE TABLE <#= table.TableName #>
     <#= col.ColumnName #> <#= GetMySqlType(col) #><#= (col.AllowDBNull ? "" : " NOT NULL") #><#= (col.AutoIncrement? " AUTO_INCREMENT" : "") #><#= (IsLastCreateTableElement(table, col) ? "" : ",") #>
 <#
 		}	// foreach DataColumn
-		
-        foreach (Constraint constraint in table.Constraints)
-        {
-			if (constraint.GetType() == typeof(UniqueConstraint))
-			{
-				UniqueConstraint pk = (UniqueConstraint) constraint;
 #>
-    PRIMARY KEY(<#= pk.Columns[0].ColumnName #>)<#= (IsPKLastCreateTableElement(table, pk) ? "" : ",") #>
-<#
-			}
-        } // foreach Constraint
-#>
+    PRIMARY KEY(<#= GetPrimaryKeyString (table) #>)
 );
 GO
 

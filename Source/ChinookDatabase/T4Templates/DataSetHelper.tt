@@ -2,10 +2,11 @@
 <#@ assembly name="System.Xml.dll" #>
 <#@ assembly name="System.Data.dll" #>
 <#@ import namespace="System.Data" #>
+<#@ import namespace="System.Text" #>
 <#+
 private string GetVersionNumber()
 {
-	return "1.0";
+	return "1.1";
 }
 
 private string GetOracleType (DataColumn col)
@@ -67,32 +68,46 @@ private bool IsLastCreateTableElement (DataTable table, DataColumn col)
 	return false;
 }
 
-private bool IsPKLastCreateTableElement (DataTable table, UniqueConstraint pk)
+/// <summary>
+/// Gets a string containing the primary key of the given table. For example "CustomerId" or "PlaylistId, TrackId".
+/// </summary>
+/// <param name="table"></param>
+/// <returns>A string representing the primary key (single or composite).</returns>
+private string GetPrimaryKeyString (DataTable table)
 {
-    for (int i = table.Constraints.IndexOf(pk)+1; i < table.Constraints.Count; i++)
+    StringBuilder sb = new StringBuilder();
+    foreach (Constraint constraint in table.Constraints)
     {
-        Constraint next = table.Constraints[i];
-        if (next.GetType()==typeof(UniqueConstraint))
+        UniqueConstraint uniqueConstraint = constraint as UniqueConstraint;
+
+        if (uniqueConstraint != null && uniqueConstraint.IsPrimaryKey)
         {
-            return false;
+            foreach (DataColumn pk in uniqueConstraint.Columns)
+            {
+                if (sb.Length != 0) sb.Append(", ");
+                sb.Append(pk.ColumnName);
+            }
         }
     }
-    
-	return true;
+    return sb.ToString();
 }
 
-private bool IsFKLastCreateTableElement (DataTable table, ForeignKeyConstraint fk)
+/// <summary>
+/// Gets the name of the primary key constraint, for example "PK_Customer".
+/// </summary>
+/// <param name="table"></param>
+/// <returns>Primary key constraint name.</returns>
+private string GetPrimaryKeyConstraintName (DataTable table)
 {
-    for (int i = table.Constraints.IndexOf(fk)+1; i < table.Constraints.Count; i++)
+    foreach (Constraint constraint in table.Constraints)
     {
-        Constraint next = table.Constraints[i];
-        if (next.GetType()==typeof(ForeignKeyConstraint))
+        UniqueConstraint uniqueConstraint = constraint as UniqueConstraint;
+
+        if (uniqueConstraint != null && uniqueConstraint.IsPrimaryKey)
         {
-            return false;
+            return uniqueConstraint.ConstraintName;
         }
     }
-    
-	return true;
+    return string.Empty;
 }
-
 #>

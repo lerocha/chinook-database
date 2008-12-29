@@ -51,7 +51,7 @@ namespace ChinookDatabase.Tests
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
     DataSet ds = new DataSet();
-    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\Schema\ChinookDataSet.xsd");
+    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\..\ChinookMetadata\Schema\ChinookDataSet.xsd");
     ds.ReadXml(thisFile.DirectoryName + @"\..\SampleData\ChinookData.xml");
 
 	foreach (DataColumn col in ds.Tables["Customer"].Columns)
