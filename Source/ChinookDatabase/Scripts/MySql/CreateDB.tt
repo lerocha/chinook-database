@@ -3,11 +3,14 @@
 <#@ assembly name="System.dll" #>
 <#@ assembly name="System.Xml.dll" #>
 <#@ assembly name="System.Data.dll" #>
+<#@ assembly name="ChinookMetadata.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="ChinookMetadata.Convert" #>
+<#@ import namespace="ChinookMetadata.Schema" #>
 <#@ include file="..\..\T4Templates\DataSetHelper.tt" #>
 /*******************************************************************************
    Chinook Database
@@ -26,8 +29,7 @@ USE Chinook;
 ********************************************************************************/
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
-    DataSet ds = new DataSet();
-    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\..\..\ChinookMetadata\Schema\ChinookDataSet.xsd");
+    ChinookDataSet ds = new ChinookDataSet();
     ds.ReadXml(thisFile.DirectoryName + @"\..\..\SampleData\ChinookData.xml");
 
     foreach (DataTable table in ds.Tables)
@@ -45,7 +47,6 @@ CREATE TABLE <#= table.TableName #>
 #>
     PRIMARY KEY(<#= GetPrimaryKeyString (table) #>)
 );
-GO
 
 <#
 	}	// foreach DataTable
@@ -64,7 +65,6 @@ GO
 				ForeignKeyConstraint fk = (ForeignKeyConstraint) constraint;
 #>
 ALTER TABLE <#= table.TableName #> ADD FOREIGN KEY (<#= fk.Columns[0].ColumnName #>) REFERENCES <#= fk.RelatedTable.TableName #>(<#= fk.RelatedColumns[0].ColumnName #>);
-GO
 <#
 			}
         } // foreach Constraint
@@ -84,7 +84,6 @@ GO
 				UniqueConstraint pk = (UniqueConstraint) constraint;
 #>
 CREATE INDEX I<#= pk.ConstraintName #> ON <#= table.TableName #>(<#= pk.Columns[0].ColumnName #>);
-GO
 <#
 			}
         } // foreach Constraint
@@ -101,7 +100,6 @@ GO
 				ForeignKeyConstraint fk = (ForeignKeyConstraint) constraint;
 #>
 CREATE INDEX I<#= fk.ConstraintName #> ON <#= table.TableName #>(<#= fk.Columns[0].ColumnName #>);
-GO
 <#
 			}
         } // foreach Constraint
@@ -172,5 +170,3 @@ GO
 <#
     }	// foreach DataTable
 #>
-
-GO

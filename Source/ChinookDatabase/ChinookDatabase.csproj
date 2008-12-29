@@ -128,7 +128,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateDB.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="T4Templates\DataSetHelper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

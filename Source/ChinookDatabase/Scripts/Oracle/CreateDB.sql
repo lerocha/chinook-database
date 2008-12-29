@@ -163,7 +163,7 @@ ALTER TABLE Album ADD CONSTRAINT FK_Artist_Album FOREIGN KEY (ArtistId) REFERENC
 ALTER TABLE Track ADD CONSTRAINT FK_Album_Track FOREIGN KEY (AlbumId) REFERENCES Album(AlbumId);
 ALTER TABLE Track ADD CONSTRAINT FK_MediaType_Track FOREIGN KEY (MediaTypeId) REFERENCES MediaType(MediaTypeId);
 ALTER TABLE Track ADD CONSTRAINT FK_Genre_Track FOREIGN KEY (GenreId) REFERENCES Genre(GenreId);
-ALTER TABLE Employee ADD CONSTRAINT Employee_ReportsTo FOREIGN KEY (ReportsTo) REFERENCES Employee(EmployeeId);
+ALTER TABLE Employee ADD CONSTRAINT FK_Employee_ReportsTo FOREIGN KEY (ReportsTo) REFERENCES Employee(EmployeeId);
 ALTER TABLE Customer ADD CONSTRAINT FK_Employee_Customer FOREIGN KEY (SupportRepId) REFERENCES Employee(EmployeeId);
 ALTER TABLE Invoice ADD CONSTRAINT FK_Customer_Invoice FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId);
 ALTER TABLE InvoiceLine ADD CONSTRAINT FK_ProductItem_InvoiceLine FOREIGN KEY (TrackId) REFERENCES Track(TrackId);

@@ -20,7 +20,6 @@ CREATE TABLE Genre
     Name VARCHAR(120),
     PRIMARY KEY(GenreId)
 );
-GO
 
 CREATE TABLE MediaType 
 ( 
@@ -28,7 +27,6 @@ CREATE TABLE MediaType
     Name VARCHAR(120),
     PRIMARY KEY(MediaTypeId)
 );
-GO
 
 CREATE TABLE Artist 
 ( 
@@ -36,7 +34,6 @@ CREATE TABLE Artist
     Name VARCHAR(120),
     PRIMARY KEY(ArtistId)
 );
-GO
 
 CREATE TABLE Album 
 ( 
@@ -45,7 +42,6 @@ CREATE TABLE Album
     ArtistId INTEGER NOT NULL,
     PRIMARY KEY(AlbumId)
 );
-GO
 
 CREATE TABLE Track 
 ( 
@@ -60,7 +56,6 @@ CREATE TABLE Track
     UnitPrice DECIMAL NOT NULL,
     PRIMARY KEY(TrackId)
 );
-GO
 
 CREATE TABLE Employee 
 ( 
@@ -81,7 +76,6 @@ CREATE TABLE Employee
     Email VARCHAR(60),
     PRIMARY KEY(EmployeeId)
 );
-GO
 
 CREATE TABLE Customer 
 ( 
@@ -100,7 +94,6 @@ CREATE TABLE Customer
     SupportRepId INTEGER,
     PRIMARY KEY(CustomerId)
 );
-GO
 
 CREATE TABLE Invoice 
 ( 
@@ -114,7 +107,6 @@ CREATE TABLE Invoice
     BillingPostalCode VARCHAR(10),
     PRIMARY KEY(InvoiceId)
 );
-GO
 
 CREATE TABLE InvoiceLine 
 ( 
@@ -125,7 +117,6 @@ CREATE TABLE InvoiceLine
     Quantity DECIMAL NOT NULL,
     PRIMARY KEY(InvoiceLineId)
 );
-GO
 
 CREATE TABLE Playlist 
 ( 
@@ -133,7 +124,6 @@ CREATE TABLE Playlist
     Name VARCHAR(120),
     PRIMARY KEY(PlaylistId)
 );
-GO
 
 CREATE TABLE PlaylistTrack 
 ( 
@@ -141,83 +131,49 @@ CREATE TABLE PlaylistTrack
     TrackId INTEGER NOT NULL,
     PRIMARY KEY(PlaylistId, TrackId)
 );
-GO
 
 
 /*******************************************************************************
    Create Foreign Keys
 ********************************************************************************/
 ALTER TABLE Album ADD FOREIGN KEY (ArtistId) REFERENCES Artist(ArtistId);
-GO
 ALTER TABLE Track ADD FOREIGN KEY (AlbumId) REFERENCES Album(AlbumId);
-GO
 ALTER TABLE Track ADD FOREIGN KEY (MediaTypeId) REFERENCES MediaType(MediaTypeId);
-GO
 ALTER TABLE Track ADD FOREIGN KEY (GenreId) REFERENCES Genre(GenreId);
-GO
 ALTER TABLE Employee ADD FOREIGN KEY (ReportsTo) REFERENCES Employee(EmployeeId);
-GO
 ALTER TABLE Customer ADD FOREIGN KEY (SupportRepId) REFERENCES Employee(EmployeeId);
-GO
 ALTER TABLE Invoice ADD FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId);
-GO
 ALTER TABLE InvoiceLine ADD FOREIGN KEY (TrackId) REFERENCES Track(TrackId);
-GO
 ALTER TABLE InvoiceLine ADD FOREIGN KEY (InvoiceId) REFERENCES Invoice(InvoiceId);
-GO
 ALTER TABLE PlaylistTrack ADD FOREIGN KEY (TrackId) REFERENCES Track(TrackId);
-GO
 ALTER TABLE PlaylistTrack ADD FOREIGN KEY (PlaylistId) REFERENCES Playlist(PlaylistId);
-GO
 
 /*******************************************************************************
    Create Indexes
 ********************************************************************************/
 CREATE INDEX IPK_Genre ON Genre(GenreId);
-GO
 CREATE INDEX IPK_MediaType ON MediaType(MediaTypeId);
-GO
 CREATE INDEX IPK_Artist ON Artist(ArtistId);
-GO
 CREATE INDEX IPK_ProductItem ON Album(AlbumId);
-GO
 CREATE INDEX IPK_Track ON Track(TrackId);
-GO
 CREATE INDEX IPK_Employee ON Employee(EmployeeId);
-GO
 CREATE INDEX IPK_Customer ON Customer(CustomerId);
-GO
 CREATE INDEX IPK_Invoice ON Invoice(InvoiceId);
-GO
 CREATE INDEX IPK_InvoiceLine ON InvoiceLine(InvoiceLineId);
-GO
 CREATE INDEX IPK_Playlist ON Playlist(PlaylistId);
-GO
 CREATE INDEX IPK_PlaylistTrack ON PlaylistTrack(PlaylistId);
-GO
 
 CREATE INDEX IFK_Artist_Album ON Album(ArtistId);
-GO
 CREATE INDEX IFK_Album_Track ON Track(AlbumId);
-GO
 CREATE INDEX IFK_MediaType_Track ON Track(MediaTypeId);
-GO
 CREATE INDEX IFK_Genre_Track ON Track(GenreId);
-GO
-CREATE INDEX IEmployee_ReportsTo ON Employee(ReportsTo);
-GO
+CREATE INDEX IFK_Employee_ReportsTo ON Employee(ReportsTo);
 CREATE INDEX IFK_Employee_Customer ON Customer(SupportRepId);
-GO
 CREATE INDEX IFK_Customer_Invoice ON Invoice(CustomerId);
-GO
 CREATE INDEX IFK_ProductItem_InvoiceLine ON InvoiceLine(TrackId);
-GO
 CREATE INDEX IFK_Invoice_InvoiceLine ON InvoiceLine(InvoiceId);
-GO
 CREATE INDEX IFK_Track_PlaylistTrack ON PlaylistTrack(TrackId);
-GO
 CREATE INDEX IFK_Playlist_PlaylistTrack ON PlaylistTrack(PlaylistId);
-GO
 
 /*******************************************************************************
    Populate Tables
@@ -6481,5 +6437,3 @@ INSERT INTO PlaylistTrack (PlaylistId, TrackId) VALUES (3, 3426);
 INSERT INTO PlaylistTrack (PlaylistId, TrackId) VALUES (3, 3427);
 INSERT INTO PlaylistTrack (PlaylistId, TrackId) VALUES (4, 597);
 
-
-GO

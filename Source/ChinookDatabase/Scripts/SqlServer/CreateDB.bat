@@ -1,2 +1,2 @@
 @echo off
-OSQL -E -S .\sqlexpress -i CreateDB.sql -n -b -m
+sqlcmd -E -S .\sqlexpress -i CreateDB.sql -b -m 1

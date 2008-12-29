@@ -3,11 +3,14 @@
 <#@ assembly name="System.dll" #>
 <#@ assembly name="System.Xml.dll" #>
 <#@ assembly name="System.Data.dll" #>
+<#@ assembly name="ChinookMetadata.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="ChinookMetadata.Convert" #>
+<#@ import namespace="ChinookMetadata.Schema" #>
 <#@ include file="..\..\T4Templates\DataSetHelper.tt" #>
 /*******************************************************************************
    Chinook Database
@@ -38,8 +41,7 @@ conn  chinook/p4ssw0rd
 ********************************************************************************/
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
-    DataSet ds = new DataSet();
-    ds.ReadXmlSchema(thisFile.DirectoryName + @"\..\..\..\ChinookMetadata\Schema\ChinookDataSet.xsd");
+    ChinookDataSet ds = new ChinookDataSet();
     ds.ReadXml(thisFile.DirectoryName + @"\..\..\SampleData\ChinookData.xml");
 
     foreach (DataTable table in ds.Tables)

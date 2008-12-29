@@ -416,7 +416,7 @@
       <xs:selector xpath=".//mstns:Customer" />
       <xs:field xpath="mstns:SupportRepId" />
     </xs:keyref>
-    <xs:keyref name="Employee_ReportsTo" refer="PK_Employee" msdata:ConstraintOnly="true" msdata:DeleteRule="None">
+    <xs:keyref name="FK_Employee_ReportsTo" refer="PK_Employee" msdata:ConstraintOnly="true" msdata:DeleteRule="None">
       <xs:selector xpath=".//mstns:Employee" />
       <xs:field xpath="mstns:ReportsTo" />
     </xs:keyref>

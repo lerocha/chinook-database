@@ -471,7 +471,7 @@ namespace ChinookMetadata.Schema {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("Employee_ReportsTo", new global::System.Data.DataColumn[] {
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Employee_ReportsTo", new global::System.Data.DataColumn[] {
                         this.tableEmployee.EmployeeIdColumn}, new global::System.Data.DataColumn[] {
                         this.tableEmployee.ReportsToColumn});
             this.tableEmployee.Constraints.Add(fkc);
@@ -3596,7 +3596,7 @@ namespace ChinookMetadata.Schema {
                 base.Columns.Add(this.columnPlaylistId);
                 this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnName);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("PK_Playlist", new global::System.Data.DataColumn[] {
                                 this.columnPlaylistId}, true));
                 this.columnPlaylistId.AutoIncrement = true;
                 this.columnPlaylistId.AutoIncrementSeed = 1;
@@ -3846,7 +3846,7 @@ namespace ChinookMetadata.Schema {
                 base.Columns.Add(this.columnPlaylistId);
                 this.columnTrackId = new global::System.Data.DataColumn("TrackId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnTrackId);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("PlaylistTrackKey1", new global::System.Data.DataColumn[] {
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("PK_PlaylistTrack", new global::System.Data.DataColumn[] {
                                 this.columnPlaylistId,
                                 this.columnTrackId}, true));
                 this.columnPlaylistId.AllowDBNull = false;
