@@ -35,7 +35,7 @@ private string GetSqlServerType (DataColumn col)
 		case "System.Int32":
 			return "INTEGER";
 		case "System.Decimal":
-			return "DECIMAL";
+			return "NUMERIC(10,2)";
 		case "System.DateTime":
 			return "DATETIME";
 		default:
@@ -52,7 +52,7 @@ private string GetMySqlType (DataColumn col)
 		case "System.Int32":
 			return "INTEGER";
 		case "System.Decimal":
-			return "DECIMAL";
+			return "NUMERIC(10,2)";
 		case "System.DateTime":
 			return "DATE";
 		default:
@@ -109,5 +109,20 @@ private string GetPrimaryKeyConstraintName (DataTable table)
         }
     }
     return string.Empty;
+}
+
+private string GetExpectedValue(DataColumn col, string value)
+{
+	string expected;
+	if (col.DataType == typeof(DateTime))
+	{
+		expected = string.Format("Convert.ToDateTime(\"{0}\").ToString()", value);
+	}
+	else
+	{
+		expected = string.Format("\"{0}\"", value);
+	}
+	
+	return expected;
 }
 #>

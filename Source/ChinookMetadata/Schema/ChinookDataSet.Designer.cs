@@ -450,12 +450,12 @@ namespace ChinookMetadata.Schema {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Album_Track", new global::System.Data.DataColumn[] {
-                        this.tableAlbum.AlbumIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTrack.AlbumIdColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Genre_Track", new global::System.Data.DataColumn[] {
+                        this.tableGenre.GenreIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTrack.GenreIdColumn});
             this.tableTrack.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_MediaType_Track", new global::System.Data.DataColumn[] {
                         this.tableMediaType.MediaTypeIdColumn}, new global::System.Data.DataColumn[] {
@@ -464,12 +464,12 @@ namespace ChinookMetadata.Schema {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Genre_Track", new global::System.Data.DataColumn[] {
-                        this.tableGenre.GenreIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTrack.GenreIdColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Album_Track", new global::System.Data.DataColumn[] {
+                        this.tableAlbum.AlbumIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTrack.AlbumIdColumn});
             this.tableTrack.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Employee_ReportsTo", new global::System.Data.DataColumn[] {
                         this.tableEmployee.EmployeeIdColumn}, new global::System.Data.DataColumn[] {
@@ -492,13 +492,6 @@ namespace ChinookMetadata.Schema {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_ProductItem_InvoiceLine", new global::System.Data.DataColumn[] {
-                        this.tableTrack.TrackIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableInvoiceLine.TrackIdColumn});
-            this.tableInvoiceLine.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Invoice_InvoiceLine", new global::System.Data.DataColumn[] {
                         this.tableInvoice.InvoiceIdColumn}, new global::System.Data.DataColumn[] {
                         this.tableInvoiceLine.InvoiceIdColumn});
@@ -506,16 +499,23 @@ namespace ChinookMetadata.Schema {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Track_PlaylistTrack", new global::System.Data.DataColumn[] {
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_ProductItem_InvoiceLine", new global::System.Data.DataColumn[] {
                         this.tableTrack.TrackIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePlaylistTrack.TrackIdColumn});
-            this.tablePlaylistTrack.Constraints.Add(fkc);
+                        this.tableInvoiceLine.TrackIdColumn});
+            this.tableInvoiceLine.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Playlist_PlaylistTrack", new global::System.Data.DataColumn[] {
                         this.tablePlaylist.PlaylistIdColumn}, new global::System.Data.DataColumn[] {
                         this.tablePlaylistTrack.PlaylistIdColumn});
+            this.tablePlaylistTrack.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Track_PlaylistTrack", new global::System.Data.DataColumn[] {
+                        this.tableTrack.TrackIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePlaylistTrack.TrackIdColumn});
             this.tablePlaylistTrack.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -3292,7 +3292,7 @@ namespace ChinookMetadata.Schema {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public InvoiceLineRow AddInvoiceLineRow(int InvoiceId, int TrackId, decimal UnitPrice, decimal Quantity) {
+            public InvoiceLineRow AddInvoiceLineRow(int InvoiceId, int TrackId, decimal UnitPrice, int Quantity) {
                 InvoiceLineRow rowInvoiceLineRow = ((InvoiceLineRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -3342,7 +3342,7 @@ namespace ChinookMetadata.Schema {
                 base.Columns.Add(this.columnTrackId);
                 this.columnUnitPrice = new global::System.Data.DataColumn("UnitPrice", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnUnitPrice);
-                this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(decimal), null, global::System.Data.MappingType.Element);
+                this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnQuantity);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("PK_InvoiceLine", new global::System.Data.DataColumn[] {
                                 this.columnInvoiceLineId}, true));
@@ -5178,9 +5178,9 @@ namespace ChinookMetadata.Schema {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public decimal Quantity {
+            public int Quantity {
                 get {
-                    return ((decimal)(this[this.tableInvoiceLine.QuantityColumn]));
+                    return ((int)(this[this.tableInvoiceLine.QuantityColumn]));
                 }
                 set {
                     this[this.tableInvoiceLine.QuantityColumn] = value;

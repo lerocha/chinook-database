@@ -53,7 +53,7 @@ CREATE TABLE Track
     Composer VARCHAR(220),
     Milliseconds INTEGER NOT NULL,
     Bytes INTEGER,
-    UnitPrice DECIMAL NOT NULL,
+    UnitPrice NUMERIC(10,2) NOT NULL,
     PRIMARY KEY(TrackId)
 );
 
@@ -113,8 +113,8 @@ CREATE TABLE InvoiceLine
     InvoiceLineId INTEGER NOT NULL AUTO_INCREMENT,
     InvoiceId INTEGER NOT NULL,
     TrackId INTEGER NOT NULL,
-    UnitPrice DECIMAL NOT NULL,
-    Quantity DECIMAL NOT NULL,
+    UnitPrice NUMERIC(10,2) NOT NULL,
+    Quantity INTEGER NOT NULL,
     PRIMARY KEY(InvoiceLineId)
 );
 
@@ -137,16 +137,16 @@ CREATE TABLE PlaylistTrack
    Create Foreign Keys
 ********************************************************************************/
 ALTER TABLE Album ADD FOREIGN KEY (ArtistId) REFERENCES Artist(ArtistId);
-ALTER TABLE Track ADD FOREIGN KEY (AlbumId) REFERENCES Album(AlbumId);
-ALTER TABLE Track ADD FOREIGN KEY (MediaTypeId) REFERENCES MediaType(MediaTypeId);
 ALTER TABLE Track ADD FOREIGN KEY (GenreId) REFERENCES Genre(GenreId);
+ALTER TABLE Track ADD FOREIGN KEY (MediaTypeId) REFERENCES MediaType(MediaTypeId);
+ALTER TABLE Track ADD FOREIGN KEY (AlbumId) REFERENCES Album(AlbumId);
 ALTER TABLE Employee ADD FOREIGN KEY (ReportsTo) REFERENCES Employee(EmployeeId);
 ALTER TABLE Customer ADD FOREIGN KEY (SupportRepId) REFERENCES Employee(EmployeeId);
 ALTER TABLE Invoice ADD FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId);
-ALTER TABLE InvoiceLine ADD FOREIGN KEY (TrackId) REFERENCES Track(TrackId);
 ALTER TABLE InvoiceLine ADD FOREIGN KEY (InvoiceId) REFERENCES Invoice(InvoiceId);
-ALTER TABLE PlaylistTrack ADD FOREIGN KEY (TrackId) REFERENCES Track(TrackId);
+ALTER TABLE InvoiceLine ADD FOREIGN KEY (TrackId) REFERENCES Track(TrackId);
 ALTER TABLE PlaylistTrack ADD FOREIGN KEY (PlaylistId) REFERENCES Playlist(PlaylistId);
+ALTER TABLE PlaylistTrack ADD FOREIGN KEY (TrackId) REFERENCES Track(TrackId);
 
 /*******************************************************************************
    Create Indexes
@@ -164,16 +164,16 @@ CREATE INDEX IPK_Playlist ON Playlist(PlaylistId);
 CREATE INDEX IPK_PlaylistTrack ON PlaylistTrack(PlaylistId);
 
 CREATE INDEX IFK_Artist_Album ON Album(ArtistId);
-CREATE INDEX IFK_Album_Track ON Track(AlbumId);
-CREATE INDEX IFK_MediaType_Track ON Track(MediaTypeId);
 CREATE INDEX IFK_Genre_Track ON Track(GenreId);
+CREATE INDEX IFK_MediaType_Track ON Track(MediaTypeId);
+CREATE INDEX IFK_Album_Track ON Track(AlbumId);
 CREATE INDEX IFK_Employee_ReportsTo ON Employee(ReportsTo);
 CREATE INDEX IFK_Employee_Customer ON Customer(SupportRepId);
 CREATE INDEX IFK_Customer_Invoice ON Invoice(CustomerId);
-CREATE INDEX IFK_ProductItem_InvoiceLine ON InvoiceLine(TrackId);
 CREATE INDEX IFK_Invoice_InvoiceLine ON InvoiceLine(InvoiceId);
-CREATE INDEX IFK_Track_PlaylistTrack ON PlaylistTrack(TrackId);
+CREATE INDEX IFK_ProductItem_InvoiceLine ON InvoiceLine(TrackId);
 CREATE INDEX IFK_Playlist_PlaylistTrack ON PlaylistTrack(PlaylistId);
+CREATE INDEX IFK_Track_PlaylistTrack ON PlaylistTrack(TrackId);
 
 /*******************************************************************************
    Populate Tables
