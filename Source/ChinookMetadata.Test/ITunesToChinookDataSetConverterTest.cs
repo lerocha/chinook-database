@@ -19,12 +19,13 @@ namespace ChinookMetadata.Test
             var builder = new ITunesToChinookDataSetConverter(testFile.FullName, null, ignorePlaylists);
             var ds = builder.BuildDataSet();
 
-            // Convert dataset into XML text.
-            var memstream = new MemoryStream();
-            ds.WriteXml(memstream);
-            memstream.Position = 0;
-            var reader = new StreamReader(memstream);
+            // Convert dataset into XML text and saves to a file.
+            var fs = new FileStream(testFile.DirectoryName + @"\ResultDataSet.xml" , FileMode.Create);
+            ds.WriteXml(fs);
+            fs.Position = 0;
+            var reader = new StreamReader(fs);
             string actual = reader.ReadToEnd();
+            fs.Close();
 
             // Reads the expected XML text.
             string expected = File.ReadAllText(testFile.DirectoryName + @"\ExpectedDataSet.xml");

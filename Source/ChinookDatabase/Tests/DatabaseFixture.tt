@@ -46,26 +46,23 @@ namespace ChinookDatabase.Tests
         /// <returns>DataSet with the query results.</returns>
         protected abstract DataSet ExecuteQuery(string query);
         
+        #region Public Tests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
         public void RecordsWithProperUnicodeCharacters()
         {
-            // The first customer record is used to test for Unicode problems.
-            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 1");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Artist table or the SQL script did not use Unicode characters properly.");
-            
-            DataRow row = dataSet.Tables[0].Rows[0];
-            
 <#
-	foreach (DataColumn col in ds.Tables["Customer"].Columns)
-	{
-		string expected = GetExpectedValue(col, ds.Tables["Customer"].Rows[0][col.ColumnName].ToString());
-#>            Assert.That(row["<#= col.ColumnName #>"].ToString(), Is.EqualTo(<#= expected #>), "<#= col.ColumnName #> mismatch.");
+    for (int i=0; i < 10 || i < ds.Tables.Count; i++)
+    {
+		DataTable table = ds.Tables[i];
+#>
+			AssertThatCustomerId<#= i+1 #>HasProperUnicodeCharacters();
 <#
-	}
-#>        }
+    } // foreach table
+#>
+        }
 <#
     foreach (DataTable table in ds.Tables)
     {
@@ -106,5 +103,36 @@ namespace ChinookDatabase.Tests
 <#
     } // foreach table
 #>
+		#endregion
+
+		#region Private Methods
+<#
+    for (int i=0; i < 10 || i < ds.Tables.Count; i++)
+    {
+		DataTable table = ds.Tables[i];
+#>
+        /// <summary>
+        /// Verifies that CustomerId <#= i+1 #> has expected Unicode characters.
+        /// </summary>
+        private void AssertThatCustomerId<#= i+1 #>HasProperUnicodeCharacters()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = <#= i+1 #>");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
+            DataRow row = dataSet.Tables[0].Rows[0];
+            
+<#
+		foreach (DataColumn col in ds.Tables["Customer"].Columns)
+		{
+			string expected = GetExpectedValue(col, ds.Tables["Customer"].Rows[i][col.ColumnName].ToString());
+#>            Assert.That(row["<#= col.ColumnName #>"].ToString(), Is.EqualTo(<#= expected #>), "<#= col.ColumnName #> mismatch.");
+<#
+		}
+#>
+		}
+
+<#
+    } // foreach table
+#>
+		#endregion
     }
 }

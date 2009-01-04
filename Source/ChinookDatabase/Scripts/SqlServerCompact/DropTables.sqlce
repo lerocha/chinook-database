@@ -1,0 +1,27 @@
+﻿
+/*******************************************************************************
+   Chinook Database
+   Script: CreateDB.sql - Creates and populates the Chinook database.
+   DB Server: SQL Server Compact
+   Version: 1.1
+   License: http://www.codeplex.com/ChinookDatabase/license
+********************************************************************************/
+
+
+/*******************************************************************************
+   Drop Tables
+********************************************************************************/
+DROP TABLE PlaylistTrack;
+DROP TABLE Playlist;
+DROP TABLE InvoiceLine;
+DROP TABLE Invoice;
+DROP TABLE Customer;
+DROP TABLE Employee;
+DROP TABLE Track;
+DROP TABLE Album;
+DROP TABLE Artist;
+DROP TABLE MediaType;
+DROP TABLE Genre;
+
+
+

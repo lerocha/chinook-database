@@ -134,14 +134,23 @@
       <DependentUpon>CreateDB.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\SqlServerCompact\CreateDB.sql">
+    <None Include="Scripts\SqlServerCompact\CreateTables.sqlce">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CreateDB.tt</DependentUpon>
+      <DependentUpon>CreateTables.tt</DependentUpon>
     </None>
-    <None Include="Scripts\SqlServerCompact\CreateDB.tt">
+    <None Include="Scripts\SqlServerCompact\CreateTables.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateDB.sql</LastGenOutput>
+      <LastGenOutput>CreateTables.sqlce</LastGenOutput>
+    </None>
+    <None Include="Scripts\SqlServerCompact\DropTables.sqlce">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DropTables.tt</DependentUpon>
+    </None>
+    <None Include="Scripts\SqlServerCompact\DropTables.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DropTables.sqlce</LastGenOutput>
     </None>
     <None Include="Scripts\SqlServer\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

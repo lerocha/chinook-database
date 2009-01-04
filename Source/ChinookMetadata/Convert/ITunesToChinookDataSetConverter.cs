@@ -151,8 +151,13 @@ namespace ChinookMetadata.Convert
                     case "Total Time":
                         trackInfo.Time = GetNextInteger(iterator);
                         break;
-                    case "Podcast":
+                    case "TV Show":
+                        trackInfo.UnitPrice = (decimal) 1.99;
+                        break;
                     case "Movie":
+                        trackInfo.UnitPrice = (decimal) 9.99;
+                        break;
+                    case "Podcast":
                         return false;
                     default:
                         break;

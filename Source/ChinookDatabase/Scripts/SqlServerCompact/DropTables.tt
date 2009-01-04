@@ -1,0 +1,40 @@
+﻿<#@ template language="C#" hostspecific="true"#>
+<#@ output extension="sqlce" #>
+<#@ assembly name="System.dll" #>
+<#@ assembly name="System.Xml.dll" #>
+<#@ assembly name="System.Data.dll" #>
+<#@ assembly name="ChinookMetadata.dll" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="ChinookMetadata.Convert" #>
+<#@ import namespace="ChinookMetadata.Schema" #>
+<#@ include file="..\..\T4Templates\DataSetHelper.tt" #>
+/*******************************************************************************
+   Chinook Database
+   Script: CreateDB.sql - Creates and populates the Chinook database.
+   DB Server: SQL Server Compact
+   Version: <#= GetVersionNumber() #>
+   License: http://www.codeplex.com/ChinookDatabase/license
+********************************************************************************/
+
+
+/*******************************************************************************
+   Drop Tables
+********************************************************************************/
+<#
+    FileInfo thisFile = new FileInfo(Host.TemplateFile);
+    ChinookDataSet ds = new ChinookDataSet();
+    ds.ReadXml(thisFile.DirectoryName + @"\..\..\SampleData\ChinookData.xml");
+
+    StringBuilder sb = new StringBuilder();
+    for (int i = ds.Tables.Count-1; i >= 0; i--)
+    {
+        sb.AppendLine(string.Format("DROP TABLE {0};", ds.Tables[i].TableName));
+    }
+#>
+<#= sb.ToString() #>
+
+
