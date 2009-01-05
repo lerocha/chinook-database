@@ -142,6 +142,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateTables.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\SqlServerCompact\CreateTables.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -151,6 +152,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DropTables.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\SqlServerCompact\DropTables.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -167,6 +169,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateDB.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="T4Templates\DataSetHelper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
