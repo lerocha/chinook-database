@@ -63,6 +63,30 @@ namespace ChinookDatabase.Tests
     } // foreach table
 #>
         }
+
+        /// <summary>
+        /// Asserts that all invoices contain invoice lines.
+        /// </summary>
+        [Test]
+        public void AllInvoicesMustHaveInvoiceLines()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT count(InvoiceId) FROM Invoice WHERE InvoiceId NOT IN (SELECT InvoiceId FROM InvoiceLine GROUP BY InvoiceId)");
+            Assert.That(dataSet.Tables[0].Rows[0][0], Is.EqualTo(0), "The number of invoices with no invoice lines must be zero.");
+        }
+        
+        /// <summary>
+        /// Asserts that invoice total matches sum of invoice lines.
+        /// </summary>
+        [Test]
+        public void InvoiceTotalMustMatchSumOfInvoiceLines()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT Invoice.InvoiceId, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS CalculatedTotal, Invoice.Total AS Total FROM InvoiceLine INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId GROUP BY Invoice.InvoiceId, Invoice.Total");
+
+            foreach (DataRow row in dataSet.Tables[0].Rows)
+            {
+                Assert.That(row["CalculatedTotal"].ToString(), Is.EqualTo(row["Total"].ToString()), string.Format("The total field of InvoiceId={0} does not match its invoice lines.", row["InvoiceId"]));
+            }
+        }
 <#
     foreach (DataTable table in ds.Tables)
     {

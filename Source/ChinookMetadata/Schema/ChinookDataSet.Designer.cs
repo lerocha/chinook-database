@@ -450,12 +450,12 @@ namespace ChinookMetadata.Schema {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Genre_Track", new global::System.Data.DataColumn[] {
-                        this.tableGenre.GenreIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTrack.GenreIdColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Album_Track", new global::System.Data.DataColumn[] {
+                        this.tableAlbum.AlbumIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTrack.AlbumIdColumn});
             this.tableTrack.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_MediaType_Track", new global::System.Data.DataColumn[] {
                         this.tableMediaType.MediaTypeIdColumn}, new global::System.Data.DataColumn[] {
@@ -464,12 +464,12 @@ namespace ChinookMetadata.Schema {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Album_Track", new global::System.Data.DataColumn[] {
-                        this.tableAlbum.AlbumIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTrack.AlbumIdColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Genre_Track", new global::System.Data.DataColumn[] {
+                        this.tableGenre.GenreIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTrack.GenreIdColumn});
             this.tableTrack.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Employee_ReportsTo", new global::System.Data.DataColumn[] {
                         this.tableEmployee.EmployeeIdColumn}, new global::System.Data.DataColumn[] {
@@ -492,13 +492,6 @@ namespace ChinookMetadata.Schema {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Invoice_InvoiceLine", new global::System.Data.DataColumn[] {
-                        this.tableInvoice.InvoiceIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableInvoiceLine.InvoiceIdColumn});
-            this.tableInvoiceLine.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.Cascade;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_ProductItem_InvoiceLine", new global::System.Data.DataColumn[] {
                         this.tableTrack.TrackIdColumn}, new global::System.Data.DataColumn[] {
                         this.tableInvoiceLine.TrackIdColumn});
@@ -506,16 +499,23 @@ namespace ChinookMetadata.Schema {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Playlist_PlaylistTrack", new global::System.Data.DataColumn[] {
-                        this.tablePlaylist.PlaylistIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePlaylistTrack.PlaylistIdColumn});
-            this.tablePlaylistTrack.Constraints.Add(fkc);
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Invoice_InvoiceLine", new global::System.Data.DataColumn[] {
+                        this.tableInvoice.InvoiceIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableInvoiceLine.InvoiceIdColumn});
+            this.tableInvoiceLine.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Track_PlaylistTrack", new global::System.Data.DataColumn[] {
                         this.tableTrack.TrackIdColumn}, new global::System.Data.DataColumn[] {
                         this.tablePlaylistTrack.TrackIdColumn});
+            this.tablePlaylistTrack.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Playlist_PlaylistTrack", new global::System.Data.DataColumn[] {
+                        this.tablePlaylist.PlaylistIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePlaylistTrack.PlaylistIdColumn});
             this.tablePlaylistTrack.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.Cascade;
@@ -2871,6 +2871,8 @@ namespace ChinookMetadata.Schema {
             
             private global::System.Data.DataColumn columnBillingPostalCode;
             
+            private global::System.Data.DataColumn columnTotal;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             public InvoiceDataTable() {
                 this.TableName = "Invoice";
@@ -2958,6 +2960,13 @@ namespace ChinookMetadata.Schema {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public global::System.Data.DataColumn TotalColumn {
+                get {
+                    return this.columnTotal;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2986,7 +2995,7 @@ namespace ChinookMetadata.Schema {
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            public InvoiceRow AddInvoiceRow(int CustomerId, System.DateTime InvoiceDate, string BillingAddress, string BillingCity, string BillingState, string BillingCountry, string BillingPostalCode) {
+            public InvoiceRow AddInvoiceRow(int CustomerId, System.DateTime InvoiceDate, string BillingAddress, string BillingCity, string BillingState, string BillingCountry, string BillingPostalCode, decimal Total) {
                 InvoiceRow rowInvoiceRow = ((InvoiceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2996,7 +3005,8 @@ namespace ChinookMetadata.Schema {
                         BillingCity,
                         BillingState,
                         BillingCountry,
-                        BillingPostalCode};
+                        BillingPostalCode,
+                        Total};
                 rowInvoiceRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowInvoiceRow);
                 return rowInvoiceRow;
@@ -3030,6 +3040,7 @@ namespace ChinookMetadata.Schema {
                 this.columnBillingState = base.Columns["BillingState"];
                 this.columnBillingCountry = base.Columns["BillingCountry"];
                 this.columnBillingPostalCode = base.Columns["BillingPostalCode"];
+                this.columnTotal = base.Columns["Total"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3050,6 +3061,8 @@ namespace ChinookMetadata.Schema {
                 base.Columns.Add(this.columnBillingCountry);
                 this.columnBillingPostalCode = new global::System.Data.DataColumn("BillingPostalCode", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBillingPostalCode);
+                this.columnTotal = new global::System.Data.DataColumn("Total", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTotal);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("PK_Invoice", new global::System.Data.DataColumn[] {
                                 this.columnInvoiceId}, true));
                 this.columnInvoiceId.AutoIncrement = true;
@@ -3063,6 +3076,7 @@ namespace ChinookMetadata.Schema {
                 this.columnBillingState.MaxLength = 40;
                 this.columnBillingCountry.MaxLength = 40;
                 this.columnBillingPostalCode.MaxLength = 10;
+                this.columnTotal.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5069,6 +5083,16 @@ namespace ChinookMetadata.Schema {
                 }
                 set {
                     this[this.tableInvoice.BillingPostalCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            public decimal Total {
+                get {
+                    return ((decimal)(this[this.tableInvoice.TotalColumn]));
+                }
+                set {
+                    this[this.tableInvoice.TotalColumn] = value;
                 }
             }
             

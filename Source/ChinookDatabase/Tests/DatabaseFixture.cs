@@ -49,6 +49,30 @@ namespace ChinookDatabase.Tests
         }
 
         /// <summary>
+        /// Asserts that all invoices contain invoice lines.
+        /// </summary>
+        [Test]
+        public void AllInvoicesMustHaveInvoiceLines()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT count(InvoiceId) FROM Invoice WHERE InvoiceId NOT IN (SELECT InvoiceId FROM InvoiceLine GROUP BY InvoiceId)");
+            Assert.That(dataSet.Tables[0].Rows[0][0], Is.EqualTo(0), "The number of invoices with no invoice lines must be zero.");
+        }
+        
+        /// <summary>
+        /// Asserts that invoice total matches sum of invoice lines.
+        /// </summary>
+        [Test]
+        public void InvoiceTotalMustMatchSumOfInvoiceLines()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT Invoice.InvoiceId, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS CalculatedTotal, Invoice.Total AS Total FROM InvoiceLine INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId GROUP BY Invoice.InvoiceId, Invoice.Total");
+
+            foreach (DataRow row in dataSet.Tables[0].Rows)
+            {
+                Assert.That(row["CalculatedTotal"].ToString(), Is.EqualTo(row["Total"].ToString()), string.Format("The total field of InvoiceId={0} does not match its invoice lines.", row["InvoiceId"]));
+            }
+        }
+
+        /// <summary>
         /// Verifies that the Genre table was populated properly.
         /// </summary>
         [Test]
@@ -276,7 +300,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Invoice");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(511), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(520), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -292,14 +316,15 @@ namespace ChinookDatabase.Tests
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
-            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("511"), "InvoiceId mismatch.");
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("46"), "CustomerId mismatch.");
-            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/27/2010 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
-            Assert.That(row["BillingAddress"].ToString(), Is.EqualTo("68, Rue Jouvence"), "BillingAddress mismatch.");
-            Assert.That(row["BillingCity"].ToString(), Is.EqualTo("Dijon"), "BillingCity mismatch.");
-            Assert.That(row["BillingState"].ToString(), Is.EqualTo(""), "BillingState mismatch.");
-            Assert.That(row["BillingCountry"].ToString(), Is.EqualTo("France"), "BillingCountry mismatch.");
-            Assert.That(row["BillingPostalCode"].ToString(), Is.EqualTo("21000"), "BillingPostalCode mismatch.");
+            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("520"), "InvoiceId mismatch.");
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("22"), "CustomerId mismatch.");
+            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/26/2010 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
+            Assert.That(row["BillingAddress"].ToString(), Is.EqualTo("801 W 4th Street"), "BillingAddress mismatch.");
+            Assert.That(row["BillingCity"].ToString(), Is.EqualTo("Reno"), "BillingCity mismatch.");
+            Assert.That(row["BillingState"].ToString(), Is.EqualTo("NV"), "BillingState mismatch.");
+            Assert.That(row["BillingCountry"].ToString(), Is.EqualTo("USA"), "BillingCountry mismatch.");
+            Assert.That(row["BillingPostalCode"].ToString(), Is.EqualTo("89503"), "BillingPostalCode mismatch.");
+            Assert.That(row["Total"].ToString(), Is.EqualTo("10.91"), "Total mismatch.");
         }
 
         /// <summary>
@@ -309,7 +334,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceLineTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM InvoiceLine");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1226), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3075), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -325,9 +350,9 @@ namespace ChinookDatabase.Tests
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
-            Assert.That(row["InvoiceLineId"].ToString(), Is.EqualTo("1226"), "InvoiceLineId mismatch.");
-            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("511"), "InvoiceId mismatch.");
-            Assert.That(row["TrackId"].ToString(), Is.EqualTo("63"), "TrackId mismatch.");
+            Assert.That(row["InvoiceLineId"].ToString(), Is.EqualTo("3075"), "InvoiceLineId mismatch.");
+            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("520"), "InvoiceId mismatch.");
+            Assert.That(row["TrackId"].ToString(), Is.EqualTo("976"), "TrackId mismatch.");
             Assert.That(row["UnitPrice"].ToString(), Is.EqualTo("0.99"), "UnitPrice mismatch.");
             Assert.That(row["Quantity"].ToString(), Is.EqualTo("1"), "Quantity mismatch.");
         }
