@@ -81,5 +81,7 @@
   -->
   <PropertyGroup>
     <PreBuildEvent>attrib -r $(SolutionDir)Lib\ChinookMetadata.dll</PreBuildEvent>
+    <PostBuildEvent>copy $(TargetDir)ChinookMetadata.dll $(SolutionDir)Lib\ChinookMetadata.dll
+</PostBuildEvent>
   </PropertyGroup>
 </Project>
