@@ -262,7 +262,7 @@ namespace ChinookDatabase.Tests
         public void CustomerTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Customer");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(62), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(59), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace ChinookDatabase.Tests
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("62"), "CustomerId mismatch.");
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("59"), "CustomerId mismatch.");
             Assert.That(row["FirstName"].ToString(), Is.EqualTo("Puja"), "FirstName mismatch.");
             Assert.That(row["LastName"].ToString(), Is.EqualTo("Srivastava"), "LastName mismatch.");
             Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
@@ -300,7 +300,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Invoice");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(520), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(458), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -316,15 +316,15 @@ namespace ChinookDatabase.Tests
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
-            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("520"), "InvoiceId mismatch.");
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("22"), "CustomerId mismatch.");
-            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/26/2010 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
-            Assert.That(row["BillingAddress"].ToString(), Is.EqualTo("801 W 4th Street"), "BillingAddress mismatch.");
-            Assert.That(row["BillingCity"].ToString(), Is.EqualTo("Reno"), "BillingCity mismatch.");
-            Assert.That(row["BillingState"].ToString(), Is.EqualTo("NV"), "BillingState mismatch.");
-            Assert.That(row["BillingCountry"].ToString(), Is.EqualTo("USA"), "BillingCountry mismatch.");
-            Assert.That(row["BillingPostalCode"].ToString(), Is.EqualTo("89503"), "BillingPostalCode mismatch.");
-            Assert.That(row["Total"].ToString(), Is.EqualTo("10.91"), "Total mismatch.");
+            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("458"), "InvoiceId mismatch.");
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("10"), "CustomerId mismatch.");
+            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/27/2010 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
+            Assert.That(row["BillingAddress"].ToString(), Is.EqualTo("Rua Dr. Falcão Filho, 155"), "BillingAddress mismatch.");
+            Assert.That(row["BillingCity"].ToString(), Is.EqualTo("São Paulo"), "BillingCity mismatch.");
+            Assert.That(row["BillingState"].ToString(), Is.EqualTo("SP"), "BillingState mismatch.");
+            Assert.That(row["BillingCountry"].ToString(), Is.EqualTo("Brazil"), "BillingCountry mismatch.");
+            Assert.That(row["BillingPostalCode"].ToString(), Is.EqualTo("01007-010"), "BillingPostalCode mismatch.");
+            Assert.That(row["Total"].ToString(), Is.EqualTo("6.93"), "Total mismatch.");
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceLineTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM InvoiceLine");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3075), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(2662), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -350,9 +350,9 @@ namespace ChinookDatabase.Tests
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
-            Assert.That(row["InvoiceLineId"].ToString(), Is.EqualTo("3075"), "InvoiceLineId mismatch.");
-            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("520"), "InvoiceId mismatch.");
-            Assert.That(row["TrackId"].ToString(), Is.EqualTo("976"), "TrackId mismatch.");
+            Assert.That(row["InvoiceLineId"].ToString(), Is.EqualTo("2662"), "InvoiceLineId mismatch.");
+            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("458"), "InvoiceId mismatch.");
+            Assert.That(row["TrackId"].ToString(), Is.EqualTo("1588"), "TrackId mismatch.");
             Assert.That(row["UnitPrice"].ToString(), Is.EqualTo("0.99"), "UnitPrice mismatch.");
             Assert.That(row["Quantity"].ToString(), Is.EqualTo("1"), "Quantity mismatch.");
         }
@@ -447,17 +447,17 @@ namespace ChinookDatabase.Tests
             DataRow row = dataSet.Tables[0].Rows[0];
             
             Assert.That(row["CustomerId"].ToString(), Is.EqualTo("2"), "CustomerId mismatch.");
-            Assert.That(row["FirstName"].ToString(), Is.EqualTo("Sergey"), "FirstName mismatch.");
-            Assert.That(row["LastName"].ToString(), Is.EqualTo("Kuznetsov"), "LastName mismatch.");
+            Assert.That(row["FirstName"].ToString(), Is.EqualTo("Leonie"), "FirstName mismatch.");
+            Assert.That(row["LastName"].ToString(), Is.EqualTo("Köhler"), "LastName mismatch.");
             Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
-            Assert.That(row["Address"].ToString(), Is.EqualTo("ул. Усиевича, 22"), "Address mismatch.");
-            Assert.That(row["City"].ToString(), Is.EqualTo("Moscow"), "City mismatch.");
+            Assert.That(row["Address"].ToString(), Is.EqualTo("Theodor-Heuss-Straße 34"), "Address mismatch.");
+            Assert.That(row["City"].ToString(), Is.EqualTo("Stuttgart"), "City mismatch.");
             Assert.That(row["State"].ToString(), Is.EqualTo(""), "State mismatch.");
-            Assert.That(row["Country"].ToString(), Is.EqualTo("Russia"), "Country mismatch.");
-            Assert.That(row["PostalCode"].ToString(), Is.EqualTo("125315"), "PostalCode mismatch.");
-            Assert.That(row["Phone"].ToString(), Is.EqualTo("+7 8 (495) 787-68-68"), "Phone mismatch.");
+            Assert.That(row["Country"].ToString(), Is.EqualTo("Germany"), "Country mismatch.");
+            Assert.That(row["PostalCode"].ToString(), Is.EqualTo("70174"), "PostalCode mismatch.");
+            Assert.That(row["Phone"].ToString(), Is.EqualTo("+49 0711 2842222"), "Phone mismatch.");
             Assert.That(row["Fax"].ToString(), Is.EqualTo(""), "Fax mismatch.");
-            Assert.That(row["Email"].ToString(), Is.EqualTo("sergey.kuznetsov@goldnet.ru"), "Email mismatch.");
+            Assert.That(row["Email"].ToString(), Is.EqualTo("leonekohler@surfeu.de"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("5"), "SupportRepId mismatch.");
 		}
 
@@ -471,18 +471,18 @@ namespace ChinookDatabase.Tests
             DataRow row = dataSet.Tables[0].Rows[0];
             
             Assert.That(row["CustomerId"].ToString(), Is.EqualTo("3"), "CustomerId mismatch.");
-            Assert.That(row["FirstName"].ToString(), Is.EqualTo("Ioannis"), "FirstName mismatch.");
-            Assert.That(row["LastName"].ToString(), Is.EqualTo("Papadopoulos"), "LastName mismatch.");
+            Assert.That(row["FirstName"].ToString(), Is.EqualTo("François"), "FirstName mismatch.");
+            Assert.That(row["LastName"].ToString(), Is.EqualTo("Tremblay"), "LastName mismatch.");
             Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
-            Assert.That(row["Address"].ToString(), Is.EqualTo("1 Κουμπαρη"), "Address mismatch.");
-            Assert.That(row["City"].ToString(), Is.EqualTo("Athens"), "City mismatch.");
-            Assert.That(row["State"].ToString(), Is.EqualTo(""), "State mismatch.");
-            Assert.That(row["Country"].ToString(), Is.EqualTo("Greece"), "Country mismatch.");
-            Assert.That(row["PostalCode"].ToString(), Is.EqualTo("10674"), "PostalCode mismatch.");
-            Assert.That(row["Phone"].ToString(), Is.EqualTo("+30 210-3935500"), "Phone mismatch.");
+            Assert.That(row["Address"].ToString(), Is.EqualTo("1498 rue Bélanger"), "Address mismatch.");
+            Assert.That(row["City"].ToString(), Is.EqualTo("Montréal"), "City mismatch.");
+            Assert.That(row["State"].ToString(), Is.EqualTo("QC"), "State mismatch.");
+            Assert.That(row["Country"].ToString(), Is.EqualTo("Canada"), "Country mismatch.");
+            Assert.That(row["PostalCode"].ToString(), Is.EqualTo("H2G 1A7"), "PostalCode mismatch.");
+            Assert.That(row["Phone"].ToString(), Is.EqualTo("+1 (514) 721-4711"), "Phone mismatch.");
             Assert.That(row["Fax"].ToString(), Is.EqualTo(""), "Fax mismatch.");
-            Assert.That(row["Email"].ToString(), Is.EqualTo("ioannis_papadopoulos@yahoo.gr"), "Email mismatch.");
-            Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("4"), "SupportRepId mismatch.");
+            Assert.That(row["Email"].ToString(), Is.EqualTo("ftremblay@gmail.com"), "Email mismatch.");
+            Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("3"), "SupportRepId mismatch.");
 		}
 
         /// <summary>
@@ -495,30 +495,6 @@ namespace ChinookDatabase.Tests
             DataRow row = dataSet.Tables[0].Rows[0];
             
             Assert.That(row["CustomerId"].ToString(), Is.EqualTo("4"), "CustomerId mismatch.");
-            Assert.That(row["FirstName"].ToString(), Is.EqualTo("Dmitri"), "FirstName mismatch.");
-            Assert.That(row["LastName"].ToString(), Is.EqualTo("Petrov"), "LastName mismatch.");
-            Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
-            Assert.That(row["Address"].ToString(), Is.EqualTo("Миллионная ул., 23"), "Address mismatch.");
-            Assert.That(row["City"].ToString(), Is.EqualTo("Saint Petersburg"), "City mismatch.");
-            Assert.That(row["State"].ToString(), Is.EqualTo(""), "State mismatch.");
-            Assert.That(row["Country"].ToString(), Is.EqualTo("Russia"), "Country mismatch.");
-            Assert.That(row["PostalCode"].ToString(), Is.EqualTo("191186"), "PostalCode mismatch.");
-            Assert.That(row["Phone"].ToString(), Is.EqualTo("+7 8 (812) 315-87-87"), "Phone mismatch.");
-            Assert.That(row["Fax"].ToString(), Is.EqualTo(""), "Fax mismatch.");
-            Assert.That(row["Email"].ToString(), Is.EqualTo("dmitri.petrov@yahoo.ru"), "Email mismatch.");
-            Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("4"), "SupportRepId mismatch.");
-		}
-
-        /// <summary>
-        /// Verifies that CustomerId 5 has expected Unicode characters.
-        /// </summary>
-        private void AssertThatCustomerId5HasProperUnicodeCharacters()
-        {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 5");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
-            DataRow row = dataSet.Tables[0].Rows[0];
-            
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("5"), "CustomerId mismatch.");
             Assert.That(row["FirstName"].ToString(), Is.EqualTo("Bjørn"), "FirstName mismatch.");
             Assert.That(row["LastName"].ToString(), Is.EqualTo("Hansen"), "LastName mismatch.");
             Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
@@ -534,15 +510,15 @@ namespace ChinookDatabase.Tests
 		}
 
         /// <summary>
-        /// Verifies that CustomerId 6 has expected Unicode characters.
+        /// Verifies that CustomerId 5 has expected Unicode characters.
         /// </summary>
-        private void AssertThatCustomerId6HasProperUnicodeCharacters()
+        private void AssertThatCustomerId5HasProperUnicodeCharacters()
         {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 6");
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 5");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             DataRow row = dataSet.Tables[0].Rows[0];
             
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("6"), "CustomerId mismatch.");
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("5"), "CustomerId mismatch.");
             Assert.That(row["FirstName"].ToString(), Is.EqualTo("František"), "FirstName mismatch.");
             Assert.That(row["LastName"].ToString(), Is.EqualTo("Wichterlová"), "LastName mismatch.");
             Assert.That(row["Company"].ToString(), Is.EqualTo("JetBrains s.r.o."), "Company mismatch.");
@@ -558,15 +534,15 @@ namespace ChinookDatabase.Tests
 		}
 
         /// <summary>
-        /// Verifies that CustomerId 7 has expected Unicode characters.
+        /// Verifies that CustomerId 6 has expected Unicode characters.
         /// </summary>
-        private void AssertThatCustomerId7HasProperUnicodeCharacters()
+        private void AssertThatCustomerId6HasProperUnicodeCharacters()
         {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 7");
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 6");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             DataRow row = dataSet.Tables[0].Rows[0];
             
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("7"), "CustomerId mismatch.");
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("6"), "CustomerId mismatch.");
             Assert.That(row["FirstName"].ToString(), Is.EqualTo("Helena"), "FirstName mismatch.");
             Assert.That(row["LastName"].ToString(), Is.EqualTo("Holý"), "LastName mismatch.");
             Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
@@ -582,6 +558,30 @@ namespace ChinookDatabase.Tests
 		}
 
         /// <summary>
+        /// Verifies that CustomerId 7 has expected Unicode characters.
+        /// </summary>
+        private void AssertThatCustomerId7HasProperUnicodeCharacters()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 7");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
+            DataRow row = dataSet.Tables[0].Rows[0];
+            
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("7"), "CustomerId mismatch.");
+            Assert.That(row["FirstName"].ToString(), Is.EqualTo("Astrid"), "FirstName mismatch.");
+            Assert.That(row["LastName"].ToString(), Is.EqualTo("Gruber"), "LastName mismatch.");
+            Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
+            Assert.That(row["Address"].ToString(), Is.EqualTo("Rotenturmstraße 4, 1010 Innere Stadt"), "Address mismatch.");
+            Assert.That(row["City"].ToString(), Is.EqualTo("Vienne"), "City mismatch.");
+            Assert.That(row["State"].ToString(), Is.EqualTo(""), "State mismatch.");
+            Assert.That(row["Country"].ToString(), Is.EqualTo("Austria"), "Country mismatch.");
+            Assert.That(row["PostalCode"].ToString(), Is.EqualTo("1010"), "PostalCode mismatch.");
+            Assert.That(row["Phone"].ToString(), Is.EqualTo("+43 01 5134505"), "Phone mismatch.");
+            Assert.That(row["Fax"].ToString(), Is.EqualTo(""), "Fax mismatch.");
+            Assert.That(row["Email"].ToString(), Is.EqualTo("astrid.gruber@apple.at"), "Email mismatch.");
+            Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("5"), "SupportRepId mismatch.");
+		}
+
+        /// <summary>
         /// Verifies that CustomerId 8 has expected Unicode characters.
         /// </summary>
         private void AssertThatCustomerId8HasProperUnicodeCharacters()
@@ -591,30 +591,6 @@ namespace ChinookDatabase.Tests
             DataRow row = dataSet.Tables[0].Rows[0];
             
             Assert.That(row["CustomerId"].ToString(), Is.EqualTo("8"), "CustomerId mismatch.");
-            Assert.That(row["FirstName"].ToString(), Is.EqualTo("Astrid"), "FirstName mismatch.");
-            Assert.That(row["LastName"].ToString(), Is.EqualTo("Gruber"), "LastName mismatch.");
-            Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
-            Assert.That(row["Address"].ToString(), Is.EqualTo("Rotenturmstraße 4, 1010 Innere Stadt"), "Address mismatch.");
-            Assert.That(row["City"].ToString(), Is.EqualTo("Vienne"), "City mismatch.");
-            Assert.That(row["State"].ToString(), Is.EqualTo(""), "State mismatch.");
-            Assert.That(row["Country"].ToString(), Is.EqualTo("Austria"), "Country mismatch.");
-            Assert.That(row["PostalCode"].ToString(), Is.EqualTo("1010"), "PostalCode mismatch.");
-            Assert.That(row["Phone"].ToString(), Is.EqualTo("+43 01 5134505‎"), "Phone mismatch.");
-            Assert.That(row["Fax"].ToString(), Is.EqualTo(""), "Fax mismatch.");
-            Assert.That(row["Email"].ToString(), Is.EqualTo("astrid.gruber@apple.at"), "Email mismatch.");
-            Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("5"), "SupportRepId mismatch.");
-		}
-
-        /// <summary>
-        /// Verifies that CustomerId 9 has expected Unicode characters.
-        /// </summary>
-        private void AssertThatCustomerId9HasProperUnicodeCharacters()
-        {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 9");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
-            DataRow row = dataSet.Tables[0].Rows[0];
-            
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("9"), "CustomerId mismatch.");
             Assert.That(row["FirstName"].ToString(), Is.EqualTo("Daan"), "FirstName mismatch.");
             Assert.That(row["LastName"].ToString(), Is.EqualTo("Peeters"), "LastName mismatch.");
             Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
@@ -630,15 +606,15 @@ namespace ChinookDatabase.Tests
 		}
 
         /// <summary>
-        /// Verifies that CustomerId 10 has expected Unicode characters.
+        /// Verifies that CustomerId 9 has expected Unicode characters.
         /// </summary>
-        private void AssertThatCustomerId10HasProperUnicodeCharacters()
+        private void AssertThatCustomerId9HasProperUnicodeCharacters()
         {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 10");
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 9");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             DataRow row = dataSet.Tables[0].Rows[0];
             
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("10"), "CustomerId mismatch.");
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("9"), "CustomerId mismatch.");
             Assert.That(row["FirstName"].ToString(), Is.EqualTo("Kara"), "FirstName mismatch.");
             Assert.That(row["LastName"].ToString(), Is.EqualTo("Nielsen"), "LastName mismatch.");
             Assert.That(row["Company"].ToString(), Is.EqualTo(""), "Company mismatch.");
@@ -654,15 +630,15 @@ namespace ChinookDatabase.Tests
 		}
 
         /// <summary>
-        /// Verifies that CustomerId 11 has expected Unicode characters.
+        /// Verifies that CustomerId 10 has expected Unicode characters.
         /// </summary>
-        private void AssertThatCustomerId11HasProperUnicodeCharacters()
+        private void AssertThatCustomerId10HasProperUnicodeCharacters()
         {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 11");
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 10");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             DataRow row = dataSet.Tables[0].Rows[0];
             
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("11"), "CustomerId mismatch.");
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("10"), "CustomerId mismatch.");
             Assert.That(row["FirstName"].ToString(), Is.EqualTo("Eduardo"), "FirstName mismatch.");
             Assert.That(row["LastName"].ToString(), Is.EqualTo("Martins"), "LastName mismatch.");
             Assert.That(row["Company"].ToString(), Is.EqualTo("Woodstock Discos"), "Company mismatch.");
@@ -675,6 +651,30 @@ namespace ChinookDatabase.Tests
             Assert.That(row["Fax"].ToString(), Is.EqualTo("+55 (11) 3033-4564"), "Fax mismatch.");
             Assert.That(row["Email"].ToString(), Is.EqualTo("eduardo@woodstock.com.br"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("4"), "SupportRepId mismatch.");
+		}
+
+        /// <summary>
+        /// Verifies that CustomerId 11 has expected Unicode characters.
+        /// </summary>
+        private void AssertThatCustomerId11HasProperUnicodeCharacters()
+        {
+            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = 11");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
+            DataRow row = dataSet.Tables[0].Rows[0];
+            
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("11"), "CustomerId mismatch.");
+            Assert.That(row["FirstName"].ToString(), Is.EqualTo("Alexandre"), "FirstName mismatch.");
+            Assert.That(row["LastName"].ToString(), Is.EqualTo("Rocha"), "LastName mismatch.");
+            Assert.That(row["Company"].ToString(), Is.EqualTo("Banco do Brasil S.A."), "Company mismatch.");
+            Assert.That(row["Address"].ToString(), Is.EqualTo("Av. Paulista, 2022"), "Address mismatch.");
+            Assert.That(row["City"].ToString(), Is.EqualTo("São Paulo"), "City mismatch.");
+            Assert.That(row["State"].ToString(), Is.EqualTo("SP"), "State mismatch.");
+            Assert.That(row["Country"].ToString(), Is.EqualTo("Brazil"), "Country mismatch.");
+            Assert.That(row["PostalCode"].ToString(), Is.EqualTo("01310-200"), "PostalCode mismatch.");
+            Assert.That(row["Phone"].ToString(), Is.EqualTo("+55 (11) 3055-3278"), "Phone mismatch.");
+            Assert.That(row["Fax"].ToString(), Is.EqualTo("+55 (11) 3055-8131"), "Fax mismatch.");
+            Assert.That(row["Email"].ToString(), Is.EqualTo("alero@uol.com.br"), "Email mismatch.");
+            Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("5"), "SupportRepId mismatch.");
 		}
 
 		#endregion
