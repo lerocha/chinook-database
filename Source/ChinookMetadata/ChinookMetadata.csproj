@@ -79,4 +79,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PreBuildEvent>attrib -r $(SolutionDir)Lib\ChinookMetadata.dll</PreBuildEvent>
+  </PropertyGroup>
 </Project>

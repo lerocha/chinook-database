@@ -46,6 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChinookMetadata, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\ChinookMetadata.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=5.1.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\MySql.Data.dll</HintPath>
@@ -188,12 +192,6 @@
     </Content>
     <Content Include="SampleData\iTunes Music Library.xml" />
     <Content Include="SampleData\ManualData.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ChinookMetadata\ChinookMetadata.csproj">
-      <Project>{67E64402-FB7A-4D55-9E8E-B0818B693639}</Project>
-      <Name>ChinookMetadata</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
