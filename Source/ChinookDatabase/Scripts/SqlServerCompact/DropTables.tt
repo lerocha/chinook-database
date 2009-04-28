@@ -1,22 +1,17 @@
-﻿<#@ template language="C#" hostspecific="true"#>
+﻿<#@ template language="C#v3.5" hostspecific="True"#>
 <#@ output extension="sqlce" #>
 <#@ assembly name="System.dll" #>
-<#@ assembly name="System.Xml.dll" #>
-<#@ assembly name="System.Data.dll" #>
-<#@ assembly name="ChinookMetadata.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ import namespace="ChinookMetadata.Convert" #>
-<#@ import namespace="ChinookMetadata.Schema" #>
-<#@ include file="..\..\T4Templates\DataSetHelper.tt" #>
+<#@ include file="..\..\T4Templates\Chinook.t4" #>
 /*******************************************************************************
    Chinook Database
    Script: CreateDB.sql - Creates and populates the Chinook database.
    DB Server: SQL Server Compact
-   Version: <#= GetVersionNumber() #>
+   Version: <#= DataSetHelper.GetVersionNumber() #>
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 

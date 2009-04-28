@@ -1,22 +1,16 @@
-﻿<#@ template language="C#" hostspecific="true"#>
+﻿<#@ template language="C#v3.5" hostspecific="True"#>
 <#@ output extension="cs" #>
 <#@ assembly name="System.dll" #>
-<#@ assembly name="System.Xml.dll" #>
-<#@ assembly name="System.Data.dll" #>
-<#@ assembly name="ChinookMetadata.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="System.Data" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ import namespace="ChinookMetadata.Convert" #>
-<#@ import namespace="ChinookMetadata.Schema" #>
-<#@ include file="..\T4Templates\DataSetHelper.tt" #>
+<#@ include file="..\T4Templates\Chinook.t4" #>
 /*******************************************************************************
  * Chinook Database
  * Description: Test fixture for Chinook database.
  * DB Server: SQL Server
- * Version: <#= GetVersionNumber() #>
+ * Version: <#= DataSetHelper.GetVersionNumber() #>
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
@@ -108,7 +102,7 @@ namespace ChinookDatabase.Tests
         [Test]
         public void <#= table.TableName #>LastRecordHasProperInfo()
         {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM <#= table.TableName #> ORDER BY <#= GetPrimaryKeyString (table) #>");
+            DataSet dataSet = ExecuteQuery("SELECT * FROM <#= table.TableName #> ORDER BY <#= DataSetHelper.GetPrimaryKeyString (table) #>");
             DataTable table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             DataRow row = table.Rows[table.Rows.Count - 1];
@@ -119,7 +113,7 @@ namespace ChinookDatabase.Tests
 		int num = table.Rows.Count - 1;
 		foreach (DataColumn col in table.Columns)
 		{
-			string expected = GetExpectedValue(col, table.Rows[num][col.ColumnName].ToString());
+			string expected = DataSetHelper.GetExpectedValue(col, table.Rows[num][col.ColumnName].ToString());
 #>            Assert.That(row["<#= col.ColumnName #>"].ToString(), Is.EqualTo(<#= expected #>), "<#= col.ColumnName #> mismatch.");
 <#
 		} // foreach column
@@ -147,7 +141,7 @@ namespace ChinookDatabase.Tests
 <#
 		foreach (DataColumn col in ds.Tables["Customer"].Columns)
 		{
-			string expected = GetExpectedValue(col, ds.Tables["Customer"].Rows[i][col.ColumnName].ToString());
+			string expected = DataSetHelper.GetExpectedValue(col, ds.Tables["Customer"].Rows[i][col.ColumnName].ToString());
 #>            Assert.That(row["<#= col.ColumnName #>"].ToString(), Is.EqualTo(<#= expected #>), "<#= col.ColumnName #> mismatch.");
 <#
 		}

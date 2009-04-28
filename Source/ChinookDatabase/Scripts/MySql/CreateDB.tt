@@ -1,22 +1,17 @@
-﻿<#@ template language="C#" hostspecific="true"#>
+﻿<#@ template language="C#v3.5" hostspecific="True"#>
 <#@ output extension="sql" #>
 <#@ assembly name="System.dll" #>
-<#@ assembly name="System.Xml.dll" #>
-<#@ assembly name="System.Data.dll" #>
-<#@ assembly name="ChinookMetadata.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ import namespace="ChinookMetadata.Convert" #>
-<#@ import namespace="ChinookMetadata.Schema" #>
-<#@ include file="..\..\T4Templates\DataSetHelper.tt" #>
+<#@ include file="..\..\T4Templates\Chinook.t4" #>
 /*******************************************************************************
    Chinook Database
    Script: CreateDB.sql - Creates and populates the Chinook database.
    DB Server: MySQL
-   Version: <#= GetVersionNumber() #>
+   Version: <#= DataSetHelper.GetVersionNumber() #>
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 
@@ -41,11 +36,11 @@ CREATE TABLE <#= table.TableName #>
         foreach (DataColumn col in table.Columns)
         {
 #>
-    <#= col.ColumnName #> <#= GetMySqlType(col) #><#= (col.AllowDBNull ? "" : " NOT NULL") #><#= (col.AutoIncrement? " AUTO_INCREMENT" : "") #><#= (IsLastCreateTableElement(table, col) ? "" : ",") #>
+    <#= col.ColumnName #> <#= DataSetHelper.GetMySqlType(col) #><#= (col.AllowDBNull ? "" : " NOT NULL") #><#= (col.AutoIncrement? " AUTO_INCREMENT" : "") #><#= (DataSetHelper.IsLastCreateTableElement(table, col) ? "" : ",") #>
 <#
 		}	// foreach DataColumn
 #>
-    PRIMARY KEY(<#= GetPrimaryKeyString (table) #>)
+    PRIMARY KEY(<#= DataSetHelper.GetPrimaryKeyString (table) #>)
 );
 
 <#
