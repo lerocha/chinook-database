@@ -1,5 +1,5 @@
-﻿<#@ template language="C#v3.5" hostspecific="True"#>
-<#@ output extension=".t4"#>
+<#@ template language="C#v3.5" hostspecific="True"#>
+<#@ output extension=".ttinclude"#>
 <#@ assembly name="System.Core"#>
 <#@ assembly name="System.Data"#>
 <#@ assembly name="System.Data.DataSetExtensions.dll"#>

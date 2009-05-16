@@ -1,4 +1,4 @@
-﻿<#@ assembly name="System.Core"#>
+<#@ assembly name="System.Core"#>
 <#@ assembly name="System.Data"#>
 <#@ assembly name="System.Data.DataSetExtensions.dll"#>
 <#@ assembly name="System.Data.Linq"#>

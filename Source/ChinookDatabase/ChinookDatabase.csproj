@@ -170,7 +170,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB_NoIdentity.sql</LastGenOutput>
     </None>
-    <None Include="T4Templates\Chinook.t4" />
+    <None Include="T4Templates\Chinook.ttinclude" />
     <None Include="Tests\DatabaseFixture.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DatabaseFixture.cs</LastGenOutput>

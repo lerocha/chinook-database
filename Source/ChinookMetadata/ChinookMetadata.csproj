@@ -60,14 +60,14 @@
     <Compile Include="Convert\TrackInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Chinook.t4">
+    <None Include="Chinook.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Chinook.ttinclude</LastGenOutput>
+    </None>
+    <None Include="Chinook.ttinclude">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Chinook.tt</DependentUpon>
-    </None>
-    <None Include="Chinook.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Chinook.t4</LastGenOutput>
     </None>
     <None Include="Schema\ChinookDataSet.xsc">
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
@@ -94,7 +94,7 @@
   -->
   <PropertyGroup>
     <PreBuildEvent>attrib -r $(SolutionDir)Lib\ChinookMetadata.dll</PreBuildEvent>
-    <PostBuildEvent>copy $(ProjectDir)Chinook.t4 $(SolutionDir)\ChinookDatabase\T4Templates
+    <PostBuildEvent>copy $(ProjectDir)Chinook.ttinclude $(SolutionDir)\ChinookDatabase\T4Templates
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

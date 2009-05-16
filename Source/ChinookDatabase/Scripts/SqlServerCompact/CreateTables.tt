@@ -1,4 +1,4 @@
-﻿<#@ template language="C#v3.5" hostspecific="true"#>
+<#@ template language="C#v3.5" hostspecific="true"#>
 <#@ output extension="sqlce" #>
 <#@ assembly name="System.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -6,7 +6,10 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ include file="..\..\T4Templates\Chinook.t4" #>
+<#@ include file="..\..\T4Templates\Chinook.ttinclude" #>
+<#
+this.Host.SetOutputEncoding(System.Text.Encoding.UTF8, false);
+#>
 /*******************************************************************************
    Chinook Database
    Script: CreateDB.sql - Creates and populates the Chinook database.
