@@ -1,6 +1,5 @@
-<#@ template language="C#v3.5" hostspecific="True"#>
+<#@ template hostspecific="True"#>
 <#@ output extension="sql" #>
-<#@ assembly name="System.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.IO" #>

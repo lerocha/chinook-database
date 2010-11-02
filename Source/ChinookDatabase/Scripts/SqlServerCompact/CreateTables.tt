@@ -1,6 +1,5 @@
-<#@ template language="C#v3.5" hostspecific="true"#>
+<#@ template hostspecific="true"#>
 <#@ output extension="sqlce" #>
-<#@ assembly name="System.dll" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.IO" #>

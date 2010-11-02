@@ -1,4 +1,4 @@
-<#@ template language="C#v3.5" hostspecific="True"#>
+<#@ template hostspecific="True"#>
 <#@ output extension=".ttinclude"#>
 <#@ assembly name="System.Core"#>
 <#@ assembly name="System.Data"#>

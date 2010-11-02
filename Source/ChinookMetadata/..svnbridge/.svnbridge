@@ -5,4 +5,11 @@ obj
 *.user
 *.aps
 *.eto
+</Value></Property><Property><Name>svn:ignore</Name><Value>*.aps
+*.eto
+*.user
+[Bb]in
+[Dd]ebug
+[Rr]elease
+obj
 </Value></Property></Properties></ItemProperties>

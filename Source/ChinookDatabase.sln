@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChinookDatabase", "ChinookDatabase\ChinookDatabase.csproj", "{AC2D0974-9B63-429A-BB62-031B716C8861}"
 	ProjectSection(ProjectDependencies) = postProject
 		{67E64402-FB7A-4D55-9E8E-B0818B693639} = {67E64402-FB7A-4D55-9E8E-B0818B693639}
