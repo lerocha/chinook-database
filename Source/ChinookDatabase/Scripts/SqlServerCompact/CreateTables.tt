@@ -1,8 +1,6 @@
-<#@ template hostspecific="True"#>
+﻿<#@ template hostspecific="True"#>
 <#@ output extension="sqlce" #>
 <#
-this.Host.SetOutputEncoding(System.Text.Encoding.UTF8, false);
-
 var options = new { 
 					AutoIncrement = true,
 					SetupDatabase = false,

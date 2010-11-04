@@ -1,4 +1,4 @@
-<#@ template hostspecific="True"#>
+﻿<#@ template hostspecific="True"#>
 <#@ output extension="sql" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>

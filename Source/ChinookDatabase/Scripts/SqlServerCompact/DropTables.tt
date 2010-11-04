@@ -1,4 +1,4 @@
-<#@ template hostspecific="True"#>
+﻿<#@ template hostspecific="True"#>
 <#@ output extension="sqlce" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
@@ -6,9 +6,6 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ include file="..\..\T4Templates\Chinook.ttinclude" #>
-<#
-this.Host.SetOutputEncoding(System.Text.Encoding.UTF8, false);
-#>
 /*******************************************************************************
    Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
    Script: DropTables.sql

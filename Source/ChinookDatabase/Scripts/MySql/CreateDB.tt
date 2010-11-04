@@ -1,4 +1,4 @@
-<#@ template hostspecific="True"#>
+﻿<#@ template hostspecific="True"#>
 <#@ output extension="sql" #>
 <#
 this.Host.SetOutputEncoding(System.Text.Encoding.UTF8, false);

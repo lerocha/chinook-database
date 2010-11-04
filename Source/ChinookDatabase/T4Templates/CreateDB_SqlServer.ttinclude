@@ -1,4 +1,4 @@
-<#@ import namespace="System.Collections.Generic" #>
+﻿<#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
@@ -12,7 +12,9 @@
    Author: Luis Rocha
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
-<# if (options.SetupDatabase) { #>
+<#
+	if (options.SetupDatabase) { 
+#>
 
 /*******************************************************************************
    Drop database if it exists
@@ -39,7 +41,9 @@ CREATE DATABASE [Chinook];
 GO
 
 USE Chinook;
-<# } // if (options.SetupDatabase) #>
+<# 
+	} // if (options.SetupDatabase) 
+#>
 
 /*******************************************************************************
    Create Tables

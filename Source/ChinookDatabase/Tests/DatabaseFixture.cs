@@ -300,7 +300,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Invoice");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(534), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(412), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -316,15 +316,15 @@ namespace ChinookDatabase.Tests
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
-            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("534"), "InvoiceId mismatch.");
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("32"), "CustomerId mismatch.");
-            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/24/2010 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
-            Assert.That(row["BillingAddress"].ToString(), Is.EqualTo("696 Osborne Street"), "BillingAddress mismatch.");
-            Assert.That(row["BillingCity"].ToString(), Is.EqualTo("Winnipeg"), "BillingCity mismatch.");
-            Assert.That(row["BillingState"].ToString(), Is.EqualTo("MB"), "BillingState mismatch.");
-            Assert.That(row["BillingCountry"].ToString(), Is.EqualTo("Canada"), "BillingCountry mismatch.");
-            Assert.That(row["BillingPostalCode"].ToString(), Is.EqualTo("R3L 2B9"), "BillingPostalCode mismatch.");
-            Assert.That(row["Total"].ToString(), Is.EqualTo("2.97"), "Total mismatch.");
+            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("412"), "InvoiceId mismatch.");
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("58"), "CustomerId mismatch.");
+            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/22/2011 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
+            Assert.That(row["BillingAddress"].ToString(), Is.EqualTo("12,Community Centre"), "BillingAddress mismatch.");
+            Assert.That(row["BillingCity"].ToString(), Is.EqualTo("Delhi"), "BillingCity mismatch.");
+            Assert.That(row["BillingState"].ToString(), Is.EqualTo(""), "BillingState mismatch.");
+            Assert.That(row["BillingCountry"].ToString(), Is.EqualTo("India"), "BillingCountry mismatch.");
+            Assert.That(row["BillingPostalCode"].ToString(), Is.EqualTo("110017"), "BillingPostalCode mismatch.");
+            Assert.That(row["Total"].ToString(), Is.EqualTo("1.99"), "Total mismatch.");
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceLineTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM InvoiceLine");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3141), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(2240), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -350,10 +350,10 @@ namespace ChinookDatabase.Tests
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
-            Assert.That(row["InvoiceLineId"].ToString(), Is.EqualTo("3141"), "InvoiceLineId mismatch.");
-            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("534"), "InvoiceId mismatch.");
-            Assert.That(row["TrackId"].ToString(), Is.EqualTo("2454"), "TrackId mismatch.");
-            Assert.That(row["UnitPrice"].ToString(), Is.EqualTo("0.99"), "UnitPrice mismatch.");
+            Assert.That(row["InvoiceLineId"].ToString(), Is.EqualTo("2240"), "InvoiceLineId mismatch.");
+            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("412"), "InvoiceId mismatch.");
+            Assert.That(row["TrackId"].ToString(), Is.EqualTo("3177"), "TrackId mismatch.");
+            Assert.That(row["UnitPrice"].ToString(), Is.EqualTo("1.99"), "UnitPrice mismatch.");
             Assert.That(row["Quantity"].ToString(), Is.EqualTo("1"), "Quantity mismatch.");
         }
 
