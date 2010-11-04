@@ -3,11 +3,31 @@
    Chinook Database
    Script: CreateDB.sql - Creates and populates the Chinook database.
    DB Server: SQL Server
-   Version: 1.1
+   Version: 1.2
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 
-IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Chinook') DROP DATABASE [Chinook];
+/*******************************************************************************
+   Drop database if it exists
+********************************************************************************/
+IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'Chinook')
+BEGIN 
+	--Take database offline ignoring any connection made
+	ALTER DATABASE [Chinook] 
+	SET OFFLINE 
+	WITH ROLLBACK IMMEDIATE; 
+
+	--Bring online before delete 
+	ALTER DATABASE [Chinook]
+	SET ONLINE; 
+
+	--Delete database
+	DROP DATABASE [Chinook]; 
+END 
+
+/*******************************************************************************
+   Create database
+********************************************************************************/
 CREATE DATABASE [Chinook];
 GO
 
@@ -20,21 +40,21 @@ CREATE TABLE Genre
 ( 
     GenreId INTEGER NOT NULL IDENTITY,
     Name NVARCHAR(120),
-    PRIMARY KEY(GenreId)
+    CONSTRAINT PK_Genre PRIMARY KEY(GenreId)
 );
 
 CREATE TABLE MediaType 
 ( 
     MediaTypeId INTEGER NOT NULL IDENTITY,
     Name NVARCHAR(120),
-    PRIMARY KEY(MediaTypeId)
+    CONSTRAINT PK_MediaType PRIMARY KEY(MediaTypeId)
 );
 
 CREATE TABLE Artist 
 ( 
     ArtistId INTEGER NOT NULL IDENTITY,
     Name NVARCHAR(120),
-    PRIMARY KEY(ArtistId)
+    CONSTRAINT PK_Artist PRIMARY KEY(ArtistId)
 );
 
 CREATE TABLE Album 
@@ -42,7 +62,7 @@ CREATE TABLE Album
     AlbumId INTEGER NOT NULL IDENTITY,
     Title NVARCHAR(160) NOT NULL,
     ArtistId INTEGER NOT NULL,
-    PRIMARY KEY(AlbumId)
+    CONSTRAINT PK_Album PRIMARY KEY(AlbumId)
 );
 
 CREATE TABLE Track 
@@ -56,7 +76,7 @@ CREATE TABLE Track
     Milliseconds INTEGER NOT NULL,
     Bytes INTEGER,
     UnitPrice NUMERIC(10,2) NOT NULL,
-    PRIMARY KEY(TrackId)
+    CONSTRAINT PK_Track PRIMARY KEY(TrackId)
 );
 
 CREATE TABLE Employee 
@@ -76,7 +96,7 @@ CREATE TABLE Employee
     Phone NVARCHAR(24),
     Fax NVARCHAR(24),
     Email NVARCHAR(60),
-    PRIMARY KEY(EmployeeId)
+    CONSTRAINT PK_Employee PRIMARY KEY(EmployeeId)
 );
 
 CREATE TABLE Customer 
@@ -94,7 +114,7 @@ CREATE TABLE Customer
     Fax NVARCHAR(24),
     Email NVARCHAR(60) NOT NULL,
     SupportRepId INTEGER,
-    PRIMARY KEY(CustomerId)
+    CONSTRAINT PK_Customer PRIMARY KEY(CustomerId)
 );
 
 CREATE TABLE Invoice 
@@ -108,7 +128,7 @@ CREATE TABLE Invoice
     BillingCountry NVARCHAR(40),
     BillingPostalCode NVARCHAR(10),
     Total NUMERIC(10,2) NOT NULL,
-    PRIMARY KEY(InvoiceId)
+    CONSTRAINT PK_Invoice PRIMARY KEY(InvoiceId)
 );
 
 CREATE TABLE InvoiceLine 
@@ -118,21 +138,21 @@ CREATE TABLE InvoiceLine
     TrackId INTEGER NOT NULL,
     UnitPrice NUMERIC(10,2) NOT NULL,
     Quantity INTEGER NOT NULL,
-    PRIMARY KEY(InvoiceLineId)
+    CONSTRAINT PK_InvoiceLine PRIMARY KEY(InvoiceLineId)
 );
 
 CREATE TABLE Playlist 
 ( 
     PlaylistId INTEGER NOT NULL IDENTITY,
     Name NVARCHAR(120),
-    PRIMARY KEY(PlaylistId)
+    CONSTRAINT PK_Playlist PRIMARY KEY(PlaylistId)
 );
 
 CREATE TABLE PlaylistTrack 
 ( 
     PlaylistId INTEGER NOT NULL,
     TrackId INTEGER NOT NULL,
-    PRIMARY KEY(PlaylistId, TrackId)
+    CONSTRAINT PK_PlaylistTrack PRIMARY KEY(PlaylistId, TrackId)
 );
 
 
@@ -154,17 +174,17 @@ ALTER TABLE PlaylistTrack ADD FOREIGN KEY (PlaylistId) REFERENCES Playlist(Playl
 /*******************************************************************************
    Create Indexes
 ********************************************************************************/
-CREATE INDEX IPK_Genre ON Genre(GenreId);
-CREATE INDEX IPK_MediaType ON MediaType(MediaTypeId);
-CREATE INDEX IPK_Artist ON Artist(ArtistId);
-CREATE INDEX IPK_ProductItem ON Album(AlbumId);
-CREATE INDEX IPK_Track ON Track(TrackId);
-CREATE INDEX IPK_Employee ON Employee(EmployeeId);
-CREATE INDEX IPK_Customer ON Customer(CustomerId);
-CREATE INDEX IPK_Invoice ON Invoice(InvoiceId);
-CREATE INDEX IPK_InvoiceLine ON InvoiceLine(InvoiceLineId);
-CREATE INDEX IPK_Playlist ON Playlist(PlaylistId);
-CREATE INDEX IPK_PlaylistTrack ON PlaylistTrack(PlaylistId);
+CREATE UNIQUE INDEX IPK_Genre ON Genre(GenreId);
+CREATE UNIQUE INDEX IPK_MediaType ON MediaType(MediaTypeId);
+CREATE UNIQUE INDEX IPK_Artist ON Artist(ArtistId);
+CREATE UNIQUE INDEX IPK_ProductItem ON Album(AlbumId);
+CREATE UNIQUE INDEX IPK_Track ON Track(TrackId);
+CREATE UNIQUE INDEX IPK_Employee ON Employee(EmployeeId);
+CREATE UNIQUE INDEX IPK_Customer ON Customer(CustomerId);
+CREATE UNIQUE INDEX IPK_Invoice ON Invoice(InvoiceId);
+CREATE UNIQUE INDEX IPK_InvoiceLine ON InvoiceLine(InvoiceLineId);
+CREATE UNIQUE INDEX IPK_Playlist ON Playlist(PlaylistId);
+CREATE UNIQUE INDEX IPK_PlaylistTrack ON PlaylistTrack(PlaylistId, TrackId);
 
 CREATE INDEX IFK_Artist_Album ON Album(ArtistId);
 CREATE INDEX IFK_Album_Track ON Track(AlbumId);
@@ -4343,7 +4363,7 @@ INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, 
 
 INSERT INTO Employee (LastName, FirstName, Title, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (N'Adams', N'Andrew', N'General Manager', '1962/2/18', '2002/8/14', N'11120 Jasper Ave NW', N'Edmonton', N'AB', N'Canada', N'T5K 2N1', N'+1 (780) 428-9482', N'+1 (780) 428-3457', N'andrew@chinookcorp.com');
 INSERT INTO Employee (LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (N'Edwards', N'Nancy', N'Sales Manager', 1, '1958/12/8', '2002/5/1', N'825 8 Ave SW', N'Calgary', N'AB', N'Canada', N'T2P 2T3', N'+1 (403) 262-3443', N'+1 (403) 262-3322', N'nancy@chinookcorp.com');
-INSERT INTO Employee (LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (N'Peacock', N'Jane', N'Sales Support Agent', 2, '1973/8/29', '2002/4/1', N'1111 6 Ave SW', N'Calgary', N'AB', N'Canada', N'T2P 5M5', N'+1 (403) 262-3443', N'+1 (403) 262-6712', N'jane@chinookcorp.com');
+INSERT INTO Employee (LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (N'Peacock', N'Jane', N'Sales Support Agent', 2, '1973/8/29', '2002/3/31', N'1111 6 Ave SW', N'Calgary', N'AB', N'Canada', N'T2P 5M5', N'+1 (403) 262-3443', N'+1 (403) 262-6712', N'jane@chinookcorp.com');
 INSERT INTO Employee (LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (N'Park', N'Margaret', N'Sales Support Agent', 2, '1947/9/19', '2003/5/3', N'683 10 Street SW', N'Calgary', N'AB', N'Canada', N'T2P 5G3', N'+1 (403) 263-4423', N'+1 (403) 263-4289', N'margaret@chinookcorp.com');
 INSERT INTO Employee (LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (N'Johnson', N'Steve', N'Sales Support Agent', 2, '1965/3/3', '2003/10/17', N'7727B 41 Ave', N'Calgary', N'AB', N'Canada', N'T3B 1Y7', N'1 (780) 836-9987', N'1 (780) 836-9543', N'steve@chinookcorp.com');
 INSERT INTO Employee (LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (N'Mitchell', N'Michael', N'IT Manager', 1, '1973/7/1', '2003/10/17', N'5827 Bowness Road NW', N'Calgary', N'AB', N'Canada', N'T3B 0C5', N'+1 (403) 246-9887', N'+1 (403) 246-9899', N'michael@chinookcorp.com');

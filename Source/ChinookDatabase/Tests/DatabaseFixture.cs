@@ -3,7 +3,7 @@
  * Chinook Database
  * Description: Test fixture for Chinook database.
  * DB Server: SQL Server
- * Version: 1.1
+ * Version: 1.2
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
@@ -300,7 +300,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM Invoice");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(543), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(534), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -316,15 +316,15 @@ namespace ChinookDatabase.Tests
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
-            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("543"), "InvoiceId mismatch.");
-            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("48"), "CustomerId mismatch.");
-            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/27/2011 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
-            Assert.That(row["BillingAddress"].ToString(), Is.EqualTo("Lijnbaansgracht 120bg"), "BillingAddress mismatch.");
-            Assert.That(row["BillingCity"].ToString(), Is.EqualTo("Amsterdam"), "BillingCity mismatch.");
-            Assert.That(row["BillingState"].ToString(), Is.EqualTo("VV"), "BillingState mismatch.");
-            Assert.That(row["BillingCountry"].ToString(), Is.EqualTo("Netherlands"), "BillingCountry mismatch.");
-            Assert.That(row["BillingPostalCode"].ToString(), Is.EqualTo("1016"), "BillingPostalCode mismatch.");
-            Assert.That(row["Total"].ToString(), Is.EqualTo("3.96"), "Total mismatch.");
+            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("534"), "InvoiceId mismatch.");
+            Assert.That(row["CustomerId"].ToString(), Is.EqualTo("32"), "CustomerId mismatch.");
+            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/24/2010 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
+            Assert.That(row["BillingAddress"].ToString(), Is.EqualTo("696 Osborne Street"), "BillingAddress mismatch.");
+            Assert.That(row["BillingCity"].ToString(), Is.EqualTo("Winnipeg"), "BillingCity mismatch.");
+            Assert.That(row["BillingState"].ToString(), Is.EqualTo("MB"), "BillingState mismatch.");
+            Assert.That(row["BillingCountry"].ToString(), Is.EqualTo("Canada"), "BillingCountry mismatch.");
+            Assert.That(row["BillingPostalCode"].ToString(), Is.EqualTo("R3L 2B9"), "BillingPostalCode mismatch.");
+            Assert.That(row["Total"].ToString(), Is.EqualTo("2.97"), "Total mismatch.");
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace ChinookDatabase.Tests
         public void InvoiceLineTableShouldBePopulated()
         {
             DataSet dataSet = ExecuteQuery("SELECT * FROM InvoiceLine");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3205), "Total number of records mismatch.");
+            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3141), "Total number of records mismatch.");
         }
 
         /// <summary>
@@ -350,9 +350,9 @@ namespace ChinookDatabase.Tests
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
-            Assert.That(row["InvoiceLineId"].ToString(), Is.EqualTo("3205"), "InvoiceLineId mismatch.");
-            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("543"), "InvoiceId mismatch.");
-            Assert.That(row["TrackId"].ToString(), Is.EqualTo("212"), "TrackId mismatch.");
+            Assert.That(row["InvoiceLineId"].ToString(), Is.EqualTo("3141"), "InvoiceLineId mismatch.");
+            Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("534"), "InvoiceId mismatch.");
+            Assert.That(row["TrackId"].ToString(), Is.EqualTo("2454"), "TrackId mismatch.");
             Assert.That(row["UnitPrice"].ToString(), Is.EqualTo("0.99"), "UnitPrice mismatch.");
             Assert.That(row["Quantity"].ToString(), Is.EqualTo("1"), "Quantity mismatch.");
         }

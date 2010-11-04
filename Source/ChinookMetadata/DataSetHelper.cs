@@ -8,7 +8,7 @@ namespace ChinookMetadata
     {
         public static string GetVersionNumber()
         {
-            return "1.1";
+            return "1.2";
         }
 
         public static string GetOracleType(DataColumn col)

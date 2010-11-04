@@ -105,9 +105,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookData.xml</LastGenOutput>
     </None>
-    <None Include="Scripts\CreateAll.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Scripts\MySql\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -138,7 +135,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateTables.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\SqlServerCompact\CreateTables.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -154,6 +150,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DropTables.sqlce</LastGenOutput>
     </None>
+    <None Include="T4Templates\CreateDB_SqlServer.ttinclude" />
     <None Include="Scripts\SqlServer\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -195,6 +192,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ChinookData.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="SampleData\iTunes Music Library.xml" />
     <Content Include="SampleData\ManualData.xml" />

@@ -1,9 +1,9 @@
 ﻿
 /*******************************************************************************
    Chinook Database
-   Script: CreateDB.sql - Creates and populates the Chinook database.
+   Script: DropTables.sql - Drop all tables.
    DB Server: SQL Server Compact
-   Version: 1.1
+   Version: 1.2
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 

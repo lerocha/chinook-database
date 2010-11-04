@@ -11,7 +11,7 @@ this.Host.SetOutputEncoding(System.Text.Encoding.UTF8, false);
 #>
 /*******************************************************************************
    Chinook Database
-   Script: CreateDB.sql - Creates and populates the Chinook database.
+   Script: DropTables.sql - Drop all tables.
    DB Server: SQL Server Compact
    Version: <#= DataSetHelper.GetVersionNumber() #>
    License: http://www.codeplex.com/ChinookDatabase/license
