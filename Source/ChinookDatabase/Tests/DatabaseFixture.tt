@@ -8,10 +8,10 @@
 <#
 this.Host.SetOutputEncoding(System.Text.Encoding.UTF8,false);
 #>/*******************************************************************************
- * Chinook Database
+ * Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
  * Description: Test fixture for Chinook database.
  * DB Server: SQL Server
- * Version: <#= DataSetHelper.GetVersionNumber() #>
+ * Author: Luis Rocha
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:

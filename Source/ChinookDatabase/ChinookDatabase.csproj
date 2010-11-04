@@ -105,6 +105,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookData.xml</LastGenOutput>
     </None>
+    <None Include="Scripts\MySql\CreateDB_NoAutoIncrement.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CreateDB_NoAutoIncrement.sql</LastGenOutput>
+    </None>
     <None Include="Scripts\MySql\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -150,6 +154,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DropTables.sqlce</LastGenOutput>
     </None>
+    <None Include="T4Templates\CreateDB_MySql.ttinclude" />
     <None Include="T4Templates\CreateDB_SqlServer.ttinclude" />
     <None Include="Scripts\SqlServer\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -196,6 +201,12 @@
     </Content>
     <Content Include="SampleData\iTunes Music Library.xml" />
     <Content Include="SampleData\ManualData.xml" />
+    <None Include="Scripts\MySql\CreateDB_NoAutoIncrement.sql">
+      <DependentUpon>CreateDB_NoAutoIncrement.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

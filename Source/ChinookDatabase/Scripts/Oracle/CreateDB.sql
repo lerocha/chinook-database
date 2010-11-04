@@ -1,9 +1,10 @@
 ﻿
 /*******************************************************************************
-   Chinook Database
-   Script: CreateDB.sql - Creates and populates the Chinook database.
+   Chinook Database - Version 1.2
+   Script: CreateDB.sql
+   Description: Creates and populates the Chinook database.
    DB Server: Oracle
-   Version: 1.2
+   Author: Luis Rocha
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 

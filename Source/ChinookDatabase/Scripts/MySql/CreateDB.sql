@@ -1,9 +1,10 @@
 ﻿
 /*******************************************************************************
-   Chinook Database
-   Script: CreateDB.sql - Creates and populates the Chinook database.
+   Chinook Database - Version 1.2
+   Script: CreateDB.sql
+   Description: Creates and populates the Chinook database.
    DB Server: MySQL
-   Version: 1.2
+   Author: Luis Rocha
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 
@@ -18,21 +19,21 @@ CREATE TABLE Genre
 ( 
     GenreId INTEGER NOT NULL AUTO_INCREMENT,
     Name VARCHAR(120),
-    PRIMARY KEY(GenreId)
+    CONSTRAINT PK_Genre PRIMARY KEY(GenreId)
 );
 
 CREATE TABLE MediaType 
 ( 
     MediaTypeId INTEGER NOT NULL AUTO_INCREMENT,
     Name VARCHAR(120),
-    PRIMARY KEY(MediaTypeId)
+    CONSTRAINT PK_MediaType PRIMARY KEY(MediaTypeId)
 );
 
 CREATE TABLE Artist 
 ( 
     ArtistId INTEGER NOT NULL AUTO_INCREMENT,
     Name VARCHAR(120),
-    PRIMARY KEY(ArtistId)
+    CONSTRAINT PK_Artist PRIMARY KEY(ArtistId)
 );
 
 CREATE TABLE Album 
@@ -40,7 +41,7 @@ CREATE TABLE Album
     AlbumId INTEGER NOT NULL AUTO_INCREMENT,
     Title VARCHAR(160) NOT NULL,
     ArtistId INTEGER NOT NULL,
-    PRIMARY KEY(AlbumId)
+    CONSTRAINT PK_Album PRIMARY KEY(AlbumId)
 );
 
 CREATE TABLE Track 
@@ -54,7 +55,7 @@ CREATE TABLE Track
     Milliseconds INTEGER NOT NULL,
     Bytes INTEGER,
     UnitPrice NUMERIC(10,2) NOT NULL,
-    PRIMARY KEY(TrackId)
+    CONSTRAINT PK_Track PRIMARY KEY(TrackId)
 );
 
 CREATE TABLE Employee 
@@ -74,7 +75,7 @@ CREATE TABLE Employee
     Phone VARCHAR(24),
     Fax VARCHAR(24),
     Email VARCHAR(60),
-    PRIMARY KEY(EmployeeId)
+    CONSTRAINT PK_Employee PRIMARY KEY(EmployeeId)
 );
 
 CREATE TABLE Customer 
@@ -92,7 +93,7 @@ CREATE TABLE Customer
     Fax VARCHAR(24),
     Email VARCHAR(60) NOT NULL,
     SupportRepId INTEGER,
-    PRIMARY KEY(CustomerId)
+    CONSTRAINT PK_Customer PRIMARY KEY(CustomerId)
 );
 
 CREATE TABLE Invoice 
@@ -106,7 +107,7 @@ CREATE TABLE Invoice
     BillingCountry VARCHAR(40),
     BillingPostalCode VARCHAR(10),
     Total NUMERIC(10,2) NOT NULL,
-    PRIMARY KEY(InvoiceId)
+    CONSTRAINT PK_Invoice PRIMARY KEY(InvoiceId)
 );
 
 CREATE TABLE InvoiceLine 
@@ -116,21 +117,21 @@ CREATE TABLE InvoiceLine
     TrackId INTEGER NOT NULL,
     UnitPrice NUMERIC(10,2) NOT NULL,
     Quantity INTEGER NOT NULL,
-    PRIMARY KEY(InvoiceLineId)
+    CONSTRAINT PK_InvoiceLine PRIMARY KEY(InvoiceLineId)
 );
 
 CREATE TABLE Playlist 
 ( 
     PlaylistId INTEGER NOT NULL AUTO_INCREMENT,
     Name VARCHAR(120),
-    PRIMARY KEY(PlaylistId)
+    CONSTRAINT PK_Playlist PRIMARY KEY(PlaylistId)
 );
 
 CREATE TABLE PlaylistTrack 
 ( 
     PlaylistId INTEGER NOT NULL,
     TrackId INTEGER NOT NULL,
-    PRIMARY KEY(PlaylistId, TrackId)
+    CONSTRAINT PK_PlaylistTrack PRIMARY KEY(PlaylistId, TrackId)
 );
 
 
@@ -152,17 +153,17 @@ ALTER TABLE PlaylistTrack ADD FOREIGN KEY (PlaylistId) REFERENCES Playlist(Playl
 /*******************************************************************************
    Create Indexes
 ********************************************************************************/
-CREATE INDEX IPK_Genre ON Genre(GenreId);
-CREATE INDEX IPK_MediaType ON MediaType(MediaTypeId);
-CREATE INDEX IPK_Artist ON Artist(ArtistId);
-CREATE INDEX IPK_ProductItem ON Album(AlbumId);
-CREATE INDEX IPK_Track ON Track(TrackId);
-CREATE INDEX IPK_Employee ON Employee(EmployeeId);
-CREATE INDEX IPK_Customer ON Customer(CustomerId);
-CREATE INDEX IPK_Invoice ON Invoice(InvoiceId);
-CREATE INDEX IPK_InvoiceLine ON InvoiceLine(InvoiceLineId);
-CREATE INDEX IPK_Playlist ON Playlist(PlaylistId);
-CREATE INDEX IPK_PlaylistTrack ON PlaylistTrack(PlaylistId);
+CREATE UNIQUE INDEX IPK_Genre ON Genre(GenreId);
+CREATE UNIQUE INDEX IPK_MediaType ON MediaType(MediaTypeId);
+CREATE UNIQUE INDEX IPK_Artist ON Artist(ArtistId);
+CREATE UNIQUE INDEX IPK_ProductItem ON Album(AlbumId);
+CREATE UNIQUE INDEX IPK_Track ON Track(TrackId);
+CREATE UNIQUE INDEX IPK_Employee ON Employee(EmployeeId);
+CREATE UNIQUE INDEX IPK_Customer ON Customer(CustomerId);
+CREATE UNIQUE INDEX IPK_Invoice ON Invoice(InvoiceId);
+CREATE UNIQUE INDEX IPK_InvoiceLine ON InvoiceLine(InvoiceLineId);
+CREATE UNIQUE INDEX IPK_Playlist ON Playlist(PlaylistId);
+CREATE UNIQUE INDEX IPK_PlaylistTrack ON PlaylistTrack(PlaylistId, TrackId);
 
 CREATE INDEX IFK_Artist_Album ON Album(ArtistId);
 CREATE INDEX IFK_Album_Track ON Track(AlbumId);

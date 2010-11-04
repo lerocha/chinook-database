@@ -10,10 +10,11 @@
 this.Host.SetOutputEncoding(System.Text.Encoding.UTF8, false);
 #>
 /*******************************************************************************
-   Chinook Database
-   Script: CreateDB.sql - Creates and populates the Chinook database.
+   Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
+   Script: CreateDB.sql
+   Description: Creates and populates the Chinook database.
    DB Server: Oracle
-   Version: <#= DataSetHelper.GetVersionNumber() #>
+   Author: Luis Rocha
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 

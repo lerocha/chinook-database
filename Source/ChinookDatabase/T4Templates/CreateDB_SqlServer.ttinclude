@@ -5,10 +5,11 @@
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ include file="Chinook.ttinclude" #>
 /*******************************************************************************
-   Chinook Database
-   Script: <#= options.FileName #> - Creates and populates the Chinook database.
+   Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
+   Script: <#= options.FileName #>
+   Description: Creates and populates the Chinook database.
    DB Server: <#= options.ServerName #>
-   Version: <#= DataSetHelper.GetVersionNumber() #>
+   Author: Luis Rocha
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 <# if (options.SetupDatabase) { #>

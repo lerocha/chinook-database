@@ -7,7 +7,7 @@ var options = new {
 					AutoIncrement = true,
 					SetupDatabase = true,
 					ServerName = "SQL Server",
-					FileName = "CreateDB.sql"
+					FileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".sql"
 				  };
 #>
 <#@ include file="..\..\T4Templates\CreateDB_SqlServer.ttinclude" #>

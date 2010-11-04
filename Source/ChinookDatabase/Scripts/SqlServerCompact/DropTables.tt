@@ -10,10 +10,11 @@
 this.Host.SetOutputEncoding(System.Text.Encoding.UTF8, false);
 #>
 /*******************************************************************************
-   Chinook Database
-   Script: DropTables.sql - Drop all tables.
+   Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
+   Script: DropTables.sql
+   Description: Drop all tables.
    DB Server: SQL Server Compact
-   Version: <#= DataSetHelper.GetVersionNumber() #>
+   Author: Luis Rocha
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 

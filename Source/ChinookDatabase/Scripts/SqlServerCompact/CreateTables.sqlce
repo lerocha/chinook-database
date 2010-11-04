@@ -1,9 +1,10 @@
 ﻿
 /*******************************************************************************
-   Chinook Database
-   Script: CreateTables.sqlce - Creates and populates the Chinook database.
+   Chinook Database - Version 1.2
+   Script: CreateTables.sqlce
+   Description: Creates and populates the Chinook database.
    DB Server: SQL Server Compact
-   Version: 1.2
+   Author: Luis Rocha
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 

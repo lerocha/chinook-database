@@ -1,9 +1,10 @@
 ﻿
 /*******************************************************************************
-   Chinook Database
-   Script: DropTables.sql - Drop all tables.
+   Chinook Database - Version 1.2
+   Script: DropTables.sql
+   Description: Drop all tables.
    DB Server: SQL Server Compact
-   Version: 1.2
+   Author: Luis Rocha
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
 

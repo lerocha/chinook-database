@@ -1,0 +1,167 @@
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ include file="Chinook.ttinclude" #>
+/*******************************************************************************
+   Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
+   Script: <#= options.FileName #>
+   Description: Creates and populates the Chinook database.
+   DB Server: <#= options.ServerName #>
+   Author: Luis Rocha
+   License: http://www.codeplex.com/ChinookDatabase/license
+********************************************************************************/
+<# if (options.SetupDatabase) { #>
+
+DROP DATABASE IF EXISTS Chinook;
+CREATE DATABASE IF NOT EXISTS Chinook;
+USE Chinook;
+<# } // if (options.SetupDatabase) #>
+
+/*******************************************************************************
+   Create Tables
+********************************************************************************/
+<#
+    FileInfo thisFile = new FileInfo(Host.TemplateFile);
+    ChinookDataSet ds = new ChinookDataSet();
+    ds.ReadXml(thisFile.DirectoryName + @"\..\..\SampleData\ChinookData.xml");
+
+    foreach (DataTable table in ds.Tables)
+    {
+#>
+CREATE TABLE <#= table.TableName #> 
+( 
+<#
+        foreach (DataColumn col in table.Columns)
+        {
+#>
+    <#= col.ColumnName #> <#= DataSetHelper.GetMySqlType(col) #><#= (col.AllowDBNull ? "" : " NOT NULL") #><#= (col.AutoIncrement && options.AutoIncrement ? " AUTO_INCREMENT" : "") #><#= (DataSetHelper.IsLastCreateTableElement(table, col) ? "" : ",") #>
+<#
+		}	// foreach DataColumn
+#>
+    CONSTRAINT PK_<#= table.TableName #> PRIMARY KEY(<#= DataSetHelper.GetPrimaryKeyString(table) #>)
+);
+
+<#
+	}	// foreach DataTable
+#>
+
+/*******************************************************************************
+   Create Foreign Keys
+********************************************************************************/
+<#	
+    foreach (DataTable table in ds.Tables)
+    {
+        foreach (Constraint constraint in table.Constraints)
+        {
+			if (constraint.GetType() == typeof(ForeignKeyConstraint))
+			{
+				ForeignKeyConstraint fk = (ForeignKeyConstraint) constraint;
+#>
+ALTER TABLE <#= table.TableName #> ADD FOREIGN KEY (<#= fk.Columns[0].ColumnName #>) REFERENCES <#= fk.RelatedTable.TableName #>(<#= fk.RelatedColumns[0].ColumnName #>);
+<#
+			}
+        } // foreach Constraint
+	}	// foreach DataTable
+#>
+
+/*******************************************************************************
+   Create Indexes
+********************************************************************************/
+<#	
+    foreach (DataTable table in ds.Tables)
+    {
+        foreach (Constraint constraint in table.Constraints)
+        {
+			if (constraint.GetType() == typeof(UniqueConstraint))
+			{
+				UniqueConstraint pk = (UniqueConstraint) constraint;
+#>
+CREATE UNIQUE INDEX I<#= pk.ConstraintName #> ON <#= table.TableName #>(<#= DataSetHelper.GetPrimaryKeyString(table) #>);
+<#
+			}
+        } // foreach Constraint
+	}	// foreach DataTable
+#>
+
+<#	
+    foreach (DataTable table in ds.Tables)
+    {
+        foreach (Constraint constraint in table.Constraints)
+        {
+			if (constraint.GetType() == typeof(ForeignKeyConstraint))
+			{
+				ForeignKeyConstraint fk = (ForeignKeyConstraint) constraint;
+#>
+CREATE INDEX I<#= fk.ConstraintName #> ON <#= table.TableName #>(<#= fk.Columns[0].ColumnName #>);
+<#
+			}
+        } // foreach Constraint
+	}	// foreach DataTable
+#>
+
+/*******************************************************************************
+   Populate Tables
+********************************************************************************/
+<#
+    StringBuilder sbFields = new StringBuilder();
+    StringBuilder sbValues = new StringBuilder();
+
+    foreach (DataTable table in ds.Tables)
+    {
+#>
+<#
+        foreach (DataRow row in table.Rows)
+        {
+            sbFields.Length = 0;
+            sbValues.Length = 0;
+
+            foreach (DataColumn col in table.Columns)
+            {
+                string value = row[col.ColumnName].ToString();
+                if ((col.AutoIncrement && options.AutoIncrement) || value.Length==0) continue;
+                
+                if (sbFields.Length == 0)
+                {
+                    sbFields.Append("(");
+                    sbValues.Append("(");
+                }
+                else
+                {
+                    sbFields.Append(", ");
+                    sbValues.Append(", ");
+                }
+
+                if (col.DataType == typeof(DateTime))
+                {
+                    DateTime date = Convert.ToDateTime(value);
+                    value = string.Format("'{0}/{1:0}/{2:0}'", date.Year, date.Month, date.Day);
+                    sbValues.Append(value);
+                }
+                else if (col.DataType == typeof(String))
+                {
+                    sbValues.Append("N'");
+                    value = value.Replace("'", "''");
+                    sbValues.Append(value);
+                    sbValues.Append("'");
+                }
+                else
+                {
+                    sbValues.Append(value);
+                }
+
+                sbFields.Append(col.ColumnName);
+            }
+
+            sbFields.Append(")");
+            sbValues.Append(")");
+#>
+<#= string.Format("INSERT INTO {0} {1} VALUES {2};", table.TableName, sbFields, sbValues) #>
+<#
+        }	// foreach DataRow
+#>
+
+<#
+    }	// foreach DataTable
+#>

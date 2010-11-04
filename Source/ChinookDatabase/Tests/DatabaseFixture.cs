@@ -1,9 +1,9 @@
 ﻿
 /*******************************************************************************
- * Chinook Database
+ * Chinook Database - Version 1.2
  * Description: Test fixture for Chinook database.
  * DB Server: SQL Server
- * Version: 1.2
+ * Author: Luis Rocha
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
