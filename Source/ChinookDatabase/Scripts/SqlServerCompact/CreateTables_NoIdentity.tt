@@ -1,8 +1,8 @@
-﻿<#@ template debug="true" hostspecific="True"#>
+﻿<#@ template debug="true" hostSpecific="true" #>
 <#@ output extension="sqlce" #>
 <#
 var options = new { 
-					AutoIncrement = true,
+					AutoIncrement = false,
 					SetupDatabase = false,
 					ServerName = "SQL Server Compact",
 					FileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".sqlce"

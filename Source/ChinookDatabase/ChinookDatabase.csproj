@@ -139,10 +139,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateTables.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\SqlServerCompact\CreateTables.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateTables.sqlce</LastGenOutput>
+    </None>
+    <None Include="Scripts\SqlServerCompact\CreateTables_NoIdentity.sqlce">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateTables_NoIdentity.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\SqlServerCompact\CreateTables_NoIdentity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CreateTables_NoIdentity.sqlce</LastGenOutput>
     </None>
     <None Include="Scripts\SqlServerCompact\DropTables.sqlce">
       <AutoGen>True</AutoGen>
@@ -173,6 +184,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateDB_NoIdentity.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Scripts\SqlServer\CreateDB_NoIdentity.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -190,7 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SampleData\Chinook.sdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SampleData\ChinookData.xml">
       <AutoGen>True</AutoGen>
@@ -198,6 +210,9 @@
       <DependentUpon>ChinookData.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="SampleData\Chinook_NoIdentity.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SampleData\iTunes Music Library.xml" />
     <Content Include="SampleData\ManualData.xml" />
