@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="DataSources\Xml\Schema\ChinookDataSet.cs">
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="DataSources\Xml\Schema\ChinookDataSet.Designer.cs">
       <AutoGen>True</AutoGen>

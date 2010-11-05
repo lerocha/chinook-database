@@ -27,7 +27,7 @@ using NUnit.Framework.SyntaxHelpers;
     ChinookDataSet ds = new ChinookDataSet();
     ds.ReadXml(thisFile.DirectoryName + @"\..\..\ChinookDatabase\DataSources\Xml\ChinookData.xml");
 #>
-namespace ChinookMetadata.Test.DatabaseTests
+namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
     /// Base class for Chinook database test fixture.

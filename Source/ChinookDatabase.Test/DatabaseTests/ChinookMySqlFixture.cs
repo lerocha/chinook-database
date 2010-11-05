@@ -1,6 +1,6 @@
 ﻿/*******************************************************************************
  * Chinook Database
- * Description: Test fixture for Oracle version of Chinook database.
+ * Description: Test fixture for MySQL version of Chinook database.
  * DB Server: SQL Server
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
@@ -11,24 +11,24 @@
 using System;
 using System.Configuration;
 using System.Data;
-using System.Data.OleDb;
+using MySql.Data.MySqlClient;
 using NUnit.Framework;
 
-namespace ChinookMetadata.Test.DatabaseTests
+namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Class fixture for Oracle version of Chinook database.
+    /// Class fixture for MySQL version of Chinook database.
     /// </summary>
     [TestFixture]
-    public class ChinookOracleFixture : DatabaseFixture
+    public class ChinookMySqlFixture : DatabaseFixture
     {
-        static OleDbConnection _connection;
+        static MySqlConnection _connection;
 
         /// <summary>
         /// Retrieves the cached connection object.
         /// </summary>
         /// <returns>A connection object for this specific database.</returns>
-        protected static OleDbConnection GetConnection()
+        protected static MySqlConnection GetConnection()
         {
             // Creates an ADO.NET connection to the database, if not created yet.
             if (_connection == null)
@@ -36,9 +36,9 @@ namespace ChinookMetadata.Test.DatabaseTests
                 var section = (ConnectionStringsSection) ConfigurationManager.GetSection("connectionStrings");
                 foreach (ConnectionStringSettings entry in section.ConnectionStrings)
                 {
-                    if (entry.Name == "ChinookOracle")
+                    if (entry.Name == "ChinookMySql")
                     {
-                        _connection = new OleDbConnection(entry.ConnectionString);
+                        _connection = new MySqlConnection(entry.ConnectionString);
                         break;
                     }
                 }
@@ -49,7 +49,6 @@ namespace ChinookMetadata.Test.DatabaseTests
             {
                 throw new ApplicationException("There is no connection string defined in app.config file.");
             }
-
             return _connection;
         }
 
@@ -63,9 +62,9 @@ namespace ChinookMetadata.Test.DatabaseTests
             var dataset = new DataSet();
 
             // Verify if number of entities match number of records.
-            using (var adapter = new OleDbDataAdapter())
+            using (var adapter = new MySqlDataAdapter())
             {
-                adapter.SelectCommand = new OleDbCommand(query, GetConnection());
+                adapter.SelectCommand = new MySqlCommand(query, GetConnection());
                 adapter.Fill(dataset);
             }
 

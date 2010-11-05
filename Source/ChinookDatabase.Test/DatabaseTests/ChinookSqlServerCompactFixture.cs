@@ -1,7 +1,7 @@
 ﻿/*******************************************************************************
  * Chinook Database
- * Description: Test fixture for MySQL version of Chinook database.
- * DB Server: SQL Server
+ * Description: Test fixture for SQL Server version of Chinook database.
+ * DB Server: SQL Server Compact
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
@@ -11,45 +11,47 @@
 using System;
 using System.Configuration;
 using System.Data;
-using MySql.Data.MySqlClient;
+using System.Data.SqlServerCe;
 using NUnit.Framework;
 
-namespace ChinookMetadata.Test.DatabaseTests
+namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Class fixture for MySQL version of Chinook database.
+    /// Class fixture for SQL Server Compact version of Chinook database.
     /// </summary>
     [TestFixture]
-    public class ChinookMySqlFixture : DatabaseFixture
+    public class ChinookSqlServerCompactFixture : DatabaseFixture
     {
-        static MySqlConnection _connection;
+        static SqlCeConnection _sqlConnection;
 
         /// <summary>
         /// Retrieves the cached connection object.
         /// </summary>
         /// <returns>A connection object for this specific database.</returns>
-        protected static MySqlConnection GetConnection()
+        protected static SqlCeConnection GetConnection()
         {
             // Creates an ADO.NET connection to the database, if not created yet.
-            if (_connection == null)
+            if (_sqlConnection == null)
             {
-                var section = (ConnectionStringsSection) ConfigurationManager.GetSection("connectionStrings");
+                var section = (ConnectionStringsSection)ConfigurationManager.GetSection("connectionStrings");
+
                 foreach (ConnectionStringSettings entry in section.ConnectionStrings)
                 {
-                    if (entry.Name == "ChinookMySql")
+                    if (entry.Name == "ChinookSqlServerCompact")
                     {
-                        _connection = new MySqlConnection(entry.ConnectionString);
+                        _sqlConnection = new SqlCeConnection(entry.ConnectionString);
                         break;
                     }
                 }
             }
 
             // If we failed to create a connection, then throw an exception.
-            if (_connection == null)
+            if (_sqlConnection == null)
             {
                 throw new ApplicationException("There is no connection string defined in app.config file.");
             }
-            return _connection;
+
+            return _sqlConnection;
         }
 
         /// <summary>
@@ -62,9 +64,9 @@ namespace ChinookMetadata.Test.DatabaseTests
             var dataset = new DataSet();
 
             // Verify if number of entities match number of records.
-            using (var adapter = new MySqlDataAdapter())
+            using (var adapter = new SqlCeDataAdapter())
             {
-                adapter.SelectCommand = new MySqlCommand(query, GetConnection());
+                adapter.SelectCommand = new SqlCeCommand(query, GetConnection());
                 adapter.Fill(dataset);
             }
 

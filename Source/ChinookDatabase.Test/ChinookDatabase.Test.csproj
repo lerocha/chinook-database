@@ -8,8 +8,8 @@
     <ProjectGuid>{FE4EC648-40D4-41DD-8C3B-8BC76D3275EB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChinookMetadata.Test</RootNamespace>
-    <AssemblyName>ChinookMetadata.Test</AssemblyName>
+    <RootNamespace>ChinookDatabase.Test</RootNamespace>
+    <AssemblyName>ChinookDatabase.Test</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>

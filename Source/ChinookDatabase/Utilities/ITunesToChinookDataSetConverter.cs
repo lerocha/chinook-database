@@ -2,7 +2,7 @@
 using System.Data;
 using System.IO;
 using System.Xml.XPath;
-using ChinookMetadata.Schema;
+using ChinookDatabase.DataSources.Xml.Schema;
 
 namespace ChinookDatabase.Utilities
 {

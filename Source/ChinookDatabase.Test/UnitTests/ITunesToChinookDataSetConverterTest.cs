@@ -2,7 +2,7 @@
 using ChinookDatabase.Utilities;
 using NUnit.Framework;
 
-namespace ChinookMetadata.Test.UnitTests
+namespace ChinookDatabase.Test.UnitTests
 {
     [TestFixture]
     public class ITunesToChinookDataSetConverterTest

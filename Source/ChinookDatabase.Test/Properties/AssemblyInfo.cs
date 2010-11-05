@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ChinookMetadata.Test")]
+[assembly: AssemblyTitle("ChinookDatabase.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("yCount Software, Inc.")]
-[assembly: AssemblyProduct("ChinookMetadata.Test")]
+[assembly: AssemblyProduct("ChinookDatabase.Test")]
 [assembly: AssemblyCopyright("Copyright © yCount Software, Inc. 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

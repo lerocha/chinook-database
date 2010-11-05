@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChinookDatabase", "ChinookDatabase\ChinookDatabase.csproj", "{AC2D0974-9B63-429A-BB62-031B716C8861}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChinookMetadata.Test", "ChinookMetadata.Test\ChinookMetadata.Test.csproj", "{FE4EC648-40D4-41DD-8C3B-8BC76D3275EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChinookDatabase.Test", "ChinookDatabase.Test\ChinookDatabase.Test.csproj", "{FE4EC648-40D4-41DD-8C3B-8BC76D3275EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace ChinookMetadata.Schema {
+namespace ChinookDatabase.DataSources.Xml.Schema {
     
     
     /// <summary>

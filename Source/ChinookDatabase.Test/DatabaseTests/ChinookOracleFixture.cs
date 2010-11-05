@@ -1,7 +1,7 @@
 ﻿/*******************************************************************************
  * Chinook Database
- * Description: Test fixture for SQL Server version of Chinook database.
- * DB Server: SQL Server Compact
+ * Description: Test fixture for Oracle version of Chinook database.
+ * DB Server: SQL Server
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
@@ -11,47 +11,46 @@
 using System;
 using System.Configuration;
 using System.Data;
-using System.Data.SqlServerCe;
+using System.Data.OleDb;
 using NUnit.Framework;
 
-namespace ChinookMetadata.Test.DatabaseTests
+namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Class fixture for SQL Server Compact version of Chinook database.
+    /// Class fixture for Oracle version of Chinook database.
     /// </summary>
     [TestFixture]
-    public class ChinookSqlServerCompactFixture : DatabaseFixture
+    public class ChinookOracleFixture : DatabaseFixture
     {
-        static SqlCeConnection _sqlConnection;
+        static OleDbConnection _connection;
 
         /// <summary>
         /// Retrieves the cached connection object.
         /// </summary>
         /// <returns>A connection object for this specific database.</returns>
-        protected static SqlCeConnection GetConnection()
+        protected static OleDbConnection GetConnection()
         {
             // Creates an ADO.NET connection to the database, if not created yet.
-            if (_sqlConnection == null)
+            if (_connection == null)
             {
-                var section = (ConnectionStringsSection)ConfigurationManager.GetSection("connectionStrings");
-
+                var section = (ConnectionStringsSection) ConfigurationManager.GetSection("connectionStrings");
                 foreach (ConnectionStringSettings entry in section.ConnectionStrings)
                 {
-                    if (entry.Name == "ChinookSqlServerCompact")
+                    if (entry.Name == "ChinookOracle")
                     {
-                        _sqlConnection = new SqlCeConnection(entry.ConnectionString);
+                        _connection = new OleDbConnection(entry.ConnectionString);
                         break;
                     }
                 }
             }
 
             // If we failed to create a connection, then throw an exception.
-            if (_sqlConnection == null)
+            if (_connection == null)
             {
                 throw new ApplicationException("There is no connection string defined in app.config file.");
             }
 
-            return _sqlConnection;
+            return _connection;
         }
 
         /// <summary>
@@ -64,9 +63,9 @@ namespace ChinookMetadata.Test.DatabaseTests
             var dataset = new DataSet();
 
             // Verify if number of entities match number of records.
-            using (var adapter = new SqlCeDataAdapter())
+            using (var adapter = new OleDbDataAdapter())
             {
-                adapter.SelectCommand = new SqlCeCommand(query, GetConnection());
+                adapter.SelectCommand = new OleDbCommand(query, GetConnection());
                 adapter.Fill(dataset);
             }
 
