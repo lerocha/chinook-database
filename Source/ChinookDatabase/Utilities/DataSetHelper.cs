@@ -2,7 +2,7 @@
 using System.Data;
 using System.Text;
 
-namespace ChinookMetadata
+namespace ChinookDatabase.Utilities
 {
     class DataSetHelper
     {

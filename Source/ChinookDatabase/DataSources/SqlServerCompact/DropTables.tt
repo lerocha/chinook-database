@@ -22,7 +22,7 @@
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
     ChinookDataSet ds = new ChinookDataSet();
-    ds.ReadXml(thisFile.DirectoryName + @"\..\..\SampleData\ChinookData.xml");
+    ds.ReadXml(thisFile.DirectoryName + @"\..\Xml\ChinookData.xml");
 
     StringBuilder sb = new StringBuilder();
     for (int i = ds.Tables.Count-1; i >= 0; i--)

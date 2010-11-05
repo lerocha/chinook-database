@@ -14,7 +14,7 @@ using System.Data;
 using System.Data.OleDb;
 using NUnit.Framework;
 
-namespace ChinookDatabase.Tests
+namespace ChinookMetadata.Test.DatabaseTests
 {
     /// <summary>
     /// Class fixture for Oracle version of Chinook database.

@@ -14,7 +14,7 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using NUnit.Framework;
 
-namespace ChinookDatabase.Tests
+namespace ChinookMetadata.Test.DatabaseTests
 {
     /// <summary>
     /// Class fixture for MySQL version of Chinook database.

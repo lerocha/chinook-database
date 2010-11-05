@@ -4,7 +4,7 @@ using System.IO;
 using System.Xml.XPath;
 using ChinookMetadata.Schema;
 
-namespace ChinookMetadata.Convert
+namespace ChinookDatabase.Utilities
 {
     public class ITunesToChinookDataSetConverter
     {

@@ -14,7 +14,7 @@ using System.Data;
 using System.Data.SqlServerCe;
 using NUnit.Framework;
 
-namespace ChinookDatabase.Tests
+namespace ChinookMetadata.Test.DatabaseTests
 {
     /// <summary>
     /// Class fixture for SQL Server Compact version of Chinook database.

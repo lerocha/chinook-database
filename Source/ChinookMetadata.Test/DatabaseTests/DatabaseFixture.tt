@@ -1,10 +1,10 @@
-<#@ template hostspecific="True"#>
+﻿<#@ template hostspecific="True"#>
 <#@ output extension="cs" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ include file="..\T4Templates\Chinook.ttinclude" #>
+<#@ include file="..\..\ChinookDatabase\T4Templates\Chinook.ttinclude" #>
 <#
 this.Host.SetOutputEncoding(System.Text.Encoding.UTF8,false);
 #>/*******************************************************************************
@@ -25,9 +25,9 @@ using NUnit.Framework.SyntaxHelpers;
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
     ChinookDataSet ds = new ChinookDataSet();
-    ds.ReadXml(thisFile.DirectoryName + @"\..\SampleData\ChinookData.xml");
+    ds.ReadXml(thisFile.DirectoryName + @"\..\..\ChinookDatabase\DataSources\Xml\ChinookData.xml");
 #>
-namespace ChinookDatabase.Tests
+namespace ChinookMetadata.Test.DatabaseTests
 {
     /// <summary>
     /// Base class for Chinook database test fixture.

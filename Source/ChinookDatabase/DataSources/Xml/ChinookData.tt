@@ -1,11 +1,11 @@
-﻿<#@ template hostspecific="True"#>
+﻿<#@ template debug="true" hostspecific="True"#>
 <#@ output encoding="UNICODE" extension="xml" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ include file="..\T4Templates\Chinook.ttinclude" #><?xml version="1.0" encoding="UTF-16"?>
+<#@ include file="..\..\T4Templates\Chinook.ttinclude" #><?xml version="1.0" encoding="UTF-16"?>
 <!--
    Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
    Author: Luis Rocha
@@ -13,8 +13,8 @@
 -->
 <#
             var thisFile = new FileInfo(Host.TemplateFile);
-            var filename = thisFile.DirectoryName + @"\..\SampleData\iTunes Music Library.xml";
-            var xmlDataFilename = thisFile.DirectoryName + @"\..\SampleData\ManualData.xml";
+            var filename = thisFile.DirectoryName + @"\Source\iTunes Music Library.xml";
+            var xmlDataFilename = thisFile.DirectoryName + @"\Source\CompanyData.xml";
 
             var ignorePlaylists = new[]
                                       {

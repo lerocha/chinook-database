@@ -52,10 +52,6 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=5.1.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\nunit.framework.dll</HintPath>
@@ -65,7 +61,6 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -76,124 +71,128 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSources\Xml\Schema\ChinookDataSet.cs">
+      <DependentUpon>ChinookDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DataSources\Xml\Schema\ChinookDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChinookDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\ChinookMySqlFixture.cs">
-      <SubType>Code</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Tests\ChinookOracleFixture.cs">
-      <SubType>Code</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Tests\ChinookSqlServerCompactFixture.cs" />
-    <Compile Include="Tests\ChinookSqlServerFixture.cs">
-      <SubType>Code</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Tests\DatabaseFixture.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DatabaseFixture.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Utilities\DataSetHelper.cs" />
+    <Compile Include="Utilities\ITunesToChinookDataSetConverter.cs" />
+    <Compile Include="Utilities\TrackInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="SampleData\ChinookData.tt">
+    <None Include="DataSources\Xml\ChinookData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookData.xml</LastGenOutput>
     </None>
-    <None Include="Scripts\MySql\CreateDB_NoAutoIncrement.tt">
+    <None Include="DataSources\MySql\CreateDB_NoAutoIncrement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB_NoAutoIncrement.sql</LastGenOutput>
     </None>
-    <None Include="Scripts\MySql\CreateDB.bat">
+    <None Include="DataSources\MySql\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\MySql\CreateDB.tt">
+    <None Include="DataSources\MySql\CreateDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB.sql</LastGenOutput>
     </None>
-    <None Include="Scripts\MySql\CreateDB.sql">
+    <None Include="DataSources\MySql\CreateDB.sql">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateDB.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Oracle\CreateDB.bat">
+    <None Include="DataSources\Oracle\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\Oracle\CreateDB.tt">
+    <None Include="DataSources\Oracle\CreateDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB.sql</LastGenOutput>
     </None>
-    <None Include="Scripts\Oracle\CreateDB.sql">
+    <None Include="DataSources\Oracle\CreateDB.sql">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateDB.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\SqlServerCompact\CreateTables.sqlce">
+    <None Include="DataSources\SqlServerCompact\CreateTables.sqlce">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateTables.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\SqlServerCompact\CreateTables.tt">
+    <None Include="DataSources\SqlServerCompact\CreateTables.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateTables.sqlce</LastGenOutput>
     </None>
-    <None Include="Scripts\SqlServerCompact\CreateTables_NoIdentity.sqlce">
+    <None Include="DataSources\SqlServerCompact\CreateTables_NoIdentity.sqlce">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateTables_NoIdentity.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\SqlServerCompact\CreateTables_NoIdentity.tt">
+    <None Include="DataSources\SqlServerCompact\CreateTables_NoIdentity.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateTables_NoIdentity.sqlce</LastGenOutput>
     </None>
-    <None Include="Scripts\SqlServerCompact\DropTables.sqlce">
+    <None Include="DataSources\SqlServerCompact\DropTables.sqlce">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DropTables.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\SqlServerCompact\DropTables.tt">
+    <None Include="DataSources\SqlServerCompact\DropTables.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DropTables.sqlce</LastGenOutput>
     </None>
+    <None Include="DataSources\Xml\Schema\ChinookDataSet.xsc">
+      <DependentUpon>ChinookDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DataSources\Xml\Schema\ChinookDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ChinookDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DataSources\Xml\Schema\ChinookDataSet.xss">
+      <DependentUpon>ChinookDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="T4Templates\Chinook.ttinclude">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Chinook.tt</DependentUpon>
+    </None>
     <None Include="T4Templates\CreateDB_MySql.ttinclude" />
     <None Include="T4Templates\CreateDB_SqlServer.ttinclude" />
-    <None Include="Scripts\SqlServer\CreateDB.bat">
+    <None Include="DataSources\SqlServer\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\SqlServer\CreateDB.tt">
+    <None Include="DataSources\SqlServer\CreateDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB.sql</LastGenOutput>
     </None>
-    <None Include="Scripts\SqlServer\CreateDB.sql">
+    <None Include="DataSources\SqlServer\CreateDB.sql">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateDB.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\SqlServer\CreateDB_NoIdentity.sql">
+    <None Include="DataSources\SqlServer\CreateDB_NoIdentity.sql">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateDB_NoIdentity.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Scripts\SqlServer\CreateDB_NoIdentity.tt">
+    <None Include="DataSources\SqlServer\CreateDB_NoIdentity.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB_NoIdentity.sql</LastGenOutput>
     </None>
-    <None Include="T4Templates\Chinook.ttinclude" />
-    <None Include="Tests\DatabaseFixture.tt">
+    <None Include="T4Templates\Chinook.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DatabaseFixture.cs</LastGenOutput>
+      <LastGenOutput>Chinook.ttinclude</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -201,22 +200,22 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SampleData\Chinook.sdf">
+    <Content Include="DataSources\SqlServerCompact\Chinook.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SampleData\ChinookData.xml">
+    <Content Include="DataSources\Xml\ChinookData.xml">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ChinookData.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="SampleData\Chinook_NoIdentity.sdf">
+    <Content Include="DataSources\SqlServerCompact\Chinook_NoIdentity.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SampleData\iTunes Music Library.xml" />
-    <Content Include="SampleData\ManualData.xml" />
-    <None Include="Scripts\MySql\CreateDB_NoAutoIncrement.sql">
+    <Content Include="DataSources\Xml\Source\CompanyData.xml" />
+    <Content Include="DataSources\Xml\Source\iTunes Music Library.xml" />
+    <None Include="DataSources\MySql\CreateDB_NoAutoIncrement.sql">
       <DependentUpon>CreateDB_NoAutoIncrement.tt</DependentUpon>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -270,7 +269,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>@echo off
-cd Scripts
+cd DataSources
 rem CreateAll.bat
 cd ..</PostBuildEvent>
   </PropertyGroup>

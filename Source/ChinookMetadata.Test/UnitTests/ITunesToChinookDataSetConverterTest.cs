@@ -1,16 +1,18 @@
 ﻿using System.IO;
-using ChinookMetadata.Convert;
+using ChinookDatabase.Utilities;
 using NUnit.Framework;
 
-namespace ChinookMetadata.Test
+namespace ChinookMetadata.Test.UnitTests
 {
     [TestFixture]
     public class ITunesToChinookDataSetConverterTest
     {
+        private const string TestData = @"TestData\iTunesLibraryTestData.xml";
+
         [Test]
         public void TestConversion()
         {
-            var testFile = new FileInfo(@"TestData\iTunesLibraryTestData.xml");
+            var testFile = new FileInfo(TestData);
             Assert.That(File.Exists(testFile.FullName));
 
             var ignorePlaylists = new[] { "Audiobooks", "Genius" };
@@ -36,7 +38,7 @@ namespace ChinookMetadata.Test
         [Test]
         public void TestConversionWithPlaylistsToIgnore()
         {
-            var testFile = new FileInfo(@"TestData\iTunesLibraryTestData.xml");
+            var testFile = new FileInfo(TestData);
             Assert.That(File.Exists(testFile.FullName));
 
             var ignorePlaylists = new[] { "Audiobooks", "Genius" };
@@ -58,7 +60,7 @@ namespace ChinookMetadata.Test
         [Test]
         public void TestConversionWithNonMediaData()
         {
-            var testFile = new FileInfo(@"TestData\iTunesLibraryTestData.xml");
+            var testFile = new FileInfo(TestData);
             Assert.That(File.Exists(testFile.FullName));
 
             string xmlNonMediaDataFilename = testFile.DirectoryName + @"\NonMediaTestData.xml";
@@ -119,7 +121,7 @@ namespace ChinookMetadata.Test
         [Test]
         public void TestConversionWithNullNonMediaDataFile()
         {
-            var testFile = new FileInfo(@"TestData\iTunesLibraryTestData.xml");
+            var testFile = new FileInfo(TestData);
             Assert.That(File.Exists(testFile.FullName));
 
             // Import data from iTunes library.
@@ -133,7 +135,7 @@ namespace ChinookMetadata.Test
         [Test]
         public void TestConversionWithInvalidNonMediaDataFile()
         {
-            var testFile = new FileInfo(@"TestData\iTunesLibraryTestData.xml");
+            var testFile = new FileInfo(TestData);
             Assert.That(File.Exists(testFile.FullName));
 
             string xmlNonMediaDataFilename = testFile.DirectoryName + @"\NonExistingFile.xml";

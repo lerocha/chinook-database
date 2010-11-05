@@ -1,4 +1,4 @@
-namespace ChinookMetadata.Convert
+namespace ChinookDatabase.Utilities
 {
     /// <summary>
     /// Class that represents iTunes track info.

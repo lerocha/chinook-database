@@ -14,7 +14,7 @@ using System;
 using System.Data;
 using NUnit.Framework;
 using NUnit.Framework.SyntaxHelpers;
-namespace ChinookDatabase.Tests
+namespace ChinookMetadata.Test.DatabaseTests
 {
     /// <summary>
     /// Base class for Chinook database test fixture.

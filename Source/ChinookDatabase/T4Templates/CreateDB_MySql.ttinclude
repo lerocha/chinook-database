@@ -28,7 +28,7 @@ USE Chinook;
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
     ChinookDataSet ds = new ChinookDataSet();
-    ds.ReadXml(thisFile.DirectoryName + @"\..\..\SampleData\ChinookData.xml");
+    ds.ReadXml(thisFile.DirectoryName + @"\..\Xml\ChinookData.xml");
 
     foreach (DataTable table in ds.Tables)
     {
