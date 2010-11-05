@@ -572,7 +572,7 @@
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_ProductItem_InvoiceLine", new global::System.Data.DataColumn[] {
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Track_InvoiceLine", new global::System.Data.DataColumn[] {
                         this.tableTrack.TrackIdColumn}, new global::System.Data.DataColumn[] {
                         this.tableInvoiceLine.TrackIdColumn});
             this.tableInvoiceLine.Constraints.Add(fkc);
@@ -1737,7 +1737,7 @@
                 base.Columns.Add(this.columnTitle);
                 this.columnArtistId = new global::System.Data.DataColumn("ArtistId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnArtistId);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("PK_ProductItem", new global::System.Data.DataColumn[] {
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("PK_Album", new global::System.Data.DataColumn[] {
                                 this.columnAlbumId}, true));
                 this.columnAlbumId.AutoIncrement = true;
                 this.columnAlbumId.AutoIncrementSeed = 1;

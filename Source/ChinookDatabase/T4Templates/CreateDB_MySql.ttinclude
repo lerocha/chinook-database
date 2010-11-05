@@ -43,7 +43,7 @@ CREATE TABLE <#= table.TableName #>
 <#
 		}	// foreach DataColumn
 #>
-    CONSTRAINT PK_<#= table.TableName #> PRIMARY KEY(<#= DataSetHelper.GetPrimaryKeyString(table) #>)
+    CONSTRAINT <#= DataSetHelper.GetPrimaryKeyConstraintName (table) #> PRIMARY KEY(<#= DataSetHelper.GetPrimaryKeyString(table) #>)
 );
 
 <#

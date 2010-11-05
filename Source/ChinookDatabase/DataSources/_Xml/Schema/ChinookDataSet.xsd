@@ -360,7 +360,7 @@
       <xs:selector xpath=".//mstns:Artist" />
       <xs:field xpath="mstns:ArtistId" />
     </xs:unique>
-    <xs:unique name="PK_ProductItem" msdata:PrimaryKey="true">
+    <xs:unique name="PK_Album" msdata:PrimaryKey="true">
       <xs:selector xpath=".//mstns:Album" />
       <xs:field xpath="mstns:AlbumId" />
     </xs:unique>
@@ -401,7 +401,7 @@
       <xs:selector xpath=".//mstns:PlaylistTrack" />
       <xs:field xpath="mstns:PlaylistId" />
     </xs:keyref>
-    <xs:keyref name="FK_ProductItem_InvoiceLine" refer="PK_Track" msdata:ConstraintOnly="true" msdata:DeleteRule="None">
+    <xs:keyref name="FK_Track_InvoiceLine" refer="PK_Track" msdata:ConstraintOnly="true" msdata:DeleteRule="None">
       <xs:selector xpath=".//mstns:InvoiceLine" />
       <xs:field xpath="mstns:TrackId" />
     </xs:keyref>
@@ -421,7 +421,7 @@
       <xs:selector xpath=".//mstns:Employee" />
       <xs:field xpath="mstns:ReportsTo" />
     </xs:keyref>
-    <xs:keyref name="FK_Album_Track" refer="PK_ProductItem" msdata:ConstraintOnly="true">
+    <xs:keyref name="FK_Album_Track" refer="PK_Album" msdata:ConstraintOnly="true">
       <xs:selector xpath=".//mstns:Track" />
       <xs:field xpath="mstns:AlbumId" />
     </xs:keyref>

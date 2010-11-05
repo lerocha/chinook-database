@@ -152,7 +152,7 @@ ALTER TABLE PlaylistTrack ADD FOREIGN KEY (PlaylistId) REFERENCES Playlist(Playl
 CREATE UNIQUE INDEX IPK_Genre ON Genre(GenreId);
 CREATE UNIQUE INDEX IPK_MediaType ON MediaType(MediaTypeId);
 CREATE UNIQUE INDEX IPK_Artist ON Artist(ArtistId);
-CREATE UNIQUE INDEX IPK_ProductItem ON Album(AlbumId);
+CREATE UNIQUE INDEX IPK_Album ON Album(AlbumId);
 CREATE UNIQUE INDEX IPK_Track ON Track(TrackId);
 CREATE UNIQUE INDEX IPK_Employee ON Employee(EmployeeId);
 CREATE UNIQUE INDEX IPK_Customer ON Customer(CustomerId);
@@ -168,7 +168,7 @@ CREATE INDEX IFK_Genre_Track ON Track(GenreId);
 CREATE INDEX IFK_Employee_ReportsTo ON Employee(ReportsTo);
 CREATE INDEX IFK_Employee_Customer ON Customer(SupportRepId);
 CREATE INDEX IFK_Customer_Invoice ON Invoice(CustomerId);
-CREATE INDEX IFK_ProductItem_InvoiceLine ON InvoiceLine(TrackId);
+CREATE INDEX IFK_Track_InvoiceLine ON InvoiceLine(TrackId);
 CREATE INDEX IFK_Invoice_InvoiceLine ON InvoiceLine(InvoiceId);
 CREATE INDEX IFK_Track_PlaylistTrack ON PlaylistTrack(TrackId);
 CREATE INDEX IFK_Playlist_PlaylistTrack ON PlaylistTrack(PlaylistId);

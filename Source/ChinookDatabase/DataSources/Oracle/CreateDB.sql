@@ -56,7 +56,7 @@ CREATE TABLE Album
     AlbumId NUMBER NOT NULL,
     Title VARCHAR2(160) NOT NULL,
     ArtistId NUMBER NOT NULL,
-    CONSTRAINT PK_ProductItem PRIMARY KEY (AlbumId)
+    CONSTRAINT PK_Album PRIMARY KEY (AlbumId)
 ) 
 / 
 
@@ -168,7 +168,7 @@ ALTER TABLE Track ADD CONSTRAINT FK_Genre_Track FOREIGN KEY (GenreId) REFERENCES
 ALTER TABLE Employee ADD CONSTRAINT FK_Employee_ReportsTo FOREIGN KEY (ReportsTo) REFERENCES Employee(EmployeeId);
 ALTER TABLE Customer ADD CONSTRAINT FK_Employee_Customer FOREIGN KEY (SupportRepId) REFERENCES Employee(EmployeeId);
 ALTER TABLE Invoice ADD CONSTRAINT FK_Customer_Invoice FOREIGN KEY (CustomerId) REFERENCES Customer(CustomerId);
-ALTER TABLE InvoiceLine ADD CONSTRAINT FK_ProductItem_InvoiceLine FOREIGN KEY (TrackId) REFERENCES Track(TrackId);
+ALTER TABLE InvoiceLine ADD CONSTRAINT FK_Track_InvoiceLine FOREIGN KEY (TrackId) REFERENCES Track(TrackId);
 ALTER TABLE InvoiceLine ADD CONSTRAINT FK_Invoice_InvoiceLine FOREIGN KEY (InvoiceId) REFERENCES Invoice(InvoiceId);
 ALTER TABLE PlaylistTrack ADD CONSTRAINT FK_Track_PlaylistTrack FOREIGN KEY (TrackId) REFERENCES Track(TrackId);
 ALTER TABLE PlaylistTrack ADD CONSTRAINT FK_Playlist_PlaylistTrack FOREIGN KEY (PlaylistId) REFERENCES Playlist(PlaylistId);
