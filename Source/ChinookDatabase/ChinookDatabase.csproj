@@ -71,11 +71,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataSources\Xml\Schema\ChinookDataSet.cs">
+    <Compile Include="DataSources\_Xml\Schema\ChinookDataSet.cs">
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="DataSources\Xml\Schema\ChinookDataSet.Designer.cs">
+    <Compile Include="DataSources\_Xml\Schema\ChinookDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
@@ -86,7 +86,7 @@
     <Compile Include="Utilities\TrackInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataSources\Xml\ChinookData.tt">
+    <None Include="DataSources\_Xml\ChinookData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookData.xml</LastGenOutput>
     </None>
@@ -150,15 +150,15 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DropTables.sqlce</LastGenOutput>
     </None>
-    <None Include="DataSources\Xml\Schema\ChinookDataSet.xsc">
+    <None Include="DataSources\_Xml\Schema\ChinookDataSet.xsc">
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
     </None>
-    <None Include="DataSources\Xml\Schema\ChinookDataSet.xsd">
+    <None Include="DataSources\_Xml\Schema\ChinookDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ChinookDataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="DataSources\Xml\Schema\ChinookDataSet.xss">
+    <None Include="DataSources\_Xml\Schema\ChinookDataSet.xss">
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
     </None>
     <None Include="T4Templates\Chinook.ttinclude">
@@ -204,7 +204,7 @@
     <Content Include="DataSources\SqlServerCompact\Chinook.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataSources\Xml\ChinookData.xml">
+    <Content Include="DataSources\_Xml\ChinookData.xml">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ChinookData.tt</DependentUpon>
@@ -214,8 +214,8 @@
     <Content Include="DataSources\SqlServerCompact\Chinook_NoIdentity.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataSources\Xml\Source\CompanyData.xml" />
-    <Content Include="DataSources\Xml\Source\iTunes Music Library.xml" />
+    <Content Include="DataSources\_Xml\Source\CompanyData.xml" />
+    <Content Include="DataSources\_Xml\Source\iTunes Music Library.xml" />
     <None Include="DataSources\MySql\CreateDB_NoAutoIncrement.sql">
       <DependentUpon>CreateDB_NoAutoIncrement.tt</DependentUpon>
       <AutoGen>True</AutoGen>

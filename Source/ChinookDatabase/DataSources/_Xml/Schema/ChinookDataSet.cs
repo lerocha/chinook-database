@@ -1,4 +1,4 @@
-﻿namespace ChinookDatabase.DataSources.Xml.Schema
+﻿namespace ChinookDatabase.DataSources._Xml.Schema
 {
 
     partial class ChinookDataSet
