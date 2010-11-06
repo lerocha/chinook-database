@@ -86,6 +86,33 @@
     <Compile Include="Utilities\TrackInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataSources\MySql\create.bat">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>create.tt</DependentUpon>
+    </None>
+    <None Include="DataSources\MySql\create.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>create.bat</LastGenOutput>
+    </None>
+    <None Include="DataSources\Oracle\create.bat">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>create.tt</DependentUpon>
+    </None>
+    <None Include="DataSources\Oracle\create.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>create.bat</LastGenOutput>
+    </None>
+    <None Include="DataSources\SqlServer\create.bat">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>create.tt</DependentUpon>
+    </None>
+    <None Include="DataSources\SqlServer\create.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>create.bat</LastGenOutput>
+    </None>
     <None Include="DataSources\_Xml\ChinookData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookData.xml</LastGenOutput>
@@ -93,9 +120,6 @@
     <None Include="DataSources\MySql\CreateDB_NoAutoIncrement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB_NoAutoIncrement.sql</LastGenOutput>
-    </None>
-    <None Include="DataSources\MySql\CreateDB.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DataSources\MySql\CreateDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -105,9 +129,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateDB.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\Oracle\CreateDB.bat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="DataSources\Oracle\CreateDB.tt">
@@ -166,11 +187,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Chinook.tt</DependentUpon>
     </None>
+    <None Include="T4Templates\CreateDBBatchFile.ttinclude" />
     <None Include="T4Templates\CreateDB_MySql.ttinclude" />
     <None Include="T4Templates\CreateDB_SqlServer.ttinclude" />
-    <None Include="DataSources\SqlServer\CreateDB.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="DataSources\SqlServer\CreateDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB.sql</LastGenOutput>

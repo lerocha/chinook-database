@@ -1,0 +1,6 @@
+﻿<#@ template hostspecific="True"#>
+<#@ output extension="bat" encoding="ASCII" #>
+<#@ include file="..\..\T4Templates\CreateDBBatchFile.ttinclude" #>
+<#
+	this.Template_CreateDBBatchFile_Render(@"mysql -h localhost -u root --password=p4ssw0rd <{0}");
+#>
