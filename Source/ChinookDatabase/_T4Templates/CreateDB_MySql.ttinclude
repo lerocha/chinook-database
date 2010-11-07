@@ -26,9 +26,8 @@ USE Chinook;
    Create Tables
 ********************************************************************************/
 <#
-    FileInfo thisFile = new FileInfo(Host.TemplateFile);
-    ChinookDataSet ds = new ChinookDataSet();
-    ds.ReadXml(thisFile.DirectoryName + @"\..\_Xml\ChinookData.xml");
+    var ds = new ChinookDataSet();
+    ds.ReadXml(options.DataSource);
 
     foreach (DataTable table in ds.Tables)
     {

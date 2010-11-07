@@ -8,15 +8,26 @@
 <#@ include file="..\..\_T4Templates\Chinook.ttinclude" #>
 <#
 this.Host.SetOutputEncoding(System.Text.Encoding.UTF8, false);
+
+var options = new { 
+					AutoIncrement = false,
+					SetupDatabase = true,
+					ServerName = "Oracle",
+					FileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".sql",
+					DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"..\_Xml\ChinookData.xml")
+				  };
 #>
 /*******************************************************************************
    Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
-   Script: CreateDB.sql
+   Script: <#= options.FileName #>
    Description: Creates and populates the Chinook database.
-   DB Server: Oracle
+   DB Server: <#= options.ServerName #>
    Author: Luis Rocha
    License: http://www.codeplex.com/ChinookDatabase/license
 ********************************************************************************/
+<# 
+	if (options.SetupDatabase) { 
+#>
 
 DROP USER chinook CASCADE;
 
@@ -33,6 +44,9 @@ GRANT create table TO chinook;
 GRANT create view TO chinook;
 
 conn  chinook/p4ssw0rd
+<# 
+	} // if (options.SetupDatabase)
+#>
 
 /*******************************************************************************
    Create Tables

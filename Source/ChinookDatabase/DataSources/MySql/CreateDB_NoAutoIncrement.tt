@@ -8,7 +8,8 @@ var options = new {
 					AutoIncrement = false,
 					SetupDatabase = true,
 					ServerName = "MySQL",
-					FileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".sql"
+					FileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".sql",
+					DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"..\_Xml\ChinookData.xml")
 				  };
 #>
 <#@ include file="..\..\_T4Templates\CreateDB_MySql.ttinclude" #>
