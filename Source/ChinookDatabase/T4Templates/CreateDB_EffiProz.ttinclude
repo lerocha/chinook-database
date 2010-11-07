@@ -47,7 +47,7 @@ CREATE TABLE "<#= table.TableName #>"
     foreach (DataTable table in ds.Tables)
     {
 #>
-ALTER TABLE "<#= table.TableName #>" ADD CONSTRAINT "<#= DataSetHelper.GetPrimaryKeyConstraintName (table) #>" PRIMARY KEY("<#= DataSetHelper.GetPrimaryKeyString(table) #>");
+ALTER TABLE "<#= table.TableName #>" ADD CONSTRAINT "<#= DataSetHelper.GetPrimaryKeyConstraintName (table) #>" PRIMARY KEY(<#= DataSetHelper.GetPrimaryKeyString(table, "\"{0}\"") #>);
 <#
 	}	// foreach DataTable
 #>
@@ -83,7 +83,7 @@ ALTER TABLE "<#= table.TableName #>" ADD CONSTRAINT "<#= fk.ConstraintName #>" F
 			{
 				UniqueConstraint pk = (UniqueConstraint) constraint;
 #>
-ALTER TABLE "<#= table.TableName #>" ADD CONSTRAINT "I<#= DataSetHelper.GetPrimaryKeyConstraintName (table) #>" UNIQUE("<#= DataSetHelper.GetPrimaryKeyString(table) #>");
+ALTER TABLE "<#= table.TableName #>" ADD CONSTRAINT "I<#= DataSetHelper.GetPrimaryKeyConstraintName (table) #>" UNIQUE(<#= DataSetHelper.GetPrimaryKeyString(table, "\"{0}\"") #>);
 <#
 			}
         } // foreach Constraint
@@ -129,12 +129,12 @@ CREATE INDEX "I<#= fk.ConstraintName #>" ON "<#= table.TableName #>"("<#= fk.Col
                 
                 if (sbFields.Length == 0)
                 {
-                    sbFields.Append("(");
+                    sbFields.Append("(\"");
                     sbValues.Append("(");
                 }
                 else
                 {
-                    sbFields.Append(", ");
+                    sbFields.Append("\", \"");
                     sbValues.Append(", ");
                 }
 
@@ -159,7 +159,7 @@ CREATE INDEX "I<#= fk.ConstraintName #>" ON "<#= table.TableName #>"("<#= fk.Col
                 sbFields.Append(col.ColumnName);
             }
 
-            sbFields.Append(")");
+            sbFields.Append("\")");
             sbValues.Append(")");
 #>
 <#= string.Format("INSERT INTO \"{0}\" {1} VALUES {2};", table.TableName, sbFields, sbValues) #>

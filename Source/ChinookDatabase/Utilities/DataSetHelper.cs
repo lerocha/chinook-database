@@ -74,20 +74,21 @@ namespace ChinookDatabase.Utilities
         /// Gets a string containing the primary key of the given table. For example "CustomerId" or "PlaylistId, TrackId".
         /// </summary>
         /// <param name="table"></param>
+        /// <param name="nameFormat"></param>
         /// <returns>A string representing the primary key (single or composite).</returns>
-        public static string GetPrimaryKeyString(DataTable table)
+        public static string GetPrimaryKeyString(DataTable table, string nameFormat = "{0}")
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Constraint constraint in table.Constraints)
+            var sb = new StringBuilder();
+            foreach (var constraint in table.Constraints)
             {
-                UniqueConstraint uniqueConstraint = constraint as UniqueConstraint;
+                var uniqueConstraint = constraint as UniqueConstraint;
 
                 if (uniqueConstraint != null && uniqueConstraint.IsPrimaryKey)
                 {
-                    foreach (DataColumn pk in uniqueConstraint.Columns)
+                    foreach (var pk in uniqueConstraint.Columns)
                     {
                         if (sb.Length != 0) sb.Append(", ");
-                        sb.Append(pk.ColumnName);
+                        sb.AppendFormat(nameFormat, pk.ColumnName);
                     }
                 }
             }
@@ -103,7 +104,7 @@ namespace ChinookDatabase.Utilities
         {
             foreach (Constraint constraint in table.Constraints)
             {
-                UniqueConstraint uniqueConstraint = constraint as UniqueConstraint;
+                var uniqueConstraint = constraint as UniqueConstraint;
 
                 if (uniqueConstraint != null && uniqueConstraint.IsPrimaryKey)
                 {
