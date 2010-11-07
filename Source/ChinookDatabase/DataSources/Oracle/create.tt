@@ -1,6 +1,6 @@
 ﻿<#@ template hostspecific="True"#>
 <#@ output extension="bat" encoding="ASCII" #>
-<#@ include file="..\..\T4Templates\CreateDBBatchFile.ttinclude" #>
+<#@ include file="..\..\_T4Templates\CreateDBBatchFile.ttinclude" #>
 <#
 	this.Template_CreateDBBatchFile_Render(@"sqlplus -S / as sysdba @ {0}");
 #>

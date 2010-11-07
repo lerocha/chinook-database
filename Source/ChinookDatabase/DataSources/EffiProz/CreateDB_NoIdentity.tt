@@ -7,4 +7,4 @@ var options = new {
 					FileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".sql"
 				  };
 #>
-<#@ include file="..\..\T4Templates\CreateDB_EffiProz.ttinclude" #>
+<#@ include file="..\..\_T4Templates\CreateDB_EffiProz.ttinclude" #>

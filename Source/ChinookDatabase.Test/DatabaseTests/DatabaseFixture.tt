@@ -4,7 +4,7 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ include file="..\..\ChinookDatabase\T4Templates\Chinook.ttinclude" #>
+<#@ include file="..\..\ChinookDatabase\_T4Templates\Chinook.ttinclude" #>
 <#
 this.Host.SetOutputEncoding(System.Text.Encoding.UTF8,false);
 #>/*******************************************************************************

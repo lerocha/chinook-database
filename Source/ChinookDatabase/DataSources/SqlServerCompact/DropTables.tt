@@ -5,7 +5,7 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ include file="..\..\T4Templates\Chinook.ttinclude" #>
+<#@ include file="..\..\_T4Templates\Chinook.ttinclude" #>
 /*******************************************************************************
    Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
    Script: DropTables.sql

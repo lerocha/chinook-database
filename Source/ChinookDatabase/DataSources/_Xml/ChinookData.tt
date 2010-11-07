@@ -5,7 +5,7 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ include file="..\..\T4Templates\Chinook.ttinclude" #><?xml version="1.0" encoding="UTF-16"?>
+<#@ include file="..\..\_T4Templates\Chinook.ttinclude" #><?xml version="1.0" encoding="UTF-16"?>
 <!--
    Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
    Author: Luis Rocha

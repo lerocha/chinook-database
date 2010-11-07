@@ -8,4 +8,4 @@ var options = new {
 					FileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".sqlce"
 				  };
 #>
-<#@ include file="..\..\T4Templates\CreateDB_SqlServer.ttinclude" #>
+<#@ include file="..\..\_T4Templates\CreateDB_SqlServer.ttinclude" #>

@@ -11,4 +11,4 @@ var options = new {
 					FileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".sql"
 				  };
 #>
-<#@ include file="..\..\T4Templates\CreateDB_MySql.ttinclude" #>
+<#@ include file="..\..\_T4Templates\CreateDB_MySql.ttinclude" #>

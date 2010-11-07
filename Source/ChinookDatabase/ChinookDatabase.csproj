@@ -193,15 +193,15 @@
     <None Include="DataSources\_Xml\Schema\ChinookDataSet.xss">
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
     </None>
-    <None Include="T4Templates\Chinook.ttinclude">
+    <None Include="_T4Templates\Chinook.ttinclude">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Chinook.tt</DependentUpon>
     </None>
-    <None Include="T4Templates\CreateDB_EffiProz.ttinclude" />
-    <None Include="T4Templates\CreateDBBatchFile.ttinclude" />
-    <None Include="T4Templates\CreateDB_MySql.ttinclude" />
-    <None Include="T4Templates\CreateDB_SqlServer.ttinclude" />
+    <None Include="_T4Templates\CreateDB_EffiProz.ttinclude" />
+    <None Include="_T4Templates\CreateDBBatchFile.ttinclude" />
+    <None Include="_T4Templates\CreateDB_MySql.ttinclude" />
+    <None Include="_T4Templates\CreateDB_SqlServer.ttinclude" />
     <None Include="DataSources\SqlServer\CreateDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB.sql</LastGenOutput>
@@ -222,7 +222,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CreateDB_NoIdentity.sql</LastGenOutput>
     </None>
-    <None Include="T4Templates\Chinook.tt">
+    <None Include="_T4Templates\Chinook.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Chinook.ttinclude</LastGenOutput>
     </None>
