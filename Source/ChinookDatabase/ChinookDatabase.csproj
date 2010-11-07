@@ -86,6 +86,14 @@
     <Compile Include="Utilities\TrackInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataSources\EffiProz\CreateDB_NoIdentity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CreateDB_NoIdentity.sql</LastGenOutput>
+    </None>
+    <None Include="DataSources\EffiProz\CreateDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CreateDB.sql</LastGenOutput>
+    </None>
     <None Include="DataSources\MySql\create.bat">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -190,6 +198,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Chinook.tt</DependentUpon>
     </None>
+    <None Include="T4Templates\CreateDB_EffiProz.ttinclude" />
     <None Include="T4Templates\CreateDBBatchFile.ttinclude" />
     <None Include="T4Templates\CreateDB_MySql.ttinclude" />
     <None Include="T4Templates\CreateDB_SqlServer.ttinclude" />
@@ -223,6 +232,18 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataSources\EffiProz\CreateDB.sql">
+      <DependentUpon>CreateDB.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </None>
+    <None Include="DataSources\EffiProz\CreateDB_NoIdentity.sql">
+      <DependentUpon>CreateDB_NoIdentity.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </None>
     <Content Include="DataSources\SqlServerCompact\Chinook.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -282,6 +303,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

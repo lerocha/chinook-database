@@ -1,0 +1,10 @@
+﻿<#@ template hostspecific="True"#>
+<#@ output extension="sql" #>
+<#
+var options = new { 
+					AutoIncrement = true,
+					ServerName = "EffiProz",
+					FileName = Path.GetFileNameWithoutExtension(Host.TemplateFile) + ".sql"
+				  };
+#>
+<#@ include file="..\..\T4Templates\CreateDB_EffiProz.ttinclude" #>
