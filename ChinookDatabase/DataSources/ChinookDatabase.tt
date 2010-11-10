@@ -19,6 +19,7 @@ var options = new
 								new SqlServerCompactStrategy { IsIdentityEnabled = false },
 								new MySqlStrategy { IsIdentityEnabled = true },
 								new MySqlStrategy { IsIdentityEnabled = false },
+								new OracleStrategy { IsIdentityEnabled = false },
 								new EffiProzStrategy { IsIdentityEnabled = true },
 								new EffiProzStrategy { IsIdentityEnabled = false }
 						   	}

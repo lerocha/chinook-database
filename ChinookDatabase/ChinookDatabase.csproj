@@ -94,6 +94,7 @@
     </Compile>
     <Compile Include="DdlStrategies\AbstractDdlStrategy.cs" />
     <Compile Include="DdlStrategies\EffiProzStrategy.cs" />
+    <Compile Include="DdlStrategies\OracleStrategy.cs" />
     <Compile Include="DdlStrategies\SqlServerCompactStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DataSetHelper.cs" />
@@ -125,6 +126,9 @@
     <None Include="DataSources\create-MySql.bat">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="DataSources\create-Oracle.bat">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
     </None>
     <None Include="DataSources\create-SqlServer.bat">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
@@ -176,6 +180,9 @@
     <Content Include="DataSources\Chinook-MySql.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook-Oracle-NoIdentity.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
     </Content>
     <Content Include="DataSources\Chinook-SqlServer-NoIdentity.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>

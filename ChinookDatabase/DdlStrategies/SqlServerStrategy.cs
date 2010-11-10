@@ -12,7 +12,10 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
         }
 
-        public override string Name { get { return "SqlServer"; } }
+        public override string Name
+        {
+            get { return "SqlServer"; }
+        }
 
         public override string GetClustered(StoreItemCollection store, EntityType entityType)
         {
@@ -26,11 +29,11 @@ namespace ChinookDatabase.DdlStrategies
 
             builder.AppendFormat("IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'{0}')\n",
                                  databaseName)
-                    .AppendLine("BEGIN")
-                    .AppendFormat("\tALTER DATABASE {0} SET OFFLINE WITH ROLLBACK IMMEDIATE;\n", name)
-                    .AppendFormat("\tALTER DATABASE {0} SET ONLINE;\n", name)
-                    .AppendFormat("\tDROP DATABASE {0};\n", name)
-                    .AppendLine("END");
+                .AppendLine("BEGIN")
+                .AppendFormat("\tALTER DATABASE {0} SET OFFLINE WITH ROLLBACK IMMEDIATE;\n", name)
+                .AppendFormat("\tALTER DATABASE {0} SET ONLINE;\n", name)
+                .AppendFormat("\tDROP DATABASE {0};\n", name)
+                .AppendLine("END");
 
             return builder.ToString();
         }
@@ -55,6 +58,5 @@ namespace ChinookDatabase.DdlStrategies
         {
             return "GO";
         }
-
     }
 }

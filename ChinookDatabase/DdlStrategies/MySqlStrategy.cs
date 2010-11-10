@@ -11,9 +11,15 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = @"mysql -h localhost -u root --password=p4ssw0rd <{0}";
         }
 
-        public override string Name { get { return "MySql"; } }
+        public override string Name
+        {
+            get { return "MySql"; }
+        }
 
-        public override string Identity { get { return "AUTO_INCREMENT"; } }
+        public override string Identity
+        {
+            get { return "AUTO_INCREMENT"; }
+        }
 
         public override string FormatName(string name)
         {
@@ -52,6 +58,5 @@ namespace ChinookDatabase.DdlStrategies
         {
             return string.Format("USE {0};", FormatName(databaseName));
         }
-
     }
 }
