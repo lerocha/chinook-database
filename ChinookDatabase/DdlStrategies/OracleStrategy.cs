@@ -15,11 +15,6 @@ namespace ChinookDatabase.DdlStrategies
             get { return "Oracle"; }
         }
 
-        public override string Identity
-        {
-            get { return "AUTO_INCREMENT"; }
-        }
-
         public override string FormatName(string name)
         {
             return string.Format("{0}", name);
