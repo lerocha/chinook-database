@@ -1,10 +1,13 @@
-﻿<#@ assembly name="System.Core"#>
+﻿
+<#@ assembly name="System.Core"#>
 <#@ assembly name="System.Data"#>
 <#@ assembly name="System.Data.DataSetExtensions.dll"#>
+<#@ assembly name="System.Data.Entity"#>
 <#@ assembly name="System.Data.Linq"#>
 <#@ assembly name="EnvDTE"#>
 <#@ assembly name="System.Xml"#>
 <#@ assembly name="System.Xml.Linq"#>
+<#@ assembly name="$(DevEnvDir)Microsoft.Data.Entity.Design.DatabaseGeneration.dll"#>
 <#@ import namespace="System"#>
 <#@ import namespace="System.CodeDom"#>
 <#@ import namespace="System.CodeDom.Compiler"#>
@@ -13,6 +16,7 @@
 <#@ import namespace="System.Data"#>
 <#@ import namespace="System.Data.Linq"#>
 <#@ import namespace="System.Data.Linq.Mapping"#>
+<#@ import namespace="System.Data.Metadata.Edm"#>
 <#@ import namespace="System.IO"#>
 <#@ import namespace="System.Linq"#>
 <#@ import namespace="System.Reflection"#>
@@ -21,6 +25,7 @@
 <#@ import namespace="System.Xml.Linq"#>
 <#@ import namespace="System.Xml.XPath"#>
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating"#>
+<#@ import namespace="Microsoft.Data.Entity.Design.DatabaseGeneration" #>
 <#+
 
 //------------------------------------------------------------------------------
@@ -34,7 +39,14 @@
 //     List of Included Files:
 //          ChinookDataSet.cs
 //          ChinookDataSet.Designer.cs
+//          AbstractDdlStrategy.cs
+//          EffiProzStrategy.cs
+//          IDdlStrategy.cs
+//          MySqlStrategy.cs
+//          SqlServerCompactStrategy.cs
+//          SqlServerStrategy.cs
 //          DataSetHelper.cs
+//          EdmHelper.cs
 //          ITunesToChinookDataSetConverter.cs
 //          TrackInfo.cs
 //
@@ -6239,6 +6251,342 @@
 #pragma warning restore 1591
 
 //------------------------------------------------------------------------------
+// Filename: AbstractDdlStrategy.cs
+//------------------------------------------------------------------------------
+
+
+    public abstract class AbstractDdlStrategy : IDdlStrategy
+    {
+
+        #region Implementation of IDdlStrategy
+
+        public virtual string Name
+        {
+            get { return string.Empty; }
+        }
+
+        public virtual string FileExtension
+        {
+            get { return "sql"; }
+        }
+
+        public virtual string Identity
+        {
+            get { return "IDENTITY"; }
+        }
+
+        public bool IsIdentityEnabled { get; set; }
+
+        public bool CanReCreateDatabase { get; set; }
+
+        public string CommandLineFormat { get; set; }
+
+        public virtual string FormatName(string name)
+        {
+            return string.Format("[{0}]", name);
+        }
+
+        public virtual string GetFullyQualifiedName(string schema, string name)
+        {
+            return string.Format("{0}.{1}", FormatName(schema), FormatName(name));
+        }
+
+        public virtual string GetStoreType(EdmProperty property)
+        {
+            return property.ToStoreType().ToUpper();
+        }
+
+        public virtual string GetIdentity(EdmProperty property, Version targetVersion)
+        {
+            if (IsIdentityEnabled &&
+                property.GetStoreGeneratedPatternValue(targetVersion, DataSpace.SSpace) ==
+                StoreGeneratedPattern.Identity)
+            {
+                return Identity;
+            }
+
+            return String.Empty;
+        }
+
+        public virtual string GetClustered(StoreItemCollection store, EntityType entityType)
+        {
+            return string.Empty;
+        }
+
+        public virtual string GetForeignKeyConstraintName(ReferentialConstraint constraint)
+        {
+            var name = constraint.FromRole.DeclaringType.Name;
+
+            if (!name.StartsWith("FK_", StringComparison.InvariantCultureIgnoreCase))
+            {
+                name = "FK_" + name;
+            }
+
+            return name;
+        }
+
+        public virtual string GetColumns(IEnumerable<EdmProperty> properties, char delimiter)
+        {
+            var builder = new StringBuilder();
+            foreach (var property in properties)
+            {
+                builder.AppendFormat("{0}{1} ", FormatName(property.Name), delimiter);
+            }
+            return builder.ToString().Trim().TrimEnd(delimiter);
+        }
+
+        public string GetDeleteAction(ReferentialConstraint refConstraint)
+        {
+            return refConstraint.FromRole.DeleteBehavior == OperationAction.Cascade ? "CASCADE" : "NO ACTION";
+        }
+
+        public virtual string WriteDropDatabase(string databaseName)
+        {
+            return string.Empty;
+        }
+
+        public virtual string WriteDropTable(EntitySet entitySet)
+        {
+            return string.Format("DROP TABLE {0};", FormatName(entitySet.GetTableName()));
+        }
+
+        public string WriteDropForeignKey(AssociationSet associationSet)
+        {
+            var constraint = associationSet.ElementType.ReferentialConstraints.Single();
+            var constraintName = GetForeignKeyConstraintName(constraint);
+            var end = associationSet.AssociationSetEnds
+                .Where(a => a.CorrespondingAssociationEndMember == constraint.ToRole)
+                .Single();
+            var fqTableName = GetFullyQualifiedName(end.EntitySet.GetSchemaName(), end.EntitySet.GetTableName());
+            var name = FormatName(constraintName);
+            return string.Format("ALTER TABLE {0} DROP CONSTRAINT {1};", fqTableName, name);
+        }
+
+        public virtual string WriteCreateDatabase(string databaseName)
+        {
+            return string.Empty;
+        }
+
+        public virtual string WriteUseDatabase(string databaseName)
+        {
+            return string.Empty;
+        }
+
+        public virtual string WriteCreateColumn(EdmProperty property, Version targetVersion)
+        {
+            var notnull = (property.Nullable ? "" : "NOT NULL");
+            var identity = GetIdentity(property, targetVersion);
+            return string.Format("{0} {1} {2} {3}",
+                                 FormatName(property.Name),
+                                 GetStoreType(property),
+                                 notnull, identity).Trim();
+        }
+
+        public virtual string WriteExecuteCommand()
+        {
+            return string.Empty;
+        }
+
+        #endregion
+    }
+
+
+//------------------------------------------------------------------------------
+// Filename: EffiProzStrategy.cs
+//------------------------------------------------------------------------------
+
+    public class EffiProzStrategy : AbstractDdlStrategy
+    {
+        public override string Name { get { return "EffiProz"; } }
+
+        public override string FormatName(string name)
+        {
+            return string.Format("\"{0}\"", name);
+        }
+    }
+
+//------------------------------------------------------------------------------
+// Filename: IDdlStrategy.cs
+//------------------------------------------------------------------------------
+
+
+    public interface IDdlStrategy
+    {
+        #region Read-only properties.
+
+        string Name { get; }
+        string FileExtension { get; }
+        string Identity { get; }
+
+        #endregion
+
+        #region Customizable properties.
+
+        bool IsIdentityEnabled { get; set; }
+        bool CanReCreateDatabase { get; set; }
+        string CommandLineFormat { get; set; }
+
+        #endregion
+
+        #region Methods used to build SQL commands.
+
+        string FormatName(string name);
+        string GetFullyQualifiedName(string schema, string name);
+        string GetStoreType(EdmProperty property);
+        string GetIdentity(EdmProperty property, Version targetVersion);
+        string GetClustered(StoreItemCollection store, EntityType entityType);
+        string GetForeignKeyConstraintName(ReferentialConstraint constraint);
+        string GetColumns(IEnumerable<EdmProperty> properties, char delimiter);
+        string GetDeleteAction(ReferentialConstraint refConstraint);
+
+        #endregion
+
+        #region Methods used to write full SQL commands.
+
+        string WriteDropDatabase(string databaseName);
+        string WriteDropTable(EntitySet entitySet);
+        string WriteDropForeignKey(AssociationSet associationSet);
+        string WriteCreateDatabase(string databaseName);
+        string WriteUseDatabase(string databaseName);
+        string WriteCreateColumn(EdmProperty property, Version targetVersion);
+        string WriteExecuteCommand();
+
+        #endregion
+    }
+
+//------------------------------------------------------------------------------
+// Filename: MySqlStrategy.cs
+//------------------------------------------------------------------------------
+
+
+    public class MySqlStrategy : AbstractDdlStrategy
+    {
+        public MySqlStrategy()
+        {
+            CanReCreateDatabase = true;
+            CommandLineFormat = @"mysql -h localhost -u root --password=p4ssw0rd <{0}";
+        }
+
+        public override string Name { get { return "MySql"; } }
+
+        public override string Identity { get { return "AUTO_INCREMENT"; } }
+
+        public override string FormatName(string name)
+        {
+            return string.Format("`{0}`", name);
+        }
+
+        public override string GetFullyQualifiedName(string schema, string name)
+        {
+            return FormatName(name);
+        }
+
+        public override string GetStoreType(EdmProperty property)
+        {
+            if (property.TypeUsage.EdmType.Name == "guid")
+                return "CHAR(36) BINARY";
+
+            return base.GetStoreType(property);
+        }
+
+        public override string WriteDropDatabase(string databaseName)
+        {
+            return string.Format("DROP DATABASE IF EXISTS {0};", FormatName(databaseName));
+        }
+
+        public override string WriteDropTable(EntitySet entitySet)
+        {
+            return string.Format("DROP TABLE IF EXISTS {0};", FormatName(entitySet.GetTableName()));
+        }
+
+        public override string WriteCreateDatabase(string databaseName)
+        {
+            return string.Format("CREATE DATABASE {0};", FormatName(databaseName));
+        }
+
+        public override string WriteUseDatabase(string databaseName)
+        {
+            return string.Format("USE {0};", FormatName(databaseName));
+        }
+
+    }
+
+//------------------------------------------------------------------------------
+// Filename: SqlServerCompactStrategy.cs
+//------------------------------------------------------------------------------
+
+    public class SqlServerCompactStrategy : AbstractDdlStrategy
+    {
+        public override string Name { get { return "SqlServerCompact"; } }
+
+        public override string FileExtension { get { return "sqlce"; } }
+
+        public override string GetFullyQualifiedName(string schema, string name)
+        {
+            return FormatName(name);
+        }
+    }
+
+//------------------------------------------------------------------------------
+// Filename: SqlServerStrategy.cs
+//------------------------------------------------------------------------------
+
+
+    public class SqlServerStrategy : AbstractDdlStrategy
+    {
+        public SqlServerStrategy()
+        {
+            CanReCreateDatabase = true;
+            CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
+        }
+
+        public override string Name { get { return "SqlServer"; } }
+
+        public override string GetClustered(StoreItemCollection store, EntityType entityType)
+        {
+            return entityType.IsJoinTable(store) ? "NONCLUSTERED" : "CLUSTERED";
+        }
+
+        public override string WriteDropDatabase(string databaseName)
+        {
+            var name = FormatName(databaseName);
+            var builder = new StringBuilder();
+
+            builder.AppendFormat("IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'{0}')\n",
+                                 databaseName)
+                    .AppendLine("BEGIN")
+                    .AppendFormat("\tALTER DATABASE {0} SET OFFLINE WITH ROLLBACK IMMEDIATE;\n", name)
+                    .AppendFormat("\tALTER DATABASE {0} SET ONLINE;\n", name)
+                    .AppendFormat("\tDROP DATABASE {0};\n", name)
+                    .AppendLine("END");
+
+            return builder.ToString();
+        }
+
+        public override string WriteDropTable(EntitySet entitySet)
+        {
+            var fqName = GetFullyQualifiedName(entitySet.GetSchemaName(), entitySet.GetTableName());
+            return string.Format("IF OBJECT_ID(N'{0}', 'U') IS NOT NULL DROP TABLE {0};", fqName);
+        }
+
+        public override string WriteCreateDatabase(string databaseName)
+        {
+            return string.Format("CREATE DATABASE {0};", FormatName(databaseName));
+        }
+
+        public override string WriteUseDatabase(string databaseName)
+        {
+            return string.Format("USE {0};", FormatName(databaseName));
+        }
+
+        public override string WriteExecuteCommand()
+        {
+            return "GO";
+        }
+
+    }
+
+//------------------------------------------------------------------------------
 // Filename: DataSetHelper.cs
 //------------------------------------------------------------------------------
 
@@ -6368,6 +6716,34 @@
             return expected;
         }
 
+    }
+
+//------------------------------------------------------------------------------
+// Filename: EdmHelper.cs
+//------------------------------------------------------------------------------
+
+
+    public class EdmHelper
+    {
+        public static string GetSsdlFromEdmx(string filename)
+        {
+            var document = new XPathDocument(filename);
+            var navigator = document.CreateNavigator();
+
+            if (navigator.NameTable == null) return string.Empty;
+
+            var manager = new XmlNamespaceManager(navigator.NameTable);
+            manager.AddNamespace("edmx", "http://schemas.microsoft.com/ado/2008/10/edmx");
+            var nodes = navigator.Select("/edmx:Edmx/edmx:Runtime/edmx:StorageModels", manager);
+
+            if (nodes.MoveNext())
+            {
+                if (nodes.Current != null)
+                    return nodes.Current.InnerXml;
+            }
+
+            return string.Empty;
+        }
     }
 
 //------------------------------------------------------------------------------
