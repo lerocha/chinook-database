@@ -67,8 +67,9 @@ CREATE TABLE [Album]
     [AlbumId] INT NOT NULL,
     [Title] NVARCHAR(160) NOT NULL,
     [ArtistId] INT NOT NULL,
-    CONSTRAINT [PK_Album] PRIMARY KEY  ([AlbumId])
-    -- FOREIGN KEY ...
+    CONSTRAINT [PK_Album] PRIMARY KEY  ([AlbumId]),
+    FOREIGN KEY ([ArtistId]) REFERENCES [Artist] ([ArtistId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE [Artist]
@@ -76,7 +77,6 @@ CREATE TABLE [Artist]
     [ArtistId] INT NOT NULL,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_Artist] PRIMARY KEY  ([ArtistId])
-    -- FOREIGN KEY ...
 );
 
 CREATE TABLE [Customer]
@@ -94,8 +94,9 @@ CREATE TABLE [Customer]
     [Fax] NVARCHAR(24),
     [Email] NVARCHAR(60) NOT NULL,
     [SupportRepId] INT,
-    CONSTRAINT [PK_Customer] PRIMARY KEY  ([CustomerId])
-    -- FOREIGN KEY ...
+    CONSTRAINT [PK_Customer] PRIMARY KEY  ([CustomerId]),
+    FOREIGN KEY ([SupportRepId]) REFERENCES [Employee] ([EmployeeId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE [Employee]
@@ -115,8 +116,9 @@ CREATE TABLE [Employee]
     [Phone] NVARCHAR(24),
     [Fax] NVARCHAR(24),
     [Email] NVARCHAR(60),
-    CONSTRAINT [PK_Employee] PRIMARY KEY  ([EmployeeId])
-    -- FOREIGN KEY ...
+    CONSTRAINT [PK_Employee] PRIMARY KEY  ([EmployeeId]),
+    FOREIGN KEY ([ReportsTo]) REFERENCES [Employee] ([EmployeeId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE [Genre]
@@ -124,7 +126,6 @@ CREATE TABLE [Genre]
     [GenreId] INT NOT NULL,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_Genre] PRIMARY KEY  ([GenreId])
-    -- FOREIGN KEY ...
 );
 
 CREATE TABLE [Invoice]
@@ -138,8 +139,9 @@ CREATE TABLE [Invoice]
     [BillingCountry] NVARCHAR(40),
     [BillingPostalCode] NVARCHAR(10),
     [Total] NUMERIC(10,2) NOT NULL,
-    CONSTRAINT [PK_Invoice] PRIMARY KEY  ([InvoiceId])
-    -- FOREIGN KEY ...
+    CONSTRAINT [PK_Invoice] PRIMARY KEY  ([InvoiceId]),
+    FOREIGN KEY ([CustomerId]) REFERENCES [Customer] ([CustomerId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE [InvoiceLine]
@@ -149,8 +151,11 @@ CREATE TABLE [InvoiceLine]
     [TrackId] INT NOT NULL,
     [UnitPrice] NUMERIC(10,2) NOT NULL,
     [Quantity] INT NOT NULL,
-    CONSTRAINT [PK_InvoiceLine] PRIMARY KEY  ([InvoiceLineId])
-    -- FOREIGN KEY ...
+    CONSTRAINT [PK_InvoiceLine] PRIMARY KEY  ([InvoiceLineId]),
+    FOREIGN KEY ([InvoiceId]) REFERENCES [Invoice] ([InvoiceId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY ([TrackId]) REFERENCES [Track] ([TrackId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE [MediaType]
@@ -158,7 +163,6 @@ CREATE TABLE [MediaType]
     [MediaTypeId] INT NOT NULL,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_MediaType] PRIMARY KEY  ([MediaTypeId])
-    -- FOREIGN KEY ...
 );
 
 CREATE TABLE [Playlist]
@@ -166,15 +170,17 @@ CREATE TABLE [Playlist]
     [PlaylistId] INT NOT NULL,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_Playlist] PRIMARY KEY  ([PlaylistId])
-    -- FOREIGN KEY ...
 );
 
 CREATE TABLE [PlaylistTrack]
 (
     [PlaylistId] INT NOT NULL,
     [TrackId] INT NOT NULL,
-    CONSTRAINT [PK_PlaylistTrack] PRIMARY KEY  ([PlaylistId], [TrackId])
-    -- FOREIGN KEY ...
+    CONSTRAINT [PK_PlaylistTrack] PRIMARY KEY  ([PlaylistId], [TrackId]),
+    FOREIGN KEY ([PlaylistId]) REFERENCES [Playlist] ([PlaylistId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY ([TrackId]) REFERENCES [Track] ([TrackId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 CREATE TABLE [Track]
@@ -188,8 +194,13 @@ CREATE TABLE [Track]
     [Milliseconds] INT NOT NULL,
     [Bytes] INT,
     [UnitPrice] NUMERIC(10,2) NOT NULL,
-    CONSTRAINT [PK_Track] PRIMARY KEY  ([TrackId])
-    -- FOREIGN KEY ...
+    CONSTRAINT [PK_Track] PRIMARY KEY  ([TrackId]),
+    FOREIGN KEY ([AlbumId]) REFERENCES [Album] ([AlbumId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY ([GenreId]) REFERENCES [Genre] ([GenreId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION,
+    FOREIGN KEY ([MediaTypeId]) REFERENCES [MediaType] ([MediaTypeId]) 
+		ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 

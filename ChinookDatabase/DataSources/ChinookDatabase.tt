@@ -112,16 +112,24 @@ CREATE TABLE <#= tableName #>
 	// Create Primary Key Constraint.
 	string pkName = strategy.FormatName("PK_" + entitySet.GetTableName());
 #>
-    CONSTRAINT <#= pkName #> PRIMARY KEY <#= strategy.GetClustered(existingStore, entitySet.ElementType)#> (<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>)
-<#
+    CONSTRAINT <#= pkName #> PRIMARY KEY <#= strategy.GetClustered(existingStore, entitySet.ElementType)#> (<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>)<#
+	// Create Foreign Key depending on the strategy.
 	if (strategy.CreateForeignKeyOnTableCreate)
 	{
-		// TODO:
-#>
-    -- FOREIGN KEY ...
-<#
+        foreach (var item in from associationSet in existingStore.GetAllAssociationSets()
+                             let constraint = associationSet.ElementType.ReferentialConstraints.Single()
+                             let toEnd = associationSet.AssociationSetEnds.Where(a => a.CorrespondingAssociationEndMember == constraint.ToRole).Single()
+                             where toEnd.EntitySet == entitySet
+                             let refEntity = associationSet.AssociationSetEnds.Where(a => a.CorrespondingAssociationEndMember == constraint.FromRole).Single().EntitySet
+                             select new {constraint, refEntity})
+        {#>,
+    FOREIGN KEY (<#= strategy.GetColumns(item.constraint.ToProperties, ',') #>) REFERENCES <#= strategy.GetFullyQualifiedName(item.refEntity.GetSchemaName(), item.refEntity.GetTableName()) #> (<#= strategy.GetColumns(item.constraint.FromProperties, ',') #>) 
+		ON DELETE <#= strategy.GetDeleteAction(item.constraint) #> ON UPDATE NO ACTION<#
+        }
+	
 	}
 #>
+
 );
 <#= strategy.WriteExecuteCommand() #>
 <#
