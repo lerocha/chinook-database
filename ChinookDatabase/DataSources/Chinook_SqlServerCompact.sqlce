@@ -1,6 +1,6 @@
 /*******************************************************************************
    Chinook Database - Version 1.2
-   Script: Chinook-SqlServerCompact.sqlce
+   Script: Chinook_SqlServerCompact.sqlce
    Description: Creates and populates the Chinook database.
    DB Server: SqlServerCompact
    Author: Luis Rocha
@@ -64,7 +64,7 @@ DROP TABLE [Track];
 ********************************************************************************/
 CREATE TABLE [Album]
 (
-    [AlbumId] INT NOT NULL IDENTITY,
+    [AlbumId] INT NOT NULL,
     [Title] NVARCHAR(160) NOT NULL,
     [ArtistId] INT NOT NULL,
     CONSTRAINT [PK_Album] PRIMARY KEY  ([AlbumId])
@@ -72,14 +72,14 @@ CREATE TABLE [Album]
 
 CREATE TABLE [Artist]
 (
-    [ArtistId] INT NOT NULL IDENTITY,
+    [ArtistId] INT NOT NULL,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_Artist] PRIMARY KEY  ([ArtistId])
 );
 
 CREATE TABLE [Customer]
 (
-    [CustomerId] INT NOT NULL IDENTITY,
+    [CustomerId] INT NOT NULL,
     [FirstName] NVARCHAR(40) NOT NULL,
     [LastName] NVARCHAR(20) NOT NULL,
     [Company] NVARCHAR(80),
@@ -97,7 +97,7 @@ CREATE TABLE [Customer]
 
 CREATE TABLE [Employee]
 (
-    [EmployeeId] INT NOT NULL IDENTITY,
+    [EmployeeId] INT NOT NULL,
     [LastName] NVARCHAR(20) NOT NULL,
     [FirstName] NVARCHAR(20) NOT NULL,
     [Title] NVARCHAR(30),
@@ -117,14 +117,14 @@ CREATE TABLE [Employee]
 
 CREATE TABLE [Genre]
 (
-    [GenreId] INT NOT NULL IDENTITY,
+    [GenreId] INT NOT NULL,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_Genre] PRIMARY KEY  ([GenreId])
 );
 
 CREATE TABLE [Invoice]
 (
-    [InvoiceId] INT NOT NULL IDENTITY,
+    [InvoiceId] INT NOT NULL,
     [CustomerId] INT NOT NULL,
     [InvoiceDate] DATETIME NOT NULL,
     [BillingAddress] NVARCHAR(70),
@@ -138,7 +138,7 @@ CREATE TABLE [Invoice]
 
 CREATE TABLE [InvoiceLine]
 (
-    [InvoiceLineId] INT NOT NULL IDENTITY,
+    [InvoiceLineId] INT NOT NULL,
     [InvoiceId] INT NOT NULL,
     [TrackId] INT NOT NULL,
     [UnitPrice] NUMERIC(10,2) NOT NULL,
@@ -148,14 +148,14 @@ CREATE TABLE [InvoiceLine]
 
 CREATE TABLE [MediaType]
 (
-    [MediaTypeId] INT NOT NULL IDENTITY,
+    [MediaTypeId] INT NOT NULL,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_MediaType] PRIMARY KEY  ([MediaTypeId])
 );
 
 CREATE TABLE [Playlist]
 (
-    [PlaylistId] INT NOT NULL IDENTITY,
+    [PlaylistId] INT NOT NULL,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_Playlist] PRIMARY KEY  ([PlaylistId])
 );
@@ -169,7 +169,7 @@ CREATE TABLE [PlaylistTrack]
 
 CREATE TABLE [Track]
 (
-    [TrackId] INT NOT NULL IDENTITY,
+    [TrackId] INT NOT NULL,
     [Name] NVARCHAR(200) NOT NULL,
     [AlbumId] INT,
     [MediaTypeId] INT NOT NULL,

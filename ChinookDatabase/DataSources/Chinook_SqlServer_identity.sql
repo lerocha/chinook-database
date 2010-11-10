@@ -1,6 +1,6 @@
 /*******************************************************************************
    Chinook Database - Version 1.2
-   Script: Chinook-SqlServer-NoIdentity.sql
+   Script: Chinook_SqlServer_identity.sql
    Description: Creates and populates the Chinook database.
    DB Server: SqlServer
    Author: Luis Rocha
@@ -29,7 +29,7 @@ USE [Chinook];
 ********************************************************************************/
 CREATE TABLE [dbo].[Album]
 (
-    [AlbumId] INT NOT NULL,
+    [AlbumId] INT NOT NULL IDENTITY,
     [Title] NVARCHAR(160) NOT NULL,
     [ArtistId] INT NOT NULL,
     CONSTRAINT [PK_Album] PRIMARY KEY CLUSTERED ([AlbumId])
@@ -37,14 +37,14 @@ CREATE TABLE [dbo].[Album]
 GO
 CREATE TABLE [dbo].[Artist]
 (
-    [ArtistId] INT NOT NULL,
+    [ArtistId] INT NOT NULL IDENTITY,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_Artist] PRIMARY KEY CLUSTERED ([ArtistId])
 );
 GO
 CREATE TABLE [dbo].[Customer]
 (
-    [CustomerId] INT NOT NULL,
+    [CustomerId] INT NOT NULL IDENTITY,
     [FirstName] NVARCHAR(40) NOT NULL,
     [LastName] NVARCHAR(20) NOT NULL,
     [Company] NVARCHAR(80),
@@ -62,7 +62,7 @@ CREATE TABLE [dbo].[Customer]
 GO
 CREATE TABLE [dbo].[Employee]
 (
-    [EmployeeId] INT NOT NULL,
+    [EmployeeId] INT NOT NULL IDENTITY,
     [LastName] NVARCHAR(20) NOT NULL,
     [FirstName] NVARCHAR(20) NOT NULL,
     [Title] NVARCHAR(30),
@@ -82,14 +82,14 @@ CREATE TABLE [dbo].[Employee]
 GO
 CREATE TABLE [dbo].[Genre]
 (
-    [GenreId] INT NOT NULL,
+    [GenreId] INT NOT NULL IDENTITY,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_Genre] PRIMARY KEY CLUSTERED ([GenreId])
 );
 GO
 CREATE TABLE [dbo].[Invoice]
 (
-    [InvoiceId] INT NOT NULL,
+    [InvoiceId] INT NOT NULL IDENTITY,
     [CustomerId] INT NOT NULL,
     [InvoiceDate] DATETIME NOT NULL,
     [BillingAddress] NVARCHAR(70),
@@ -103,7 +103,7 @@ CREATE TABLE [dbo].[Invoice]
 GO
 CREATE TABLE [dbo].[InvoiceLine]
 (
-    [InvoiceLineId] INT NOT NULL,
+    [InvoiceLineId] INT NOT NULL IDENTITY,
     [InvoiceId] INT NOT NULL,
     [TrackId] INT NOT NULL,
     [UnitPrice] NUMERIC(10,2) NOT NULL,
@@ -113,14 +113,14 @@ CREATE TABLE [dbo].[InvoiceLine]
 GO
 CREATE TABLE [dbo].[MediaType]
 (
-    [MediaTypeId] INT NOT NULL,
+    [MediaTypeId] INT NOT NULL IDENTITY,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_MediaType] PRIMARY KEY CLUSTERED ([MediaTypeId])
 );
 GO
 CREATE TABLE [dbo].[Playlist]
 (
-    [PlaylistId] INT NOT NULL,
+    [PlaylistId] INT NOT NULL IDENTITY,
     [Name] NVARCHAR(120),
     CONSTRAINT [PK_Playlist] PRIMARY KEY CLUSTERED ([PlaylistId])
 );
@@ -134,7 +134,7 @@ CREATE TABLE [dbo].[PlaylistTrack]
 GO
 CREATE TABLE [dbo].[Track]
 (
-    [TrackId] INT NOT NULL,
+    [TrackId] INT NOT NULL IDENTITY,
     [Name] NVARCHAR(200) NOT NULL,
     [AlbumId] INT,
     [MediaTypeId] INT NOT NULL,

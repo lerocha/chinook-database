@@ -1,6 +1,6 @@
 /*******************************************************************************
    Chinook Database - Version 1.2
-   Script: Chinook-Oracle-NoIdentity.sql
+   Script: Chinook_Oracle.sql
    Description: Creates and populates the Chinook database.
    DB Server: Oracle
    Author: Luis Rocha

@@ -16,17 +16,17 @@ goto END
 :MENU
 echo Options:
 echo.
-echo 1. Run Chinook-Oracle-NoIdentity.sql
+echo 1. Run Chinook_Sqlite.sql
 echo 2. Exit
 echo.
 choice /c 123
-if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook-Oracle-NoIdentity.sql
+if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook_Sqlite.sql
 if (%ERRORLEVEL%)==(2) goto END
 
 :RUNSQL
 echo.
 echo Running %SQLFILE%...
-sqlplus -S / as sysdba @ %SQLFILE%
+sqlite3 -init %SQLFILE% Chinook_Sqlite.db
 
 :END
 echo.

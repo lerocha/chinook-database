@@ -44,6 +44,7 @@
 //          IDdlStrategy.cs
 //          MySqlStrategy.cs
 //          OracleStrategy.cs
+//          SqliteStrategy.cs
 //          SqlServerCompactStrategy.cs
 //          SqlServerStrategy.cs
 //          DataSetHelper.cs
@@ -6273,7 +6274,12 @@
 
         public virtual string Identity
         {
-            get { return "IDENTITY"; }
+            get { return string.Empty; }
+        }
+
+        public virtual bool CreateForeignKeyOnTableCreate
+        {
+            get { return false; }
         }
 
         public bool IsIdentityEnabled { get; set; }
@@ -6351,7 +6357,7 @@
             return string.Format("DROP TABLE {0};", FormatName(entitySet.GetTableName()));
         }
 
-        public string WriteDropForeignKey(AssociationSet associationSet)
+        public virtual string WriteDropForeignKey(AssociationSet associationSet)
         {
             var constraint = associationSet.ElementType.ReferentialConstraints.Single();
             var constraintName = GetForeignKeyConstraintName(constraint);
@@ -6398,7 +6404,15 @@
 
     public class EffiProzStrategy : AbstractDdlStrategy
     {
-        public override string Name { get { return "EffiProz"; } }
+        public override string Name
+        {
+            get { return "EffiProz"; }
+        }
+
+        public override string Identity
+        {
+            get { return "IDENTITY"; }
+        }
 
         public override string FormatName(string name)
         {
@@ -6418,6 +6432,7 @@
         string Name { get; }
         string FileExtension { get; }
         string Identity { get; }
+        bool CreateForeignKeyOnTableCreate { get; }
 
         #endregion
 
@@ -6583,6 +6598,41 @@
 
 
 //------------------------------------------------------------------------------
+// Filename: SqliteStrategy.cs
+//------------------------------------------------------------------------------
+
+
+    public class SqliteStrategy : AbstractDdlStrategy
+    {
+        public SqliteStrategy()
+        {
+            CommandLineFormat = "sqlite3 -init {0} Chinook_Sqlite.db";
+        }
+
+        public override string Name { get { return "Sqlite"; } }
+
+        public override bool CreateForeignKeyOnTableCreate
+        {
+            get { return true; }
+        }
+
+        public override string GetFullyQualifiedName(string schema, string name)
+        {
+            return FormatName(name);
+        }
+
+        public override string WriteDropTable(EntitySet entitySet)
+        {
+            return string.Format("DROP TABLE IF EXISTS {0};", FormatName(entitySet.GetTableName()));
+        }
+
+        public override string WriteDropForeignKey(AssociationSet associationSet)
+        {
+            return string.Empty;
+        }
+    }
+
+//------------------------------------------------------------------------------
 // Filename: SqlServerCompactStrategy.cs
 //------------------------------------------------------------------------------
 
@@ -6591,6 +6641,11 @@
         public override string Name { get { return "SqlServerCompact"; } }
 
         public override string FileExtension { get { return "sqlce"; } }
+
+        public override string Identity
+        {
+            get { return "IDENTITY"; }
+        }
 
         public override string GetFullyQualifiedName(string schema, string name)
         {
@@ -6614,6 +6669,11 @@
         public override string Name
         {
             get { return "SqlServer"; }
+        }
+
+        public override string Identity
+        {
+            get { return "IDENTITY"; }
         }
 
         public override string GetClustered(StoreItemCollection store, EntityType entityType)

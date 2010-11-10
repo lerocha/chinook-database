@@ -24,7 +24,12 @@ namespace ChinookDatabase.DdlStrategies
 
         public virtual string Identity
         {
-            get { return "IDENTITY"; }
+            get { return string.Empty; }
+        }
+
+        public virtual bool CreateForeignKeyOnTableCreate
+        {
+            get { return false; }
         }
 
         public bool IsIdentityEnabled { get; set; }
@@ -102,7 +107,7 @@ namespace ChinookDatabase.DdlStrategies
             return string.Format("DROP TABLE {0};", FormatName(entitySet.GetTableName()));
         }
 
-        public string WriteDropForeignKey(AssociationSet associationSet)
+        public virtual string WriteDropForeignKey(AssociationSet associationSet)
         {
             var constraint = associationSet.ElementType.ReferentialConstraints.Single();
             var constraintName = GetForeignKeyConstraintName(constraint);

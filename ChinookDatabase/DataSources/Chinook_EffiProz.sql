@@ -1,6 +1,6 @@
 /*******************************************************************************
    Chinook Database - Version 1.2
-   Script: Chinook-EffiProz-NoIdentity.sql
+   Script: Chinook_EffiProz.sql
    Description: Creates and populates the Chinook database.
    DB Server: EffiProz
    Author: Luis Rocha

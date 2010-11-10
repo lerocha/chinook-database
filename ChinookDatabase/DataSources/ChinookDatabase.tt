@@ -17,6 +17,7 @@ var options = new
 								new SqlServerStrategy { IsIdentityEnabled = false },
 								new SqlServerCompactStrategy { IsIdentityEnabled = true },
 								new SqlServerCompactStrategy { IsIdentityEnabled = false },
+								new SqliteStrategy { IsIdentityEnabled = false },
 								new MySqlStrategy { IsIdentityEnabled = true },
 								new MySqlStrategy { IsIdentityEnabled = false },
 								new OracleStrategy { IsIdentityEnabled = false },
@@ -112,6 +113,15 @@ CREATE TABLE <#= tableName #>
 	string pkName = strategy.FormatName("PK_" + entitySet.GetTableName());
 #>
     CONSTRAINT <#= pkName #> PRIMARY KEY <#= strategy.GetClustered(existingStore, entitySet.ElementType)#> (<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>)
+<#
+	if (strategy.CreateForeignKeyOnTableCreate)
+	{
+		// TODO:
+#>
+    -- FOREIGN KEY ...
+<#
+	}
+#>
 );
 <#= strategy.WriteExecuteCommand() #>
 <#
@@ -147,11 +157,16 @@ CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColum
 		var constraintName = strategy.GetForeignKeyConstraintName(constraint);
 		var fkName = strategy.FormatName(constraintName);
 		var ifkName = strategy.FormatName("I" + constraintName);
+		
+		if (!strategy.CreateForeignKeyOnTableCreate)
+		{
 #>
 ALTER TABLE <#= toTableName #> ADD CONSTRAINT <#= fkName #>
     FOREIGN KEY (<#= strategy.GetColumns(constraint.ToProperties, ',') #>) REFERENCES <#= fromTableName #> (<#= strategy.GetColumns(constraint.FromProperties, ',') #>)
     ON DELETE <#= strategy.GetDeleteAction(constraint) #> ON UPDATE NO ACTION;
 <#      
+		} 
+		
         // if the foreign keys are part of the primary key on the dependent end, then we should not add a constraint.
         if (!toEnd.EntitySet.ElementType.GetKeyProperties().Take(constraint.ToProperties.Count()).OrderBy(r => r.Name).SequenceEqual(constraint.ToProperties.OrderBy(r => r.Name)))
         {
@@ -189,7 +204,7 @@ foreach (var strategy in strategies)
 	//************************************************************************
 	// Start batch file.
 	//************************************************************************
-	var filename = string.Format("create-{0}.bat", strategy.Name);
+	var filename = string.Format("Create{0}.bat", strategy.Name);
 	var commandFormat = "echo {0}";
 	
 	if (!string.IsNullOrEmpty(strategy.CommandLineFormat)) 
@@ -254,8 +269,11 @@ fileManager.Process(true);
 
 private static string GetFileName(IDdlStrategy strategy)
 {
-	var suffix = (strategy.IsIdentityEnabled ? "" : "-NoIdentity");
-	return string.Format("Chinook-{0}{1}.{2}", strategy.Name, suffix, strategy.FileExtension);
+	var suffix = string.Empty;
+	if (strategy.IsIdentityEnabled)
+		suffix = "_" + strategy.Identity.Trim().Replace("_","").ToLower();
+	
+	return string.Format("Chinook_{0}{1}.{2}", strategy.Name, suffix, strategy.FileExtension);
 }
 
 #>

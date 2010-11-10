@@ -16,19 +16,19 @@ goto END
 :MENU
 echo Options:
 echo.
-echo 1. Run Chinook-SqlServer.sql
-echo 2. Run Chinook-SqlServer-NoIdentity.sql
+echo 1. Run Chinook_MySql_autoincrement.sql
+echo 2. Run Chinook_MySql.sql
 echo 3. Exit
 echo.
 choice /c 123
-if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook-SqlServer.sql
-if (%ERRORLEVEL%)==(2) set SQLFILE=Chinook-SqlServer-NoIdentity.sql
+if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook_MySql_autoincrement.sql
+if (%ERRORLEVEL%)==(2) set SQLFILE=Chinook_MySql.sql
 if (%ERRORLEVEL%)==(3) goto END
 
 :RUNSQL
 echo.
 echo Running %SQLFILE%...
-sqlcmd -E -S .\sqlexpress -i %SQLFILE% -b -m 1
+mysql -h localhost -u root --password=p4ssw0rd <%SQLFILE%
 
 :END
 echo.

@@ -16,19 +16,17 @@ goto END
 :MENU
 echo Options:
 echo.
-echo 1. Run Chinook-MySql.sql
-echo 2. Run Chinook-MySql-NoIdentity.sql
-echo 3. Exit
+echo 1. Run Chinook_Oracle.sql
+echo 2. Exit
 echo.
 choice /c 123
-if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook-MySql.sql
-if (%ERRORLEVEL%)==(2) set SQLFILE=Chinook-MySql-NoIdentity.sql
-if (%ERRORLEVEL%)==(3) goto END
+if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook_Oracle.sql
+if (%ERRORLEVEL%)==(2) goto END
 
 :RUNSQL
 echo.
 echo Running %SQLFILE%...
-mysql -h localhost -u root --password=p4ssw0rd <%SQLFILE%
+sqlplus -S / as sysdba @ %SQLFILE%
 
 :END
 echo.

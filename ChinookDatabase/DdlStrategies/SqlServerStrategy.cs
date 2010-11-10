@@ -17,6 +17,11 @@ namespace ChinookDatabase.DdlStrategies
             get { return "SqlServer"; }
         }
 
+        public override string Identity
+        {
+            get { return "IDENTITY"; }
+        }
+
         public override string GetClustered(StoreItemCollection store, EntityType entityType)
         {
             return entityType.IsJoinTable(store) ? "NONCLUSTERED" : "CLUSTERED";

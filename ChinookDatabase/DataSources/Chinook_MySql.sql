@@ -1,6 +1,6 @@
 /*******************************************************************************
    Chinook Database - Version 1.2
-   Script: Chinook-MySql.sql
+   Script: Chinook_MySql.sql
    Description: Creates and populates the Chinook database.
    DB Server: MySql
    Author: Luis Rocha
@@ -23,7 +23,7 @@ USE `Chinook`;
 ********************************************************************************/
 CREATE TABLE `Album`
 (
-    `AlbumId` INT NOT NULL AUTO_INCREMENT,
+    `AlbumId` INT NOT NULL,
     `Title` NVARCHAR(160) NOT NULL,
     `ArtistId` INT NOT NULL,
     CONSTRAINT `PK_Album` PRIMARY KEY  (`AlbumId`)
@@ -31,14 +31,14 @@ CREATE TABLE `Album`
 
 CREATE TABLE `Artist`
 (
-    `ArtistId` INT NOT NULL AUTO_INCREMENT,
+    `ArtistId` INT NOT NULL,
     `Name` NVARCHAR(120),
     CONSTRAINT `PK_Artist` PRIMARY KEY  (`ArtistId`)
 );
 
 CREATE TABLE `Customer`
 (
-    `CustomerId` INT NOT NULL AUTO_INCREMENT,
+    `CustomerId` INT NOT NULL,
     `FirstName` NVARCHAR(40) NOT NULL,
     `LastName` NVARCHAR(20) NOT NULL,
     `Company` NVARCHAR(80),
@@ -56,7 +56,7 @@ CREATE TABLE `Customer`
 
 CREATE TABLE `Employee`
 (
-    `EmployeeId` INT NOT NULL AUTO_INCREMENT,
+    `EmployeeId` INT NOT NULL,
     `LastName` NVARCHAR(20) NOT NULL,
     `FirstName` NVARCHAR(20) NOT NULL,
     `Title` NVARCHAR(30),
@@ -76,14 +76,14 @@ CREATE TABLE `Employee`
 
 CREATE TABLE `Genre`
 (
-    `GenreId` INT NOT NULL AUTO_INCREMENT,
+    `GenreId` INT NOT NULL,
     `Name` NVARCHAR(120),
     CONSTRAINT `PK_Genre` PRIMARY KEY  (`GenreId`)
 );
 
 CREATE TABLE `Invoice`
 (
-    `InvoiceId` INT NOT NULL AUTO_INCREMENT,
+    `InvoiceId` INT NOT NULL,
     `CustomerId` INT NOT NULL,
     `InvoiceDate` DATETIME NOT NULL,
     `BillingAddress` NVARCHAR(70),
@@ -97,7 +97,7 @@ CREATE TABLE `Invoice`
 
 CREATE TABLE `InvoiceLine`
 (
-    `InvoiceLineId` INT NOT NULL AUTO_INCREMENT,
+    `InvoiceLineId` INT NOT NULL,
     `InvoiceId` INT NOT NULL,
     `TrackId` INT NOT NULL,
     `UnitPrice` NUMERIC(10,2) NOT NULL,
@@ -107,14 +107,14 @@ CREATE TABLE `InvoiceLine`
 
 CREATE TABLE `MediaType`
 (
-    `MediaTypeId` INT NOT NULL AUTO_INCREMENT,
+    `MediaTypeId` INT NOT NULL,
     `Name` NVARCHAR(120),
     CONSTRAINT `PK_MediaType` PRIMARY KEY  (`MediaTypeId`)
 );
 
 CREATE TABLE `Playlist`
 (
-    `PlaylistId` INT NOT NULL AUTO_INCREMENT,
+    `PlaylistId` INT NOT NULL,
     `Name` NVARCHAR(120),
     CONSTRAINT `PK_Playlist` PRIMARY KEY  (`PlaylistId`)
 );
@@ -128,7 +128,7 @@ CREATE TABLE `PlaylistTrack`
 
 CREATE TABLE `Track`
 (
-    `TrackId` INT NOT NULL AUTO_INCREMENT,
+    `TrackId` INT NOT NULL,
     `Name` NVARCHAR(200) NOT NULL,
     `AlbumId` INT,
     `MediaTypeId` INT NOT NULL,
