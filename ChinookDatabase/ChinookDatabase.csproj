@@ -17,6 +17,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
     <PublishUrl>http://localhost/ChinookDatabase/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -31,7 +32,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -116,6 +116,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookDatabase.txt</LastGenOutput>
     </None>
+    <Content Include="DataSources\Chinook_Sqlite.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="DataSources\Chinook_SqlServerCompact.sqlce">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
     </None>
@@ -190,6 +193,12 @@
     </Content>
     <Content Include="DataSources\Chinook_SqlServer.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
+    </Content>
+    <Content Include="DataSources\Chinook_SqlServerCompact.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_SqlServerCompact_identity.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataSources\Chinook_SqlServer_identity.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
