@@ -7,7 +7,7 @@ namespace ChinookDatabase.DdlStrategies
     {
         public SqliteStrategy()
         {
-            CommandLineFormat = "sqlite3 -init {0} Chinook_Sqlite.db";
+            CommandLineFormat = "sqlite3 -init {0} {0}ite";
         }
 
         public override string Name { get { return "Sqlite"; } }

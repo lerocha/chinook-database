@@ -26,7 +26,7 @@ if (%ERRORLEVEL%)==(2) goto END
 :RUNSQL
 echo.
 echo Running %SQLFILE%...
-sqlite3 -init %SQLFILE% Chinook_Sqlite.db
+sqlite3 -init %SQLFILE% %SQLFILE%ite
 
 :END
 echo.
