@@ -40,16 +40,16 @@ namespace ChinookDatabase.DdlStrategies
             var name = databaseName.ToLower();
             var builder = new StringBuilder();
 
-            builder.AppendFormat("CREATE USER {0}\n", name)
-                .AppendLine("IDENTIFIED BY p4ssw0rd")
-                .AppendLine("DEFAULT TABLESPACE users")
-                .AppendLine("TEMPORARY TABLESPACE temp")
-                .AppendLine("QUOTA 10M ON users;\n")
-                .AppendFormat("GRANT connect to {0};\n", name)
-                .AppendFormat("GRANT resource to {0};\n", name)
-                .AppendFormat("GRANT create session TO {0};\n", name)
-                .AppendFormat("GRANT create table TO {0};\n", name)
-                .AppendFormat("GRANT create view TO {0};\n", name);
+            builder.AppendFormat("CREATE USER {0}\r\n", name)
+                .AppendFormat("IDENTIFIED BY p4ssw0rd\r\n")
+                .AppendFormat("DEFAULT TABLESPACE users\r\n")
+                .AppendFormat("TEMPORARY TABLESPACE temp\r\n")
+                .AppendFormat("QUOTA 10M ON users;\r\n\r\n")
+                .AppendFormat("GRANT connect to {0};\r\n", name)
+                .AppendFormat("GRANT resource to {0};\r\n", name)
+                .AppendFormat("GRANT create session TO {0};\r\n", name)
+                .AppendFormat("GRANT create table TO {0};\r\n", name)
+                .AppendFormat("GRANT create view TO {0};\r\n", name);
 
             return builder.ToString();
         }

@@ -32,13 +32,13 @@ namespace ChinookDatabase.DdlStrategies
             var name = FormatName(databaseName);
             var builder = new StringBuilder();
 
-            builder.AppendFormat("IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'{0}')\n",
+            builder.AppendFormat("IF EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'{0}')\r\n",
                                  databaseName)
-                .AppendLine("BEGIN")
-                .AppendFormat("\tALTER DATABASE {0} SET OFFLINE WITH ROLLBACK IMMEDIATE;\n", name)
-                .AppendFormat("\tALTER DATABASE {0} SET ONLINE;\n", name)
-                .AppendFormat("\tDROP DATABASE {0};\n", name)
-                .AppendLine("END");
+                .AppendFormat("BEGIN\r\n")
+                .AppendFormat("\tALTER DATABASE {0} SET OFFLINE WITH ROLLBACK IMMEDIATE;\r\n", name)
+                .AppendFormat("\tALTER DATABASE {0} SET ONLINE;\r\n", name)
+                .AppendFormat("\tDROP DATABASE {0};\r\n", name)
+                .AppendFormat("END\r\n");
 
             return builder.ToString();
         }
