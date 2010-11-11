@@ -1,6 +1,6 @@
 /*******************************************************************************
    Chinook Database - Version 1.2
-   Script: Chinook_SqlServerCompact_Generated_PKs.sqlce
+   Script: Chinook_SqlServerCompact_AutoIncrementPKs.sqlce
    Description: Creates and populates the Chinook database.
    DB Server: SqlServerCompact
    Author: Luis Rocha

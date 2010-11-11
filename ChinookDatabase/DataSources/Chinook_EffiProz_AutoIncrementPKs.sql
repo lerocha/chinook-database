@@ -1,6 +1,6 @@
 /*******************************************************************************
    Chinook Database - Version 1.2
-   Script: Chinook_EffiProz_Generated_PKs.sql
+   Script: Chinook_EffiProz_AutoIncrementPKs.sql
    Description: Creates and populates the Chinook database.
    DB Server: EffiProz
    Author: Luis Rocha
