@@ -59,7 +59,7 @@ namespace ChinookDatabase.DdlStrategies
                                  identity, notnull).Trim();
         }
 
-        public override string WriteCreateTableDelimiter()
+        public override string WriteExecuteCommand()
         {
             return @"\";
         }

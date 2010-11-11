@@ -132,7 +132,7 @@ CREATE TABLE <#= tableName #>
 #>
 
 );
-<#= strategy.WriteCreateTableDelimiter() #><#= strategy.WriteExecuteCommand() #>
+<#= strategy.WriteExecuteCommand() #>
 <#
 	}	// foreach EntityType
 #>
@@ -152,6 +152,7 @@ CREATE TABLE <#= tableName #>
 			string pkName = strategy.FormatName("PK_" + entitySet.GetTableName());
 #>
 ALTER TABLE <#= tableName #> ADD CONSTRAINT <#= pkName #> PRIMARY KEY (<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>);
+<#= strategy.WriteExecuteCommand() #>
 <#			
 		}
 
@@ -184,6 +185,7 @@ CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColum
 ALTER TABLE <#= toTableName #> ADD CONSTRAINT <#= fkName #>
     FOREIGN KEY (<#= strategy.GetColumns(constraint.ToProperties, ',') #>) REFERENCES <#= fromTableName #> (<#= strategy.GetColumns(constraint.FromProperties, ',') #>)
     ON DELETE <#= strategy.GetDeleteAction(constraint) #> ON UPDATE NO ACTION;
+<#= strategy.WriteExecuteCommand() #>
 <#      
 		} 
 		
@@ -191,14 +193,10 @@ ALTER TABLE <#= toTableName #> ADD CONSTRAINT <#= fkName #>
         if (!toEnd.EntitySet.ElementType.GetKeyProperties().Take(constraint.ToProperties.Count()).OrderBy(r => r.Name).SequenceEqual(constraint.ToProperties.OrderBy(r => r.Name)))
         {
 #>
-
 CREATE INDEX <#= ifkName #> ON <#= toTableName #> (<#= strategy.GetColumns(constraint.ToProperties, ',') #>);
+<#= strategy.WriteExecuteCommand() #>
 <#      
         }
-#>
-<#= strategy.WriteExecuteCommand() #>
-
-<#
     }
 #>
 

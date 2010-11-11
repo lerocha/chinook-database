@@ -179,78 +179,67 @@ GO
 ALTER TABLE [dbo].[Album] ADD CONSTRAINT [FK_AlbumArtistId_ArtistArtistId]
     FOREIGN KEY ([ArtistId]) REFERENCES [dbo].[Artist] ([ArtistId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_AlbumArtistId_ArtistArtistId] ON [dbo].[Album] ([ArtistId]);
 GO
-
 ALTER TABLE [dbo].[Customer] ADD CONSTRAINT [FK_CustomerSupportRepId_EmployeeEmployeeId]
     FOREIGN KEY ([SupportRepId]) REFERENCES [dbo].[Employee] ([EmployeeId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_CustomerSupportRepId_EmployeeEmployeeId] ON [dbo].[Customer] ([SupportRepId]);
 GO
-
 ALTER TABLE [dbo].[Employee] ADD CONSTRAINT [FK_EmployeeReportsTo_EmployeeEmployeeId]
     FOREIGN KEY ([ReportsTo]) REFERENCES [dbo].[Employee] ([EmployeeId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_EmployeeReportsTo_EmployeeEmployeeId] ON [dbo].[Employee] ([ReportsTo]);
 GO
-
 ALTER TABLE [dbo].[Invoice] ADD CONSTRAINT [FK_InvoiceCustomerId_CustomerCustomerId]
     FOREIGN KEY ([CustomerId]) REFERENCES [dbo].[Customer] ([CustomerId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_InvoiceCustomerId_CustomerCustomerId] ON [dbo].[Invoice] ([CustomerId]);
 GO
-
 ALTER TABLE [dbo].[InvoiceLine] ADD CONSTRAINT [FK_InvoiceLineInvoiceId_InvoiceInvoiceId]
     FOREIGN KEY ([InvoiceId]) REFERENCES [dbo].[Invoice] ([InvoiceId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_InvoiceLineInvoiceId_InvoiceInvoiceId] ON [dbo].[InvoiceLine] ([InvoiceId]);
 GO
-
 ALTER TABLE [dbo].[InvoiceLine] ADD CONSTRAINT [FK_InvoiceLineTrackId_TrackTrackId]
     FOREIGN KEY ([TrackId]) REFERENCES [dbo].[Track] ([TrackId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_InvoiceLineTrackId_TrackTrackId] ON [dbo].[InvoiceLine] ([TrackId]);
 GO
-
 ALTER TABLE [dbo].[PlaylistTrack] ADD CONSTRAINT [FK_PlaylistTrackPlaylistId_PlaylistPlaylistId]
     FOREIGN KEY ([PlaylistId]) REFERENCES [dbo].[Playlist] ([PlaylistId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
-
 ALTER TABLE [dbo].[PlaylistTrack] ADD CONSTRAINT [FK_PlaylistTrackTrackId_TrackTrackId]
     FOREIGN KEY ([TrackId]) REFERENCES [dbo].[Track] ([TrackId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_PlaylistTrackTrackId_TrackTrackId] ON [dbo].[PlaylistTrack] ([TrackId]);
 GO
-
 ALTER TABLE [dbo].[Track] ADD CONSTRAINT [FK_TrackAlbumId_AlbumAlbumId]
     FOREIGN KEY ([AlbumId]) REFERENCES [dbo].[Album] ([AlbumId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_TrackAlbumId_AlbumAlbumId] ON [dbo].[Track] ([AlbumId]);
 GO
-
 ALTER TABLE [dbo].[Track] ADD CONSTRAINT [FK_TrackGenreId_GenreGenreId]
     FOREIGN KEY ([GenreId]) REFERENCES [dbo].[Genre] ([GenreId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_TrackGenreId_GenreGenreId] ON [dbo].[Track] ([GenreId]);
 GO
-
 ALTER TABLE [dbo].[Track] ADD CONSTRAINT [FK_TrackMediaTypeId_MediaTypeMediaTypeId]
     FOREIGN KEY ([MediaTypeId]) REFERENCES [dbo].[MediaType] ([MediaTypeId])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
-
+GO
 CREATE INDEX [IFK_TrackMediaTypeId_MediaTypeMediaTypeId] ON [dbo].[Track] ([MediaTypeId]);
 GO
-
 
 /*******************************************************************************
    Populate Tables
