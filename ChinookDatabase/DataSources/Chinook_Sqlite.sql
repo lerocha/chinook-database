@@ -279,7 +279,6 @@ CREATE INDEX [IFK_TrackMediaTypeId_MediaTypeMediaTypeId] ON [Track] ([MediaTypeI
 /*******************************************************************************
    Populate Tables
 ********************************************************************************/
---  [Genre] table.
 INSERT INTO [Genre] ([GenreId], [Name]) VALUES (1, 'Rock');
 INSERT INTO [Genre] ([GenreId], [Name]) VALUES (2, 'Jazz');
 INSERT INTO [Genre] ([GenreId], [Name]) VALUES (3, 'Metal');
@@ -306,14 +305,12 @@ INSERT INTO [Genre] ([GenreId], [Name]) VALUES (23, 'Alternative');
 INSERT INTO [Genre] ([GenreId], [Name]) VALUES (24, 'Classical');
 INSERT INTO [Genre] ([GenreId], [Name]) VALUES (25, 'Opera');
 
---  [MediaType] table.
 INSERT INTO [MediaType] ([MediaTypeId], [Name]) VALUES (1, 'MPEG audio file');
 INSERT INTO [MediaType] ([MediaTypeId], [Name]) VALUES (2, 'Protected AAC audio file');
 INSERT INTO [MediaType] ([MediaTypeId], [Name]) VALUES (3, 'Protected MPEG-4 video file');
 INSERT INTO [MediaType] ([MediaTypeId], [Name]) VALUES (4, 'Purchased AAC audio file');
 INSERT INTO [MediaType] ([MediaTypeId], [Name]) VALUES (5, 'AAC audio file');
 
---  [Artist] table.
 INSERT INTO [Artist] ([ArtistId], [Name]) VALUES (1, 'AC/DC');
 INSERT INTO [Artist] ([ArtistId], [Name]) VALUES (2, 'Accept');
 INSERT INTO [Artist] ([ArtistId], [Name]) VALUES (3, 'Aerosmith');
@@ -590,7 +587,6 @@ INSERT INTO [Artist] ([ArtistId], [Name]) VALUES (273, 'C. Monteverdi, Nigel Rog
 INSERT INTO [Artist] ([ArtistId], [Name]) VALUES (274, 'Nash Ensemble');
 INSERT INTO [Artist] ([ArtistId], [Name]) VALUES (275, 'Philip Glass Ensemble');
 
---  [Album] table.
 INSERT INTO [Album] ([AlbumId], [Title], [ArtistId]) VALUES (1, 'For Those About To Rock We Salute You', 1);
 INSERT INTO [Album] ([AlbumId], [Title], [ArtistId]) VALUES (2, 'Balls to the Wall', 2);
 INSERT INTO [Album] ([AlbumId], [Title], [ArtistId]) VALUES (3, 'Restless and Wild', 2);
@@ -939,7 +935,6 @@ INSERT INTO [Album] ([AlbumId], [Title], [ArtistId]) VALUES (345, 'Monteverdi: L
 INSERT INTO [Album] ([AlbumId], [Title], [ArtistId]) VALUES (346, 'Mozart: Chamber Music', 274);
 INSERT INTO [Album] ([AlbumId], [Title], [ArtistId]) VALUES (347, 'Koyaanisqatsi (Soundtrack from the Motion Picture)', 275);
 
---  [Track] table.
 INSERT INTO [Track] ([TrackId], [Name], [AlbumId], [MediaTypeId], [GenreId], [Composer], [Milliseconds], [Bytes], [UnitPrice]) VALUES (1, 'For Those About To Rock (We Salute You)', 1, 1, 1, 'Angus Young, Malcolm Young, Brian Johnson', 343719, 11170334, 0.99);
 INSERT INTO [Track] ([TrackId], [Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES (2, 'Balls to the Wall', 2, 2, 1, 342562, 5510424, 0.99);
 INSERT INTO [Track] ([TrackId], [Name], [AlbumId], [MediaTypeId], [GenreId], [Composer], [Milliseconds], [Bytes], [UnitPrice]) VALUES (3, 'Fast As a Shark', 3, 2, 1, 'F. Baltes, S. Kaufman, U. Dirkscneider & W. Hoffman', 230619, 3990994, 0.99);
@@ -4444,7 +4439,6 @@ INSERT INTO [Track] ([TrackId], [Name], [AlbumId], [MediaTypeId], [GenreId], [Co
 INSERT INTO [Track] ([TrackId], [Name], [AlbumId], [MediaTypeId], [GenreId], [Composer], [Milliseconds], [Bytes], [UnitPrice]) VALUES (3502, 'Quintet for Horn, Violin, 2 Violas, and Cello in E Flat Major, K. 407/386c: III. Allegro', 346, 2, 24, 'Wolfgang Amadeus Mozart', 221331, 3665114, 0.99);
 INSERT INTO [Track] ([TrackId], [Name], [AlbumId], [MediaTypeId], [GenreId], [Composer], [Milliseconds], [Bytes], [UnitPrice]) VALUES (3503, 'Koyaanisqatsi', 347, 2, 10, 'Philip Glass', 206005, 3305164, 0.99);
 
---  [Employee] table.
 INSERT INTO [Employee] ([EmployeeId], [LastName], [FirstName], [Title], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (1, 'Adams', 'Andrew', 'General Manager', '1962/2/18', '2002/8/14', '11120 Jasper Ave NW', 'Edmonton', 'AB', 'Canada', 'T5K 2N1', '+1 (780) 428-9482', '+1 (780) 428-3457', 'andrew@chinookcorp.com');
 INSERT INTO [Employee] ([EmployeeId], [LastName], [FirstName], [Title], [ReportsTo], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (2, 'Edwards', 'Nancy', 'Sales Manager', 1, '1958/12/8', '2002/5/1', '825 8 Ave SW', 'Calgary', 'AB', 'Canada', 'T2P 2T3', '+1 (403) 262-3443', '+1 (403) 262-3322', 'nancy@chinookcorp.com');
 INSERT INTO [Employee] ([EmployeeId], [LastName], [FirstName], [Title], [ReportsTo], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (3, 'Peacock', 'Jane', 'Sales Support Agent', 2, '1973/8/29', '2002/4/1', '1111 6 Ave SW', 'Calgary', 'AB', 'Canada', 'T2P 5M5', '+1 (403) 262-3443', '+1 (403) 262-6712', 'jane@chinookcorp.com');
@@ -4454,7 +4448,6 @@ INSERT INTO [Employee] ([EmployeeId], [LastName], [FirstName], [Title], [Reports
 INSERT INTO [Employee] ([EmployeeId], [LastName], [FirstName], [Title], [ReportsTo], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (7, 'King', 'Robert', 'IT Staff', 6, '1970/5/29', '2004/1/2', '590 Columbia Boulevard West', 'Lethbridge', 'AB', 'Canada', 'T1K 5N8', '+1 (403) 456-9986', '+1 (403) 456-8485', 'robert@chinookcorp.com');
 INSERT INTO [Employee] ([EmployeeId], [LastName], [FirstName], [Title], [ReportsTo], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (8, 'Callahan', 'Laura', 'IT Staff', 6, '1968/1/9', '2004/3/4', '923 7 ST NW', 'Lethbridge', 'AB', 'Canada', 'T1H 1Y8', '+1 (403) 467-3351', '+1 (403) 467-8772', 'laura@chinookcorp.com');
 
---  [Customer] table.
 INSERT INTO [Customer] ([CustomerId], [FirstName], [LastName], [Company], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email], [SupportRepId]) VALUES (1, 'Luís', 'Gonçalves', 'Embraer - Empresa Brasileira de Aeronáutica S.A.', 'Av. Brigadeiro Faria Lima, 2170', 'São José dos Campos', 'SP', 'Brazil', '12227-000', '+55 (12) 3923-5555', '+55 (12) 3923-5566', 'luisg@embraer.com.br', 3);
 INSERT INTO [Customer] ([CustomerId], [FirstName], [LastName], [Address], [City], [Country], [PostalCode], [Phone], [Email], [SupportRepId]) VALUES (2, 'Leonie', 'Köhler', 'Theodor-Heuss-Straße 34', 'Stuttgart', 'Germany', '70174', '+49 0711 2842222', 'leonekohler@surfeu.de', 5);
 INSERT INTO [Customer] ([CustomerId], [FirstName], [LastName], [Address], [City], [State], [Country], [PostalCode], [Phone], [Email], [SupportRepId]) VALUES (3, 'François', 'Tremblay', '1498 rue Bélanger', 'Montréal', 'QC', 'Canada', 'H2G 1A7', '+1 (514) 721-4711', 'ftremblay@gmail.com', 3);
@@ -4515,7 +4508,6 @@ INSERT INTO [Customer] ([CustomerId], [FirstName], [LastName], [Address], [City]
 INSERT INTO [Customer] ([CustomerId], [FirstName], [LastName], [Address], [City], [Country], [PostalCode], [Phone], [Email], [SupportRepId]) VALUES (58, 'Manoj', 'Pareek', '12,Community Centre', 'Delhi', 'India', '110017', '+91 0124 39883988', 'manoj.pareek@rediff.com', 3);
 INSERT INTO [Customer] ([CustomerId], [FirstName], [LastName], [Address], [City], [Country], [PostalCode], [Phone], [Email], [SupportRepId]) VALUES (59, 'Puja', 'Srivastava', '3,Raj Bhavan Road', 'Bangalore', 'India', '560001', '+91 080 22289999', 'puja_srivastava@yahoo.in', 3);
 
---  [Invoice] table.
 INSERT INTO [Invoice] ([InvoiceId], [CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (1, 2, '2007/1/1', 'Theodor-Heuss-Straße 34', 'Stuttgart', 'Germany', '70174', 1.98);
 INSERT INTO [Invoice] ([InvoiceId], [CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (2, 4, '2007/1/2', 'Ullevålsveien 14', 'Oslo', 'Norway', '0171', 3.96);
 INSERT INTO [Invoice] ([InvoiceId], [CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (3, 8, '2007/1/3', 'Grétrystraat 63', 'Brussels', 'Belgium', '1000', 5.94);
@@ -4929,7 +4921,6 @@ INSERT INTO [Invoice] ([InvoiceId], [CustomerId], [InvoiceDate], [BillingAddress
 INSERT INTO [Invoice] ([InvoiceId], [CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (411, 44, '2011/12/14', 'Porthaninkatu 9', 'Helsinki', 'Finland', '00530', 13.86);
 INSERT INTO [Invoice] ([InvoiceId], [CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (412, 58, '2011/12/22', '12,Community Centre', 'Delhi', 'India', '110017', 1.99);
 
---  [InvoiceLine] table.
 INSERT INTO [InvoiceLine] ([InvoiceLineId], [InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (1, 1, 2, 0.99, 1);
 INSERT INTO [InvoiceLine] ([InvoiceLineId], [InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (2, 1, 4, 0.99, 1);
 INSERT INTO [InvoiceLine] ([InvoiceLineId], [InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (3, 2, 6, 0.99, 1);
@@ -7171,7 +7162,6 @@ INSERT INTO [InvoiceLine] ([InvoiceLineId], [InvoiceId], [TrackId], [UnitPrice],
 INSERT INTO [InvoiceLine] ([InvoiceLineId], [InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (2239, 411, 3163, 0.99, 1);
 INSERT INTO [InvoiceLine] ([InvoiceLineId], [InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (2240, 412, 3177, 1.99, 1);
 
---  [Playlist] table.
 INSERT INTO [Playlist] ([PlaylistId], [Name]) VALUES (1, 'Music');
 INSERT INTO [Playlist] ([PlaylistId], [Name]) VALUES (2, 'Movies');
 INSERT INTO [Playlist] ([PlaylistId], [Name]) VALUES (3, 'TV Shows');
@@ -7191,7 +7181,6 @@ INSERT INTO [Playlist] ([PlaylistId], [Name]) VALUES (16, 'Grunge');
 INSERT INTO [Playlist] ([PlaylistId], [Name]) VALUES (17, 'Heavy Metal Classic');
 INSERT INTO [Playlist] ([PlaylistId], [Name]) VALUES (18, 'On-The-Go 1');
 
---  [PlaylistTrack] table.
 INSERT INTO [PlaylistTrack] ([PlaylistId], [TrackId]) VALUES (1, 3402);
 INSERT INTO [PlaylistTrack] ([PlaylistId], [TrackId]) VALUES (1, 3389);
 INSERT INTO [PlaylistTrack] ([PlaylistId], [TrackId]) VALUES (1, 3390);

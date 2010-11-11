@@ -255,7 +255,6 @@ GO
 /*******************************************************************************
    Populate Tables
 ********************************************************************************/
---  [dbo].[Genre] table.
 INSERT INTO [dbo].[Genre] ([Name]) VALUES (N'Rock');
 INSERT INTO [dbo].[Genre] ([Name]) VALUES (N'Jazz');
 INSERT INTO [dbo].[Genre] ([Name]) VALUES (N'Metal');
@@ -282,14 +281,12 @@ INSERT INTO [dbo].[Genre] ([Name]) VALUES (N'Alternative');
 INSERT INTO [dbo].[Genre] ([Name]) VALUES (N'Classical');
 INSERT INTO [dbo].[Genre] ([Name]) VALUES (N'Opera');
 
---  [dbo].[MediaType] table.
 INSERT INTO [dbo].[MediaType] ([Name]) VALUES (N'MPEG audio file');
 INSERT INTO [dbo].[MediaType] ([Name]) VALUES (N'Protected AAC audio file');
 INSERT INTO [dbo].[MediaType] ([Name]) VALUES (N'Protected MPEG-4 video file');
 INSERT INTO [dbo].[MediaType] ([Name]) VALUES (N'Purchased AAC audio file');
 INSERT INTO [dbo].[MediaType] ([Name]) VALUES (N'AAC audio file');
 
---  [dbo].[Artist] table.
 INSERT INTO [dbo].[Artist] ([Name]) VALUES (N'AC/DC');
 INSERT INTO [dbo].[Artist] ([Name]) VALUES (N'Accept');
 INSERT INTO [dbo].[Artist] ([Name]) VALUES (N'Aerosmith');
@@ -566,7 +563,6 @@ INSERT INTO [dbo].[Artist] ([Name]) VALUES (N'C. Monteverdi, Nigel Rogers - Chia
 INSERT INTO [dbo].[Artist] ([Name]) VALUES (N'Nash Ensemble');
 INSERT INTO [dbo].[Artist] ([Name]) VALUES (N'Philip Glass Ensemble');
 
---  [dbo].[Album] table.
 INSERT INTO [dbo].[Album] ([Title], [ArtistId]) VALUES (N'For Those About To Rock We Salute You', 1);
 INSERT INTO [dbo].[Album] ([Title], [ArtistId]) VALUES (N'Balls to the Wall', 2);
 INSERT INTO [dbo].[Album] ([Title], [ArtistId]) VALUES (N'Restless and Wild', 2);
@@ -915,7 +911,6 @@ INSERT INTO [dbo].[Album] ([Title], [ArtistId]) VALUES (N'Monteverdi: L''Orfeo',
 INSERT INTO [dbo].[Album] ([Title], [ArtistId]) VALUES (N'Mozart: Chamber Music', 274);
 INSERT INTO [dbo].[Album] ([Title], [ArtistId]) VALUES (N'Koyaanisqatsi (Soundtrack from the Motion Picture)', 275);
 
---  [dbo].[Track] table.
 INSERT INTO [dbo].[Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Composer], [Milliseconds], [Bytes], [UnitPrice]) VALUES (N'For Those About To Rock (We Salute You)', 1, 1, 1, N'Angus Young, Malcolm Young, Brian Johnson', 343719, 11170334, 0.99);
 INSERT INTO [dbo].[Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES (N'Balls to the Wall', 2, 2, 1, 342562, 5510424, 0.99);
 INSERT INTO [dbo].[Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Composer], [Milliseconds], [Bytes], [UnitPrice]) VALUES (N'Fast As a Shark', 3, 2, 1, N'F. Baltes, S. Kaufman, U. Dirkscneider & W. Hoffman', 230619, 3990994, 0.99);
@@ -4420,7 +4415,6 @@ INSERT INTO [dbo].[Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Compose
 INSERT INTO [dbo].[Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Composer], [Milliseconds], [Bytes], [UnitPrice]) VALUES (N'Quintet for Horn, Violin, 2 Violas, and Cello in E Flat Major, K. 407/386c: III. Allegro', 346, 2, 24, N'Wolfgang Amadeus Mozart', 221331, 3665114, 0.99);
 INSERT INTO [dbo].[Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Composer], [Milliseconds], [Bytes], [UnitPrice]) VALUES (N'Koyaanisqatsi', 347, 2, 10, N'Philip Glass', 206005, 3305164, 0.99);
 
---  [dbo].[Employee] table.
 INSERT INTO [dbo].[Employee] ([LastName], [FirstName], [Title], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (N'Adams', N'Andrew', N'General Manager', '1962/2/18', '2002/8/14', N'11120 Jasper Ave NW', N'Edmonton', N'AB', N'Canada', N'T5K 2N1', N'+1 (780) 428-9482', N'+1 (780) 428-3457', N'andrew@chinookcorp.com');
 INSERT INTO [dbo].[Employee] ([LastName], [FirstName], [Title], [ReportsTo], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (N'Edwards', N'Nancy', N'Sales Manager', 1, '1958/12/8', '2002/5/1', N'825 8 Ave SW', N'Calgary', N'AB', N'Canada', N'T2P 2T3', N'+1 (403) 262-3443', N'+1 (403) 262-3322', N'nancy@chinookcorp.com');
 INSERT INTO [dbo].[Employee] ([LastName], [FirstName], [Title], [ReportsTo], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (N'Peacock', N'Jane', N'Sales Support Agent', 2, '1973/8/29', '2002/4/1', N'1111 6 Ave SW', N'Calgary', N'AB', N'Canada', N'T2P 5M5', N'+1 (403) 262-3443', N'+1 (403) 262-6712', N'jane@chinookcorp.com');
@@ -4430,7 +4424,6 @@ INSERT INTO [dbo].[Employee] ([LastName], [FirstName], [Title], [ReportsTo], [Bi
 INSERT INTO [dbo].[Employee] ([LastName], [FirstName], [Title], [ReportsTo], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (N'King', N'Robert', N'IT Staff', 6, '1970/5/29', '2004/1/2', N'590 Columbia Boulevard West', N'Lethbridge', N'AB', N'Canada', N'T1K 5N8', N'+1 (403) 456-9986', N'+1 (403) 456-8485', N'robert@chinookcorp.com');
 INSERT INTO [dbo].[Employee] ([LastName], [FirstName], [Title], [ReportsTo], [BirthDate], [HireDate], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email]) VALUES (N'Callahan', N'Laura', N'IT Staff', 6, '1968/1/9', '2004/3/4', N'923 7 ST NW', N'Lethbridge', N'AB', N'Canada', N'T1H 1Y8', N'+1 (403) 467-3351', N'+1 (403) 467-8772', N'laura@chinookcorp.com');
 
---  [dbo].[Customer] table.
 INSERT INTO [dbo].[Customer] ([FirstName], [LastName], [Company], [Address], [City], [State], [Country], [PostalCode], [Phone], [Fax], [Email], [SupportRepId]) VALUES (N'Luís', N'Gonçalves', N'Embraer - Empresa Brasileira de Aeronáutica S.A.', N'Av. Brigadeiro Faria Lima, 2170', N'São José dos Campos', N'SP', N'Brazil', N'12227-000', N'+55 (12) 3923-5555', N'+55 (12) 3923-5566', N'luisg@embraer.com.br', 3);
 INSERT INTO [dbo].[Customer] ([FirstName], [LastName], [Address], [City], [Country], [PostalCode], [Phone], [Email], [SupportRepId]) VALUES (N'Leonie', N'Köhler', N'Theodor-Heuss-Straße 34', N'Stuttgart', N'Germany', N'70174', N'+49 0711 2842222', N'leonekohler@surfeu.de', 5);
 INSERT INTO [dbo].[Customer] ([FirstName], [LastName], [Address], [City], [State], [Country], [PostalCode], [Phone], [Email], [SupportRepId]) VALUES (N'François', N'Tremblay', N'1498 rue Bélanger', N'Montréal', N'QC', N'Canada', N'H2G 1A7', N'+1 (514) 721-4711', N'ftremblay@gmail.com', 3);
@@ -4491,7 +4484,6 @@ INSERT INTO [dbo].[Customer] ([FirstName], [LastName], [Address], [City], [Count
 INSERT INTO [dbo].[Customer] ([FirstName], [LastName], [Address], [City], [Country], [PostalCode], [Phone], [Email], [SupportRepId]) VALUES (N'Manoj', N'Pareek', N'12,Community Centre', N'Delhi', N'India', N'110017', N'+91 0124 39883988', N'manoj.pareek@rediff.com', 3);
 INSERT INTO [dbo].[Customer] ([FirstName], [LastName], [Address], [City], [Country], [PostalCode], [Phone], [Email], [SupportRepId]) VALUES (N'Puja', N'Srivastava', N'3,Raj Bhavan Road', N'Bangalore', N'India', N'560001', N'+91 080 22289999', N'puja_srivastava@yahoo.in', 3);
 
---  [dbo].[Invoice] table.
 INSERT INTO [dbo].[Invoice] ([CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (2, '2007/1/1', N'Theodor-Heuss-Straße 34', N'Stuttgart', N'Germany', N'70174', 1.98);
 INSERT INTO [dbo].[Invoice] ([CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (4, '2007/1/2', N'Ullevålsveien 14', N'Oslo', N'Norway', N'0171', 3.96);
 INSERT INTO [dbo].[Invoice] ([CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (8, '2007/1/3', N'Grétrystraat 63', N'Brussels', N'Belgium', N'1000', 5.94);
@@ -4905,7 +4897,6 @@ INSERT INTO [dbo].[Invoice] ([CustomerId], [InvoiceDate], [BillingAddress], [Bil
 INSERT INTO [dbo].[Invoice] ([CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (44, '2011/12/14', N'Porthaninkatu 9', N'Helsinki', N'Finland', N'00530', 13.86);
 INSERT INTO [dbo].[Invoice] ([CustomerId], [InvoiceDate], [BillingAddress], [BillingCity], [BillingCountry], [BillingPostalCode], [Total]) VALUES (58, '2011/12/22', N'12,Community Centre', N'Delhi', N'India', N'110017', 1.99);
 
---  [dbo].[InvoiceLine] table.
 INSERT INTO [dbo].[InvoiceLine] ([InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (1, 2, 0.99, 1);
 INSERT INTO [dbo].[InvoiceLine] ([InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (1, 4, 0.99, 1);
 INSERT INTO [dbo].[InvoiceLine] ([InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (2, 6, 0.99, 1);
@@ -7147,7 +7138,6 @@ INSERT INTO [dbo].[InvoiceLine] ([InvoiceId], [TrackId], [UnitPrice], [Quantity]
 INSERT INTO [dbo].[InvoiceLine] ([InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (411, 3163, 0.99, 1);
 INSERT INTO [dbo].[InvoiceLine] ([InvoiceId], [TrackId], [UnitPrice], [Quantity]) VALUES (412, 3177, 1.99, 1);
 
---  [dbo].[Playlist] table.
 INSERT INTO [dbo].[Playlist] ([Name]) VALUES (N'Music');
 INSERT INTO [dbo].[Playlist] ([Name]) VALUES (N'Movies');
 INSERT INTO [dbo].[Playlist] ([Name]) VALUES (N'TV Shows');
@@ -7167,7 +7157,6 @@ INSERT INTO [dbo].[Playlist] ([Name]) VALUES (N'Grunge');
 INSERT INTO [dbo].[Playlist] ([Name]) VALUES (N'Heavy Metal Classic');
 INSERT INTO [dbo].[Playlist] ([Name]) VALUES (N'On-The-Go 1');
 
---  [dbo].[PlaylistTrack] table.
 INSERT INTO [dbo].[PlaylistTrack] ([PlaylistId], [TrackId]) VALUES (1, 3402);
 INSERT INTO [dbo].[PlaylistTrack] ([PlaylistId], [TrackId]) VALUES (1, 3389);
 INSERT INTO [dbo].[PlaylistTrack] ([PlaylistId], [TrackId]) VALUES (1, 3390);

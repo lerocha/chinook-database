@@ -260,7 +260,6 @@ CREATE INDEX IFK_TrackMediaTypeId_MediaTypeMediaTypeId ON Track (MediaTypeId);
 /*******************************************************************************
    Populate Tables
 ********************************************************************************/
---  Genre table.
 INSERT INTO Genre (GenreId, Name) VALUES (1, N'Rock');
 INSERT INTO Genre (GenreId, Name) VALUES (2, N'Jazz');
 INSERT INTO Genre (GenreId, Name) VALUES (3, N'Metal');
@@ -287,14 +286,12 @@ INSERT INTO Genre (GenreId, Name) VALUES (23, N'Alternative');
 INSERT INTO Genre (GenreId, Name) VALUES (24, N'Classical');
 INSERT INTO Genre (GenreId, Name) VALUES (25, N'Opera');
 
---  MediaType table.
 INSERT INTO MediaType (MediaTypeId, Name) VALUES (1, N'MPEG audio file');
 INSERT INTO MediaType (MediaTypeId, Name) VALUES (2, N'Protected AAC audio file');
 INSERT INTO MediaType (MediaTypeId, Name) VALUES (3, N'Protected MPEG-4 video file');
 INSERT INTO MediaType (MediaTypeId, Name) VALUES (4, N'Purchased AAC audio file');
 INSERT INTO MediaType (MediaTypeId, Name) VALUES (5, N'AAC audio file');
 
---  Artist table.
 INSERT INTO Artist (ArtistId, Name) VALUES (1, N'AC/DC');
 INSERT INTO Artist (ArtistId, Name) VALUES (2, N'Accept');
 INSERT INTO Artist (ArtistId, Name) VALUES (3, N'Aerosmith');
@@ -571,7 +568,6 @@ INSERT INTO Artist (ArtistId, Name) VALUES (273, N'C. Monteverdi, Nigel Rogers -
 INSERT INTO Artist (ArtistId, Name) VALUES (274, N'Nash Ensemble');
 INSERT INTO Artist (ArtistId, Name) VALUES (275, N'Philip Glass Ensemble');
 
---  Album table.
 INSERT INTO Album (AlbumId, Title, ArtistId) VALUES (1, N'For Those About To Rock We Salute You', 1);
 INSERT INTO Album (AlbumId, Title, ArtistId) VALUES (2, N'Balls to the Wall', 2);
 INSERT INTO Album (AlbumId, Title, ArtistId) VALUES (3, N'Restless and Wild', 2);
@@ -920,7 +916,6 @@ INSERT INTO Album (AlbumId, Title, ArtistId) VALUES (345, N'Monteverdi: L'||chr(
 INSERT INTO Album (AlbumId, Title, ArtistId) VALUES (346, N'Mozart: Chamber Music', 274);
 INSERT INTO Album (AlbumId, Title, ArtistId) VALUES (347, N'Koyaanisqatsi (Soundtrack from the Motion Picture)', 275);
 
---  Track table.
 INSERT INTO Track (TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES (1, N'For Those About To Rock (We Salute You)', 1, 1, 1, N'Angus Young, Malcolm Young, Brian Johnson', 343719, 11170334, 0.99);
 INSERT INTO Track (TrackId, Name, AlbumId, MediaTypeId, GenreId, Milliseconds, Bytes, UnitPrice) VALUES (2, N'Balls to the Wall', 2, 2, 1, 342562, 5510424, 0.99);
 INSERT INTO Track (TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES (3, N'Fast As a Shark', 3, 2, 1, N'F. Baltes, S. Kaufman, U. Dirkscneider '||chr(38)||' W. Hoffman', 230619, 3990994, 0.99);
@@ -4425,7 +4420,6 @@ INSERT INTO Track (TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milli
 INSERT INTO Track (TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES (3502, N'Quintet for Horn, Violin, 2 Violas, and Cello in E Flat Major, K. 407/386c: III. Allegro', 346, 2, 24, N'Wolfgang Amadeus Mozart', 221331, 3665114, 0.99);
 INSERT INTO Track (TrackId, Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES (3503, N'Koyaanisqatsi', 347, 2, 10, N'Philip Glass', 206005, 3305164, 0.99);
 
---  Employee table.
 INSERT INTO Employee (EmployeeId, LastName, FirstName, Title, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (1, N'Adams', N'Andrew', N'General Manager', TO_DATE('1962-2-18 00:00:00','yyyy-mm-dd hh24:mi:ss'), TO_DATE('2002-8-14 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'11120 Jasper Ave NW', N'Edmonton', N'AB', N'Canada', N'T5K 2N1', N'+1 (780) 428-9482', N'+1 (780) 428-3457', N'andrew@chinookcorp.com');
 INSERT INTO Employee (EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (2, N'Edwards', N'Nancy', N'Sales Manager', 1, TO_DATE('1958-12-8 00:00:00','yyyy-mm-dd hh24:mi:ss'), TO_DATE('2002-5-1 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'825 8 Ave SW', N'Calgary', N'AB', N'Canada', N'T2P 2T3', N'+1 (403) 262-3443', N'+1 (403) 262-3322', N'nancy@chinookcorp.com');
 INSERT INTO Employee (EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (3, N'Peacock', N'Jane', N'Sales Support Agent', 2, TO_DATE('1973-8-29 00:00:00','yyyy-mm-dd hh24:mi:ss'), TO_DATE('2002-4-1 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'1111 6 Ave SW', N'Calgary', N'AB', N'Canada', N'T2P 5M5', N'+1 (403) 262-3443', N'+1 (403) 262-6712', N'jane@chinookcorp.com');
@@ -4435,7 +4429,6 @@ INSERT INTO Employee (EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDa
 INSERT INTO Employee (EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (7, N'King', N'Robert', N'IT Staff', 6, TO_DATE('1970-5-29 00:00:00','yyyy-mm-dd hh24:mi:ss'), TO_DATE('2004-1-2 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'590 Columbia Boulevard West', N'Lethbridge', N'AB', N'Canada', N'T1K 5N8', N'+1 (403) 456-9986', N'+1 (403) 456-8485', N'robert@chinookcorp.com');
 INSERT INTO Employee (EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email) VALUES (8, N'Callahan', N'Laura', N'IT Staff', 6, TO_DATE('1968-1-9 00:00:00','yyyy-mm-dd hh24:mi:ss'), TO_DATE('2004-3-4 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'923 7 ST NW', N'Lethbridge', N'AB', N'Canada', N'T1H 1Y8', N'+1 (403) 467-3351', N'+1 (403) 467-8772', N'laura@chinookcorp.com');
 
---  Customer table.
 INSERT INTO Customer (CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, SupportRepId) VALUES (1, N'Luís', N'Gonçalves', N'Embraer - Empresa Brasileira de Aeronáutica S.A.', N'Av. Brigadeiro Faria Lima, 2170', N'São José dos Campos', N'SP', N'Brazil', N'12227-000', N'+55 (12) 3923-5555', N'+55 (12) 3923-5566', N'luisg@embraer.com.br', 3);
 INSERT INTO Customer (CustomerId, FirstName, LastName, Address, City, Country, PostalCode, Phone, Email, SupportRepId) VALUES (2, N'Leonie', N'Köhler', N'Theodor-Heuss-Straße 34', N'Stuttgart', N'Germany', N'70174', N'+49 0711 2842222', N'leonekohler@surfeu.de', 5);
 INSERT INTO Customer (CustomerId, FirstName, LastName, Address, City, State, Country, PostalCode, Phone, Email, SupportRepId) VALUES (3, N'François', N'Tremblay', N'1498 rue Bélanger', N'Montréal', N'QC', N'Canada', N'H2G 1A7', N'+1 (514) 721-4711', N'ftremblay@gmail.com', 3);
@@ -4496,7 +4489,6 @@ INSERT INTO Customer (CustomerId, FirstName, LastName, Address, City, Country, P
 INSERT INTO Customer (CustomerId, FirstName, LastName, Address, City, Country, PostalCode, Phone, Email, SupportRepId) VALUES (58, N'Manoj', N'Pareek', N'12,Community Centre', N'Delhi', N'India', N'110017', N'+91 0124 39883988', N'manoj.pareek@rediff.com', 3);
 INSERT INTO Customer (CustomerId, FirstName, LastName, Address, City, Country, PostalCode, Phone, Email, SupportRepId) VALUES (59, N'Puja', N'Srivastava', N'3,Raj Bhavan Road', N'Bangalore', N'India', N'560001', N'+91 080 22289999', N'puja_srivastava@yahoo.in', 3);
 
---  Invoice table.
 INSERT INTO Invoice (InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingCountry, BillingPostalCode, Total) VALUES (1, 2, TO_DATE('2007-1-1 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'Theodor-Heuss-Straße 34', N'Stuttgart', N'Germany', N'70174', 1.98);
 INSERT INTO Invoice (InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingCountry, BillingPostalCode, Total) VALUES (2, 4, TO_DATE('2007-1-2 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'Ullevålsveien 14', N'Oslo', N'Norway', N'0171', 3.96);
 INSERT INTO Invoice (InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingCountry, BillingPostalCode, Total) VALUES (3, 8, TO_DATE('2007-1-3 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'Grétrystraat 63', N'Brussels', N'Belgium', N'1000', 5.94);
@@ -4910,7 +4902,6 @@ INSERT INTO Invoice (InvoiceId, CustomerId, InvoiceDate, BillingAddress, Billing
 INSERT INTO Invoice (InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingCountry, BillingPostalCode, Total) VALUES (411, 44, TO_DATE('2011-12-14 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'Porthaninkatu 9', N'Helsinki', N'Finland', N'00530', 13.86);
 INSERT INTO Invoice (InvoiceId, CustomerId, InvoiceDate, BillingAddress, BillingCity, BillingCountry, BillingPostalCode, Total) VALUES (412, 58, TO_DATE('2011-12-22 00:00:00','yyyy-mm-dd hh24:mi:ss'), N'12,Community Centre', N'Delhi', N'India', N'110017', 1.99);
 
---  InvoiceLine table.
 INSERT INTO InvoiceLine (InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity) VALUES (1, 1, 2, 0.99, 1);
 INSERT INTO InvoiceLine (InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity) VALUES (2, 1, 4, 0.99, 1);
 INSERT INTO InvoiceLine (InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity) VALUES (3, 2, 6, 0.99, 1);
@@ -7152,7 +7143,6 @@ INSERT INTO InvoiceLine (InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity)
 INSERT INTO InvoiceLine (InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity) VALUES (2239, 411, 3163, 0.99, 1);
 INSERT INTO InvoiceLine (InvoiceLineId, InvoiceId, TrackId, UnitPrice, Quantity) VALUES (2240, 412, 3177, 1.99, 1);
 
---  Playlist table.
 INSERT INTO Playlist (PlaylistId, Name) VALUES (1, N'Music');
 INSERT INTO Playlist (PlaylistId, Name) VALUES (2, N'Movies');
 INSERT INTO Playlist (PlaylistId, Name) VALUES (3, N'TV Shows');
@@ -7172,7 +7162,6 @@ INSERT INTO Playlist (PlaylistId, Name) VALUES (16, N'Grunge');
 INSERT INTO Playlist (PlaylistId, Name) VALUES (17, N'Heavy Metal Classic');
 INSERT INTO Playlist (PlaylistId, Name) VALUES (18, N'On-The-Go 1');
 
---  PlaylistTrack table.
 INSERT INTO PlaylistTrack (PlaylistId, TrackId) VALUES (1, 3402);
 INSERT INTO PlaylistTrack (PlaylistId, TrackId) VALUES (1, 3389);
 INSERT INTO PlaylistTrack (PlaylistId, TrackId) VALUES (1, 3390);

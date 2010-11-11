@@ -217,7 +217,6 @@ CREATE INDEX <#= ifkName #> ON <#= toTableName #> (<#= strategy.GetColumns(const
 		var entitySet = (from e in existingStore.GetAllEntitySets() where e.Name == table.TableName select e).Single();
 		var tableName = strategy.GetFullyQualifiedName(entitySet.GetSchemaName(), entitySet.GetTableName());
 #>
---  <#= tableName #> table.
 <#
         foreach (DataRow row in table.Rows)
         {
