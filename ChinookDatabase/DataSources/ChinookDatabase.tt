@@ -55,18 +55,40 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 <#
 	if (strategy.CanReCreateDatabase)
 	{
+		var dropdb = strategy.WriteDropDatabase(options.DatabaseName);
+		if (!string.IsNullOrEmpty(dropdb)) 
+		{
 #>
 /*******************************************************************************
    Drop database if it exists
 ********************************************************************************/
-<#= strategy.WriteDropDatabase(options.DatabaseName) #>
+<#= dropdb #>
+<#= strategy.WriteExecuteCommand() #>
 
+<#
+		}
+		
+		var createdb = strategy.WriteCreateDatabase(options.DatabaseName);
+		if (!string.IsNullOrEmpty(createdb))
+		{
+#>
 /*******************************************************************************
    Create database
 ********************************************************************************/
-<#= strategy.WriteCreateDatabase(options.DatabaseName) #>
-<#= strategy.WriteUseDatabase(options.DatabaseName) #>
+<#= createdb #>
+<#= strategy.WriteExecuteCommand() #>
+
 <#
+		}
+		
+		var usedb = strategy.WriteUseDatabase(options.DatabaseName);
+		if (!string.IsNullOrEmpty(usedb))
+		{
+#>
+<#= usedb #>
+<#= strategy.WriteExecuteCommand() #>
+<#
+		}
 	}
 	else
 	{
