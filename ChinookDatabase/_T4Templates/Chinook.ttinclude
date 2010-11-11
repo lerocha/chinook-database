@@ -6410,11 +6410,6 @@
             return string.Empty;
         }
 
-        public virtual string WriteCreateTableDelimiter()
-        {
-            return string.Empty;
-        }
-
         #endregion
     }
 
@@ -6536,7 +6531,6 @@
         string WriteUseDatabase(string databaseName);
         string WriteCreateColumn(EdmProperty property, Version targetVersion);
         string WriteExecuteCommand();
-        string WriteCreateTableDelimiter();
 
         #endregion
     }

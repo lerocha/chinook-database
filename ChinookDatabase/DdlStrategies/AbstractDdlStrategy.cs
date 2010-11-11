@@ -160,11 +160,6 @@ namespace ChinookDatabase.DdlStrategies
             return string.Empty;
         }
 
-        public virtual string WriteCreateTableDelimiter()
-        {
-            return string.Empty;
-        }
-
         #endregion
     }
 

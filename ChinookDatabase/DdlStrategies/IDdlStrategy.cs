@@ -48,7 +48,6 @@ namespace ChinookDatabase.DdlStrategies
         string WriteUseDatabase(string databaseName);
         string WriteCreateColumn(EdmProperty property, Version targetVersion);
         string WriteExecuteCommand();
-        string WriteCreateTableDelimiter();
 
         #endregion
     }
