@@ -4,6 +4,10 @@
 // Author: Damien Guard
 // Retrieved from: http://damieng.com/blog/2009/11/06/multiple-outputs-from-t4-made-easy-revisited
 //---------------------------------------------------------------------
+// Changes:
+// Date        Author        Description
+// 11/11/2010  Luis Rocha    Added option to create files using different encoding.
+//---------------------------------------------------------------------
 #>
 <#@ assembly name="System.Core"
 #><#@ assembly name="System.Data.Linq"
@@ -29,6 +33,7 @@ class Manager {
     private class Block {
         public String Name;
         public int Start, Length;
+		public Encoding Encoding;
     }
 
     private Block currentBlock;
@@ -44,10 +49,14 @@ class Manager {
     }
 
     public void StartNewFile(String name) {
+        StartNewFile(name, Encoding.UTF8);
+    }
+	
+	public void StartNewFile(String name, Encoding encoding) {
         if (name == null)
             throw new ArgumentNullException("name");
-        CurrentBlock = new Block { Name = name };
-    }
+        CurrentBlock = new Block { Name = name, Encoding = encoding };
+	}
 
     public void StartFooter() {
         CurrentBlock = footer;
@@ -77,15 +86,15 @@ class Manager {
                 String fileName = Path.Combine(outputPath, block.Name);
                 String content = headerText + template.ToString(block.Start, block.Length) + footerText;
                 generatedFileNames.Add(fileName);
-                CreateFile(fileName, content);
+                CreateFile(fileName, content, block.Encoding);
                 template.Remove(block.Start, block.Length);
             }
         }
     }
 
-    protected virtual void CreateFile(String fileName, String content) {
-        if (IsFileContentDifferent(fileName, content))
-            File.WriteAllText(fileName, content);
+    protected virtual void CreateFile(String fileName, String content, Encoding encoding) {
+        if (IsFileContentDifferent(fileName, content, encoding))
+            File.WriteAllText(fileName, content, encoding);
     }
 
     public virtual String GetCustomToolNamespace(String fileName) {
@@ -96,8 +105,8 @@ class Manager {
         get { return null; }
     }
 
-    protected bool IsFileContentDifferent(String fileName, String newContent) {
-        return !(File.Exists(fileName) && File.ReadAllText(fileName) == newContent);
+    protected bool IsFileContentDifferent(String fileName, String newContent, Encoding encoding) {
+        return !(File.Exists(fileName) && File.ReadAllText(fileName, encoding) == newContent);
     }
 
     private Manager(ITextTemplatingEngineHost host, StringBuilder template) {
@@ -139,10 +148,10 @@ class Manager {
             projectSyncAction.EndInvoke(projectSyncAction.BeginInvoke(generatedFileNames, null, null));
         }
 
-        protected override void CreateFile(String fileName, String content) {
-            if (IsFileContentDifferent(fileName, content)) {
+        protected override void CreateFile(String fileName, String content, Encoding encoding) {
+            if (IsFileContentDifferent(fileName, content, encoding)) {
                 CheckoutFileIfRequired(fileName);
-                File.WriteAllText(fileName, content);
+                File.WriteAllText(fileName, content, encoding);
             }
         }
 
