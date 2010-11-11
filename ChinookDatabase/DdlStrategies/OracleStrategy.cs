@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -18,6 +19,17 @@ namespace ChinookDatabase.DdlStrategies
         public override string FormatName(string name)
         {
             return string.Format("{0}", name);
+        }
+
+        public override string FormatStringValue(string value)
+        {
+            return string.Format("N'{0}'", value.Replace("'", "'||chr(39)||'").Replace("&", "'||chr(38)||'"));
+        }
+
+        public override string FormatDateValue(string value)
+        {
+            var date = Convert.ToDateTime(value);
+            return string.Format("TO_DATE('{0}-{1}-{2} 00:00:00','yyyy-mm-dd hh24:mi:ss')", date.Year, date.Month, date.Day);
         }
 
         public override string GetFullyQualifiedName(string schema, string name)

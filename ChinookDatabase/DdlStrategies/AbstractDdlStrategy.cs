@@ -48,6 +48,17 @@ namespace ChinookDatabase.DdlStrategies
             return string.Format("[{0}]", name);
         }
 
+        public virtual string FormatStringValue(string value)
+        {
+            return string.Format("N'{0}'", value.Replace("'", "''"));
+        }
+
+        public virtual string FormatDateValue(string value)
+        {
+            var date = Convert.ToDateTime(value);
+            return string.Format("'{0}/{1:0}/{2:0}'", date.Year, date.Month, date.Day);
+        }
+
         public virtual string GetFullyQualifiedName(string schema, string name)
         {
             return string.Format("{0}.{1}", FormatName(schema), FormatName(name));

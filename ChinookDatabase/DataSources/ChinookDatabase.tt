@@ -11,6 +11,7 @@ var options = new
 	PopulateDatabase = true,
 	Version = new Version("2.0.0.0"),
 	ModelFile = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"..\Chinook.edmx"),
+	DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"_Xml\ChinookData.xml"),
 	DdlStrategies = new IDdlStrategy[] 
 							{
 								new SqlServerStrategy { IsIdentityEnabled = false },
@@ -201,12 +202,68 @@ CREATE INDEX <#= ifkName #> ON <#= toTableName #> (<#= strategy.GetColumns(const
     }
 #>
 
-
 /*******************************************************************************
    Populate Tables
 ********************************************************************************/
+<#
+    var ds = new ChinookDataSet();
+    ds.ReadXml(options.DataSource);
+    StringBuilder sbFields = new StringBuilder();
+    StringBuilder sbValues = new StringBuilder();
 
--- TODO
+    foreach (DataTable table in ds.Tables)
+    {
+#>
+--  <#= table.TableName #> table.
+<#
+        foreach (DataRow row in table.Rows)
+        {
+            sbFields.Length = 0;
+            sbValues.Length = 0;
+
+            foreach (DataColumn col in table.Columns)
+            {
+                string value = row[col.ColumnName].ToString();
+                if ((col.AutoIncrement && strategy.IsIdentityEnabled) || value.Length==0) continue;
+                
+                if (sbFields.Length == 0)
+                {
+                    sbFields.Append("(");
+                    sbValues.Append("(");
+                }
+                else
+                {
+                    sbFields.Append(", ");
+                    sbValues.Append(", ");
+                }
+
+                if (col.DataType == typeof(DateTime))
+                {
+                    sbValues.Append(strategy.FormatDateValue(value));
+                }
+                else if (col.DataType == typeof(String))
+                {
+                    sbValues.Append(strategy.FormatStringValue(value));
+                }
+                else
+                {
+                    sbValues.Append(value);
+                }
+
+                sbFields.Append(col.ColumnName);
+            }
+
+            sbFields.Append(")");
+            sbValues.Append(")");
+#>
+<#= string.Format("INSERT INTO {0} {1} VALUES {2};", table.TableName, sbFields, sbValues) #>
+<#
+        }	// foreach DataRow
+#>
+
+<#
+    }	// foreach DataTable
+#>
 
 <#
 	

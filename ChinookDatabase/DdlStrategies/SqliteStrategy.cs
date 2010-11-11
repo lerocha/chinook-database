@@ -17,6 +17,11 @@ namespace ChinookDatabase.DdlStrategies
             get { return true; }
         }
 
+        public override string FormatStringValue(string value)
+        {
+            return string.Format("'{0}'", value.Replace("'", "''"));
+        }
+
         public override string GetFullyQualifiedName(string schema, string name)
         {
             return FormatName(name);

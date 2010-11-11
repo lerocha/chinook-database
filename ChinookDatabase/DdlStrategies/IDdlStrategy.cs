@@ -27,6 +27,8 @@ namespace ChinookDatabase.DdlStrategies
         #region Methods used to build SQL commands.
 
         string FormatName(string name);
+        string FormatStringValue(string value);
+        string FormatDateValue(string date);
         string GetFullyQualifiedName(string schema, string name);
         string GetStoreType(EdmProperty property);
         string GetIdentity(EdmProperty property, Version targetVersion);

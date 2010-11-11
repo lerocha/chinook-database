@@ -2,6 +2,11 @@
 {
     public class SqlServerCompactStrategy : AbstractDdlStrategy
     {
+        public SqlServerCompactStrategy()
+        {
+            CanReCreateDatabase = true;
+        }
+
         public override string Name { get { return "SqlServerCompact"; } }
 
         public override string FileExtension { get { return "sqlce"; } }
@@ -15,5 +20,6 @@
         {
             return FormatName(name);
         }
+
     }
 }
