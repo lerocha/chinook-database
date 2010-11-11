@@ -27,6 +27,11 @@ namespace ChinookDatabase.DdlStrategies
             get { return string.Empty; }
         }
 
+        public virtual bool CreatePrimaryKeyOnTableCreate
+        {
+            get { return true; }
+        }
+
         public virtual bool CreateForeignKeyOnTableCreate
         {
             get { return false; }

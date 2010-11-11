@@ -1,6 +1,6 @@
 /*******************************************************************************
    Chinook Database - Version 1.2
-   Script: Chinook_MySql_autoincrement.sql
+   Script: Chinook_MySql_Generated_PKs.sql
    Description: Creates and populates the Chinook database.
    DB Server: MySql
    Author: Luis Rocha

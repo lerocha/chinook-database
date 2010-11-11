@@ -116,27 +116,41 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookDatabase.txt</LastGenOutput>
     </None>
+    <Content Include="DataSources\Chinook_EffiProz_Generated_PKs.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_MySql_Generated_PKs.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DataSources\Chinook_Sqlite.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="DataSources\Chinook_SqlServerCompact.sqlce">
+    <Content Include="DataSources\Chinook_SqlServerCompact.sqlce">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
-    </None>
-    <None Include="DataSources\Chinook_SqlServerCompact_identity.sqlce">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_SqlServerCompact_Generated_PKs.sqlce">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
-    </None>
-    <None Include="DataSources\CreateMySql.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\CreateMySql.bat">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
-    </None>
-    <None Include="DataSources\CreateOracle.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\CreateOracle.bat">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
-    </None>
-    <None Include="DataSources\CreateSqlite.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\CreateSqlite.bat">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
-    </None>
-    <None Include="DataSources\CreateSqlServer.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\CreateSqlServer.bat">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
-    </None>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="DataSources\_Xml\ChinookData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookData.xml</LastGenOutput>
@@ -175,33 +189,33 @@
     </None>
     <Content Include="DataSources\Chinook_EffiProz.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
-    </Content>
-    <Content Include="DataSources\Chinook_EffiProz_identity.sql">
-      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataSources\Chinook_MySql.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
-    </Content>
-    <Content Include="DataSources\Chinook_MySql_autoincrement.sql">
-      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataSources\Chinook_Oracle.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataSources\Chinook_Sqlite.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataSources\Chinook_SqlServer.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataSources\Chinook_SqlServerCompact.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataSources\Chinook_SqlServerCompact_identity.sdf">
+    <Content Include="DataSources\Chinook_SqlServerCompact_Generated_PKs.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataSources\Chinook_SqlServer_identity.sql">
+    <Content Include="DataSources\Chinook_SqlServer_Generated_PKs.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataSources\_Xml\ChinookData.xml">
       <AutoGen>True</AutoGen>

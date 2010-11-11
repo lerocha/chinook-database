@@ -16,13 +16,13 @@ goto END
 :MENU
 echo Options:
 echo.
-echo 1. Run Chinook_SqlServer_identity.sql
-echo 2. Run Chinook_SqlServer.sql
+echo 1. Run Chinook_SqlServer.sql
+echo 2. Run Chinook_SqlServer_Generated_PKs.sql
 echo 3. Exit
 echo.
 choice /c 123
-if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook_SqlServer_identity.sql
-if (%ERRORLEVEL%)==(2) set SQLFILE=Chinook_SqlServer.sql
+if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook_SqlServer.sql
+if (%ERRORLEVEL%)==(2) set SQLFILE=Chinook_SqlServer_Generated_PKs.sql
 if (%ERRORLEVEL%)==(3) goto END
 
 :RUNSQL

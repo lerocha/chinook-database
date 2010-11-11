@@ -13,16 +13,16 @@ var options = new
 	ModelFile = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"..\Chinook.edmx"),
 	DdlStrategies = new IDdlStrategy[] 
 							{
-								new SqlServerStrategy { IsIdentityEnabled = true },
 								new SqlServerStrategy { IsIdentityEnabled = false },
-								new SqlServerCompactStrategy { IsIdentityEnabled = true },
+								new SqlServerStrategy { IsIdentityEnabled = true },
 								new SqlServerCompactStrategy { IsIdentityEnabled = false },
+								new SqlServerCompactStrategy { IsIdentityEnabled = true },
 								new SqliteStrategy { IsIdentityEnabled = false },
-								new MySqlStrategy { IsIdentityEnabled = true },
 								new MySqlStrategy { IsIdentityEnabled = false },
+								new MySqlStrategy { IsIdentityEnabled = true },
 								new OracleStrategy { IsIdentityEnabled = false },
-								new EffiProzStrategy { IsIdentityEnabled = true },
-								new EffiProzStrategy { IsIdentityEnabled = false }
+								new EffiProzStrategy { IsIdentityEnabled = false },
+								new EffiProzStrategy { IsIdentityEnabled = true }
 						   	}
 };
 
@@ -98,21 +98,21 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 		var tableName = strategy.GetFullyQualifiedName(entitySet.GetSchemaName(), entitySet.GetTableName());
 #>
 CREATE TABLE <#= tableName #>
-(
-<#
+(<#
 
     for (int i = 0; i < entitySet.ElementType.Properties.Count; i++)
     {
-        var prop = entitySet.ElementType.Properties[i];
-#>
-    <#= strategy.WriteCreateColumn(prop, options.Version) #>,
-<#
+        var prop = entitySet.ElementType.Properties[i];#><#= ( i>0 ? "," : "") #>
+    <#= strategy.WriteCreateColumn(prop, options.Version) #><#
 	}
 
 	// Create Primary Key Constraint.
-	string pkName = strategy.FormatName("PK_" + entitySet.GetTableName());
-#>
+	if (strategy.CreatePrimaryKeyOnTableCreate)
+	{
+		string pkName = strategy.FormatName("PK_" + entitySet.GetTableName());#>,
     CONSTRAINT <#= pkName #> PRIMARY KEY <#= strategy.GetClustered(existingStore, entitySet.ElementType)#> (<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>)<#
+	}
+	
 	// Create Foreign Key depending on the strategy.
 	if (strategy.CreateForeignKeyOnTableCreate)
 	{
@@ -144,6 +144,17 @@ CREATE TABLE <#= tableName #>
     {
 		string tableName = strategy.GetFullyQualifiedName(entitySet.GetSchemaName(), entitySet.GetTableName());
 		string pkIndexName = strategy.FormatName("IPK_" + entitySet.GetTableName());
+		
+		// Create Primary Key Constraint.
+		if (!strategy.CreatePrimaryKeyOnTableCreate)
+		{
+			string pkName = strategy.FormatName("PK_" + entitySet.GetTableName());
+#>
+ALTER TABLE <#= tableName #> ADD CONSTRAINT <#= pkName #> PRIMARY KEY (<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>);
+<#			
+		}
+
+		// Create Primary Key Unique Constraint.
 #>
 CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>);
 <#= strategy.WriteExecuteCommand() #>
@@ -279,7 +290,7 @@ private static string GetFileName(IDdlStrategy strategy)
 {
 	var suffix = string.Empty;
 	if (strategy.IsIdentityEnabled)
-		suffix = "_" + strategy.Identity.Trim().Replace("_","").ToLower();
+		suffix = "_Generated_PKs";
 	
 	return string.Format("Chinook_{0}{1}.{2}", strategy.Name, suffix, strategy.FileExtension);
 }
