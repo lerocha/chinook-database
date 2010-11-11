@@ -6752,7 +6752,6 @@
     {
         public SqlServerStrategy()
         {
-            Encoding = Encoding.Unicode;
             CanReCreateDatabase = true;
             CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
         }
