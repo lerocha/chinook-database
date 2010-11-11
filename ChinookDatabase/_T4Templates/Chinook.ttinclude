@@ -6260,6 +6260,11 @@
     public abstract class AbstractDdlStrategy : IDdlStrategy
     {
 
+        protected AbstractDdlStrategy()
+        {
+            Encoding = Encoding.UTF8;
+        }
+
         #region Implementation of IDdlStrategy
 
         public virtual string Name
@@ -6292,6 +6297,8 @@
         public bool CanReCreateDatabase { get; set; }
 
         public string CommandLineFormat { get; set; }
+
+        public Encoding Encoding { get; set; }
 
         public virtual string FormatName(string name)
         {
@@ -6504,6 +6511,7 @@
         bool IsIdentityEnabled { get; set; }
         bool CanReCreateDatabase { get; set; }
         string CommandLineFormat { get; set; }
+        Encoding Encoding { get; set; }
 
         #endregion
 
@@ -6744,6 +6752,7 @@
     {
         public SqlServerStrategy()
         {
+            Encoding = Encoding.Unicode;
             CanReCreateDatabase = true;
             CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Metadata.Edm;
+using System.Text;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -21,6 +22,7 @@ namespace ChinookDatabase.DdlStrategies
         bool IsIdentityEnabled { get; set; }
         bool CanReCreateDatabase { get; set; }
         string CommandLineFormat { get; set; }
+        Encoding Encoding { get; set; }
 
         #endregion
 

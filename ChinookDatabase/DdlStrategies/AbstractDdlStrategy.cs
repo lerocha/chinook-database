@@ -10,6 +10,11 @@ namespace ChinookDatabase.DdlStrategies
     public abstract class AbstractDdlStrategy : IDdlStrategy
     {
 
+        protected AbstractDdlStrategy()
+        {
+            Encoding = Encoding.UTF8;
+        }
+
         #region Implementation of IDdlStrategy
 
         public virtual string Name
@@ -42,6 +47,8 @@ namespace ChinookDatabase.DdlStrategies
         public bool CanReCreateDatabase { get; set; }
 
         public string CommandLineFormat { get; set; }
+
+        public Encoding Encoding { get; set; }
 
         public virtual string FormatName(string name)
         {
