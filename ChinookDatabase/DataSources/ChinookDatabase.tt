@@ -14,8 +14,8 @@ var options = new
 	DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"_Xml\ChinookData.xml"),
 	DdlStrategies = new IDdlStrategy[] 
 							{
-								new SqlServerStrategy { IsIdentityEnabled = false },
-								new SqlServerStrategy { IsIdentityEnabled = true },
+								new SqlServerStrategy { IsIdentityEnabled = false, Encoding = Encoding.Unicode },
+								new SqlServerStrategy { IsIdentityEnabled = true, Encoding = Encoding.Unicode },
 								new SqlServerCompactStrategy { IsIdentityEnabled = false },
 								new SqlServerCompactStrategy { IsIdentityEnabled = true },
 								new SqliteStrategy { IsIdentityEnabled = false },
@@ -41,7 +41,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 	// Start SQL file.
 	//************************************************************************
 	var filename = GetFileName(strategy);
-    fileManager.StartNewFile(filename);
+	fileManager.StartNewFile(filename, strategy.Encoding);
 #>
 /*******************************************************************************
    Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
