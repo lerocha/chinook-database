@@ -333,7 +333,7 @@ private static string GetFileName(IDdlStrategy strategy)
 {
 	var suffix = string.Empty;
 	if (strategy.IsIdentityEnabled)
-		suffix = "_Generated_PKs";
+		suffix = "_AutoIncrementPKs";
 	
 	return string.Format("Chinook_{0}{1}.{2}", strategy.Name, suffix, strategy.FileExtension);
 }

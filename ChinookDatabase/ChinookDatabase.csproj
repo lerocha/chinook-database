@@ -116,11 +116,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookDatabase.txt</LastGenOutput>
     </None>
-    <Content Include="DataSources\Chinook_EffiProz_Generated_PKs.sql">
+    <Content Include="DataSources\Chinook_EffiProz_AutoIncrementPKs.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataSources\Chinook_MySql_Generated_PKs.sql">
+    <Content Include="DataSources\Chinook_MySql_AutoIncrementPKs.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -131,7 +131,7 @@
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataSources\Chinook_SqlServerCompact_Generated_PKs.sqlce">
+    <Content Include="DataSources\Chinook_SqlServerCompact_AutoIncrementPKs.sqlce">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -210,10 +210,10 @@
     <Content Include="DataSources\Chinook_SqlServerCompact.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataSources\Chinook_SqlServerCompact_Generated_PKs.sdf">
+    <Content Include="DataSources\Chinook_SqlServerCompact_AutoIncrementPKs.sdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="DataSources\Chinook_SqlServer_Generated_PKs.sql">
+    <Content Include="DataSources\Chinook_SqlServer_AutoIncrementPKs.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
