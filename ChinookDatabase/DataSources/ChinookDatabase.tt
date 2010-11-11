@@ -131,7 +131,7 @@ CREATE TABLE <#= tableName #>
 #>
 
 );
-<#= strategy.WriteExecuteCommand() #>
+<#= strategy.WriteCreateTableDelimiter() #><#= strategy.WriteExecuteCommand() #>
 <#
 	}	// foreach EntityType
 #>

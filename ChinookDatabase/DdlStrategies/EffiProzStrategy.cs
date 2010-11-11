@@ -1,10 +1,16 @@
-﻿namespace ChinookDatabase.DdlStrategies
+﻿using System;
+using System.Data.Metadata.Edm;
+
+namespace ChinookDatabase.DdlStrategies
 {
     public class EffiProzStrategy : AbstractDdlStrategy
     {
+        public string SchemaName { get; set; }
+
         public EffiProzStrategy()
         {
             CanReCreateDatabase = true;
+            SchemaName = "Chinook";
         }
 
         public override string Name
@@ -27,9 +33,30 @@
             return string.Format("\"{0}\"", name);
         }
 
+        public override string GetFullyQualifiedName(string schema, string name)
+        {
+            return base.GetFullyQualifiedName(SchemaName, name);
+        }
+
         public override string WriteCreateDatabase(string databaseName)
         {
-            return string.Format("CREATE SCHEMA {0} AUTHORIZATION DBA;", FormatName("dbo"));
+            return string.Format("CREATE SCHEMA {0} AUTHORIZATION DBA;", FormatName(SchemaName));
         }
-    }
+
+        public override string WriteCreateColumn(EdmProperty property, Version targetVersion)
+        {
+            var notnull = (property.Nullable ? "" : "NOT NULL");
+            var identity = GetIdentity(property, targetVersion);
+            return string.Format("{0} {1} {2} {3}",
+                                 FormatName(property.Name),
+                                 GetStoreType(property),
+                                 identity, notnull).Trim();
+        }
+
+        public override string WriteCreateTableDelimiter()
+        {
+            return @"\";
+        }
+
+   }
 }
