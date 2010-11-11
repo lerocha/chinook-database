@@ -208,55 +208,44 @@ CREATE INDEX <#= ifkName #> ON <#= toTableName #> (<#= strategy.GetColumns(const
 <#
     var ds = new ChinookDataSet();
     ds.ReadXml(options.DataSource);
-    StringBuilder sbFields = new StringBuilder();
-    StringBuilder sbValues = new StringBuilder();
+    var sbFields = new StringBuilder();
+    var sbValues = new StringBuilder();
+	char delimiter = ',';
 
-    foreach (DataTable table in ds.Tables)
-    {
+	foreach (DataTable table in ds.Tables)
+	{
+		var entitySet = (from e in existingStore.GetAllEntitySets() where e.Name == table.TableName select e).Single();
+		var tableName = strategy.GetFullyQualifiedName(entitySet.GetSchemaName(), entitySet.GetTableName());
 #>
---  <#= table.TableName #> table.
+--  <#= tableName #> table.
 <#
         foreach (DataRow row in table.Rows)
         {
             sbFields.Length = 0;
             sbValues.Length = 0;
-
+			
             foreach (DataColumn col in table.Columns)
             {
                 string value = row[col.ColumnName].ToString();
                 if ((col.AutoIncrement && strategy.IsIdentityEnabled) || value.Length==0) continue;
-                
-                if (sbFields.Length == 0)
-                {
-                    sbFields.Append("(");
-                    sbValues.Append("(");
-                }
-                else
-                {
-                    sbFields.Append(", ");
-                    sbValues.Append(", ");
-                }
-
+				
                 if (col.DataType == typeof(DateTime))
                 {
-                    sbValues.Append(strategy.FormatDateValue(value));
+                    value = strategy.FormatDateValue(value);
                 }
                 else if (col.DataType == typeof(String))
                 {
-                    sbValues.Append(strategy.FormatStringValue(value));
+                    value = strategy.FormatStringValue(value);
                 }
-                else
-                {
-                    sbValues.Append(value);
-                }
-
-                sbFields.Append(col.ColumnName);
+				
+                sbValues.AppendFormat("{0}{1} ", value, delimiter);
+                sbFields.AppendFormat("{0}{1} ", strategy.FormatName(col.ColumnName), delimiter);
             }
 
-            sbFields.Append(")");
-            sbValues.Append(")");
+            var fields = sbFields.ToString().Trim().TrimEnd(delimiter);
+            var values = sbValues.ToString().Trim().TrimEnd(delimiter);
 #>
-<#= string.Format("INSERT INTO {0} {1} VALUES {2};", table.TableName, sbFields, sbValues) #>
+<#= string.Format("INSERT INTO {0} ({1}) VALUES ({2});", tableName, fields, values) #>
 <#
         }	// foreach DataRow
 #>
