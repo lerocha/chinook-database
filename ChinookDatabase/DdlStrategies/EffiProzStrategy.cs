@@ -33,6 +33,12 @@ namespace ChinookDatabase.DdlStrategies
             return string.Format("\"{0}\"", name);
         }
 
+        public override string FormatDateValue(string value)
+        {
+            var date = Convert.ToDateTime(value);
+            return string.Format("'{0}-{1}-{2} 00:00:00'", date.Year, date.Month, date.Day);
+        }
+
         public override string GetFullyQualifiedName(string schema, string name)
         {
             return base.GetFullyQualifiedName(SchemaName, name);
