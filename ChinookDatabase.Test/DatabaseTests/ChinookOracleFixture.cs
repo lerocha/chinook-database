@@ -15,23 +15,24 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NUnit.Framework;
+using System.Data.OleDb;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Test fixtures for System.Data.OleDb.OleDbConnection databases.
+    /// Test fixtures for ChinookOracle databases.
     /// </summary>
     [TestFixture]
     public class ChinookOracleFixture
     {
-        static readonly IDictionary<string, System.Data.OleDb.OleDbConnection> Connections = new Dictionary<string, System.Data.OleDb.OleDbConnection>();
+        static readonly IDictionary<string, OleDbConnection> Connections = new Dictionary<string, OleDbConnection>();
 
         /// <summary>
         /// Retrieves the cached connection object.
         /// </summary>
         /// <param name="connectionName">Connection name in the configuration file.</param>
         /// <returns>A connection object for this specific database.</returns>
-        protected System.Data.OleDb.OleDbConnection GetConnection(string connectionName)
+        protected OleDbConnection GetConnection(string connectionName)
         {
             // Creates an ADO.NET connection to the database, if not created yet.
             if (!Connections.ContainsKey(connectionName))
@@ -41,7 +42,7 @@ namespace ChinookDatabase.Test.DatabaseTests
                 foreach (var entry in section.ConnectionStrings.Cast<ConnectionStringSettings>()
                                                                 .Where(entry => entry.Name == connectionName))
                 {
-                    Connections[connectionName] = new System.Data.OleDb.OleDbConnection(entry.ConnectionString);
+                    Connections[connectionName] = new OleDbConnection(entry.ConnectionString);
                     break;
                 }
 
@@ -62,12 +63,11 @@ namespace ChinookDatabase.Test.DatabaseTests
         protected DataSet ExecuteQuery(string connectionName, string query)
         {
             var dataset = new DataSet();
+			var connection = GetConnection(connectionName);
 
             // Verify if number of entities match number of records.
-            using (var adapter = new System.Data.OleDb.OleDbDataAdapter())
+            using (var adapter = new OleDbDataAdapter(query, connection))
             {
-				var connection = GetConnection(connectionName);
-                adapter.SelectCommand = new System.Data.OleDb.OleDbCommand(query, connection);
                 adapter.Fill(dataset);
             }
 

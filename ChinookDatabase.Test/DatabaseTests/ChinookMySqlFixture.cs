@@ -15,23 +15,24 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NUnit.Framework;
+using MySql.Data.MySqlClient;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Test fixtures for MySql.Data.MySqlClient.MySqlConnection databases.
+    /// Test fixtures for ChinookMySql databases.
     /// </summary>
     [TestFixture]
     public class ChinookMySqlFixture
     {
-        static readonly IDictionary<string, MySql.Data.MySqlClient.MySqlConnection> Connections = new Dictionary<string, MySql.Data.MySqlClient.MySqlConnection>();
+        static readonly IDictionary<string, MySqlConnection> Connections = new Dictionary<string, MySqlConnection>();
 
         /// <summary>
         /// Retrieves the cached connection object.
         /// </summary>
         /// <param name="connectionName">Connection name in the configuration file.</param>
         /// <returns>A connection object for this specific database.</returns>
-        protected MySql.Data.MySqlClient.MySqlConnection GetConnection(string connectionName)
+        protected MySqlConnection GetConnection(string connectionName)
         {
             // Creates an ADO.NET connection to the database, if not created yet.
             if (!Connections.ContainsKey(connectionName))
@@ -41,7 +42,7 @@ namespace ChinookDatabase.Test.DatabaseTests
                 foreach (var entry in section.ConnectionStrings.Cast<ConnectionStringSettings>()
                                                                 .Where(entry => entry.Name == connectionName))
                 {
-                    Connections[connectionName] = new MySql.Data.MySqlClient.MySqlConnection(entry.ConnectionString);
+                    Connections[connectionName] = new MySqlConnection(entry.ConnectionString);
                     break;
                 }
 
@@ -62,12 +63,11 @@ namespace ChinookDatabase.Test.DatabaseTests
         protected DataSet ExecuteQuery(string connectionName, string query)
         {
             var dataset = new DataSet();
+			var connection = GetConnection(connectionName);
 
             // Verify if number of entities match number of records.
-            using (var adapter = new MySql.Data.MySqlClient.MySqlDataAdapter())
+            using (var adapter = new MySqlDataAdapter(query, connection))
             {
-				var connection = GetConnection(connectionName);
-                adapter.SelectCommand = new MySql.Data.MySqlClient.MySqlCommand(query, connection);
                 adapter.Fill(dataset);
             }
 

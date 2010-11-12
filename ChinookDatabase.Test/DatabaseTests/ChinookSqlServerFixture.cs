@@ -15,23 +15,24 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NUnit.Framework;
+using System.Data.SqlClient;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Test fixtures for System.Data.SqlClient.SqlConnection databases.
+    /// Test fixtures for ChinookSqlServer databases.
     /// </summary>
     [TestFixture]
     public class ChinookSqlServerFixture
     {
-        static readonly IDictionary<string, System.Data.SqlClient.SqlConnection> Connections = new Dictionary<string, System.Data.SqlClient.SqlConnection>();
+        static readonly IDictionary<string, SqlConnection> Connections = new Dictionary<string, SqlConnection>();
 
         /// <summary>
         /// Retrieves the cached connection object.
         /// </summary>
         /// <param name="connectionName">Connection name in the configuration file.</param>
         /// <returns>A connection object for this specific database.</returns>
-        protected System.Data.SqlClient.SqlConnection GetConnection(string connectionName)
+        protected SqlConnection GetConnection(string connectionName)
         {
             // Creates an ADO.NET connection to the database, if not created yet.
             if (!Connections.ContainsKey(connectionName))
@@ -41,7 +42,7 @@ namespace ChinookDatabase.Test.DatabaseTests
                 foreach (var entry in section.ConnectionStrings.Cast<ConnectionStringSettings>()
                                                                 .Where(entry => entry.Name == connectionName))
                 {
-                    Connections[connectionName] = new System.Data.SqlClient.SqlConnection(entry.ConnectionString);
+                    Connections[connectionName] = new SqlConnection(entry.ConnectionString);
                     break;
                 }
 
@@ -62,12 +63,11 @@ namespace ChinookDatabase.Test.DatabaseTests
         protected DataSet ExecuteQuery(string connectionName, string query)
         {
             var dataset = new DataSet();
+			var connection = GetConnection(connectionName);
 
             // Verify if number of entities match number of records.
-            using (var adapter = new System.Data.SqlClient.SqlDataAdapter())
+            using (var adapter = new SqlDataAdapter(query, connection))
             {
-				var connection = GetConnection(connectionName);
-                adapter.SelectCommand = new System.Data.SqlClient.SqlCommand(query, connection);
                 adapter.Fill(dataset);
             }
 

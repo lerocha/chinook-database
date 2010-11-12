@@ -12,33 +12,33 @@ var options = new [] {
 						new Option
 						{
 							Name = "ChinookSqlServer",
-							ConnectionClass = "System.Data.SqlClient.SqlConnection",
-							AdapterClass = "System.Data.SqlClient.SqlDataAdapter",
-							CommandClass = "System.Data.SqlClient.SqlCommand",
+							ConnectionClass = "SqlConnection",
+							AdapterClass = "SqlDataAdapter",
+							Namespace = "System.Data.SqlClient",
 							ConnectionNames = new[] {"ChinookSqlServer", "ChinookSqlServer_AutoIncrement"}
 						},
 						new Option 
 						{
 							Name = "ChinookSqlServerCompact",
-							ConnectionClass = "System.Data.SqlServerCe.SqlCeConnection",
-							AdapterClass = "System.Data.SqlServerCe.SqlCeDataAdapter",
-							CommandClass = "System.Data.SqlServerCe.SqlCeCommand",
+							ConnectionClass = "SqlCeConnection",
+							AdapterClass = "SqlCeDataAdapter",
+							Namespace = "System.Data.SqlServerCe",
 							ConnectionNames = new[] {"ChinookSqlServerCompact", "ChinookSqlServerCompact_AutoIncrement"}
 						},
 						new Option 
 						{
 							Name = "ChinookMySql",
-							ConnectionClass = "MySql.Data.MySqlClient.MySqlConnection",
-							AdapterClass = "MySql.Data.MySqlClient.MySqlDataAdapter",
-							CommandClass = "MySql.Data.MySqlClient.MySqlCommand",
+							ConnectionClass = "MySqlConnection",
+							AdapterClass = "MySqlDataAdapter",
+							Namespace = "MySql.Data.MySqlClient",
 							ConnectionNames = new[] {"ChinookMySql", "ChinookMySql_AutoIncrement"}
 						},
 						new Option 
 						{
 							Name = "ChinookOracle",
-							ConnectionClass = "System.Data.OleDb.OleDbConnection",
-							AdapterClass = "System.Data.OleDb.OleDbDataAdapter",
-							CommandClass = "System.Data.OleDb.OleDbCommand",
+							ConnectionClass = "OleDbConnection",
+							AdapterClass = "OleDbDataAdapter",
+							Namespace = "System.Data.OleDb",
 							ConnectionNames = new[] {"ChinookOracle"}
 						}
 					};
@@ -69,6 +69,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NUnit.Framework;
+using <#= option.Namespace #>;
 
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
@@ -78,7 +79,7 @@ using NUnit.Framework;
 namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Test fixtures for <#= option.ConnectionClass #> databases.
+    /// Test fixtures for <#= option.Name #> databases.
     /// </summary>
     [TestFixture]
     public class <#= className #>
@@ -121,12 +122,11 @@ namespace ChinookDatabase.Test.DatabaseTests
         protected DataSet ExecuteQuery(string connectionName, string query)
         {
             var dataset = new DataSet();
+			var connection = GetConnection(connectionName);
 
             // Verify if number of entities match number of records.
-            using (var adapter = new <#= option.AdapterClass #>())
+            using (var adapter = new <#= option.AdapterClass #>(query, connection))
             {
-				var connection = GetConnection(connectionName);
-                adapter.SelectCommand = new <#= option.CommandClass #>(query, connection);
                 adapter.Fill(dataset);
             }
 
@@ -266,7 +266,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		public string Name { get; set; }
 		public string ConnectionClass { get; set; }
 		public string AdapterClass { get; set; }
-		public string CommandClass { get; set; }
+		public string Namespace { get; set; }
 		public IList<string> ConnectionNames { get; set; }
 		
 		public string GetConnectionValues()
