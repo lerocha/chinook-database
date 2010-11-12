@@ -1,4 +1,5 @@
-﻿using System.Data.Metadata.Edm;
+﻿using System;
+using System.Data.Metadata.Edm;
 using Microsoft.Data.Entity.Design.DatabaseGeneration;
 
 namespace ChinookDatabase.DdlStrategies
@@ -20,6 +21,12 @@ namespace ChinookDatabase.DdlStrategies
         public override string FormatStringValue(string value)
         {
             return string.Format("'{0}'", value.Replace("'", "''"));
+        }
+
+        public override string FormatDateValue(string value)
+        {
+            var date = Convert.ToDateTime(value);
+            return string.Format("'{0}'", date.ToString("yyyy-MM-dd HH:mm:ss"));
         }
 
         public override string GetFullyQualifiedName(string schema, string name)

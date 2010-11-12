@@ -35,6 +35,14 @@ var options = new [] {
 						},
 						new Option 
 						{
+							Name = "ChinookSqlite",
+							ConnectionClass = "SQLiteConnection",
+							AdapterClass = "SQLiteDataAdapter",
+							Namespace = "Devart.Data.SQLite",
+							ConnectionNames = new[] {"ChinookSqlite"}
+						},
+						new Option 
+						{
 							Name = "ChinookOracle",
 							ConnectionClass = "OleDbConnection",
 							AdapterClass = "OleDbDataAdapter",

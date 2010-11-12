@@ -53,6 +53,11 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Accessibility">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Devart.Data, Version=5.0.143.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
+    <Reference Include="Devart.Data.SQLite, Version=2.90.190.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Data.Entity.Design.DatabaseGeneration">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll</HintPath>
     </Reference>
@@ -84,6 +89,9 @@
       <DependentUpon>DatabaseFixture.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseTests\ChinookOracleFixture.cs">
+      <DependentUpon>DatabaseFixture.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseTests\ChinookSqliteFixture.cs">
       <DependentUpon>DatabaseFixture.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseTests\ChinookSqlServerCompactFixture.cs">
