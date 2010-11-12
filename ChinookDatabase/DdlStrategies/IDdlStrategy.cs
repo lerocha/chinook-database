@@ -12,8 +12,8 @@ namespace ChinookDatabase.DdlStrategies
         string Name { get; }
         string FileExtension { get; }
         string Identity { get; }
-        bool CreatePrimaryKeyOnTableCreate { get; }
-        bool CreateForeignKeyOnTableCreate { get; }
+        KeyDefinition PrimaryKeyDef { get; }
+        KeyDefinition ForeignKeyDef { get; }
 
         #endregion
 

@@ -15,7 +15,7 @@ var options = new [] {
 							ConnectionClass = "SqlConnection",
 							AdapterClass = "SqlDataAdapter",
 							Namespace = "System.Data.SqlClient",
-							ConnectionNames = new[] {"ChinookSqlServer", "ChinookSqlServer_AutoIncrement"}
+							ConnectionNames = new[] {"Chinook_SqlServer", "Chinook_SqlServer_AutoIncrement"}
 						},
 						new Option 
 						{
@@ -23,7 +23,7 @@ var options = new [] {
 							ConnectionClass = "SqlCeConnection",
 							AdapterClass = "SqlCeDataAdapter",
 							Namespace = "System.Data.SqlServerCe",
-							ConnectionNames = new[] {"ChinookSqlServerCompact", "ChinookSqlServerCompact_AutoIncrement"}
+							ConnectionNames = new[] {"Chinook_SqlServerCompact", "Chinook_SqlServerCompact_AutoIncrement"}
 						},
 						new Option 
 						{
@@ -31,7 +31,7 @@ var options = new [] {
 							ConnectionClass = "MySqlConnection",
 							AdapterClass = "MySqlDataAdapter",
 							Namespace = "MySql.Data.MySqlClient",
-							ConnectionNames = new[] {"ChinookMySql", "ChinookMySql_AutoIncrement"}
+							ConnectionNames = new[] {"Chinook_MySql", "Chinook_MySql_AutoIncrement"}
 						},
 						new Option 
 						{
@@ -39,7 +39,7 @@ var options = new [] {
 							ConnectionClass = "SQLiteConnection",
 							AdapterClass = "SQLiteDataAdapter",
 							Namespace = "Devart.Data.SQLite",
-							ConnectionNames = new[] {"ChinookSqlite"}
+							ConnectionNames = new[] {"Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement"}
 						},
 						new Option 
 						{
@@ -47,7 +47,7 @@ var options = new [] {
 							ConnectionClass = "OleDbConnection",
 							AdapterClass = "OleDbDataAdapter",
 							Namespace = "System.Data.OleDb",
-							ConnectionNames = new[] {"ChinookOracle"}
+							ConnectionNames = new[] {"Chinook_Oracle"}
 						}
 					};
 

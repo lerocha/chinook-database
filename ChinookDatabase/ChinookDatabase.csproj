@@ -95,6 +95,7 @@
     <Compile Include="DdlStrategies\AbstractDdlStrategy.cs" />
     <Compile Include="DdlStrategies\EffiProzStrategy.cs" />
     <Compile Include="DdlStrategies\OracleStrategy.cs" />
+    <Compile Include="DdlStrategies\KeyDefinition.cs" />
     <Compile Include="DdlStrategies\SqliteStrategy.cs" />
     <Compile Include="DdlStrategies\SqlServerCompactStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,6 +128,9 @@
     <Content Include="DataSources\Chinook_Sqlite.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="DataSources\Chinook_Sqlite_AutoIncrementPKs.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+    </Content>
     <Content Include="DataSources\Chinook_SqlServerCompact.sqlce">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -151,6 +155,7 @@
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="DataSources\Chinook_Sqlite_AutoIncrementPKs.sqlite" />
     <None Include="DataSources\CreateAll.bat" />
     <None Include="DataSources\_Xml\ChinookData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

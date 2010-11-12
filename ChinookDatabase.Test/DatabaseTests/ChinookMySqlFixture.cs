@@ -79,7 +79,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void RecordsWithProperUnicodeCharacters([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void RecordsWithProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
 			AssertThatCustomerId1HasProperUnicodeCharacters(connectionName);
 			AssertThatCustomerId2HasProperUnicodeCharacters(connectionName);
@@ -98,7 +98,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
         [Test]
-        public void AllInvoicesMustHaveInvoiceLines([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void AllInvoicesMustHaveInvoiceLines([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT count(InvoiceId) FROM Invoice WHERE InvoiceId NOT IN (SELECT InvoiceId FROM InvoiceLine GROUP BY InvoiceId)");
             Assert.That(dataSet.Tables[0].Rows[0][0], Is.EqualTo(0), "The number of invoices with no invoice lines must be zero.");
@@ -108,7 +108,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Asserts that invoice total matches sum of invoice lines.
         /// </summary>
         [Test]
-        public void InvoiceTotalMustMatchSumOfInvoiceLines([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void InvoiceTotalMustMatchSumOfInvoiceLines([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT Invoice.InvoiceId, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS CalculatedTotal, Invoice.Total AS Total FROM InvoiceLine INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId GROUP BY Invoice.InvoiceId, Invoice.Total");
 
@@ -122,7 +122,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Genre table was populated properly.
         /// </summary>
         [Test]
-        public void GenreTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void GenreTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Genre");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(25), "Total number of records mismatch.");
@@ -132,7 +132,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Genre table has the proper information.
         /// </summary>
         [Test]
-        public void GenreLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void GenreLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Genre ORDER BY GenreId");
             var table = dataSet.Tables[0];
@@ -149,7 +149,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the MediaType table was populated properly.
         /// </summary>
         [Test]
-        public void MediaTypeTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void MediaTypeTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM MediaType");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(5), "Total number of records mismatch.");
@@ -159,7 +159,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of MediaType table has the proper information.
         /// </summary>
         [Test]
-        public void MediaTypeLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void MediaTypeLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM MediaType ORDER BY MediaTypeId");
             var table = dataSet.Tables[0];
@@ -176,7 +176,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Artist table was populated properly.
         /// </summary>
         [Test]
-        public void ArtistTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void ArtistTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Artist");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(275), "Total number of records mismatch.");
@@ -186,7 +186,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Artist table has the proper information.
         /// </summary>
         [Test]
-        public void ArtistLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void ArtistLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Artist ORDER BY ArtistId");
             var table = dataSet.Tables[0];
@@ -203,7 +203,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Album table was populated properly.
         /// </summary>
         [Test]
-        public void AlbumTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void AlbumTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Album");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(347), "Total number of records mismatch.");
@@ -213,7 +213,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Album table has the proper information.
         /// </summary>
         [Test]
-        public void AlbumLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void AlbumLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Album ORDER BY AlbumId");
             var table = dataSet.Tables[0];
@@ -231,7 +231,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Track table was populated properly.
         /// </summary>
         [Test]
-        public void TrackTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void TrackTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Track");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3503), "Total number of records mismatch.");
@@ -241,7 +241,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Track table has the proper information.
         /// </summary>
         [Test]
-        public void TrackLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void TrackLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Track ORDER BY TrackId");
             var table = dataSet.Tables[0];
@@ -265,7 +265,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Employee table was populated properly.
         /// </summary>
         [Test]
-        public void EmployeeTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void EmployeeTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Employee");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(8), "Total number of records mismatch.");
@@ -275,7 +275,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Employee table has the proper information.
         /// </summary>
         [Test]
-        public void EmployeeLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void EmployeeLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Employee ORDER BY EmployeeId");
             var table = dataSet.Tables[0];
@@ -305,7 +305,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Customer table was populated properly.
         /// </summary>
         [Test]
-        public void CustomerTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void CustomerTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(59), "Total number of records mismatch.");
@@ -315,7 +315,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Customer table has the proper information.
         /// </summary>
         [Test]
-        public void CustomerLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void CustomerLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer ORDER BY CustomerId");
             var table = dataSet.Tables[0];
@@ -343,7 +343,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Invoice table was populated properly.
         /// </summary>
         [Test]
-        public void InvoiceTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void InvoiceTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Invoice");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(412), "Total number of records mismatch.");
@@ -353,7 +353,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Invoice table has the proper information.
         /// </summary>
         [Test]
-        public void InvoiceLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void InvoiceLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Invoice ORDER BY InvoiceId");
             var table = dataSet.Tables[0];
@@ -377,7 +377,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the InvoiceLine table was populated properly.
         /// </summary>
         [Test]
-        public void InvoiceLineTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void InvoiceLineTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM InvoiceLine");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(2240), "Total number of records mismatch.");
@@ -387,7 +387,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of InvoiceLine table has the proper information.
         /// </summary>
         [Test]
-        public void InvoiceLineLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void InvoiceLineLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM InvoiceLine ORDER BY InvoiceLineId");
             var table = dataSet.Tables[0];
@@ -407,7 +407,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Playlist table was populated properly.
         /// </summary>
         [Test]
-        public void PlaylistTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void PlaylistTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Playlist");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(18), "Total number of records mismatch.");
@@ -417,7 +417,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Playlist table has the proper information.
         /// </summary>
         [Test]
-        public void PlaylistLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void PlaylistLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Playlist ORDER BY PlaylistId");
             var table = dataSet.Tables[0];
@@ -434,7 +434,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the PlaylistTrack table was populated properly.
         /// </summary>
         [Test]
-        public void PlaylistTrackTableShouldBePopulated([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void PlaylistTrackTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM PlaylistTrack");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(8715), "Total number of records mismatch.");
@@ -444,7 +444,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of PlaylistTrack table has the proper information.
         /// </summary>
         [Test]
-        public void PlaylistTrackLastRecordHasProperInfo([Values("ChinookMySql", "ChinookMySql_AutoIncrement")] string connectionName)
+        public void PlaylistTrackLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM PlaylistTrack ORDER BY PlaylistId, TrackId");
             var table = dataSet.Tables[0];

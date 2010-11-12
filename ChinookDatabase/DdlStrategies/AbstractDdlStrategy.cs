@@ -32,14 +32,14 @@ namespace ChinookDatabase.DdlStrategies
             get { return string.Empty; }
         }
 
-        public virtual bool CreatePrimaryKeyOnTableCreate
+        public virtual KeyDefinition PrimaryKeyDef
         {
-            get { return true; }
+            get { return KeyDefinition.OnCreateTableBottom; }
         }
 
-        public virtual bool CreateForeignKeyOnTableCreate
+        public virtual KeyDefinition ForeignKeyDef
         {
-            get { return false; }
+            get { return KeyDefinition.OnAlterTable; }
         }
 
         public bool IsIdentityEnabled { get; set; }
