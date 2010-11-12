@@ -5,12 +5,57 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
 <#@ include file="..\..\ChinookDatabase\_T4Templates\Chinook.ttinclude" #>
+<#@ include file="..\..\ChinookDatabase\_T4Templates\Manager.ttinclude" #>
 <#
-this.Host.SetOutputEncoding(System.Text.Encoding.UTF8,false);
+
+var options = new [] {
+						new Option
+						{
+							Name = "ChinookSqlServer",
+							ConnectionClass = "System.Data.SqlClient.SqlConnection",
+							AdapterClass = "System.Data.SqlClient.SqlDataAdapter",
+							CommandClass = "System.Data.SqlClient.SqlCommand",
+							ConnectionNames = new[] {"ChinookSqlServer", "ChinookSqlServer_AutoIncrement"}
+						},
+						new Option 
+						{
+							Name = "ChinookSqlServerCompact",
+							ConnectionClass = "System.Data.SqlServerCe.SqlCeConnection",
+							AdapterClass = "System.Data.SqlServerCe.SqlCeDataAdapter",
+							CommandClass = "System.Data.SqlServerCe.SqlCeCommand",
+							ConnectionNames = new[] {"ChinookSqlServerCompact", "ChinookSqlServerCompact_AutoIncrement"}
+						},
+						new Option 
+						{
+							Name = "ChinookMySql",
+							ConnectionClass = "MySql.Data.MySqlClient.MySqlConnection",
+							AdapterClass = "MySql.Data.MySqlClient.MySqlDataAdapter",
+							CommandClass = "MySql.Data.MySqlClient.MySqlCommand",
+							ConnectionNames = new[] {"ChinookMySql", "ChinookMySql_AutoIncrement"}
+						},
+						new Option 
+						{
+							Name = "ChinookOracle",
+							ConnectionClass = "System.Data.OleDb.OleDbConnection",
+							AdapterClass = "System.Data.OleDb.OleDbDataAdapter",
+							CommandClass = "System.Data.OleDb.OleDbCommand",
+							ConnectionNames = new[] {"ChinookOracle"}
+						}
+					};
+
+var fileManager = Manager.Create(Host, GenerationEnvironment);
+
+foreach (Option option in options)
+{
+	var connectionValues = option.GetConnectionValues();
+	var className = option.Name + "Fixture";
+	var filename = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), className + ".cs");
+	fileManager.StartNewFile(filename);
+	
 #>/*******************************************************************************
  * Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
  * Description: Test fixture for Chinook database.
- * DB Server: SQL Server
+ * DB Server: <#= option.Name #>
  * Author: Luis Rocha
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
@@ -19,9 +64,12 @@ this.Host.SetOutputEncoding(System.Text.Encoding.UTF8,false);
  *            2. Verify that app.config has the proper connection string (user/password).
  ********************************************************************************/
 using System;
+using System.Configuration;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
+
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
     ChinookDataSet ds = new ChinookDataSet();
@@ -30,30 +78,74 @@ using NUnit.Framework.SyntaxHelpers;
 namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Base class for Chinook database test fixture.
+    /// Test fixtures for <#= option.ConnectionClass #> databases.
     /// </summary>
-    public abstract class DatabaseFixture
+    [TestFixture]
+    public class <#= className #>
     {
+        static readonly IDictionary<string, <#= option.ConnectionClass #>> Connections = new Dictionary<string, <#= option.ConnectionClass #>>();
+
+        /// <summary>
+        /// Retrieves the cached connection object.
+        /// </summary>
+        /// <param name="connectionName">Connection name in the configuration file.</param>
+        /// <returns>A connection object for this specific database.</returns>
+        protected <#= option.ConnectionClass #> GetConnection(string connectionName)
+        {
+            // Creates an ADO.NET connection to the database, if not created yet.
+            if (!Connections.ContainsKey(connectionName))
+            {
+                var section = (ConnectionStringsSection)ConfigurationManager.GetSection("connectionStrings");
+
+                foreach (var entry in section.ConnectionStrings.Cast<ConnectionStringSettings>()
+                                                                .Where(entry => entry.Name == connectionName))
+                {
+                    Connections[connectionName] = new <#= option.ConnectionClass #>(entry.ConnectionString);
+                    break;
+                }
+
+                // If we failed to create a connection, then throw an exception.
+                if (!Connections.ContainsKey(connectionName))
+                    throw new ApplicationException("There is no connection string defined in app.config file.");
+            }
+
+            return Connections[connectionName];
+        }
+
         /// <summary>
         /// Method to execute a SQL query and return a dataset.
         /// </summary>
+        /// <param name="connectionName">Connection name in the configuration file.</param>
         /// <param name="query">Query string to be executed.</param>
         /// <returns>DataSet with the query results.</returns>
-        protected abstract DataSet ExecuteQuery(string query);
+        protected DataSet ExecuteQuery(string connectionName, string query)
+        {
+            var dataset = new DataSet();
+
+            // Verify if number of entities match number of records.
+            using (var adapter = new <#= option.AdapterClass #>())
+            {
+				var connection = GetConnection(connectionName);
+                adapter.SelectCommand = new <#= option.CommandClass #>(query, connection);
+                adapter.Fill(dataset);
+            }
+
+            return dataset;
+        }
         
         #region Public Tests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void RecordsWithProperUnicodeCharacters()
+        public void RecordsWithProperUnicodeCharacters([Values(<#= connectionValues #>)] string connectionName)
         {
 <#
     for (int i=0; i < 10 || i < ds.Tables.Count; i++)
     {
 		DataTable table = ds.Tables[i];
 #>
-			AssertThatCustomerId<#= i+1 #>HasProperUnicodeCharacters();
+			AssertThatCustomerId<#= i+1 #>HasProperUnicodeCharacters(connectionName);
 <#
     } // foreach table
 #>
@@ -63,9 +155,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
         [Test]
-        public void AllInvoicesMustHaveInvoiceLines()
+        public void AllInvoicesMustHaveInvoiceLines([Values(<#= connectionValues #>)] string connectionName)
         {
-            DataSet dataSet = ExecuteQuery("SELECT count(InvoiceId) FROM Invoice WHERE InvoiceId NOT IN (SELECT InvoiceId FROM InvoiceLine GROUP BY InvoiceId)");
+            var dataSet = ExecuteQuery(connectionName, "SELECT count(InvoiceId) FROM Invoice WHERE InvoiceId NOT IN (SELECT InvoiceId FROM InvoiceLine GROUP BY InvoiceId)");
             Assert.That(dataSet.Tables[0].Rows[0][0], Is.EqualTo(0), "The number of invoices with no invoice lines must be zero.");
         }
         
@@ -73,9 +165,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Asserts that invoice total matches sum of invoice lines.
         /// </summary>
         [Test]
-        public void InvoiceTotalMustMatchSumOfInvoiceLines()
+        public void InvoiceTotalMustMatchSumOfInvoiceLines([Values(<#= connectionValues #>)] string connectionName)
         {
-            DataSet dataSet = ExecuteQuery("SELECT Invoice.InvoiceId, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS CalculatedTotal, Invoice.Total AS Total FROM InvoiceLine INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId GROUP BY Invoice.InvoiceId, Invoice.Total");
+            var dataSet = ExecuteQuery(connectionName, "SELECT Invoice.InvoiceId, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS CalculatedTotal, Invoice.Total AS Total FROM InvoiceLine INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId GROUP BY Invoice.InvoiceId, Invoice.Total");
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
@@ -91,9 +183,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the <#= table.TableName #> table was populated properly.
         /// </summary>
         [Test]
-        public void <#= table.TableName #>TableShouldBePopulated()
+        public void <#= table.TableName #>TableShouldBePopulated([Values(<#= connectionValues #>)] string connectionName)
         {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM <#= table.TableName #>");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM <#= table.TableName #>");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(<#= table.Rows.Count #>), "Total number of records mismatch.");
         }
 
@@ -101,12 +193,12 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of <#= table.TableName #> table has the proper information.
         /// </summary>
         [Test]
-        public void <#= table.TableName #>LastRecordHasProperInfo()
+        public void <#= table.TableName #>LastRecordHasProperInfo([Values(<#= connectionValues #>)] string connectionName)
         {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM <#= table.TableName #> ORDER BY <#= DataSetHelper.GetPrimaryKeyString (table) #>");
-            DataTable table = dataSet.Tables[0];
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM <#= table.TableName #> ORDER BY <#= DataSetHelper.GetPrimaryKeyString (table) #>");
+            var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
-            DataRow row = table.Rows[table.Rows.Count - 1];
+            var row = table.Rows[table.Rows.Count - 1];
             Assert.IsNotNull(row);
 
 			// Assert that the last record has the proper information.            
@@ -133,11 +225,11 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that CustomerId <#= i+1 #> has expected Unicode characters.
         /// </summary>
-        private void AssertThatCustomerId<#= i+1 #>HasProperUnicodeCharacters()
+        private void AssertThatCustomerId<#= i+1 #>HasProperUnicodeCharacters(string connectionName)
         {
-            DataSet dataSet = ExecuteQuery("SELECT * FROM Customer WHERE CustomerId = <#= i+1 #>");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = <#= i+1 #>");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
-            DataRow row = dataSet.Tables[0].Rows[0];
+            var row = dataSet.Tables[0].Rows[0];
             
 <#
 		foreach (DataColumn col in ds.Tables["Customer"].Columns)
@@ -155,3 +247,37 @@ namespace ChinookDatabase.Test.DatabaseTests
 		#endregion
     }
 }
+<# 
+	fileManager.EndBlock();
+}
+
+fileManager.Process(true);
+
+#>
+namespace ChinookDatabase.Test.DatabaseTests
+{
+    public class DatabaseFixture
+    {
+	}
+}
+<#+ 
+	public class Option
+	{
+		public string Name { get; set; }
+		public string ConnectionClass { get; set; }
+		public string AdapterClass { get; set; }
+		public string CommandClass { get; set; }
+		public IList<string> ConnectionNames { get; set; }
+		
+		public string GetConnectionValues()
+		{
+			char delimiter = ',';
+			var builder = new StringBuilder();
+			foreach(var name in ConnectionNames)
+			{
+				builder.AppendFormat("\"{0}\"{1} ", name, delimiter);
+			}
+			return builder.ToString().Trim().Trim(delimiter);
+		}
+	}
+#>

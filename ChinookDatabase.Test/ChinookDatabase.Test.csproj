@@ -59,7 +59,7 @@
     <Reference Include="MySql.Data">
       <HintPath>..\Lib\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+    <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -80,10 +80,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DatabaseTests\ChinookMySqlFixture.cs" />
-    <Compile Include="DatabaseTests\ChinookOracleFixture.cs" />
-    <Compile Include="DatabaseTests\ChinookSqlServerCompactFixture.cs" />
-    <Compile Include="DatabaseTests\ChinookSqlServerFixture.cs" />
+    <Compile Include="DatabaseTests\ChinookMySqlFixture.cs">
+      <DependentUpon>DatabaseFixture.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseTests\ChinookOracleFixture.cs">
+      <DependentUpon>DatabaseFixture.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseTests\ChinookSqlServerCompactFixture.cs">
+      <DependentUpon>DatabaseFixture.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseTests\ChinookSqlServerFixture.cs">
+      <DependentUpon>DatabaseFixture.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseTests\DatabaseFixture.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
