@@ -74,26 +74,6 @@ namespace ChinookDatabase.Test.DatabaseTests
             return dataset;
         }
         
-        #region Public Tests
-        /// <summary>
-        /// Verifies that the Unicode characters are populated properly.
-        /// </summary>
-        [Test]
-        public void RecordsWithProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
-        {
-			AssertThatCustomerId1HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId2HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId3HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId4HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId5HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId6HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId7HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId8HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId9HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId10HasProperUnicodeCharacters(connectionName);
-			AssertThatCustomerId11HasProperUnicodeCharacters(connectionName);
-        }
-
         /// <summary>
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
@@ -456,13 +436,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["PlaylistId"].ToString(), Is.EqualTo("18"), "PlaylistId mismatch.");
             Assert.That(row["TrackId"].ToString(), Is.EqualTo("597"), "TrackId mismatch.");
         }
-		#endregion
 
-		#region Private Methods
         /// <summary>
-        /// Verifies that CustomerId 1 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId1HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId01HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 1");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -482,11 +461,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("luisg@embraer.com.br"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("3"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 2 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId2HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId02HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 2");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -506,11 +486,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("leonekohler@surfeu.de"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("5"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 3 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId3HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId03HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 3");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -530,11 +511,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("ftremblay@gmail.com"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("3"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 4 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId4HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId04HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 4");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -554,11 +536,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("bjorn.hansen@yahoo.no"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("4"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 5 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId5HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId05HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 5");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -578,11 +561,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("frantisekw@jetbrains.com"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("4"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 6 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId6HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId06HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 6");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -602,11 +586,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("hholy@gmail.com"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("5"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 7 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId7HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId07HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 7");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -626,11 +611,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("astrid.gruber@apple.at"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("5"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 8 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId8HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId08HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 8");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -650,11 +636,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("daan_peeters@apple.be"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("4"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 9 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId9HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId09HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 9");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -674,11 +661,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("kara.nielsen@jubii.dk"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("4"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 10 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId10HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId10HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 10");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -698,11 +686,12 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("eduardo@woodstock.com.br"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("4"), "SupportRepId mismatch.");
 		}
-
+		
         /// <summary>
-        /// Verifies that CustomerId 11 has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId11HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId11HasProperUnicodeCharacters([Values("Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement")] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 11");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -722,7 +711,7 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.That(row["Email"].ToString(), Is.EqualTo("alero@uol.com.br"), "Email mismatch.");
             Assert.That(row["SupportRepId"].ToString(), Is.EqualTo("5"), "SupportRepId mismatch.");
 		}
-
-		#endregion
+		
     }
+	
 }

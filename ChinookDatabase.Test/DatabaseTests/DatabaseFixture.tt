@@ -141,24 +141,6 @@ namespace ChinookDatabase.Test.DatabaseTests
             return dataset;
         }
         
-        #region Public Tests
-        /// <summary>
-        /// Verifies that the Unicode characters are populated properly.
-        /// </summary>
-        [Test]
-        public void RecordsWithProperUnicodeCharacters([Values(<#= connectionValues #>)] string connectionName)
-        {
-<#
-    for (int i=0; i < 10 || i < ds.Tables.Count; i++)
-    {
-		DataTable table = ds.Tables[i];
-#>
-			AssertThatCustomerId<#= i+1 #>HasProperUnicodeCharacters(connectionName);
-<#
-    } // foreach table
-#>
-        }
-
         /// <summary>
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
@@ -222,18 +204,16 @@ namespace ChinookDatabase.Test.DatabaseTests
 <#
     } // foreach table
 #>
-		#endregion
 
-		#region Private Methods
 <#
-    for (int i=0; i < 10 || i < ds.Tables.Count; i++)
+    for (int i=0; i <= 10; i++)
     {
-		DataTable table = ds.Tables[i];
 #>
         /// <summary>
-        /// Verifies that CustomerId <#= i+1 #> has expected Unicode characters.
+        /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        private void AssertThatCustomerId<#= i+1 #>HasProperUnicodeCharacters(string connectionName)
+        [Test]
+        public void CustomerId<#= (i+1).ToString("D2") #>HasProperUnicodeCharacters([Values(<#= connectionValues #>)] string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = <#= i+1 #>");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
@@ -248,12 +228,12 @@ namespace ChinookDatabase.Test.DatabaseTests
 		}
 #>
 		}
-
+		
 <#
     } // foreach table
 #>
-		#endregion
     }
+	
 }
 <# 
 	fileManager.EndBlock();
@@ -279,13 +259,18 @@ namespace ChinookDatabase.Test.DatabaseTests
 		
 		public string GetConnectionValues()
 		{
-			char delimiter = ',';
-			var builder = new StringBuilder();
-			foreach(var name in ConnectionNames)
-			{
-				builder.AppendFormat("\"{0}\"{1} ", name, delimiter);
-			}
-			return builder.ToString().Trim().Trim(delimiter);
+			return GetValues(ConnectionNames, ',');
 		}
 	}
+	
+    private static string GetValues(IEnumerable<string> values, char delimiter)
+    {
+        var builder = new StringBuilder();
+        foreach (var value in values)
+        {
+            builder.AppendFormat("\"{0}\"{1} ", value, delimiter);
+        }
+        return builder.ToString().Trim().TrimEnd(delimiter);
+    }
+	
 #>
