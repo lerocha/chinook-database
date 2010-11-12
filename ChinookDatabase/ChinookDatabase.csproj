@@ -10,13 +10,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ChinookDatabase</RootNamespace>
     <AssemblyName>ChinookDatabase</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
     <PublishUrl>http://localhost/ChinookDatabase/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -52,6 +53,9 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Data.Entity.Design.DatabaseGeneration">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\nunit.framework.dll</HintPath>
@@ -61,6 +65,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -71,6 +78,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chinook.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Chinook.edmx</DependentUpon>
+    </Compile>
     <Compile Include="DataSources\_Xml\Schema\ChinookDataSet.cs">
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
       <SubType>Component</SubType>
@@ -80,107 +92,69 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DdlStrategies\AbstractDdlStrategy.cs" />
+    <Compile Include="DdlStrategies\EffiProzStrategy.cs" />
+    <Compile Include="DdlStrategies\OracleStrategy.cs" />
+    <Compile Include="DdlStrategies\SqliteStrategy.cs" />
+    <Compile Include="DdlStrategies\SqlServerCompactStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\DataSetHelper.cs" />
+    <Compile Include="DdlStrategies\IDdlStrategy.cs" />
+    <Compile Include="Utilities\EdmHelper.cs" />
     <Compile Include="Utilities\ITunesToChinookDataSetConverter.cs" />
+    <Compile Include="DdlStrategies\MySqlStrategy.cs" />
+    <Compile Include="DdlStrategies\SqlServerStrategy.cs" />
     <Compile Include="Utilities\TrackInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataSources\EffiProz\CreateDB_NoIdentity.tt">
+    <EntityDeploy Include="Chinook.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Chinook.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="App.Config" />
+    <None Include="DataSources\ChinookDatabase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateDB_NoIdentity.sql</LastGenOutput>
+      <LastGenOutput>ChinookDatabase.txt</LastGenOutput>
     </None>
-    <None Include="DataSources\EffiProz\CreateDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateDB.sql</LastGenOutput>
-    </None>
-    <None Include="DataSources\MySql\create.bat">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>create.tt</DependentUpon>
+    <Content Include="DataSources\Chinook_EffiProz_AutoIncrementPKs.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\MySql\create.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>create.bat</LastGenOutput>
-    </None>
-    <None Include="DataSources\Oracle\create.bat">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>create.tt</DependentUpon>
+    </Content>
+    <Content Include="DataSources\Chinook_MySql_AutoIncrementPKs.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\Oracle\create.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>create.bat</LastGenOutput>
-    </None>
-    <None Include="DataSources\SqlServer\create.bat">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>create.tt</DependentUpon>
+    </Content>
+    <Content Include="DataSources\Chinook_Sqlite.sqlite">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\SqlServer\create.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>create.bat</LastGenOutput>
-    </None>
+    </Content>
+    <Content Include="DataSources\Chinook_SqlServerCompact.sqlce">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_SqlServerCompact_AutoIncrementPKs.sqlce">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\CreateMySql.bat">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\CreateOracle.bat">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\CreateSqlite.bat">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\CreateSqlServer.bat">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="DataSources\CreateAll.bat" />
     <None Include="DataSources\_Xml\ChinookData.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookData.xml</LastGenOutput>
-    </None>
-    <None Include="DataSources\MySql\CreateDB_NoAutoIncrement.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateDB_NoAutoIncrement.sql</LastGenOutput>
-    </None>
-    <None Include="DataSources\MySql\CreateDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateDB.sql</LastGenOutput>
-    </None>
-    <None Include="DataSources\MySql\CreateDB.sql">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CreateDB.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\Oracle\CreateDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateDB.sql</LastGenOutput>
-    </None>
-    <None Include="DataSources\Oracle\CreateDB.sql">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CreateDB.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\SqlServerCompact\CreateTables.sqlce">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CreateTables.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\SqlServerCompact\CreateTables.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateTables.sqlce</LastGenOutput>
-    </None>
-    <None Include="DataSources\SqlServerCompact\CreateTables_NoIdentity.sqlce">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CreateTables_NoIdentity.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\SqlServerCompact\CreateTables_NoIdentity.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateTables_NoIdentity.sqlce</LastGenOutput>
-    </None>
-    <None Include="DataSources\SqlServerCompact\DropTables.sqlce">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DropTables.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\SqlServerCompact\DropTables.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DropTables.sqlce</LastGenOutput>
     </None>
     <None Include="DataSources\_Xml\Schema\ChinookDataSet.xsc">
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
@@ -198,53 +172,50 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Chinook.tt</DependentUpon>
     </None>
-    <None Include="_T4Templates\CreateDB_EffiProz.ttinclude" />
-    <None Include="_T4Templates\CreateDBBatchFile.ttinclude" />
-    <None Include="_T4Templates\CreateDB_MySql.ttinclude" />
-    <None Include="_T4Templates\CreateDB_SqlServer.ttinclude" />
-    <None Include="DataSources\SqlServer\CreateDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateDB.sql</LastGenOutput>
-    </None>
-    <None Include="DataSources\SqlServer\CreateDB.sql">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CreateDB.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\SqlServer\CreateDB_NoIdentity.sql">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CreateDB_NoIdentity.tt</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="DataSources\SqlServer\CreateDB_NoIdentity.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>CreateDB_NoIdentity.sql</LastGenOutput>
-    </None>
     <None Include="_T4Templates\Chinook.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Chinook.ttinclude</LastGenOutput>
     </None>
+    <None Include="_T4Templates\Manager.ttinclude" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataSources\EffiProz\CreateDB.sql">
-      <DependentUpon>CreateDB.tt</DependentUpon>
+    <None Include="DataSources\ChinookDatabase.txt">
       <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
     </None>
-    <None Include="DataSources\EffiProz\CreateDB_NoIdentity.sql">
-      <DependentUpon>CreateDB_NoIdentity.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
+    <Content Include="DataSources\Chinook_EffiProz.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </None>
-    <Content Include="DataSources\SqlServerCompact\Chinook.sdf">
+    </Content>
+    <Content Include="DataSources\Chinook_MySql.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_Oracle.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_Sqlite.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_SqlServer.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_SqlServerCompact.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_SqlServerCompact_AutoIncrementPKs.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DataSources\Chinook_SqlServer_AutoIncrementPKs.sql">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="DataSources\_Xml\ChinookData.xml">
@@ -254,17 +225,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="DataSources\SqlServerCompact\Chinook_NoIdentity.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="DataSources\_Xml\Source\CompanyData.xml" />
     <Content Include="DataSources\_Xml\Source\iTunes Music Library.xml" />
-    <None Include="DataSources\MySql\CreateDB_NoAutoIncrement.sql">
-      <DependentUpon>CreateDB_NoAutoIncrement.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

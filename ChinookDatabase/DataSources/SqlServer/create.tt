@@ -1,6 +1,0 @@
-﻿<#@ template hostspecific="True"#>
-<#@ output extension="bat" encoding="ASCII" #>
-<#@ include file="..\..\_T4Templates\CreateDBBatchFile.ttinclude" #>
-<#
-	this.Template_CreateDBBatchFile_Render(@"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1");
-#>

@@ -3,10 +3,12 @@
 <#@ assembly name="System.Core"#>
 <#@ assembly name="System.Data"#>
 <#@ assembly name="System.Data.DataSetExtensions.dll"#>
+<#@ assembly name="System.Data.Entity"#>
 <#@ assembly name="System.Data.Linq"#>
 <#@ assembly name="EnvDTE"#>
 <#@ assembly name="System.Xml"#>
 <#@ assembly name="System.Xml.Linq"#>
+<#@ assembly name="$(DevEnvDir)Microsoft.Data.Entity.Design.DatabaseGeneration.dll"#>
 <#@ import namespace="System"#>
 <#@ import namespace="System.CodeDom"#>
 <#@ import namespace="System.CodeDom.Compiler"#>
@@ -15,6 +17,7 @@
 <#@ import namespace="System.Data"#>
 <#@ import namespace="System.Data.Linq"#>
 <#@ import namespace="System.Data.Linq.Mapping"#>
+<#@ import namespace="System.Data.Metadata.Edm"#>
 <#@ import namespace="System.IO"#>
 <#@ import namespace="System.Linq"#>
 <#@ import namespace="System.Reflection"#>
@@ -23,6 +26,8 @@
 <#@ import namespace="System.Xml.Linq"#>
 <#@ import namespace="System.Xml.XPath"#>
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating"#>
+<#@ import namespace="Microsoft.Data.Entity.Design.DatabaseGeneration" #>
+
 <# 
 	// Set options here
 	var options = new {
@@ -62,7 +67,10 @@
 	foreach (FileInfo file in files)
 	{
 		// Skip any unwanted source file.
-		if (file.Name.StartsWith("AssemblyInfo")) continue;
+		if (file.Name.StartsWith("AssemblyInfo") || file.Name.Equals("Chinook.Designer.cs")) 
+		{
+			continue;
+		}
 		
 		fullnames.Add(file.FullName);
 #>
