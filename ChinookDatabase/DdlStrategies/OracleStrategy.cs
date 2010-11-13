@@ -40,6 +40,8 @@ namespace ChinookDatabase.DdlStrategies
         {
             switch (property.TypeUsage.EdmType.Name)
             {
+                case "datetime":
+                    return "DATE";
                 case "int":
                     return "NUMBER";
                 case "numeric":
