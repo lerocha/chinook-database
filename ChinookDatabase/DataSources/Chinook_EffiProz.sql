@@ -177,58 +177,58 @@ CREATE UNIQUE INDEX "IPK_Track" ON "Chinook"."Track"("TrackId");
 /*******************************************************************************
    Create Foreign Keys
 ********************************************************************************/
-ALTER TABLE "Chinook"."Album" ADD CONSTRAINT "FK_AlbumArtistId_ArtistArtistId"
+ALTER TABLE "Chinook"."Album" ADD CONSTRAINT "FK_AlbumArtistId"
     FOREIGN KEY ("ArtistId") REFERENCES "Chinook"."Artist" ("ArtistId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_AlbumArtistId_ArtistArtistId" ON "Chinook"."Album" ("ArtistId");
+CREATE INDEX "IFK_AlbumArtistId" ON "Chinook"."Album" ("ArtistId");
 \
-ALTER TABLE "Chinook"."Customer" ADD CONSTRAINT "FK_CustomerSupportRepId_EmployeeEmployeeId"
+ALTER TABLE "Chinook"."Customer" ADD CONSTRAINT "FK_CustomerSupportRepId"
     FOREIGN KEY ("SupportRepId") REFERENCES "Chinook"."Employee" ("EmployeeId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_CustomerSupportRepId_EmployeeEmployeeId" ON "Chinook"."Customer" ("SupportRepId");
+CREATE INDEX "IFK_CustomerSupportRepId" ON "Chinook"."Customer" ("SupportRepId");
 \
-ALTER TABLE "Chinook"."Employee" ADD CONSTRAINT "FK_EmployeeReportsTo_EmployeeEmployeeId"
+ALTER TABLE "Chinook"."Employee" ADD CONSTRAINT "FK_EmployeeReportsTo"
     FOREIGN KEY ("ReportsTo") REFERENCES "Chinook"."Employee" ("EmployeeId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_EmployeeReportsTo_EmployeeEmployeeId" ON "Chinook"."Employee" ("ReportsTo");
+CREATE INDEX "IFK_EmployeeReportsTo" ON "Chinook"."Employee" ("ReportsTo");
 \
-ALTER TABLE "Chinook"."Invoice" ADD CONSTRAINT "FK_InvoiceCustomerId_CustomerCustomerId"
+ALTER TABLE "Chinook"."Invoice" ADD CONSTRAINT "FK_InvoiceCustomerId"
     FOREIGN KEY ("CustomerId") REFERENCES "Chinook"."Customer" ("CustomerId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_InvoiceCustomerId_CustomerCustomerId" ON "Chinook"."Invoice" ("CustomerId");
+CREATE INDEX "IFK_InvoiceCustomerId" ON "Chinook"."Invoice" ("CustomerId");
 \
-ALTER TABLE "Chinook"."InvoiceLine" ADD CONSTRAINT "FK_InvoiceLineInvoiceId_InvoiceInvoiceId"
+ALTER TABLE "Chinook"."InvoiceLine" ADD CONSTRAINT "FK_InvoiceLineInvoiceId"
     FOREIGN KEY ("InvoiceId") REFERENCES "Chinook"."Invoice" ("InvoiceId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_InvoiceLineInvoiceId_InvoiceInvoiceId" ON "Chinook"."InvoiceLine" ("InvoiceId");
+CREATE INDEX "IFK_InvoiceLineInvoiceId" ON "Chinook"."InvoiceLine" ("InvoiceId");
 \
-ALTER TABLE "Chinook"."InvoiceLine" ADD CONSTRAINT "FK_InvoiceLineTrackId_TrackTrackId"
+ALTER TABLE "Chinook"."InvoiceLine" ADD CONSTRAINT "FK_InvoiceLineTrackId"
     FOREIGN KEY ("TrackId") REFERENCES "Chinook"."Track" ("TrackId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_InvoiceLineTrackId_TrackTrackId" ON "Chinook"."InvoiceLine" ("TrackId");
+CREATE INDEX "IFK_InvoiceLineTrackId" ON "Chinook"."InvoiceLine" ("TrackId");
 \
-ALTER TABLE "Chinook"."PlaylistTrack" ADD CONSTRAINT "FK_PlaylistTrackPlaylistId_PlaylistPlaylistId"
+ALTER TABLE "Chinook"."PlaylistTrack" ADD CONSTRAINT "FK_PlaylistTrackPlaylistId"
     FOREIGN KEY ("PlaylistId") REFERENCES "Chinook"."Playlist" ("PlaylistId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-ALTER TABLE "Chinook"."PlaylistTrack" ADD CONSTRAINT "FK_PlaylistTrackTrackId_TrackTrackId"
+ALTER TABLE "Chinook"."PlaylistTrack" ADD CONSTRAINT "FK_PlaylistTrackTrackId"
     FOREIGN KEY ("TrackId") REFERENCES "Chinook"."Track" ("TrackId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_PlaylistTrackTrackId_TrackTrackId" ON "Chinook"."PlaylistTrack" ("TrackId");
+CREATE INDEX "IFK_PlaylistTrackTrackId" ON "Chinook"."PlaylistTrack" ("TrackId");
 \
-ALTER TABLE "Chinook"."Track" ADD CONSTRAINT "FK_TrackAlbumId_AlbumAlbumId"
+ALTER TABLE "Chinook"."Track" ADD CONSTRAINT "FK_TrackAlbumId"
     FOREIGN KEY ("AlbumId") REFERENCES "Chinook"."Album" ("AlbumId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_TrackAlbumId_AlbumAlbumId" ON "Chinook"."Track" ("AlbumId");
+CREATE INDEX "IFK_TrackAlbumId" ON "Chinook"."Track" ("AlbumId");
 \
-ALTER TABLE "Chinook"."Track" ADD CONSTRAINT "FK_TrackGenreId_GenreGenreId"
+ALTER TABLE "Chinook"."Track" ADD CONSTRAINT "FK_TrackGenreId"
     FOREIGN KEY ("GenreId") REFERENCES "Chinook"."Genre" ("GenreId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_TrackGenreId_GenreGenreId" ON "Chinook"."Track" ("GenreId");
+CREATE INDEX "IFK_TrackGenreId" ON "Chinook"."Track" ("GenreId");
 \
-ALTER TABLE "Chinook"."Track" ADD CONSTRAINT "FK_TrackMediaTypeId_MediaTypeMediaTypeId"
+ALTER TABLE "Chinook"."Track" ADD CONSTRAINT "FK_TrackMediaTypeId"
     FOREIGN KEY ("MediaTypeId") REFERENCES "Chinook"."MediaType" ("MediaTypeId") ON DELETE NO ACTION ON UPDATE NO ACTION;
 \
-CREATE INDEX "IFK_TrackMediaTypeId_MediaTypeMediaTypeId" ON "Chinook"."Track" ("MediaTypeId");
+CREATE INDEX "IFK_TrackMediaTypeId" ON "Chinook"."Track" ("MediaTypeId");
 \
 
 /*******************************************************************************

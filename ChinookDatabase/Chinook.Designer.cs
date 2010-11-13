@@ -18,16 +18,16 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_AlbumArtistId_ArtistArtistId", "Artist", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Artist), "Album", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Album))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackAlbumId_AlbumAlbumId", "Album", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Album), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_CustomerSupportRepId_EmployeeEmployeeId", "Employee", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Employee), "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Customer))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceCustomerId_CustomerCustomerId", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Customer), "Invoice", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Invoice))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_EmployeeReportsTo_EmployeeEmployeeId", "Employee", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Employee), "Employee1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Employee))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackGenreId_GenreGenreId", "Genre", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Genre), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceLineInvoiceId_InvoiceInvoiceId", "Invoice", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Invoice), "InvoiceLine", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.InvoiceLine))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceLineTrackId_TrackTrackId", "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Track), "InvoiceLine", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.InvoiceLine))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackMediaTypeId_MediaTypeMediaTypeId", "MediaType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.MediaType), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_PlaylistTrackPlaylistId_PlaylistPlaylistId", "Playlist", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Playlist), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_AlbumArtistId", "Artist", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Artist), "Album", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Album))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackAlbumId", "Album", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Album), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_CustomerSupportRepId", "Employee", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Employee), "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Customer))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceCustomerId", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Customer), "Invoice", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Invoice))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_EmployeeReportsTo", "Employee", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Employee), "Employee1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Employee))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackGenreId", "Genre", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Genre), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceLineInvoiceId", "Invoice", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Invoice), "InvoiceLine", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.InvoiceLine))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceLineTrackId", "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Track), "InvoiceLine", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.InvoiceLine))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackMediaTypeId", "MediaType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.MediaType), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_PlaylistTrackPlaylistId", "Playlist", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Playlist), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
 
 #endregion
 
@@ -414,16 +414,16 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_AlbumArtistId_ArtistArtistId", "Artist")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_AlbumArtistId", "Artist")]
         public Artist Artist
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Artist>("ChinookModel.FK_AlbumArtistId_ArtistArtistId", "Artist").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Artist>("ChinookModel.FK_AlbumArtistId", "Artist").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Artist>("ChinookModel.FK_AlbumArtistId_ArtistArtistId", "Artist").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Artist>("ChinookModel.FK_AlbumArtistId", "Artist").Value = value;
             }
         }
         /// <summary>
@@ -435,13 +435,13 @@ namespace ChinookDatabase
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Artist>("ChinookModel.FK_AlbumArtistId_ArtistArtistId", "Artist");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Artist>("ChinookModel.FK_AlbumArtistId", "Artist");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Artist>("ChinookModel.FK_AlbumArtistId_ArtistArtistId", "Artist", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Artist>("ChinookModel.FK_AlbumArtistId", "Artist", value);
                 }
             }
         }
@@ -452,18 +452,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackAlbumId_AlbumAlbumId", "Track")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackAlbumId", "Track")]
         public EntityCollection<Track> Tracks
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Track>("ChinookModel.FK_TrackAlbumId_AlbumAlbumId", "Track");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Track>("ChinookModel.FK_TrackAlbumId", "Track");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Track>("ChinookModel.FK_TrackAlbumId_AlbumAlbumId", "Track", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Track>("ChinookModel.FK_TrackAlbumId", "Track", value);
                 }
             }
         }
@@ -556,18 +556,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_AlbumArtistId_ArtistArtistId", "Album")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_AlbumArtistId", "Album")]
         public EntityCollection<Album> Albums
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Album>("ChinookModel.FK_AlbumArtistId_ArtistArtistId", "Album");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Album>("ChinookModel.FK_AlbumArtistId", "Album");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Album>("ChinookModel.FK_AlbumArtistId_ArtistArtistId", "Album", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Album>("ChinookModel.FK_AlbumArtistId", "Album", value);
                 }
             }
         }
@@ -906,16 +906,16 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_CustomerSupportRepId_EmployeeEmployeeId", "Employee")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_CustomerSupportRepId", "Employee")]
         public Employee Employee
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_CustomerSupportRepId_EmployeeEmployeeId", "Employee").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_CustomerSupportRepId", "Employee").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_CustomerSupportRepId_EmployeeEmployeeId", "Employee").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_CustomerSupportRepId", "Employee").Value = value;
             }
         }
         /// <summary>
@@ -927,13 +927,13 @@ namespace ChinookDatabase
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_CustomerSupportRepId_EmployeeEmployeeId", "Employee");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_CustomerSupportRepId", "Employee");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Employee>("ChinookModel.FK_CustomerSupportRepId_EmployeeEmployeeId", "Employee", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Employee>("ChinookModel.FK_CustomerSupportRepId", "Employee", value);
                 }
             }
         }
@@ -944,18 +944,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceCustomerId_CustomerCustomerId", "Invoice")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceCustomerId", "Invoice")]
         public EntityCollection<Invoice> Invoices
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Invoice>("ChinookModel.FK_InvoiceCustomerId_CustomerCustomerId", "Invoice");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Invoice>("ChinookModel.FK_InvoiceCustomerId", "Invoice");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Invoice>("ChinookModel.FK_InvoiceCustomerId_CustomerCustomerId", "Invoice", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Invoice>("ChinookModel.FK_InvoiceCustomerId", "Invoice", value);
                 }
             }
         }
@@ -1340,18 +1340,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_CustomerSupportRepId_EmployeeEmployeeId", "Customer")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_CustomerSupportRepId", "Customer")]
         public EntityCollection<Customer> Customers
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Customer>("ChinookModel.FK_CustomerSupportRepId_EmployeeEmployeeId", "Customer");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Customer>("ChinookModel.FK_CustomerSupportRepId", "Customer");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Customer>("ChinookModel.FK_CustomerSupportRepId_EmployeeEmployeeId", "Customer", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Customer>("ChinookModel.FK_CustomerSupportRepId", "Customer", value);
                 }
             }
         }
@@ -1362,18 +1362,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_EmployeeReportsTo_EmployeeEmployeeId", "Employee1")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_EmployeeReportsTo", "Employee1")]
         public EntityCollection<Employee> Employee1
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Employee>("ChinookModel.FK_EmployeeReportsTo_EmployeeEmployeeId", "Employee1");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Employee>("ChinookModel.FK_EmployeeReportsTo", "Employee1");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Employee>("ChinookModel.FK_EmployeeReportsTo_EmployeeEmployeeId", "Employee1", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Employee>("ChinookModel.FK_EmployeeReportsTo", "Employee1", value);
                 }
             }
         }
@@ -1384,16 +1384,16 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_EmployeeReportsTo_EmployeeEmployeeId", "Employee")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_EmployeeReportsTo", "Employee")]
         public Employee Employee2
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_EmployeeReportsTo_EmployeeEmployeeId", "Employee").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_EmployeeReportsTo", "Employee").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_EmployeeReportsTo_EmployeeEmployeeId", "Employee").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_EmployeeReportsTo", "Employee").Value = value;
             }
         }
         /// <summary>
@@ -1405,13 +1405,13 @@ namespace ChinookDatabase
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_EmployeeReportsTo_EmployeeEmployeeId", "Employee");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Employee>("ChinookModel.FK_EmployeeReportsTo", "Employee");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Employee>("ChinookModel.FK_EmployeeReportsTo_EmployeeEmployeeId", "Employee", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Employee>("ChinookModel.FK_EmployeeReportsTo", "Employee", value);
                 }
             }
         }
@@ -1504,18 +1504,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackGenreId_GenreGenreId", "Track")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackGenreId", "Track")]
         public EntityCollection<Track> Tracks
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Track>("ChinookModel.FK_TrackGenreId_GenreGenreId", "Track");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Track>("ChinookModel.FK_TrackGenreId", "Track");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Track>("ChinookModel.FK_TrackGenreId_GenreGenreId", "Track", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Track>("ChinookModel.FK_TrackGenreId", "Track", value);
                 }
             }
         }
@@ -1756,16 +1756,16 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceCustomerId_CustomerCustomerId", "Customer")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceCustomerId", "Customer")]
         public Customer Customer
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("ChinookModel.FK_InvoiceCustomerId_CustomerCustomerId", "Customer").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("ChinookModel.FK_InvoiceCustomerId", "Customer").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("ChinookModel.FK_InvoiceCustomerId_CustomerCustomerId", "Customer").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("ChinookModel.FK_InvoiceCustomerId", "Customer").Value = value;
             }
         }
         /// <summary>
@@ -1777,13 +1777,13 @@ namespace ChinookDatabase
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("ChinookModel.FK_InvoiceCustomerId_CustomerCustomerId", "Customer");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Customer>("ChinookModel.FK_InvoiceCustomerId", "Customer");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Customer>("ChinookModel.FK_InvoiceCustomerId_CustomerCustomerId", "Customer", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Customer>("ChinookModel.FK_InvoiceCustomerId", "Customer", value);
                 }
             }
         }
@@ -1794,18 +1794,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceLineInvoiceId_InvoiceInvoiceId", "InvoiceLine")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceLineInvoiceId", "InvoiceLine")]
         public EntityCollection<InvoiceLine> InvoiceLines
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvoiceLine>("ChinookModel.FK_InvoiceLineInvoiceId_InvoiceInvoiceId", "InvoiceLine");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvoiceLine>("ChinookModel.FK_InvoiceLineInvoiceId", "InvoiceLine");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvoiceLine>("ChinookModel.FK_InvoiceLineInvoiceId_InvoiceInvoiceId", "InvoiceLine", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvoiceLine>("ChinookModel.FK_InvoiceLineInvoiceId", "InvoiceLine", value);
                 }
             }
         }
@@ -1926,16 +1926,16 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceLineInvoiceId_InvoiceInvoiceId", "Invoice")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceLineInvoiceId", "Invoice")]
         public Invoice Invoice
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invoice>("ChinookModel.FK_InvoiceLineInvoiceId_InvoiceInvoiceId", "Invoice").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invoice>("ChinookModel.FK_InvoiceLineInvoiceId", "Invoice").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invoice>("ChinookModel.FK_InvoiceLineInvoiceId_InvoiceInvoiceId", "Invoice").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invoice>("ChinookModel.FK_InvoiceLineInvoiceId", "Invoice").Value = value;
             }
         }
         /// <summary>
@@ -1947,13 +1947,13 @@ namespace ChinookDatabase
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invoice>("ChinookModel.FK_InvoiceLineInvoiceId_InvoiceInvoiceId", "Invoice");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invoice>("ChinookModel.FK_InvoiceLineInvoiceId", "Invoice");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Invoice>("ChinookModel.FK_InvoiceLineInvoiceId_InvoiceInvoiceId", "Invoice", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Invoice>("ChinookModel.FK_InvoiceLineInvoiceId", "Invoice", value);
                 }
             }
         }
@@ -1964,16 +1964,16 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceLineTrackId_TrackTrackId", "Track")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceLineTrackId", "Track")]
         public Track Track
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Track>("ChinookModel.FK_InvoiceLineTrackId_TrackTrackId", "Track").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Track>("ChinookModel.FK_InvoiceLineTrackId", "Track").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Track>("ChinookModel.FK_InvoiceLineTrackId_TrackTrackId", "Track").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Track>("ChinookModel.FK_InvoiceLineTrackId", "Track").Value = value;
             }
         }
         /// <summary>
@@ -1985,13 +1985,13 @@ namespace ChinookDatabase
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Track>("ChinookModel.FK_InvoiceLineTrackId_TrackTrackId", "Track");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Track>("ChinookModel.FK_InvoiceLineTrackId", "Track");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Track>("ChinookModel.FK_InvoiceLineTrackId_TrackTrackId", "Track", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Track>("ChinookModel.FK_InvoiceLineTrackId", "Track", value);
                 }
             }
         }
@@ -2084,18 +2084,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackMediaTypeId_MediaTypeMediaTypeId", "Track")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackMediaTypeId", "Track")]
         public EntityCollection<Track> Tracks
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Track>("ChinookModel.FK_TrackMediaTypeId_MediaTypeMediaTypeId", "Track");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Track>("ChinookModel.FK_TrackMediaTypeId", "Track");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Track>("ChinookModel.FK_TrackMediaTypeId_MediaTypeMediaTypeId", "Track", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Track>("ChinookModel.FK_TrackMediaTypeId", "Track", value);
                 }
             }
         }
@@ -2188,18 +2188,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_PlaylistTrackPlaylistId_PlaylistPlaylistId", "Track")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_PlaylistTrackPlaylistId", "Track")]
         public EntityCollection<Track> Tracks
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Track>("ChinookModel.FK_PlaylistTrackPlaylistId_PlaylistPlaylistId", "Track");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Track>("ChinookModel.FK_PlaylistTrackPlaylistId", "Track");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Track>("ChinookModel.FK_PlaylistTrackPlaylistId_PlaylistPlaylistId", "Track", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Track>("ChinookModel.FK_PlaylistTrackPlaylistId", "Track", value);
                 }
             }
         }
@@ -2394,16 +2394,16 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackAlbumId_AlbumAlbumId", "Album")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackAlbumId", "Album")]
         public Album Album
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Album>("ChinookModel.FK_TrackAlbumId_AlbumAlbumId", "Album").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Album>("ChinookModel.FK_TrackAlbumId", "Album").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Album>("ChinookModel.FK_TrackAlbumId_AlbumAlbumId", "Album").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Album>("ChinookModel.FK_TrackAlbumId", "Album").Value = value;
             }
         }
         /// <summary>
@@ -2415,13 +2415,13 @@ namespace ChinookDatabase
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Album>("ChinookModel.FK_TrackAlbumId_AlbumAlbumId", "Album");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Album>("ChinookModel.FK_TrackAlbumId", "Album");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Album>("ChinookModel.FK_TrackAlbumId_AlbumAlbumId", "Album", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Album>("ChinookModel.FK_TrackAlbumId", "Album", value);
                 }
             }
         }
@@ -2432,16 +2432,16 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackGenreId_GenreGenreId", "Genre")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackGenreId", "Genre")]
         public Genre Genre
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Genre>("ChinookModel.FK_TrackGenreId_GenreGenreId", "Genre").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Genre>("ChinookModel.FK_TrackGenreId", "Genre").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Genre>("ChinookModel.FK_TrackGenreId_GenreGenreId", "Genre").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Genre>("ChinookModel.FK_TrackGenreId", "Genre").Value = value;
             }
         }
         /// <summary>
@@ -2453,13 +2453,13 @@ namespace ChinookDatabase
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Genre>("ChinookModel.FK_TrackGenreId_GenreGenreId", "Genre");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Genre>("ChinookModel.FK_TrackGenreId", "Genre");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Genre>("ChinookModel.FK_TrackGenreId_GenreGenreId", "Genre", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Genre>("ChinookModel.FK_TrackGenreId", "Genre", value);
                 }
             }
         }
@@ -2470,18 +2470,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceLineTrackId_TrackTrackId", "InvoiceLine")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_InvoiceLineTrackId", "InvoiceLine")]
         public EntityCollection<InvoiceLine> InvoiceLines
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvoiceLine>("ChinookModel.FK_InvoiceLineTrackId_TrackTrackId", "InvoiceLine");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InvoiceLine>("ChinookModel.FK_InvoiceLineTrackId", "InvoiceLine");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvoiceLine>("ChinookModel.FK_InvoiceLineTrackId_TrackTrackId", "InvoiceLine", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InvoiceLine>("ChinookModel.FK_InvoiceLineTrackId", "InvoiceLine", value);
                 }
             }
         }
@@ -2492,16 +2492,16 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackMediaTypeId_MediaTypeMediaTypeId", "MediaType")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_TrackMediaTypeId", "MediaType")]
         public MediaType MediaType
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<MediaType>("ChinookModel.FK_TrackMediaTypeId_MediaTypeMediaTypeId", "MediaType").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<MediaType>("ChinookModel.FK_TrackMediaTypeId", "MediaType").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<MediaType>("ChinookModel.FK_TrackMediaTypeId_MediaTypeMediaTypeId", "MediaType").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<MediaType>("ChinookModel.FK_TrackMediaTypeId", "MediaType").Value = value;
             }
         }
         /// <summary>
@@ -2513,13 +2513,13 @@ namespace ChinookDatabase
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<MediaType>("ChinookModel.FK_TrackMediaTypeId_MediaTypeMediaTypeId", "MediaType");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<MediaType>("ChinookModel.FK_TrackMediaTypeId", "MediaType");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<MediaType>("ChinookModel.FK_TrackMediaTypeId_MediaTypeMediaTypeId", "MediaType", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<MediaType>("ChinookModel.FK_TrackMediaTypeId", "MediaType", value);
                 }
             }
         }
@@ -2530,18 +2530,18 @@ namespace ChinookDatabase
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_PlaylistTrackPlaylistId_PlaylistPlaylistId", "Playlist")]
+        [EdmRelationshipNavigationPropertyAttribute("ChinookModel", "FK_PlaylistTrackPlaylistId", "Playlist")]
         public EntityCollection<Playlist> Playlists
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Playlist>("ChinookModel.FK_PlaylistTrackPlaylistId_PlaylistPlaylistId", "Playlist");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Playlist>("ChinookModel.FK_PlaylistTrackPlaylistId", "Playlist");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Playlist>("ChinookModel.FK_PlaylistTrackPlaylistId_PlaylistPlaylistId", "Playlist", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Playlist>("ChinookModel.FK_PlaylistTrackPlaylistId", "Playlist", value);
                 }
             }
         }

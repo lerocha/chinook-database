@@ -233,25 +233,25 @@ CREATE UNIQUE INDEX [IPK_Track] ON [Track]([TrackId]);
 /*******************************************************************************
    Create Foreign Keys
 ********************************************************************************/
-CREATE INDEX [IFK_AlbumArtistId_ArtistArtistId] ON [Album] ([ArtistId]);
+CREATE INDEX [IFK_AlbumArtistId] ON [Album] ([ArtistId]);
 
-CREATE INDEX [IFK_CustomerSupportRepId_EmployeeEmployeeId] ON [Customer] ([SupportRepId]);
+CREATE INDEX [IFK_CustomerSupportRepId] ON [Customer] ([SupportRepId]);
 
-CREATE INDEX [IFK_EmployeeReportsTo_EmployeeEmployeeId] ON [Employee] ([ReportsTo]);
+CREATE INDEX [IFK_EmployeeReportsTo] ON [Employee] ([ReportsTo]);
 
-CREATE INDEX [IFK_InvoiceCustomerId_CustomerCustomerId] ON [Invoice] ([CustomerId]);
+CREATE INDEX [IFK_InvoiceCustomerId] ON [Invoice] ([CustomerId]);
 
-CREATE INDEX [IFK_InvoiceLineInvoiceId_InvoiceInvoiceId] ON [InvoiceLine] ([InvoiceId]);
+CREATE INDEX [IFK_InvoiceLineInvoiceId] ON [InvoiceLine] ([InvoiceId]);
 
-CREATE INDEX [IFK_InvoiceLineTrackId_TrackTrackId] ON [InvoiceLine] ([TrackId]);
+CREATE INDEX [IFK_InvoiceLineTrackId] ON [InvoiceLine] ([TrackId]);
 
-CREATE INDEX [IFK_PlaylistTrackTrackId_TrackTrackId] ON [PlaylistTrack] ([TrackId]);
+CREATE INDEX [IFK_PlaylistTrackTrackId] ON [PlaylistTrack] ([TrackId]);
 
-CREATE INDEX [IFK_TrackAlbumId_AlbumAlbumId] ON [Track] ([AlbumId]);
+CREATE INDEX [IFK_TrackAlbumId] ON [Track] ([AlbumId]);
 
-CREATE INDEX [IFK_TrackGenreId_GenreGenreId] ON [Track] ([GenreId]);
+CREATE INDEX [IFK_TrackGenreId] ON [Track] ([GenreId]);
 
-CREATE INDEX [IFK_TrackMediaTypeId_MediaTypeMediaTypeId] ON [Track] ([MediaTypeId]);
+CREATE INDEX [IFK_TrackMediaTypeId] ON [Track] ([MediaTypeId]);
 
 
 /*******************************************************************************
