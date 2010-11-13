@@ -117,6 +117,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChinookDatabase.txt</LastGenOutput>
     </None>
+    <Content Include="DataSources\ChinookDatabase.txt">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+    </Content>
     <Content Include="DataSources\Chinook_EffiProz_AutoIncrementPKs.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -188,11 +193,6 @@
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DataSources\ChinookDatabase.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ChinookDatabase.tt</DependentUpon>
-    </None>
     <Content Include="DataSources\Chinook_EffiProz.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

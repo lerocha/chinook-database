@@ -8,18 +8,10 @@ namespace ChinookDatabase.DdlStrategies
     {
         public SqlServerStrategy()
         {
-            CanReCreateDatabase = true;
+            Name = "SqlServer";
+            Identity = "IDENTITY";
+            IsReCreateDatabaseEnabled = true;
             CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
-        }
-
-        public override string Name
-        {
-            get { return "SqlServer"; }
-        }
-
-        public override string Identity
-        {
-            get { return "IDENTITY"; }
         }
 
         public override string GetClustered(StoreItemCollection store, EntityType entityType)

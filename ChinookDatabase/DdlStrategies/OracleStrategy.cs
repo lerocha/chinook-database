@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Data.Metadata.Edm;
 using System.Text;
+using Microsoft.Data.Entity.Design.DatabaseGeneration;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -7,13 +9,10 @@ namespace ChinookDatabase.DdlStrategies
     {
         public OracleStrategy()
         {
-            CanReCreateDatabase = true;
+            Name = "Oracle";
+            IsReCreateDatabaseEnabled = true;
+            IsIndexEnabled = false;
             CommandLineFormat = @"sqlplus -S / as sysdba @ {0}";
-        }
-
-        public override string Name
-        {
-            get { return "Oracle"; }
         }
 
         public override string FormatName(string name)
@@ -23,7 +22,7 @@ namespace ChinookDatabase.DdlStrategies
 
         public override string FormatStringValue(string value)
         {
-            return string.Format("N'{0}'", value.Replace("'", "'||chr(39)||'").Replace("&", "'||chr(38)||'"));
+            return string.Format("'{0}'", value.Replace("'", "'||chr(39)||'").Replace("&", "'||chr(38)||'"));
         }
 
         public override string FormatDateValue(string value)
@@ -35,6 +34,21 @@ namespace ChinookDatabase.DdlStrategies
         public override string GetFullyQualifiedName(string schema, string name)
         {
             return FormatName(name);
+        }
+
+        public override string GetStoreType(EdmProperty property)
+        {
+            switch (property.TypeUsage.EdmType.Name)
+            {
+                case "int":
+                    return "NUMBER";
+                case "numeric":
+                    return property.ToStoreType().Replace("numeric", "NUMBER");
+                case "nvarchar":
+                    return property.ToStoreType().Replace("nvarchar", "VARCHAR2");
+                default:
+                    return base.GetStoreType(property);
+            }
         }
 
         public override string WriteDropDatabase(string databaseName)
@@ -66,6 +80,15 @@ namespace ChinookDatabase.DdlStrategies
             return string.Format("conn {0}/p4ssw0rd", databaseName.ToLower());
         }
 
+        public override string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint)
+        {
+            return refConstraint.FromRole.DeleteBehavior == OperationAction.Cascade ? "ON DELETE CASCADE" : "";
+        }
+
+        public override string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint)
+        {
+            return string.Empty;
+        }
     }
 
 }

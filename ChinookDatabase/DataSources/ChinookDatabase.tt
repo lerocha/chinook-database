@@ -19,7 +19,7 @@ var options = new
 								new SqlServerCompactStrategy { IsIdentityEnabled = false },
 								new SqlServerCompactStrategy { IsIdentityEnabled = true },
 								new SqliteStrategy { IsIdentityEnabled = false },
-								new SqliteStrategy { IsIdentityEnabled = true },
+								new SqliteStrategy { IsIdentityEnabled = true, PrimaryKeyDef = KeyDefinition.OnCreateTableColumn },
 								new MySqlStrategy { IsIdentityEnabled = false },
 								new MySqlStrategy { IsIdentityEnabled = true },
 								new OracleStrategy { IsIdentityEnabled = false },
@@ -54,7 +54,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 ********************************************************************************/
 
 <#
-	if (strategy.CanReCreateDatabase)
+	if (strategy.IsReCreateDatabaseEnabled)
 	{
 		var dropdb = strategy.WriteDropDatabase(options.DatabaseName);
 		if (!string.IsNullOrEmpty(dropdb)) 
@@ -131,10 +131,12 @@ CREATE TABLE <#= tableName #>
 	}
 
 	// Create Primary Key Constraint.
-	if (strategy.PrimaryKeyDef==KeyDefinition.OnCreateTableBottom)
+	var keys = from item in entitySet.ElementType.GetKeyProperties() select item;
+	if (strategy.PrimaryKeyDef==KeyDefinition.OnCreateTableBottom ||
+		(strategy.PrimaryKeyDef==KeyDefinition.OnCreateTableColumn && keys.Count() > 1))
 	{
 		string pkName = strategy.FormatName("PK_" + entitySet.GetTableName());#>,
-    CONSTRAINT <#= pkName #> PRIMARY KEY <#= strategy.GetClustered(existingStore, entitySet.ElementType)#> (<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>)<#
+    CONSTRAINT <#= pkName #> PRIMARY KEY <#= strategy.GetClustered(existingStore, entitySet.ElementType)#> (<#= strategy.GetColumns(keys, ',')#>)<#
 	}
 	
 	// Create Foreign Key depending on the strategy.
@@ -148,7 +150,7 @@ CREATE TABLE <#= tableName #>
                              select new {constraint, refEntity})
         {#>,
     FOREIGN KEY (<#= strategy.GetColumns(item.constraint.ToProperties, ',') #>) REFERENCES <#= strategy.GetFullyQualifiedName(item.refEntity.GetSchemaName(), item.refEntity.GetTableName()) #> (<#= strategy.GetColumns(item.constraint.FromProperties, ',') #>) 
-		ON DELETE <#= strategy.GetDeleteAction(item.constraint) #> ON UPDATE NO ACTION<#
+		<#= strategy.WriteForeignKeyDeleteAction(item.constraint) #> <#= strategy.WriteForeignKeyUpdateAction(item.constraint) #><#
         }
 	
 	}
@@ -180,10 +182,13 @@ ALTER TABLE <#= tableName #> ADD CONSTRAINT <#= pkName #> PRIMARY KEY (<#= strat
 		}
 
 		// Create Primary Key Unique Constraint.
+		if (strategy.IsIndexEnabled)
+		{
 #>
 CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>);
 <#= strategy.WriteExecuteCommand() #>
 <#
+		}
     }
 #>
 
@@ -206,14 +211,14 @@ CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColum
 		{
 #>
 ALTER TABLE <#= toTableName #> ADD CONSTRAINT <#= fkName #>
-    FOREIGN KEY (<#= strategy.GetColumns(constraint.ToProperties, ',') #>) REFERENCES <#= fromTableName #> (<#= strategy.GetColumns(constraint.FromProperties, ',') #>)
-    ON DELETE <#= strategy.GetDeleteAction(constraint) #> ON UPDATE NO ACTION;
+    FOREIGN KEY (<#= strategy.GetColumns(constraint.ToProperties, ',') #>) REFERENCES <#= fromTableName #> (<#= strategy.GetColumns(constraint.FromProperties, ',') #>) <#= strategy.WriteForeignKeyDeleteAction(constraint) #> <#= strategy.WriteForeignKeyUpdateAction(constraint) #>;
 <#= strategy.WriteExecuteCommand() #>
 <#      
 		} 
 		
         // if the foreign keys are part of the primary key on the dependent end, then we should not add a constraint.
-        if (!toEnd.EntitySet.ElementType.GetKeyProperties().Take(constraint.ToProperties.Count()).OrderBy(r => r.Name).SequenceEqual(constraint.ToProperties.OrderBy(r => r.Name)))
+        if (strategy.IsIndexEnabled &&
+			!toEnd.EntitySet.ElementType.GetKeyProperties().Take(constraint.ToProperties.Count()).OrderBy(r => r.Name).SequenceEqual(constraint.ToProperties.OrderBy(r => r.Name)))
         {
 #>
 CREATE INDEX <#= ifkName #> ON <#= toTableName #> (<#= strategy.GetColumns(constraint.ToProperties, ',') #>);

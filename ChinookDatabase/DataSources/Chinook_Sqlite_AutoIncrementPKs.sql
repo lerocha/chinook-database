@@ -167,6 +167,7 @@ CREATE TABLE [PlaylistTrack]
 (
     [PlaylistId] INTEGER  NOT NULL,
     [TrackId] INTEGER  NOT NULL,
+    CONSTRAINT [PK_PlaylistTrack] PRIMARY KEY  ([PlaylistId], [TrackId]),
     FOREIGN KEY ([PlaylistId]) REFERENCES [Playlist] ([PlaylistId]) 
 		ON DELETE NO ACTION ON UPDATE NO ACTION,
     FOREIGN KEY ([TrackId]) REFERENCES [Track] ([TrackId]) 

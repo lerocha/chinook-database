@@ -12,42 +12,28 @@ namespace ChinookDatabase.DdlStrategies
 
         protected AbstractDdlStrategy()
         {
+            Name = string.Empty;
+            FileExtension = "sql";
+            Identity = string.Empty;
+            IsIndexEnabled = true;
+            PrimaryKeyDef = KeyDefinition.OnCreateTableBottom;
+            ForeignKeyDef = KeyDefinition.OnAlterTable;
+
             Encoding = Encoding.UTF8;
         }
 
         #region Implementation of IDdlStrategy
 
-        public virtual string Name
-        {
-            get { return string.Empty; }
-        }
+        public string Name { get; protected set; }
+        public string FileExtension { get; protected set; }
+        public string Identity { get; protected set; }
+        public bool IsIndexEnabled { get; protected set; }
 
-        public virtual string FileExtension
-        {
-            get { return "sql"; }
-        }
-
-        public virtual string Identity
-        {
-            get { return string.Empty; }
-        }
-
-        public virtual KeyDefinition PrimaryKeyDef
-        {
-            get { return KeyDefinition.OnCreateTableBottom; }
-        }
-
-        public virtual KeyDefinition ForeignKeyDef
-        {
-            get { return KeyDefinition.OnAlterTable; }
-        }
-
+        public KeyDefinition PrimaryKeyDef { get; set; }
+        public KeyDefinition ForeignKeyDef { get; set; }
         public bool IsIdentityEnabled { get; set; }
-
-        public bool CanReCreateDatabase { get; set; }
-
+        public bool IsReCreateDatabaseEnabled { get; set; }
         public string CommandLineFormat { get; set; }
-
         public Encoding Encoding { get; set; }
 
         public virtual string FormatName(string name)
@@ -115,11 +101,6 @@ namespace ChinookDatabase.DdlStrategies
             return builder.ToString().Trim().TrimEnd(delimiter);
         }
 
-        public string GetDeleteAction(ReferentialConstraint refConstraint)
-        {
-            return refConstraint.FromRole.DeleteBehavior == OperationAction.Cascade ? "CASCADE" : "NO ACTION";
-        }
-
         public virtual string WriteDropDatabase(string databaseName)
         {
             return string.Empty;
@@ -160,6 +141,16 @@ namespace ChinookDatabase.DdlStrategies
                                  FormatName(property.Name),
                                  GetStoreType(property),
                                  notnull, identity).Trim();
+        }
+
+        public virtual string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint)
+        {
+            return refConstraint.FromRole.DeleteBehavior == OperationAction.Cascade ? "ON DELETE CASCADE" : "ON DELETE NO ACTION";
+        }
+
+        public virtual string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint)
+        {
+            return "ON UPDATE NO ACTION";
         }
 
         public virtual string WriteExecuteCommand()

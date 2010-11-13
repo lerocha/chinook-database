@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Metadata.Edm;
+using System.Linq;
 using Microsoft.Data.Entity.Design.DatabaseGeneration;
 
 namespace ChinookDatabase.DdlStrategies
@@ -8,24 +9,10 @@ namespace ChinookDatabase.DdlStrategies
     {
         public SqliteStrategy()
         {
+            Name = "Sqlite";
+            Identity = "PRIMARY KEY AUTOINCREMENT";
+            ForeignKeyDef = KeyDefinition.OnCreateTableBottom;
             CommandLineFormat = "sqlite3 -init {0} {0}ite";
-        }
-
-        public override string Name { get { return "Sqlite"; } }
-
-        public override string Identity
-        {
-            get { return "PRIMARY KEY AUTOINCREMENT"; }
-        }
-
-        public override KeyDefinition PrimaryKeyDef
-        {
-            get { return (IsIdentityEnabled ? KeyDefinition.OnCreateTableColumn : KeyDefinition.OnCreateTableBottom); }
-        }
-
-        public override KeyDefinition ForeignKeyDef
-        {
-            get { return KeyDefinition.OnCreateTableBottom; }
         }
 
         public override string FormatStringValue(string value)

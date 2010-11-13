@@ -12,15 +12,16 @@ namespace ChinookDatabase.DdlStrategies
         string Name { get; }
         string FileExtension { get; }
         string Identity { get; }
-        KeyDefinition PrimaryKeyDef { get; }
-        KeyDefinition ForeignKeyDef { get; }
+        bool IsIndexEnabled { get; }
 
         #endregion
 
         #region Customizable properties.
 
+        KeyDefinition PrimaryKeyDef { get; set; }
+        KeyDefinition ForeignKeyDef { get; set; }
         bool IsIdentityEnabled { get; set; }
-        bool CanReCreateDatabase { get; set; }
+        bool IsReCreateDatabaseEnabled { get; set; }
         string CommandLineFormat { get; set; }
         Encoding Encoding { get; set; }
 
@@ -37,7 +38,6 @@ namespace ChinookDatabase.DdlStrategies
         string GetClustered(StoreItemCollection store, EntityType entityType);
         string GetForeignKeyConstraintName(ReferentialConstraint constraint);
         string GetColumns(IEnumerable<EdmProperty> properties, char delimiter);
-        string GetDeleteAction(ReferentialConstraint refConstraint);
 
         #endregion
 
@@ -49,6 +49,8 @@ namespace ChinookDatabase.DdlStrategies
         string WriteCreateDatabase(string databaseName);
         string WriteUseDatabase(string databaseName);
         string WriteCreateColumn(EdmProperty property, Version targetVersion);
+        string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint);
+        string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint);
         string WriteExecuteCommand();
 
         #endregion

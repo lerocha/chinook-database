@@ -4,16 +4,10 @@
     {
         public SqlServerCompactStrategy()
         {
-            CanReCreateDatabase = true;
-        }
-
-        public override string Name { get { return "SqlServerCompact"; } }
-
-        public override string FileExtension { get { return "sqlce"; } }
-
-        public override string Identity
-        {
-            get { return "IDENTITY"; }
+            Name = "SqlServerCompact";
+            FileExtension = "sqlce";
+            Identity = "IDENTITY";
+            IsReCreateDatabaseEnabled = true;
         }
 
         public override string GetFullyQualifiedName(string schema, string name)

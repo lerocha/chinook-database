@@ -175,66 +175,55 @@ CREATE UNIQUE INDEX `IPK_Track` ON `Track`(`TrackId`);
    Create Foreign Keys
 ********************************************************************************/
 ALTER TABLE `Album` ADD CONSTRAINT `FK_AlbumArtistId_ArtistArtistId`
-    FOREIGN KEY (`ArtistId`) REFERENCES `Artist` (`ArtistId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`ArtistId`) REFERENCES `Artist` (`ArtistId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_AlbumArtistId_ArtistArtistId` ON `Album` (`ArtistId`);
 
 ALTER TABLE `Customer` ADD CONSTRAINT `FK_CustomerSupportRepId_EmployeeEmployeeId`
-    FOREIGN KEY (`SupportRepId`) REFERENCES `Employee` (`EmployeeId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`SupportRepId`) REFERENCES `Employee` (`EmployeeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_CustomerSupportRepId_EmployeeEmployeeId` ON `Customer` (`SupportRepId`);
 
 ALTER TABLE `Employee` ADD CONSTRAINT `FK_EmployeeReportsTo_EmployeeEmployeeId`
-    FOREIGN KEY (`ReportsTo`) REFERENCES `Employee` (`EmployeeId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`ReportsTo`) REFERENCES `Employee` (`EmployeeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_EmployeeReportsTo_EmployeeEmployeeId` ON `Employee` (`ReportsTo`);
 
 ALTER TABLE `Invoice` ADD CONSTRAINT `FK_InvoiceCustomerId_CustomerCustomerId`
-    FOREIGN KEY (`CustomerId`) REFERENCES `Customer` (`CustomerId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`CustomerId`) REFERENCES `Customer` (`CustomerId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_InvoiceCustomerId_CustomerCustomerId` ON `Invoice` (`CustomerId`);
 
 ALTER TABLE `InvoiceLine` ADD CONSTRAINT `FK_InvoiceLineInvoiceId_InvoiceInvoiceId`
-    FOREIGN KEY (`InvoiceId`) REFERENCES `Invoice` (`InvoiceId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`InvoiceId`) REFERENCES `Invoice` (`InvoiceId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_InvoiceLineInvoiceId_InvoiceInvoiceId` ON `InvoiceLine` (`InvoiceId`);
 
 ALTER TABLE `InvoiceLine` ADD CONSTRAINT `FK_InvoiceLineTrackId_TrackTrackId`
-    FOREIGN KEY (`TrackId`) REFERENCES `Track` (`TrackId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`TrackId`) REFERENCES `Track` (`TrackId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_InvoiceLineTrackId_TrackTrackId` ON `InvoiceLine` (`TrackId`);
 
 ALTER TABLE `PlaylistTrack` ADD CONSTRAINT `FK_PlaylistTrackPlaylistId_PlaylistPlaylistId`
-    FOREIGN KEY (`PlaylistId`) REFERENCES `Playlist` (`PlaylistId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`PlaylistId`) REFERENCES `Playlist` (`PlaylistId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 ALTER TABLE `PlaylistTrack` ADD CONSTRAINT `FK_PlaylistTrackTrackId_TrackTrackId`
-    FOREIGN KEY (`TrackId`) REFERENCES `Track` (`TrackId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`TrackId`) REFERENCES `Track` (`TrackId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_PlaylistTrackTrackId_TrackTrackId` ON `PlaylistTrack` (`TrackId`);
 
 ALTER TABLE `Track` ADD CONSTRAINT `FK_TrackAlbumId_AlbumAlbumId`
-    FOREIGN KEY (`AlbumId`) REFERENCES `Album` (`AlbumId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`AlbumId`) REFERENCES `Album` (`AlbumId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_TrackAlbumId_AlbumAlbumId` ON `Track` (`AlbumId`);
 
 ALTER TABLE `Track` ADD CONSTRAINT `FK_TrackGenreId_GenreGenreId`
-    FOREIGN KEY (`GenreId`) REFERENCES `Genre` (`GenreId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`GenreId`) REFERENCES `Genre` (`GenreId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_TrackGenreId_GenreGenreId` ON `Track` (`GenreId`);
 
 ALTER TABLE `Track` ADD CONSTRAINT `FK_TrackMediaTypeId_MediaTypeMediaTypeId`
-    FOREIGN KEY (`MediaTypeId`) REFERENCES `MediaType` (`MediaTypeId`)
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    FOREIGN KEY (`MediaTypeId`) REFERENCES `MediaType` (`MediaTypeId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 CREATE INDEX `IFK_TrackMediaTypeId_MediaTypeMediaTypeId` ON `Track` (`MediaTypeId`);
 
