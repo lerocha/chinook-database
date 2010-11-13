@@ -91,6 +91,11 @@ namespace ChinookDatabase.DdlStrategies
         {
             return string.Empty;
         }
+
+        public override string WriteFinishCommit()
+        {
+            return "commit;\r\nexit;";
+        }
     }
 
 }

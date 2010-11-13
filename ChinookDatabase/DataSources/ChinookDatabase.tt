@@ -278,7 +278,7 @@ CREATE INDEX <#= ifkName #> ON <#= toTableName #> (<#= strategy.GetColumns(const
 <#
     }	// foreach DataTable
 #>
-
+<#= strategy.WriteFinishCommit() #>
 <#
 	
 	//************************************************************************

@@ -6409,6 +6409,11 @@
             return string.Empty;
         }
 
+        public virtual string WriteFinishCommit()
+        {
+            return string.Empty;
+        }
+
         #endregion
     }
 
@@ -6521,6 +6526,7 @@
         string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint);
         string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint);
         string WriteExecuteCommand();
+        string WriteFinishCommit();
 
         #endregion
     }
@@ -6683,6 +6689,11 @@
         public override string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint)
         {
             return string.Empty;
+        }
+
+        public override string WriteFinishCommit()
+        {
+            return "commit;\r\nexit;";
         }
     }
 

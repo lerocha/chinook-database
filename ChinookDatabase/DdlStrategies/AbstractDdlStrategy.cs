@@ -158,6 +158,11 @@ namespace ChinookDatabase.DdlStrategies
             return string.Empty;
         }
 
+        public virtual string WriteFinishCommit()
+        {
+            return string.Empty;
+        }
+
         #endregion
     }
 

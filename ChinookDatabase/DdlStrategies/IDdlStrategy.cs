@@ -52,6 +52,7 @@ namespace ChinookDatabase.DdlStrategies
         string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint);
         string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint);
         string WriteExecuteCommand();
+        string WriteFinishCommit();
 
         #endregion
     }
