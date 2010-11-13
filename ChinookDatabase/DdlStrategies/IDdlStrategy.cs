@@ -10,7 +10,8 @@ namespace ChinookDatabase.DdlStrategies
         #region Read-only properties.
 
         string Name { get; }
-        string FileExtension { get; }
+        string ScriptFileExtension { get; }
+        string DatabaseFileExtension { get; }
         string Identity { get; }
         bool IsIndexEnabled { get; }
 

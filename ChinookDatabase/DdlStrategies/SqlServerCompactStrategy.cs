@@ -5,7 +5,8 @@
         public SqlServerCompactStrategy()
         {
             Name = "SqlServerCompact";
-            FileExtension = "sqlce";
+            ScriptFileExtension = "sqlce";
+            DatabaseFileExtension = "sdf";
             Identity = "IDENTITY";
             IsReCreateDatabaseEnabled = true;
         }

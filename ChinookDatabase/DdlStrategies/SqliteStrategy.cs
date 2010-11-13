@@ -10,6 +10,7 @@ namespace ChinookDatabase.DdlStrategies
         public SqliteStrategy()
         {
             Name = "Sqlite";
+            DatabaseFileExtension = "sqlite";
             Identity = "PRIMARY KEY AUTOINCREMENT";
             ForeignKeyDef = KeyDefinition.OnCreateTableBottom;
             CommandLineFormat = "sqlite3 -init {0} {0}ite";

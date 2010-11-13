@@ -13,7 +13,8 @@ namespace ChinookDatabase.DdlStrategies
         protected AbstractDdlStrategy()
         {
             Name = string.Empty;
-            FileExtension = "sql";
+            ScriptFileExtension = "sql";
+            DatabaseFileExtension = string.Empty;
             Identity = string.Empty;
             IsIndexEnabled = true;
             PrimaryKeyDef = KeyDefinition.OnCreateTableBottom;
@@ -25,7 +26,8 @@ namespace ChinookDatabase.DdlStrategies
         #region Implementation of IDdlStrategy
 
         public string Name { get; protected set; }
-        public string FileExtension { get; protected set; }
+        public string ScriptFileExtension { get; protected set; }
+        public string DatabaseFileExtension { get; protected set; }
         public string Identity { get; protected set; }
         public bool IsIndexEnabled { get; protected set; }
 

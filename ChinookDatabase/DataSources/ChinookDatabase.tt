@@ -9,7 +9,8 @@ var options = new
 {
 	DatabaseName = "Chinook",
 	PopulateDatabase = true,
-	Version = new Version("2.0.0.0"),
+	Version = DataSetHelper.GetVersionNumber(),
+	EFVersion = new Version("2.0.0.0"),
 	ModelFile = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"..\Chinook.edmx"),
 	DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"_Xml\ChinookData.xml"),
 	DdlStrategies = new IDdlStrategy[] 
@@ -25,13 +26,15 @@ var options = new
 								new OracleStrategy { IsIdentityEnabled = false },
 								new EffiProzStrategy { IsIdentityEnabled = false },
 								new EffiProzStrategy { IsIdentityEnabled = true }
-						   	}
+						   	},
+	OutputFiles = new List<OutputFile>()
 };
+
 
 // Read the existing store item collection from the edmx file.
 IList<EdmSchemaError> existingSsdlErrors;
 var existingStore = EdmExtension.CreateStoreItemCollection(EdmHelper.GetSsdlFromEdmx(options.ModelFile), 
-														   options.Version,
+														   options.EFVersion,
 														   out existingSsdlErrors);
 
 var fileManager = Manager.Create(Host, GenerationEnvironment);
@@ -41,11 +44,21 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 	//************************************************************************
 	// Start SQL file.
 	//************************************************************************
-	var filename = GetFileName(strategy);
+	var filename = GetFileName(strategy, strategy.ScriptFileExtension);
 	fileManager.StartNewFile(filename, strategy.Encoding);
+	
+	// Add the script file to the package list.
+	options.OutputFiles.Add(new OutputFile { Name = filename, Package = strategy.Name });
+	// If there is also a database file, then add it to the package list as well.
+	if (!string.IsNullOrEmpty(strategy.DatabaseFileExtension))
+	{
+		var dbfilename = GetFileName(strategy, strategy.DatabaseFileExtension);
+		options.OutputFiles.Add(new OutputFile { Name = dbfilename, Package = strategy.Name });
+	}
+	
 #>
 /*******************************************************************************
-   Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
+   Chinook Database - Version <#= options.Version #>
    Script: <#= filename #>
    Description: Creates and populates the Chinook database.
    DB Server: <#= strategy.Name #>
@@ -127,7 +140,7 @@ CREATE TABLE <#= tableName #>
     for (int i = 0; i < entitySet.ElementType.Properties.Count; i++)
     {
         var prop = entitySet.ElementType.Properties[i];#><#= ( i>0 ? "," : "") #>
-    <#= strategy.WriteCreateColumn(prop, options.Version) #><#
+    <#= strategy.WriteCreateColumn(prop, options.EFVersion) #><#
 	}
 
 	// Create Primary Key Constraint.
@@ -299,6 +312,7 @@ foreach (var strategy in strategies)
 	
 	if (!string.IsNullOrEmpty(strategy.CommandLineFormat)) 
 	{
+		options.OutputFiles.Add(new OutputFile { Name = filename, Package = strategy.Name });
     	fileManager.StartNewFile(filename, Encoding.ASCII);
 #>
 @echo off
@@ -325,13 +339,13 @@ echo.
 	for(int i=0; i<items.Count; i++) 
 	{ 
 #>
-echo <#= (i+1) #>. Run <#= GetFileName(items[i]) #>
+echo <#= (i+1) #>. Run <#= GetFileName(items[i], items[i].ScriptFileExtension) #>
 <# 	} #>
 echo <#= items.Count+1 #>. Exit
 echo.
 choice /c 123
 <# 	for(int i=0; i<items.Count; i++) { #>
-if (%ERRORLEVEL%)==(<#= (i+1) #>) set SQLFILE=<#= GetFileName(items[i]) #>
+if (%ERRORLEVEL%)==(<#= (i+1) #>) set SQLFILE=<#= GetFileName(items[i],items[i].ScriptFileExtension) #>
 <# 	} #>
 if (%ERRORLEVEL%)==(<#= items.Count+1 #>) goto END
 
@@ -352,18 +366,65 @@ set SQLFILE=
 	}
 }	// foreach options.DdlStrategies
 
-fileManager.Process(true);
 
+
+//************************************************************************
+// Start packaging file.
+//************************************************************************
+fileManager.StartNewFile("Package.bat", Encoding.ASCII);
+#>
+@echo off
+set rootDir=%1
+if (%rootDir%)==() set rootDir=%cd%
+if exist %rootDir%\Packages\. del %rootDir%\Packages\*.* /q
+if not exist %rootDir%\Packages mkdir %rootDir%\Packages
+
+<#
+var allfiles = options.OutputFiles.Select(o => o.Name);
+#>
+7z a %rootDir%\Packages\ChinookDatabase<#=options.Version#>_FullVersion.zip <#=GetValues(allfiles, ' ')#>
+<#
+var packages = from item in options.OutputFiles select item.Package;
+foreach (var package in packages.Distinct())
+{
+    var files = from item in options.OutputFiles where item.Package == package select item.Name;
+#>
+7z a %rootDir%\Packages\ChinookDatabase<#=options.Version#>_<#=package#>.zip <#=GetValues(files, ' ')#>
+<#
+}
+#>
+
+<#
+//************************************************************************
+// End of packaging file.
+//************************************************************************
+
+fileManager.Process(true);
 #>
 <#+ 
 
-private static string GetFileName(IDdlStrategy strategy)
+public class OutputFile {
+	public string Name { get; set; }
+	public string Package { get; set; }
+}
+
+private static string GetFileName(IDdlStrategy strategy, string extension)
 {
 	var suffix = string.Empty;
 	if (strategy.IsIdentityEnabled)
 		suffix = "_AutoIncrementPKs";
 	
-	return string.Format("Chinook_{0}{1}.{2}", strategy.Name, suffix, strategy.FileExtension);
+	return string.Format("Chinook_{0}{1}.{2}", strategy.Name, suffix, extension);
+}
+
+private static string GetValues(IEnumerable<string> values, char delimiter)
+{
+    var builder = new StringBuilder();
+    foreach (var value in values)
+    {
+        builder.AppendFormat("{0}{1}", value, delimiter);
+    }
+    return builder.ToString().TrimEnd(delimiter);
 }
 
 #>
