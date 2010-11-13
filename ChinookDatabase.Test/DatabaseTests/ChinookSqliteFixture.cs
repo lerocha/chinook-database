@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- * Chinook Database - Version 1.2
+ * Chinook Database - Version 1.3
  * Description: Test fixture for Chinook database.
  * DB Server: ChinookSqlite
  * Author: Luis Rocha

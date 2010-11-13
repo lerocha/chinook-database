@@ -8,7 +8,7 @@ namespace ChinookDatabase.Utilities
     {
         public static string GetVersionNumber()
         {
-            return "1.2";
+            return "1.3";
         }
 
         public static string GetOracleType(DataColumn col)

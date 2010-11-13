@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
-   Chinook Database - Version 1.2
+   Chinook Database - Version 1.3
    Script: Chinook_Sqlite.sql
    Description: Creates and populates the Chinook database.
    DB Server: Sqlite
