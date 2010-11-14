@@ -1,7 +1,7 @@
 ﻿/*******************************************************************************
  * Chinook Database - Version 1.3
  * Description: Test fixture for Chinook database.
- * DB Server: Oracle
+ * DB Server: EffiProz
  * Author: Luis Rocha
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
@@ -15,44 +15,17 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NUnit.Framework;
-using System.Data.OleDb;
+using System.Data.EffiProz;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Test fixtures for Oracle databases.
+    /// Test fixtures for EffiProz databases.
     /// </summary>
     [TestFixture]
-    public partial class ChinookOracleFixture
+    public partial class ChinookEffiProzFixture
     {
-        protected IDictionary<string, OleDbConnection> Connections;
-
-        /// <summary>
-        /// Retrieves the cached connection object.
-        /// </summary>
-        /// <param name="connectionName">Connection name in the configuration file.</param>
-        /// <returns>A connection object for this specific database.</returns>
-        protected OleDbConnection GetConnection(string connectionName)
-        {
-            // Creates an ADO.NET connection to the database, if not created yet.
-            if (!Connections.ContainsKey(connectionName))
-            {
-                var section = (ConnectionStringsSection)ConfigurationManager.GetSection("connectionStrings");
-
-                foreach (var entry in section.ConnectionStrings.Cast<ConnectionStringSettings>()
-                                                                .Where(entry => entry.Name == connectionName))
-                {
-                    Connections[connectionName] = new OleDbConnection(entry.ConnectionString);
-                    break;
-                }
-
-                // If we failed to create a connection, then throw an exception.
-                if (!Connections.ContainsKey(connectionName))
-                    throw new ApplicationException("There is no connection string defined in app.config file.");
-            }
-
-            return Connections[connectionName];
-        }
+        protected IDictionary<string, EfzConnection> Connections;
 
         /// <summary>
         /// Method to execute a SQL query and return a dataset.
@@ -66,7 +39,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 			var connection = GetConnection(connectionName);
 
             // Verify if number of entities match number of records.
-            using (var adapter = new OleDbDataAdapter(query, connection))
+            using (var adapter = new EfzDataAdapter(query, connection))
             {
                 adapter.Fill(dataset);
             }
@@ -80,7 +53,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [TestFixtureSetUp]
         public void Init()
         {
-            Connections = new Dictionary<string, OleDbConnection>();
+            Connections = new Dictionary<string, EfzConnection>();
         }
 
         /// <summary>
@@ -99,9 +72,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
         [Test]
-        public void AllInvoicesMustHaveInvoiceLines([Values("Chinook_Oracle")] string connectionName)
+        public void AllInvoicesMustHaveInvoiceLines([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT count(InvoiceId) FROM Invoice WHERE InvoiceId NOT IN (SELECT InvoiceId FROM InvoiceLine GROUP BY InvoiceId)");
+            var dataSet = ExecuteQuery(connectionName, "SELECT count(\"InvoiceId\") FROM \"Chinook\".\"Invoice\" WHERE \"InvoiceId\" NOT IN (SELECT \"InvoiceId\" FROM \"Chinook\".\"InvoiceLine\" GROUP BY \"InvoiceId\")");
             Assert.That(dataSet.Tables[0].Rows[0][0], Is.EqualTo(0), "The number of invoices with no invoice lines must be zero.");
         }
         
@@ -109,9 +82,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Asserts that invoice total matches sum of invoice lines.
         /// </summary>
         [Test]
-        public void InvoiceTotalMustMatchSumOfInvoiceLines([Values("Chinook_Oracle")] string connectionName)
+        public void InvoiceTotalMustMatchSumOfInvoiceLines([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT Invoice.InvoiceId, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS CalculatedTotal, Invoice.Total AS Total FROM InvoiceLine INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId GROUP BY Invoice.InvoiceId, Invoice.Total");
+            var dataSet = ExecuteQuery(connectionName, "SELECT \"Chinook\".\"Invoice\".\"InvoiceId\", SUM(\"Chinook\".\"InvoiceLine\".\"UnitPrice\" * \"Chinook\".\"InvoiceLine\".\"Quantity\") AS CalculatedTotal, \"Chinook\".\"Invoice\".\"Total\" AS Total FROM \"Chinook\".\"InvoiceLine\" INNER JOIN \"Chinook\".\"Invoice\" ON \"Chinook\".\"InvoiceLine\".\"InvoiceId\" = \"Chinook\".\"Invoice\".\"InvoiceId\" GROUP BY \"Chinook\".\"Invoice\".\"InvoiceId\", \"Chinook\".\"Invoice\".\"Total\"");
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
@@ -123,9 +96,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Genre table was populated properly.
         /// </summary>
         [Test]
-        public void GenreTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void GenreTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Genre");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Genre\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(25), "Total number of records mismatch.");
         }
 
@@ -133,9 +106,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Genre table has the proper information.
         /// </summary>
         [Test]
-        public void GenreLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void GenreLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Genre ORDER BY GenreId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Genre\" ORDER BY \"GenreId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -150,9 +123,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the MediaType table was populated properly.
         /// </summary>
         [Test]
-        public void MediaTypeTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void MediaTypeTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM MediaType");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"MediaType\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(5), "Total number of records mismatch.");
         }
 
@@ -160,9 +133,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of MediaType table has the proper information.
         /// </summary>
         [Test]
-        public void MediaTypeLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void MediaTypeLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM MediaType ORDER BY MediaTypeId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"MediaType\" ORDER BY \"MediaTypeId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -177,9 +150,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Artist table was populated properly.
         /// </summary>
         [Test]
-        public void ArtistTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void ArtistTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Artist");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Artist\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(275), "Total number of records mismatch.");
         }
 
@@ -187,9 +160,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Artist table has the proper information.
         /// </summary>
         [Test]
-        public void ArtistLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void ArtistLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Artist ORDER BY ArtistId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Artist\" ORDER BY \"ArtistId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -204,9 +177,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Album table was populated properly.
         /// </summary>
         [Test]
-        public void AlbumTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void AlbumTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Album");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Album\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(347), "Total number of records mismatch.");
         }
 
@@ -214,9 +187,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Album table has the proper information.
         /// </summary>
         [Test]
-        public void AlbumLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void AlbumLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Album ORDER BY AlbumId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Album\" ORDER BY \"AlbumId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -232,9 +205,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Track table was populated properly.
         /// </summary>
         [Test]
-        public void TrackTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void TrackTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Track");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Track\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3503), "Total number of records mismatch.");
         }
 
@@ -242,9 +215,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Track table has the proper information.
         /// </summary>
         [Test]
-        public void TrackLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void TrackLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Track ORDER BY TrackId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Track\" ORDER BY \"TrackId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -266,9 +239,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Employee table was populated properly.
         /// </summary>
         [Test]
-        public void EmployeeTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void EmployeeTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Employee");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Employee\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(8), "Total number of records mismatch.");
         }
 
@@ -276,9 +249,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Employee table has the proper information.
         /// </summary>
         [Test]
-        public void EmployeeLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void EmployeeLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Employee ORDER BY EmployeeId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Employee\" ORDER BY \"EmployeeId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -306,9 +279,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Customer table was populated properly.
         /// </summary>
         [Test]
-        public void CustomerTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(59), "Total number of records mismatch.");
         }
 
@@ -316,9 +289,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Customer table has the proper information.
         /// </summary>
         [Test]
-        public void CustomerLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer ORDER BY CustomerId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" ORDER BY \"CustomerId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -344,9 +317,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Invoice table was populated properly.
         /// </summary>
         [Test]
-        public void InvoiceTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void InvoiceTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Invoice");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Invoice\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(412), "Total number of records mismatch.");
         }
 
@@ -354,9 +327,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Invoice table has the proper information.
         /// </summary>
         [Test]
-        public void InvoiceLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void InvoiceLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Invoice ORDER BY InvoiceId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Invoice\" ORDER BY \"InvoiceId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -378,9 +351,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the InvoiceLine table was populated properly.
         /// </summary>
         [Test]
-        public void InvoiceLineTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void InvoiceLineTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM InvoiceLine");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"InvoiceLine\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(2240), "Total number of records mismatch.");
         }
 
@@ -388,9 +361,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of InvoiceLine table has the proper information.
         /// </summary>
         [Test]
-        public void InvoiceLineLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void InvoiceLineLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM InvoiceLine ORDER BY InvoiceLineId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"InvoiceLine\" ORDER BY \"InvoiceLineId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -408,9 +381,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Playlist table was populated properly.
         /// </summary>
         [Test]
-        public void PlaylistTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void PlaylistTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Playlist");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Playlist\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(18), "Total number of records mismatch.");
         }
 
@@ -418,9 +391,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of Playlist table has the proper information.
         /// </summary>
         [Test]
-        public void PlaylistLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void PlaylistLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Playlist ORDER BY PlaylistId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Playlist\" ORDER BY \"PlaylistId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -435,9 +408,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the PlaylistTrack table was populated properly.
         /// </summary>
         [Test]
-        public void PlaylistTrackTableShouldBePopulated([Values("Chinook_Oracle")] string connectionName)
+        public void PlaylistTrackTableShouldBePopulated([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM PlaylistTrack");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"PlaylistTrack\"");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(8715), "Total number of records mismatch.");
         }
 
@@ -445,9 +418,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that last record of PlaylistTrack table has the proper information.
         /// </summary>
         [Test]
-        public void PlaylistTrackLastRecordHasProperInfo([Values("Chinook_Oracle")] string connectionName)
+        public void PlaylistTrackLastRecordHasProperInfo([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM PlaylistTrack ORDER BY PlaylistId, TrackId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"PlaylistTrack\" ORDER BY \"PlaylistId\", \"TrackId\"");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -462,9 +435,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId01HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId01HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 1");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 1");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -487,9 +460,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId02HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId02HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 2");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 2");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -512,9 +485,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId03HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId03HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 3");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 3");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -537,9 +510,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId04HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId04HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 4");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 4");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -562,9 +535,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId05HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId05HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 5");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 5");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -587,9 +560,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId06HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId06HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 6");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 6");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -612,9 +585,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId07HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId07HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 7");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 7");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -637,9 +610,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId08HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId08HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 8");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 8");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -662,9 +635,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId09HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId09HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 9");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 9");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -687,9 +660,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId10HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId10HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 10");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 10");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -712,9 +685,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
         [Test]
-        public void CustomerId11HasProperUnicodeCharacters([Values("Chinook_Oracle")] string connectionName)
+        public void CustomerId11HasProperUnicodeCharacters([Values("Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 11");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Chinook\".\"Customer\" WHERE \"CustomerId\" = 11");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             

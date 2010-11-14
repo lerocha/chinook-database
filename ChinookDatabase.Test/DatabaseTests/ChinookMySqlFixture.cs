@@ -1,7 +1,7 @@
 ﻿/*******************************************************************************
  * Chinook Database - Version 1.3
  * Description: Test fixture for Chinook database.
- * DB Server: ChinookMySql
+ * DB Server: MySql
  * Author: Luis Rocha
  * License: http://www.codeplex.com/ChinookDatabase/license
  * 
@@ -20,12 +20,12 @@ using MySql.Data.MySqlClient;
 namespace ChinookDatabase.Test.DatabaseTests
 {
     /// <summary>
-    /// Test fixtures for ChinookMySql databases.
+    /// Test fixtures for MySql databases.
     /// </summary>
     [TestFixture]
-    public class ChinookMySqlFixture
+    public partial class ChinookMySqlFixture
     {
-        static readonly IDictionary<string, MySqlConnection> Connections = new Dictionary<string, MySqlConnection>();
+        protected IDictionary<string, MySqlConnection> Connections;
 
         /// <summary>
         /// Retrieves the cached connection object.
@@ -75,12 +75,33 @@ namespace ChinookDatabase.Test.DatabaseTests
         }
         
         /// <summary>
+        /// Initialize connections dictionary.
+        /// </summary>
+        [TestFixtureSetUp]
+        public void Init()
+        {
+            Connections = new Dictionary<string, MySqlConnection>();
+        }
+
+        /// <summary>
+        /// Close all connections.
+        /// </summary>
+        [TestFixtureTearDown]
+        public void Dispose()
+        {
+            foreach (var connection in Connections.Values)
+            {
+                connection.Close();
+            }
+        }
+
+        /// <summary>
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
         [Test]
         public void AllInvoicesMustHaveInvoiceLines([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT count(InvoiceId) FROM Invoice WHERE InvoiceId NOT IN (SELECT InvoiceId FROM InvoiceLine GROUP BY InvoiceId)");
+            var dataSet = ExecuteQuery(connectionName, "SELECT count(`InvoiceId`) FROM `Invoice` WHERE `InvoiceId` NOT IN (SELECT `InvoiceId` FROM `InvoiceLine` GROUP BY `InvoiceId`)");
             Assert.That(dataSet.Tables[0].Rows[0][0], Is.EqualTo(0), "The number of invoices with no invoice lines must be zero.");
         }
         
@@ -90,7 +111,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void InvoiceTotalMustMatchSumOfInvoiceLines([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT Invoice.InvoiceId, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS CalculatedTotal, Invoice.Total AS Total FROM InvoiceLine INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId GROUP BY Invoice.InvoiceId, Invoice.Total");
+            var dataSet = ExecuteQuery(connectionName, "SELECT `Invoice`.`InvoiceId`, SUM(`InvoiceLine`.`UnitPrice` * `InvoiceLine`.`Quantity`) AS CalculatedTotal, `Invoice`.`Total` AS Total FROM `InvoiceLine` INNER JOIN `Invoice` ON `InvoiceLine`.`InvoiceId` = `Invoice`.`InvoiceId` GROUP BY `Invoice`.`InvoiceId`, `Invoice`.`Total`");
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
@@ -104,7 +125,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void GenreTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Genre");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Genre`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(25), "Total number of records mismatch.");
         }
 
@@ -114,7 +135,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void GenreLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Genre ORDER BY GenreId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Genre` ORDER BY `GenreId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -131,7 +152,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void MediaTypeTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM MediaType");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `MediaType`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(5), "Total number of records mismatch.");
         }
 
@@ -141,7 +162,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void MediaTypeLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM MediaType ORDER BY MediaTypeId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `MediaType` ORDER BY `MediaTypeId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -158,7 +179,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void ArtistTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Artist");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Artist`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(275), "Total number of records mismatch.");
         }
 
@@ -168,7 +189,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void ArtistLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Artist ORDER BY ArtistId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Artist` ORDER BY `ArtistId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -185,7 +206,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void AlbumTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Album");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Album`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(347), "Total number of records mismatch.");
         }
 
@@ -195,7 +216,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void AlbumLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Album ORDER BY AlbumId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Album` ORDER BY `AlbumId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -213,7 +234,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void TrackTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Track");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Track`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(3503), "Total number of records mismatch.");
         }
 
@@ -223,7 +244,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void TrackLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Track ORDER BY TrackId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Track` ORDER BY `TrackId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -247,7 +268,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void EmployeeTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Employee");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Employee`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(8), "Total number of records mismatch.");
         }
 
@@ -257,7 +278,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void EmployeeLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Employee ORDER BY EmployeeId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Employee` ORDER BY `EmployeeId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -287,7 +308,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(59), "Total number of records mismatch.");
         }
 
@@ -297,7 +318,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer ORDER BY CustomerId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` ORDER BY `CustomerId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -325,7 +346,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void InvoiceTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Invoice");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Invoice`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(412), "Total number of records mismatch.");
         }
 
@@ -335,7 +356,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void InvoiceLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Invoice ORDER BY InvoiceId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Invoice` ORDER BY `InvoiceId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -359,7 +380,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void InvoiceLineTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM InvoiceLine");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `InvoiceLine`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(2240), "Total number of records mismatch.");
         }
 
@@ -369,7 +390,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void InvoiceLineLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM InvoiceLine ORDER BY InvoiceLineId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `InvoiceLine` ORDER BY `InvoiceLineId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -389,7 +410,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void PlaylistTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Playlist");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Playlist`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(18), "Total number of records mismatch.");
         }
 
@@ -399,7 +420,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void PlaylistLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Playlist ORDER BY PlaylistId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Playlist` ORDER BY `PlaylistId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -416,7 +437,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void PlaylistTrackTableShouldBePopulated([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM PlaylistTrack");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `PlaylistTrack`");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(8715), "Total number of records mismatch.");
         }
 
@@ -426,7 +447,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void PlaylistTrackLastRecordHasProperInfo([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM PlaylistTrack ORDER BY PlaylistId, TrackId");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `PlaylistTrack` ORDER BY `PlaylistId`, `TrackId`");
             var table = dataSet.Tables[0];
             Assert.IsNotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -443,7 +464,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId01HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 1");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 1");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -468,7 +489,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId02HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 2");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 2");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -493,7 +514,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId03HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 3");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 3");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -518,7 +539,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId04HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 4");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 4");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -543,7 +564,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId05HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 5");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 5");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -568,7 +589,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId06HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 6");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 6");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -593,7 +614,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId07HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 7");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 7");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -618,7 +639,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId08HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 8");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 8");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -643,7 +664,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId09HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 9");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 9");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -668,7 +689,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId10HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 10");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 10");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
@@ -693,7 +714,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [Test]
         public void CustomerId11HasProperUnicodeCharacters([Values("Chinook_MySql", "Chinook_MySql_AutoIncrement")] string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 11");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM `Customer` WHERE `CustomerId` = 11");
             Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
             var row = dataSet.Tables[0].Rows[0];
             
