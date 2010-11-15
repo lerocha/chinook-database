@@ -1,4 +1,5 @@
-﻿/*******************************************************************************
+﻿
+/*******************************************************************************
    Chinook Database - Version 1.3
    Script: Chinook_MySql_AutoIncrementPKs.sql
    Description: Creates and populates the Chinook database.

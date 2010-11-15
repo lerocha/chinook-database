@@ -42,21 +42,24 @@ var fileManager = Manager.Create(Host, GenerationEnvironment);
 foreach (IDdlStrategy strategy in options.DdlStrategies)
 {
 	//************************************************************************
-	// Start SQL file.
+	// Start of SQL file.
 	//************************************************************************
 	var filename = GetFileName(strategy, strategy.ScriptFileExtension);
 	fileManager.StartNewFile(filename, strategy.Encoding);
+
+	var details = (strategy.IsIdentityEnabled ? "Primary keys are auto incremented." : "Primary keys are not auto incremented by the database system, they must be set when inserting records.");
 	
 	// Add the script file to the package list.
-	options.OutputFiles.Add(new OutputFile { Name = filename, Package = strategy.Name });
+	options.OutputFiles.Add(new OutputFile { Name = filename, Package = strategy.Name, Description = "SQL script to create the Chinook database. " + details });
+
 	// If there is also a database file, then add it to the package list as well.
 	if (!string.IsNullOrEmpty(strategy.DatabaseFileExtension))
 	{
 		var dbfilename = GetFileName(strategy, strategy.DatabaseFileExtension);
-		options.OutputFiles.Add(new OutputFile { Name = dbfilename, Package = strategy.Name });
+		options.OutputFiles.Add(new OutputFile { Name = dbfilename, Package = strategy.Name, Description = "Chinook database file. " + details });
 	}
-	
 #>
+
 /*******************************************************************************
    Chinook Database - Version <#= options.Version #>
    Script: <#= filename #>
@@ -295,24 +298,22 @@ CREATE INDEX <#= ifkName #> ON <#= toTableName #> (<#= strategy.GetColumns(const
 <#
 	
 	//************************************************************************
-	// End SQL file.
+	// End of SQL file.
 	//************************************************************************
 	fileManager.EndBlock();
 }	// foreach options.DdlStrategies
 
-
-var strategies = (from item in options.DdlStrategies select new { item.Name, item.CommandLineFormat }).Distinct();
-foreach (var strategy in strategies)
+foreach (var strategy in options.DdlStrategies.Select(s=> new { s.Name, s.CommandLineFormat }).Distinct())
 {
 	//************************************************************************
-	// Start batch file.
+	// Start of Create DB Batch file.
 	//************************************************************************
 	var filename = string.Format("Create{0}.bat", strategy.Name);
 	var commandFormat = "echo {0}";
 	
 	if (!string.IsNullOrEmpty(strategy.CommandLineFormat)) 
 	{
-		options.OutputFiles.Add(new OutputFile { Name = filename, Package = strategy.Name });
+		options.OutputFiles.Add(new OutputFile { Name = filename, Package = strategy.Name, Description = "Batch file to create the Chinook database." });
     	fileManager.StartNewFile(filename, Encoding.ASCII);
 #>
 @echo off
@@ -334,19 +335,19 @@ goto END
 echo Options:
 echo.
 <# 	
-	// Get all files of the same strategy.
-	IList<IDdlStrategy> items = (from item in options.DdlStrategies where item.Name == strategy.Name select item).ToList();
-	for(int i=0; i<items.Count; i++) 
-	{ 
+		// Get all files of the same strategy.
+		IList<IDdlStrategy> items = options.DdlStrategies.Where(s=>s.Name==strategy.Name).ToList();
+		for(int i=0; i<items.Count; i++) 
+		{ 
 #>
 echo <#= (i+1) #>. Run <#= GetFileName(items[i], items[i].ScriptFileExtension) #>
-<# 	} #>
+<# 		} #>
 echo <#= items.Count+1 #>. Exit
 echo.
 choice /c 123
-<# 	for(int i=0; i<items.Count; i++) { #>
+<# 		for(int i=0; i<items.Count; i++) { #>
 if (%ERRORLEVEL%)==(<#= (i+1) #>) set SQLFILE=<#= GetFileName(items[i],items[i].ScriptFileExtension) #>
-<# 	} #>
+<# 		} #>
 if (%ERRORLEVEL%)==(<#= items.Count+1 #>) goto END
 
 :RUNSQL
@@ -359,17 +360,15 @@ echo.
 set SQLFILE=
 
 <#
-	//************************************************************************
-	// End batch file.
-	//************************************************************************
+		//************************************************************************
+		// End of Create DB Batch file.
+		//************************************************************************
 		fileManager.EndBlock();
 	}
 }	// foreach options.DdlStrategies
 
-
-
 //************************************************************************
-// Start packaging file.
+// Start of Package file.
 //************************************************************************
 fileManager.StartNewFile("Package.bat", Encoding.ASCII);
 #>
@@ -381,39 +380,61 @@ if not exist %rootDir%\Packages mkdir %rootDir%\Packages
 
 <#
 var allfiles = options.OutputFiles.Select(o => o.Name);
+var completePackageFile = string.Format("ChinookDatabase{0}_CompleteVersion.zip", options.Version);
 #>
-7z a %rootDir%\Packages\ChinookDatabase<#=options.Version#>_FullVersion.zip <#=GetValues(allfiles, ' ')#>
+7z a %rootDir%\Packages\<#=completePackageFile#> <#=GetValues(allfiles, ' ')#> _Xml\ChinookData.xml
 <#
-var packages = from item in options.OutputFiles select item.Package;
-foreach (var package in packages.Distinct())
+foreach (var package in options.OutputFiles.Select(o=>o.Package).Distinct())
 {
     var files = from item in options.OutputFiles where item.Package == package select item.Name;
 #>
 7z a %rootDir%\Packages\ChinookDatabase<#=options.Version#>_<#=package#>.zip <#=GetValues(files, ' ')#>
 <#
 }
-#>
-
-<#
 //************************************************************************
-// End of packaging file.
+// End of Package file.
 //************************************************************************
-
+fileManager.EndBlock();
+	
 fileManager.Process(true);
-#>
+
+// Add files that were not generated here, but will be part of the release.
+options.OutputFiles.Add(new OutputFile { Name = "ChinookData.xml", 
+										 Package = "XML", 
+										 Description = "XML data used to generate the Chinook database SQL scripts." });#>
+Chinook Database <#= options.Version #>
+* This is a sample database available in multiple formats: SQL scripts for multiple database vendors, embeded database files, and XML format.
+* The Chinook data model is available [here|Chinook_Schema].
+* <#=completePackageFile#> is a complete package for all supported databases/data sources. There are also packages for each specific data source.
+!! Supported Database Servers
+* [url:EffiProz|http://effiproz.codeplex.com/]
+* [url:MySQL|http://www.mysql.com/]
+* [url:Oracle|http://www.oracle.com/technetwork/database/express-edition/overview/index.html]
+* [url:SQL Server|http://www.microsoft.com/sqlserver/]
+* [url:SQL Server Compact|http://www.microsoft.com/sqlserver/2008/en/us/compact.aspx]
+* [url:SQLite|http://www.sqlite.org/]
+!! Issues Resolved
+* [workitem:29372]
+* [workitem:29373]
+!! Installation
+* [How do I create the Chinook Database?|Create_Databases]
+!! Package Content
+This is the list of files included in the complete version.
+|| Data Source || File || Description ||
+<#	foreach (var file in options.OutputFiles.OrderBy(o=>o.Package)) { #>
+| <#= file.Package #> | {"<#= file.Name #>"} | <#= file.Description #> |
+<#	} #>
 <#+ 
 
 public class OutputFile {
 	public string Name { get; set; }
 	public string Package { get; set; }
+	public string Description { get; set; }
 }
 
 private static string GetFileName(IDdlStrategy strategy, string extension)
 {
-	var suffix = string.Empty;
-	if (strategy.IsIdentityEnabled)
-		suffix = "_AutoIncrementPKs";
-	
+	var suffix = (strategy.IsIdentityEnabled ? "_AutoIncrementPKs" : string.Empty);
 	return string.Format("Chinook_{0}{1}.{2}", strategy.Name, suffix, extension);
 }
 

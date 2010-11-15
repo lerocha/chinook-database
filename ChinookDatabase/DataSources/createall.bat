@@ -33,3 +33,4 @@ rem echo Chinook_SqlServerCompact.sql
 rem sqlcecmd –d "Data Source=.\Chinook_SqlServerCompact.sdf" –e create
 rem echo.
 
+:end
