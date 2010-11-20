@@ -62,6 +62,7 @@
     <Reference Include="EffiProz">
       <HintPath>..\Lib\EffiProz\EffiProz.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Data.Entity.CTP, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Data.Entity.Design.DatabaseGeneration">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll</HintPath>
     </Reference>
@@ -113,6 +114,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseFixture.tt</DependentUpon>
     </Compile>
+    <Compile Include="UnitTests\ChinookModelTest.cs" />
     <Compile Include="UnitTests\ITunesToChinookDataSetConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
