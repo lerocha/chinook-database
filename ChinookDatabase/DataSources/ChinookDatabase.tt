@@ -382,7 +382,7 @@ if not exist %rootDir%\Packages mkdir %rootDir%\Packages
 var allfiles = options.OutputFiles.Select(o => o.Name);
 var completePackageFile = string.Format("ChinookDatabase{0}_CompleteVersion.zip", options.Version);
 #>
-7z a %rootDir%\Packages\<#=completePackageFile#> <#=GetValues(allfiles, ' ')#> _Xml\ChinookData.xml
+7z a %rootDir%\Packages<#=@"\" + completePackageFile#> <#=GetValues(allfiles, ' ')#> _Xml\ChinookData.xml
 <#
 foreach (var package in options.OutputFiles.Select(o=>o.Package).Distinct())
 {
