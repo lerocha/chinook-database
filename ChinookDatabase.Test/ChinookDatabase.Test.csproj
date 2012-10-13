@@ -125,6 +125,7 @@
       <DependentUpon>DatabaseFixture.tt</DependentUpon>
     </Compile>
     <Compile Include="UnitTests\ChinookModelTest.cs" />
+    <Compile Include="UnitTests\EdmHelperTest.cs" />
     <Compile Include="UnitTests\ITunesToChinookDataSetConverterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

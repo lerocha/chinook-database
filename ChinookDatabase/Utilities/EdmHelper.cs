@@ -13,7 +13,7 @@ namespace ChinookDatabase.Utilities
             if (navigator.NameTable == null) return string.Empty;
 
             var manager = new XmlNamespaceManager(navigator.NameTable);
-            manager.AddNamespace("edmx", "http://schemas.microsoft.com/ado/2008/10/edmx");
+            manager.AddNamespace("edmx", "http://schemas.microsoft.com/ado/2009/11/edmx");
             var nodes = navigator.Select("/edmx:Edmx/edmx:Runtime/edmx:StorageModels", manager);
 
             if (nodes.MoveNext())
