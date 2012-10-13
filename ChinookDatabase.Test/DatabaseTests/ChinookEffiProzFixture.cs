@@ -338,7 +338,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 			// Assert that the last record has the proper information.            
             Assert.That(row["InvoiceId"].ToString(), Is.EqualTo("412"), "InvoiceId mismatch.");
             Assert.That(row["CustomerId"].ToString(), Is.EqualTo("58"), "CustomerId mismatch.");
-            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/22/2011 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
+            Assert.That(row["InvoiceDate"].ToString(), Is.EqualTo(Convert.ToDateTime("12/22/2013 12:00:00 AM").ToString()), "InvoiceDate mismatch.");
             Assert.That(row["BillingAddress"].ToString(), Is.EqualTo("12,Community Centre"), "BillingAddress mismatch.");
             Assert.That(row["BillingCity"].ToString(), Is.EqualTo("Delhi"), "BillingCity mismatch.");
             Assert.That(row["BillingState"].ToString(), Is.EqualTo(""), "BillingState mismatch.");

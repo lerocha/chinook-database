@@ -184,20 +184,22 @@ namespace ChinookDatabase.Test.DatabaseTests
         }
 
 <# 
-	var invoiceEntity = (from e in existingStore.GetAllEntitySets() where e.Name == "Invoice" select e).Single();
-	var schema = invoiceEntity.GetSchemaName();
+	var invoiceEntity = (from e in existingStore.GetAllEntitySets() where e.Name == "Invoice" select e).FirstOrDefault();
+	if (invoiceEntity != null)
+    {
+		var schema = invoiceEntity.GetSchemaName();
 	
-	var invoice = option.Strategy.GetFullyQualifiedName(schema, invoiceEntity.Name);
-	var invoiceId = option.Strategy.FormatName("InvoiceId");
-	var invoiceLine = option.Strategy.GetFullyQualifiedName(schema, "InvoiceLine");
-	var total = option.Strategy.FormatName("Total");
-	var unitPrice = option.Strategy.FormatName("UnitPrice");
-	var quantity = option.Strategy.FormatName("Quantity");
+		var invoice = option.Strategy.GetFullyQualifiedName(schema, invoiceEntity.Name);
+		var invoiceId = option.Strategy.FormatName("InvoiceId");
+		var invoiceLine = option.Strategy.GetFullyQualifiedName(schema, "InvoiceLine");
+		var total = option.Strategy.FormatName("Total");
+		var unitPrice = option.Strategy.FormatName("UnitPrice");
+		var quantity = option.Strategy.FormatName("Quantity");
 	
-	var query1 = string.Format("SELECT count({0}) FROM {1} WHERE {0} NOT IN (SELECT {0} FROM {2} GROUP BY {0})", 
-								invoiceId, invoice, invoiceLine).Replace("\"","\\\"");
-	var query2 = string.Format("SELECT {0}.{1}, SUM({2}.{3} * {2}.{4}) AS CalculatedTotal, {0}.{5} AS Total FROM {2} INNER JOIN {0} ON {2}.{1} = {0}.{1} GROUP BY {0}.{1}, {0}.{5}",
-								invoice, invoiceId, invoiceLine, unitPrice, quantity, total).Replace("\"","\\\"");
+		var query1 = string.Format("SELECT count({0}) FROM {1} WHERE {0} NOT IN (SELECT {0} FROM {2} GROUP BY {0})", 
+									invoiceId, invoice, invoiceLine).Replace("\"","\\\"");
+		var query2 = string.Format("SELECT {0}.{1}, SUM({2}.{3} * {2}.{4}) AS CalculatedTotal, {0}.{5} AS Total FROM {2} INNER JOIN {0} ON {2}.{1} = {0}.{1} GROUP BY {0}.{1}, {0}.{5}",
+									invoice, invoiceId, invoiceLine, unitPrice, quantity, total).Replace("\"","\\\"");
 
 #>
         /// <summary>
@@ -224,9 +226,13 @@ namespace ChinookDatabase.Test.DatabaseTests
             }
         }
 <#
+    }
+
     foreach (DataTable table in ds.Tables)
     {
-		var entitySet = (from e in existingStore.GetAllEntitySets() where e.Name == table.TableName select e).Single();
+		var entitySet = (from e in existingStore.GetAllEntitySets() where e.Name == table.TableName select e).FirstOrDefault();
+		if (entitySet == null) continue;
+
 		var fqTableName = option.Strategy.GetFullyQualifiedName(entitySet.GetSchemaName(), table.TableName).Replace("\"","\\\"");
 		var keys = from item in entitySet.ElementType.GetKeyProperties() select item;
 		var fqPrimaryKeys = option.Strategy.GetColumns(keys, ',').Replace("\"","\\\"");
@@ -269,13 +275,15 @@ namespace ChinookDatabase.Test.DatabaseTests
 #>
 
 <#
-	var customerEntity = (from e in existingStore.GetAllEntitySets() where e.Name == "Customer" select e).Single();
-	var customerSchema = customerEntity.GetSchemaName();
-	var customer = option.Strategy.GetFullyQualifiedName(customerSchema, "Customer").Replace("\"","\\\"");
-	var customerId = option.Strategy.FormatName("CustomerId").Replace("\"","\\\"");
-	
-    for (int i=0; i <= 10; i++)
+	var customerEntity = (from e in existingStore.GetAllEntitySets() where e.Name == "Customer" select e).FirstOrDefault();
+	if (customerEntity != null)
     {
+		var customerSchema = customerEntity.GetSchemaName();
+		var customer = option.Strategy.GetFullyQualifiedName(customerSchema, "Customer").Replace("\"","\\\"");
+		var customerId = option.Strategy.FormatName("CustomerId").Replace("\"","\\\"");
+	
+		for (int i=0; i <= 10; i++)
+		{
 #>
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
@@ -288,17 +296,18 @@ namespace ChinookDatabase.Test.DatabaseTests
             var row = dataSet.Tables[0].Rows[0];
             
 <#
-		foreach (DataColumn col in ds.Tables["Customer"].Columns)
-		{
-			string expected = DataSetHelper.GetExpectedValue(col, ds.Tables["Customer"].Rows[i][col.ColumnName].ToString());
+			foreach (DataColumn col in ds.Tables["Customer"].Columns)
+			{
+				string expected = DataSetHelper.GetExpectedValue(col, ds.Tables["Customer"].Rows[i][col.ColumnName].ToString());
 #>            Assert.That(row["<#= col.ColumnName #>"].ToString(), Is.EqualTo(<#= expected #>), "<#= col.ColumnName #> mismatch.");
 <#
-		}
+			}
 #>
 		}
 		
 <#
-    } // foreach table
+	    } // foreach table
+    }
 #>
     }
 	
