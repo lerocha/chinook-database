@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 
 namespace ChinookDatabase.DataModel
@@ -34,7 +35,7 @@ namespace ChinookDatabase.DataModel
         [Required]
         public Decimal Total { get; set; }
 
-        [RelatedTo(ForeignKey = "CustomerId")]
+        [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
     }
 }

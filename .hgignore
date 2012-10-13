@@ -4,6 +4,7 @@ Command Prompt.lnk
 *.suo
 *.user
 
+*.sln.DotSettings
 syntax: regexp
 bin/Debug
 bin/Release

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<configuration>
+  <system.data> 
+    <DbProviderFactories> 
+      <add name="dotConnect for SQLite" invariant="Devart.Data.SQLite" description="Devart dotConnect for SQLite" type="Devart.Data.SQLite.SQLiteProviderFactory, Devart.Data.SQLite, Version=4.2.96.0, Culture=neutral, PublicKeyToken=09af7300eec23701" />
+    </DbProviderFactories> 
+  </system.data>
+</configuration>

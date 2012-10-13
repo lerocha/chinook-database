@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 
 namespace ChinookDatabase.DataModel
@@ -27,13 +28,13 @@ namespace ChinookDatabase.DataModel
 
         public decimal UnitPrice { get; set; }
 
-        [RelatedTo(ForeignKey = "AlbumId")]
+        [ForeignKey("AlbumId")]
         public Album Album { get; set; }
 
-        [RelatedTo(ForeignKey = "MediaTypeId")]
+        [ForeignKey("MediaTypeId")]
         public MediaType MediaType { get; set; }
 
-        [RelatedTo(ForeignKey = "GenreId")]
+        [ForeignKey("GenreId")]
         public Genre Genre { get; set; }
     }
 }

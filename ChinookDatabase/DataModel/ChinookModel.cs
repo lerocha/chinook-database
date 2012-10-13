@@ -1,5 +1,6 @@
-﻿using System.Data.Entity.Infrastructure;
-using System.Data.Entity.ModelConfiguration;
+﻿using System.Data.Common;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace ChinookDatabase.DataModel
 {
@@ -7,11 +8,11 @@ namespace ChinookDatabase.DataModel
     {
         private static DbModel _chinookModel;
 
-        public static DbModel CreateModel()
+        public static DbModel CreateModel(DbConnection connection)
         {
             if (_chinookModel == null)
             {
-                var builder = new ModelBuilder();
+                var builder = new DbModelBuilder();
                 builder.Entity<Genre>();
                 builder.Entity<MediaType>();
                 builder.Entity<Artist>();
@@ -23,7 +24,7 @@ namespace ChinookDatabase.DataModel
                 builder.Entity<InvoiceLine>();
                 builder.Entity<Playlist>();
                 builder.Entity<PlaylistTrack>();
-                _chinookModel = builder.CreateModel();
+                _chinookModel = builder.Build(connection);
             }
 
             return _chinookModel;

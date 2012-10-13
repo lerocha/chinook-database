@@ -7,9 +7,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ChinookDatabase")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("yCount Software, Inc.")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ChinookDatabase")]
-[assembly: AssemblyCopyright("Copyright © yCount Software, Inc. 2008")]
+[assembly: AssemblyCopyright("Copyright © Luis Rocha 2008-2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

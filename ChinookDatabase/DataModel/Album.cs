@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 
 namespace ChinookDatabase.DataModel
@@ -15,7 +16,7 @@ namespace ChinookDatabase.DataModel
         [Required]
         public int ArtistId { get; set; }
 
-        [RelatedTo(ForeignKey = "ArtistId")]
+        [ForeignKey("ArtistId")]
         public Artist Artist { get; set; }
     }
 }

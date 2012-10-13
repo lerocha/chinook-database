@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -237,6 +238,7 @@ namespace ChinookDatabase
         private ObjectSet<Track> _Tracks;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -320,11 +322,11 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -351,7 +353,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -370,7 +373,7 @@ namespace ChinookDatabase
                 {
                     OnAlbumIdChanging(value);
                     ReportPropertyChanging("AlbumId");
-                    _AlbumId = StructuralObject.SetValidValue(value);
+                    _AlbumId = StructuralObject.SetValidValue(value, "AlbumId");
                     ReportPropertyChanged("AlbumId");
                     OnAlbumIdChanged();
                 }
@@ -395,7 +398,7 @@ namespace ChinookDatabase
             {
                 OnTitleChanging(value);
                 ReportPropertyChanging("Title");
-                _Title = StructuralObject.SetValidValue(value, false);
+                _Title = StructuralObject.SetValidValue(value, false, "Title");
                 ReportPropertyChanged("Title");
                 OnTitleChanged();
             }
@@ -405,7 +408,7 @@ namespace ChinookDatabase
         partial void OnTitleChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -469,6 +472,7 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -493,7 +497,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -512,7 +517,7 @@ namespace ChinookDatabase
                 {
                     OnArtistIdChanging(value);
                     ReportPropertyChanging("ArtistId");
-                    _ArtistId = StructuralObject.SetValidValue(value);
+                    _ArtistId = StructuralObject.SetValidValue(value, "ArtistId");
                     ReportPropertyChanged("ArtistId");
                     OnArtistIdChanged();
                 }
@@ -537,7 +542,7 @@ namespace ChinookDatabase
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, true);
+                _Name = StructuralObject.SetValidValue(value, true, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -547,7 +552,7 @@ namespace ChinookDatabase
         partial void OnNameChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -573,6 +578,7 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -603,7 +609,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -622,7 +629,7 @@ namespace ChinookDatabase
                 {
                     OnCustomerIdChanging(value);
                     ReportPropertyChanging("CustomerId");
-                    _CustomerId = StructuralObject.SetValidValue(value);
+                    _CustomerId = StructuralObject.SetValidValue(value, "CustomerId");
                     ReportPropertyChanged("CustomerId");
                     OnCustomerIdChanged();
                 }
@@ -647,7 +654,7 @@ namespace ChinookDatabase
             {
                 OnFirstNameChanging(value);
                 ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, false);
+                _FirstName = StructuralObject.SetValidValue(value, false, "FirstName");
                 ReportPropertyChanged("FirstName");
                 OnFirstNameChanged();
             }
@@ -671,7 +678,7 @@ namespace ChinookDatabase
             {
                 OnLastNameChanging(value);
                 ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, false);
+                _LastName = StructuralObject.SetValidValue(value, false, "LastName");
                 ReportPropertyChanged("LastName");
                 OnLastNameChanged();
             }
@@ -695,7 +702,7 @@ namespace ChinookDatabase
             {
                 OnCompanyChanging(value);
                 ReportPropertyChanging("Company");
-                _Company = StructuralObject.SetValidValue(value, true);
+                _Company = StructuralObject.SetValidValue(value, true, "Company");
                 ReportPropertyChanged("Company");
                 OnCompanyChanged();
             }
@@ -719,7 +726,7 @@ namespace ChinookDatabase
             {
                 OnAddressChanging(value);
                 ReportPropertyChanging("Address");
-                _Address = StructuralObject.SetValidValue(value, true);
+                _Address = StructuralObject.SetValidValue(value, true, "Address");
                 ReportPropertyChanged("Address");
                 OnAddressChanged();
             }
@@ -743,7 +750,7 @@ namespace ChinookDatabase
             {
                 OnCityChanging(value);
                 ReportPropertyChanging("City");
-                _City = StructuralObject.SetValidValue(value, true);
+                _City = StructuralObject.SetValidValue(value, true, "City");
                 ReportPropertyChanged("City");
                 OnCityChanged();
             }
@@ -767,7 +774,7 @@ namespace ChinookDatabase
             {
                 OnStateChanging(value);
                 ReportPropertyChanging("State");
-                _State = StructuralObject.SetValidValue(value, true);
+                _State = StructuralObject.SetValidValue(value, true, "State");
                 ReportPropertyChanged("State");
                 OnStateChanged();
             }
@@ -791,7 +798,7 @@ namespace ChinookDatabase
             {
                 OnCountryChanging(value);
                 ReportPropertyChanging("Country");
-                _Country = StructuralObject.SetValidValue(value, true);
+                _Country = StructuralObject.SetValidValue(value, true, "Country");
                 ReportPropertyChanged("Country");
                 OnCountryChanged();
             }
@@ -815,7 +822,7 @@ namespace ChinookDatabase
             {
                 OnPostalCodeChanging(value);
                 ReportPropertyChanging("PostalCode");
-                _PostalCode = StructuralObject.SetValidValue(value, true);
+                _PostalCode = StructuralObject.SetValidValue(value, true, "PostalCode");
                 ReportPropertyChanged("PostalCode");
                 OnPostalCodeChanged();
             }
@@ -839,7 +846,7 @@ namespace ChinookDatabase
             {
                 OnPhoneChanging(value);
                 ReportPropertyChanging("Phone");
-                _Phone = StructuralObject.SetValidValue(value, true);
+                _Phone = StructuralObject.SetValidValue(value, true, "Phone");
                 ReportPropertyChanged("Phone");
                 OnPhoneChanged();
             }
@@ -863,7 +870,7 @@ namespace ChinookDatabase
             {
                 OnFaxChanging(value);
                 ReportPropertyChanging("Fax");
-                _Fax = StructuralObject.SetValidValue(value, true);
+                _Fax = StructuralObject.SetValidValue(value, true, "Fax");
                 ReportPropertyChanged("Fax");
                 OnFaxChanged();
             }
@@ -887,7 +894,7 @@ namespace ChinookDatabase
             {
                 OnEmailChanging(value);
                 ReportPropertyChanging("Email");
-                _Email = StructuralObject.SetValidValue(value, false);
+                _Email = StructuralObject.SetValidValue(value, false, "Email");
                 ReportPropertyChanged("Email");
                 OnEmailChanged();
             }
@@ -897,7 +904,7 @@ namespace ChinookDatabase
         partial void OnEmailChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -961,6 +968,7 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -989,7 +997,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1008,7 +1017,7 @@ namespace ChinookDatabase
                 {
                     OnEmployeeIdChanging(value);
                     ReportPropertyChanging("EmployeeId");
-                    _EmployeeId = StructuralObject.SetValidValue(value);
+                    _EmployeeId = StructuralObject.SetValidValue(value, "EmployeeId");
                     ReportPropertyChanged("EmployeeId");
                     OnEmployeeIdChanged();
                 }
@@ -1033,7 +1042,7 @@ namespace ChinookDatabase
             {
                 OnLastNameChanging(value);
                 ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, false);
+                _LastName = StructuralObject.SetValidValue(value, false, "LastName");
                 ReportPropertyChanged("LastName");
                 OnLastNameChanged();
             }
@@ -1057,7 +1066,7 @@ namespace ChinookDatabase
             {
                 OnFirstNameChanging(value);
                 ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, false);
+                _FirstName = StructuralObject.SetValidValue(value, false, "FirstName");
                 ReportPropertyChanged("FirstName");
                 OnFirstNameChanged();
             }
@@ -1081,7 +1090,7 @@ namespace ChinookDatabase
             {
                 OnTitleChanging(value);
                 ReportPropertyChanging("Title");
-                _Title = StructuralObject.SetValidValue(value, true);
+                _Title = StructuralObject.SetValidValue(value, true, "Title");
                 ReportPropertyChanged("Title");
                 OnTitleChanged();
             }
@@ -1105,7 +1114,7 @@ namespace ChinookDatabase
             {
                 OnBirthDateChanging(value);
                 ReportPropertyChanging("BirthDate");
-                _BirthDate = StructuralObject.SetValidValue(value);
+                _BirthDate = StructuralObject.SetValidValue(value, "BirthDate");
                 ReportPropertyChanged("BirthDate");
                 OnBirthDateChanged();
             }
@@ -1129,7 +1138,7 @@ namespace ChinookDatabase
             {
                 OnHireDateChanging(value);
                 ReportPropertyChanging("HireDate");
-                _HireDate = StructuralObject.SetValidValue(value);
+                _HireDate = StructuralObject.SetValidValue(value, "HireDate");
                 ReportPropertyChanged("HireDate");
                 OnHireDateChanged();
             }
@@ -1153,7 +1162,7 @@ namespace ChinookDatabase
             {
                 OnAddressChanging(value);
                 ReportPropertyChanging("Address");
-                _Address = StructuralObject.SetValidValue(value, true);
+                _Address = StructuralObject.SetValidValue(value, true, "Address");
                 ReportPropertyChanged("Address");
                 OnAddressChanged();
             }
@@ -1177,7 +1186,7 @@ namespace ChinookDatabase
             {
                 OnCityChanging(value);
                 ReportPropertyChanging("City");
-                _City = StructuralObject.SetValidValue(value, true);
+                _City = StructuralObject.SetValidValue(value, true, "City");
                 ReportPropertyChanged("City");
                 OnCityChanged();
             }
@@ -1201,7 +1210,7 @@ namespace ChinookDatabase
             {
                 OnStateChanging(value);
                 ReportPropertyChanging("State");
-                _State = StructuralObject.SetValidValue(value, true);
+                _State = StructuralObject.SetValidValue(value, true, "State");
                 ReportPropertyChanged("State");
                 OnStateChanged();
             }
@@ -1225,7 +1234,7 @@ namespace ChinookDatabase
             {
                 OnCountryChanging(value);
                 ReportPropertyChanging("Country");
-                _Country = StructuralObject.SetValidValue(value, true);
+                _Country = StructuralObject.SetValidValue(value, true, "Country");
                 ReportPropertyChanged("Country");
                 OnCountryChanged();
             }
@@ -1249,7 +1258,7 @@ namespace ChinookDatabase
             {
                 OnPostalCodeChanging(value);
                 ReportPropertyChanging("PostalCode");
-                _PostalCode = StructuralObject.SetValidValue(value, true);
+                _PostalCode = StructuralObject.SetValidValue(value, true, "PostalCode");
                 ReportPropertyChanged("PostalCode");
                 OnPostalCodeChanged();
             }
@@ -1273,7 +1282,7 @@ namespace ChinookDatabase
             {
                 OnPhoneChanging(value);
                 ReportPropertyChanging("Phone");
-                _Phone = StructuralObject.SetValidValue(value, true);
+                _Phone = StructuralObject.SetValidValue(value, true, "Phone");
                 ReportPropertyChanged("Phone");
                 OnPhoneChanged();
             }
@@ -1297,7 +1306,7 @@ namespace ChinookDatabase
             {
                 OnFaxChanging(value);
                 ReportPropertyChanging("Fax");
-                _Fax = StructuralObject.SetValidValue(value, true);
+                _Fax = StructuralObject.SetValidValue(value, true, "Fax");
                 ReportPropertyChanged("Fax");
                 OnFaxChanged();
             }
@@ -1321,7 +1330,7 @@ namespace ChinookDatabase
             {
                 OnEmailChanging(value);
                 ReportPropertyChanging("Email");
-                _Email = StructuralObject.SetValidValue(value, true);
+                _Email = StructuralObject.SetValidValue(value, true, "Email");
                 ReportPropertyChanged("Email");
                 OnEmailChanged();
             }
@@ -1331,7 +1340,7 @@ namespace ChinookDatabase
         partial void OnEmailChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -1417,6 +1426,7 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1441,7 +1451,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1460,7 +1471,7 @@ namespace ChinookDatabase
                 {
                     OnGenreIdChanging(value);
                     ReportPropertyChanging("GenreId");
-                    _GenreId = StructuralObject.SetValidValue(value);
+                    _GenreId = StructuralObject.SetValidValue(value, "GenreId");
                     ReportPropertyChanged("GenreId");
                     OnGenreIdChanged();
                 }
@@ -1485,7 +1496,7 @@ namespace ChinookDatabase
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, true);
+                _Name = StructuralObject.SetValidValue(value, true, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -1495,7 +1506,7 @@ namespace ChinookDatabase
         partial void OnNameChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -1521,6 +1532,7 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1549,7 +1561,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1568,7 +1581,7 @@ namespace ChinookDatabase
                 {
                     OnInvoiceIdChanging(value);
                     ReportPropertyChanging("InvoiceId");
-                    _InvoiceId = StructuralObject.SetValidValue(value);
+                    _InvoiceId = StructuralObject.SetValidValue(value, "InvoiceId");
                     ReportPropertyChanged("InvoiceId");
                     OnInvoiceIdChanged();
                 }
@@ -1593,7 +1606,7 @@ namespace ChinookDatabase
             {
                 OnInvoiceDateChanging(value);
                 ReportPropertyChanging("InvoiceDate");
-                _InvoiceDate = StructuralObject.SetValidValue(value);
+                _InvoiceDate = StructuralObject.SetValidValue(value, "InvoiceDate");
                 ReportPropertyChanged("InvoiceDate");
                 OnInvoiceDateChanged();
             }
@@ -1617,7 +1630,7 @@ namespace ChinookDatabase
             {
                 OnBillingAddressChanging(value);
                 ReportPropertyChanging("BillingAddress");
-                _BillingAddress = StructuralObject.SetValidValue(value, true);
+                _BillingAddress = StructuralObject.SetValidValue(value, true, "BillingAddress");
                 ReportPropertyChanged("BillingAddress");
                 OnBillingAddressChanged();
             }
@@ -1641,7 +1654,7 @@ namespace ChinookDatabase
             {
                 OnBillingCityChanging(value);
                 ReportPropertyChanging("BillingCity");
-                _BillingCity = StructuralObject.SetValidValue(value, true);
+                _BillingCity = StructuralObject.SetValidValue(value, true, "BillingCity");
                 ReportPropertyChanged("BillingCity");
                 OnBillingCityChanged();
             }
@@ -1665,7 +1678,7 @@ namespace ChinookDatabase
             {
                 OnBillingStateChanging(value);
                 ReportPropertyChanging("BillingState");
-                _BillingState = StructuralObject.SetValidValue(value, true);
+                _BillingState = StructuralObject.SetValidValue(value, true, "BillingState");
                 ReportPropertyChanged("BillingState");
                 OnBillingStateChanged();
             }
@@ -1689,7 +1702,7 @@ namespace ChinookDatabase
             {
                 OnBillingCountryChanging(value);
                 ReportPropertyChanging("BillingCountry");
-                _BillingCountry = StructuralObject.SetValidValue(value, true);
+                _BillingCountry = StructuralObject.SetValidValue(value, true, "BillingCountry");
                 ReportPropertyChanged("BillingCountry");
                 OnBillingCountryChanged();
             }
@@ -1713,7 +1726,7 @@ namespace ChinookDatabase
             {
                 OnBillingPostalCodeChanging(value);
                 ReportPropertyChanging("BillingPostalCode");
-                _BillingPostalCode = StructuralObject.SetValidValue(value, true);
+                _BillingPostalCode = StructuralObject.SetValidValue(value, true, "BillingPostalCode");
                 ReportPropertyChanged("BillingPostalCode");
                 OnBillingPostalCodeChanged();
             }
@@ -1737,7 +1750,7 @@ namespace ChinookDatabase
             {
                 OnTotalChanging(value);
                 ReportPropertyChanging("Total");
-                _Total = StructuralObject.SetValidValue(value);
+                _Total = StructuralObject.SetValidValue(value, "Total");
                 ReportPropertyChanged("Total");
                 OnTotalChanged();
             }
@@ -1747,7 +1760,7 @@ namespace ChinookDatabase
         partial void OnTotalChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -1811,6 +1824,7 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1839,7 +1853,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1858,7 +1873,7 @@ namespace ChinookDatabase
                 {
                     OnInvoiceLineIdChanging(value);
                     ReportPropertyChanging("InvoiceLineId");
-                    _InvoiceLineId = StructuralObject.SetValidValue(value);
+                    _InvoiceLineId = StructuralObject.SetValidValue(value, "InvoiceLineId");
                     ReportPropertyChanged("InvoiceLineId");
                     OnInvoiceLineIdChanged();
                 }
@@ -1883,7 +1898,7 @@ namespace ChinookDatabase
             {
                 OnUnitPriceChanging(value);
                 ReportPropertyChanging("UnitPrice");
-                _UnitPrice = StructuralObject.SetValidValue(value);
+                _UnitPrice = StructuralObject.SetValidValue(value, "UnitPrice");
                 ReportPropertyChanged("UnitPrice");
                 OnUnitPriceChanged();
             }
@@ -1907,7 +1922,7 @@ namespace ChinookDatabase
             {
                 OnQuantityChanging(value);
                 ReportPropertyChanging("Quantity");
-                _Quantity = StructuralObject.SetValidValue(value);
+                _Quantity = StructuralObject.SetValidValue(value, "Quantity");
                 ReportPropertyChanged("Quantity");
                 OnQuantityChanged();
             }
@@ -1917,7 +1932,7 @@ namespace ChinookDatabase
         partial void OnQuantityChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -1997,6 +2012,7 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2021,7 +2037,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2040,7 +2057,7 @@ namespace ChinookDatabase
                 {
                     OnMediaTypeIdChanging(value);
                     ReportPropertyChanging("MediaTypeId");
-                    _MediaTypeId = StructuralObject.SetValidValue(value);
+                    _MediaTypeId = StructuralObject.SetValidValue(value, "MediaTypeId");
                     ReportPropertyChanged("MediaTypeId");
                     OnMediaTypeIdChanged();
                 }
@@ -2065,7 +2082,7 @@ namespace ChinookDatabase
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, true);
+                _Name = StructuralObject.SetValidValue(value, true, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -2075,7 +2092,7 @@ namespace ChinookDatabase
         partial void OnNameChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -2101,6 +2118,7 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2125,7 +2143,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2144,7 +2163,7 @@ namespace ChinookDatabase
                 {
                     OnPlaylistIdChanging(value);
                     ReportPropertyChanging("PlaylistId");
-                    _PlaylistId = StructuralObject.SetValidValue(value);
+                    _PlaylistId = StructuralObject.SetValidValue(value, "PlaylistId");
                     ReportPropertyChanged("PlaylistId");
                     OnPlaylistIdChanged();
                 }
@@ -2169,7 +2188,7 @@ namespace ChinookDatabase
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, true);
+                _Name = StructuralObject.SetValidValue(value, true, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -2179,7 +2198,7 @@ namespace ChinookDatabase
         partial void OnNameChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -2205,6 +2224,7 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2235,7 +2255,8 @@ namespace ChinookDatabase
         }
 
         #endregion
-        #region Primitive Properties
+
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2254,7 +2275,7 @@ namespace ChinookDatabase
                 {
                     OnTrackIdChanging(value);
                     ReportPropertyChanging("TrackId");
-                    _TrackId = StructuralObject.SetValidValue(value);
+                    _TrackId = StructuralObject.SetValidValue(value, "TrackId");
                     ReportPropertyChanged("TrackId");
                     OnTrackIdChanged();
                 }
@@ -2279,7 +2300,7 @@ namespace ChinookDatabase
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -2303,7 +2324,7 @@ namespace ChinookDatabase
             {
                 OnComposerChanging(value);
                 ReportPropertyChanging("Composer");
-                _Composer = StructuralObject.SetValidValue(value, true);
+                _Composer = StructuralObject.SetValidValue(value, true, "Composer");
                 ReportPropertyChanged("Composer");
                 OnComposerChanged();
             }
@@ -2327,7 +2348,7 @@ namespace ChinookDatabase
             {
                 OnMillisecondsChanging(value);
                 ReportPropertyChanging("Milliseconds");
-                _Milliseconds = StructuralObject.SetValidValue(value);
+                _Milliseconds = StructuralObject.SetValidValue(value, "Milliseconds");
                 ReportPropertyChanged("Milliseconds");
                 OnMillisecondsChanged();
             }
@@ -2351,7 +2372,7 @@ namespace ChinookDatabase
             {
                 OnBytesChanging(value);
                 ReportPropertyChanging("Bytes");
-                _Bytes = StructuralObject.SetValidValue(value);
+                _Bytes = StructuralObject.SetValidValue(value, "Bytes");
                 ReportPropertyChanged("Bytes");
                 OnBytesChanged();
             }
@@ -2375,7 +2396,7 @@ namespace ChinookDatabase
             {
                 OnUnitPriceChanging(value);
                 ReportPropertyChanging("UnitPrice");
-                _UnitPrice = StructuralObject.SetValidValue(value);
+                _UnitPrice = StructuralObject.SetValidValue(value, "UnitPrice");
                 ReportPropertyChanged("UnitPrice");
                 OnUnitPriceChanged();
             }
@@ -2385,7 +2406,7 @@ namespace ChinookDatabase
         partial void OnUnitPriceChanged();
 
         #endregion
-    
+
         #region Navigation Properties
     
         /// <summary>
@@ -2547,8 +2568,9 @@ namespace ChinookDatabase
         }
 
         #endregion
+
     }
 
     #endregion
-    
+
 }

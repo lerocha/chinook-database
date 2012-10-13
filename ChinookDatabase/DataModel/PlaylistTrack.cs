@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 
@@ -13,10 +14,10 @@ namespace ChinookDatabase.DataModel
         [Key, DataMember(Order = 2)]
         public int TrackId { get; set; }
 
-        [RelatedTo(ForeignKey = "PlaylistId")]
+        [ForeignKey("PlaylistId")]
         public Playlist Playlist { get; set; }
 
-        [RelatedTo(ForeignKey = "TrackId")]
+        [ForeignKey("TrackId")]
         public Track Track { get; set; }
     }
 }

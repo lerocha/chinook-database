@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 
 namespace ChinookDatabase.DataModel
@@ -49,7 +50,7 @@ namespace ChinookDatabase.DataModel
         [MaxLength(60)]
         public string Email { get; set; }
 
-        [RelatedTo(ForeignKey = "ReportsTo")]
+        [ForeignKey("ReportsTo")]
         public Employee ReportsToManager { get; set; }
     }
 }

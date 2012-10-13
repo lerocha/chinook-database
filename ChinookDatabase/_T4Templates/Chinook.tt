@@ -67,7 +67,10 @@
 	foreach (FileInfo file in files)
 	{
 		// Skip any unwanted source file.
-		if (file.Name.StartsWith("AssemblyInfo") || file.Name.Equals("Chinook.Designer.cs")) 
+		if (file.Name.StartsWith("AssemblyInfo") || 
+			file.Name.Equals("Chinook.Designer.cs") ||
+			file.FullName.Contains("DataModel") ||
+			file.Name.StartsWith("TemporaryGeneratedFile_")) 
 		{
 			continue;
 		}
