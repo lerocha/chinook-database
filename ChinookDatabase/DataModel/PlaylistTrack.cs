@@ -8,10 +8,10 @@ namespace ChinookDatabase.DataModel
     [DebuggerDisplay("PlaylistId = {PlaylistId}, TrackId = {TrackId}")]
     public class PlaylistTrack
     {
-        [Key, DataMember(Order=1)]
+        [Key, Column(Order=1)]
         public int PlaylistId { get; set; }
 
-        [Key, DataMember(Order = 2)]
+        [Key, Column(Order = 2)]
         public int TrackId { get; set; }
 
         [ForeignKey("PlaylistId")]

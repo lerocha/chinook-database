@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
 namespace ChinookDatabase.DataModel
@@ -8,7 +7,7 @@ namespace ChinookDatabase.DataModel
     {
         private static DbModel _chinookModel;
 
-        public static DbModel CreateModel(DbConnection connection)
+        public static DbModel CreateModel(DbProviderInfo provider)
         {
             if (_chinookModel == null)
             {
@@ -24,7 +23,7 @@ namespace ChinookDatabase.DataModel
                 builder.Entity<InvoiceLine>();
                 builder.Entity<Playlist>();
                 builder.Entity<PlaylistTrack>();
-                _chinookModel = builder.Build(connection);
+                _chinookModel = builder.Build(provider);
             }
 
             return _chinookModel;

@@ -1,4 +1,5 @@
-﻿using ChinookDatabase.DataModel;
+﻿using System.Data.Entity.Infrastructure;
+using ChinookDatabase.DataModel;
 using NUnit.Framework;
 
 namespace ChinookDatabase.Test.UnitTests
@@ -7,12 +8,12 @@ namespace ChinookDatabase.Test.UnitTests
     public class ChinookModelTest
     {
         [Test]
-        [Ignore]
         public void TestChinookModelCreation()
         {
             using (var entities = new ChinookEntities())
             {
-                var model = ChinookModel.CreateModel(entities.Connection);
+                var provider = new DbProviderInfo("System.Data.SqlClient", "2008");
+                var model = ChinookModel.CreateModel(provider);
                 Assert.IsNotNull(model);
             }
         }
