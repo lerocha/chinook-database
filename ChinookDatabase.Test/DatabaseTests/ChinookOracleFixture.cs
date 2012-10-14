@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NUnit.Framework;
-using System.Data.OleDb;
+using Oracle.DataAccess.Client;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {
@@ -25,14 +25,14 @@ namespace ChinookDatabase.Test.DatabaseTests
     [TestFixture]
     public partial class ChinookOracleFixture
     {
-        protected IDictionary<string, OleDbConnection> Connections;
+        protected IDictionary<string, OracleConnection> Connections;
 
         /// <summary>
         /// Retrieves the cached connection object.
         /// </summary>
         /// <param name="connectionName">Connection name in the configuration file.</param>
         /// <returns>A connection object for this specific database.</returns>
-        protected OleDbConnection GetConnection(string connectionName)
+        protected OracleConnection GetConnection(string connectionName)
         {
             // Creates an ADO.NET connection to the database, if not created yet.
             if (!Connections.ContainsKey(connectionName))
@@ -42,7 +42,7 @@ namespace ChinookDatabase.Test.DatabaseTests
                 foreach (var entry in section.ConnectionStrings.Cast<ConnectionStringSettings>()
                                                                 .Where(entry => entry.Name == connectionName))
                 {
-                    Connections[connectionName] = new OleDbConnection(entry.ConnectionString);
+                    Connections[connectionName] = new OracleConnection(entry.ConnectionString);
                     break;
                 }
 
@@ -66,7 +66,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 			var connection = GetConnection(connectionName);
 
             // Verify if number of entities match number of records.
-            using (var adapter = new OleDbDataAdapter(query, connection))
+            using (var adapter = new OracleDataAdapter(query, connection))
             {
                 adapter.Fill(dataset);
             }
@@ -80,7 +80,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         [TestFixtureSetUp]
         public void Init()
         {
-            Connections = new Dictionary<string, OleDbConnection>();
+            Connections = new Dictionary<string, OracleConnection>();
         }
 
         /// <summary>
