@@ -13,7 +13,7 @@ namespace ChinookDatabase.DdlStrategies
             DatabaseFileExtension = "sqlite";
             Identity = "PRIMARY KEY AUTOINCREMENT";
             ForeignKeyDef = KeyDefinition.OnCreateTableBottom;
-            CommandLineFormat = "sqlite3 -init {0} {0}ite";
+            CommandLineFormat = "if exist {0}ite del {0}ite\nsqlite3 -init {0} {0}ite";
         }
 
         public override string FormatStringValue(string value)

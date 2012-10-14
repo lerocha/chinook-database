@@ -310,7 +310,6 @@ foreach (var strategy in options.DdlStrategies.Select(s=> new { s.Name, s.Comman
 	// Start of Create DB Batch file.
 	//************************************************************************
 	var filename = string.Format("Create{0}.bat", strategy.Name);
-	var commandFormat = "echo {0}";
 	
 	if (!string.IsNullOrEmpty(strategy.CommandLineFormat)) 
 	{

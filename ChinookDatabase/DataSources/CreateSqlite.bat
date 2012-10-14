@@ -28,6 +28,7 @@ if (%ERRORLEVEL%)==(3) goto END
 :RUNSQL
 echo.
 echo Running %SQLFILE%...
+if exist %SQLFILE%ite del %SQLFILE%ite
 sqlite3 -init %SQLFILE% %SQLFILE%ite
 
 :END
