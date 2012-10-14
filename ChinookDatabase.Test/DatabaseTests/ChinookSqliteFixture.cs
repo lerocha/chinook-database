@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using NUnit.Framework;
-using Devart.Data.SQLite;
+using System.Data.SQLite;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {

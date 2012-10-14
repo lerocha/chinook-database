@@ -38,7 +38,7 @@ var options = new [] {
 							Strategy = new SqliteStrategy(),
 							ConnectionClass = "SQLiteConnection",
 							AdapterClass = "SQLiteDataAdapter",
-							Namespace = "Devart.Data.SQLite",
+							Namespace = "System.Data.SQLite",
 							ConnectionNames = new[] {"Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement"}
 						},
 						new Option 
