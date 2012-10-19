@@ -63,7 +63,7 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Entity.Design.DatabaseGeneration">
-      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
