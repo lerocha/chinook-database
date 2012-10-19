@@ -1,6 +1,7 @@
 # use glob syntax.
 syntax: glob
 Command Prompt.lnk
+nuget.exe
 *.suo
 *.user
 
@@ -10,6 +11,7 @@ bin/Debug
 bin/Release
 obj/Debug
 obj/Release
+packages/*
 /TestResults/
 /TDD/
 /obj/
