@@ -25,7 +25,8 @@ var options = new
 								new MySqlStrategy { IsIdentityEnabled = true },
 								new OracleStrategy { IsIdentityEnabled = false },
 								new EffiProzStrategy { IsIdentityEnabled = false },
-								new EffiProzStrategy { IsIdentityEnabled = true }
+								new EffiProzStrategy { IsIdentityEnabled = true },
+								new PostgreSqlStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default }
 						   	},
 	OutputFiles = new List<OutputFile>()
 };

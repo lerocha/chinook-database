@@ -71,8 +71,14 @@
     <Reference Include="Microsoft.Data.Entity.Design.DatabaseGeneration">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>..\packages\Npgsql.2.0.11\lib\Net40\Mono.Security.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\packages\MySql.Data.6.5.4\lib\net40\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\packages\Npgsql.2.0.11\lib\Net40\Npgsql.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
@@ -115,6 +121,9 @@
       <DependentUpon>DatabaseFixture.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseTests\ChinookOracleFixture.cs">
+      <DependentUpon>DatabaseFixture.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseTests\ChinookPostgreSqlFixture.cs">
       <DependentUpon>DatabaseFixture.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseTests\ChinookSqliteFixture.cs">

@@ -33,4 +33,11 @@ rem echo Chinook_SqlServerCompact.sql
 rem sqlcecmd –d "Data Source=.\Chinook_SqlServerCompact.sdf" –e create
 rem echo.
 
+echo Chinook_PostgreSql.sql
+SET "PGOPTIONS=-c client_min_messages=WARNING"
+dropdb --if-exists -U postgres Chinook
+createdb -U postgres Chinook
+psql -f Chinook_PostgreSql.sql -q Chinook postgres
+echo.
+
 :end

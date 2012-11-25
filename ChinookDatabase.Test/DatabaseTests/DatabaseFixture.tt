@@ -56,6 +56,14 @@ var options = new [] {
 							AdapterClass = "OracleDataAdapter",
 							Namespace = "Oracle.DataAccess.Client",
 							ConnectionNames = new[] {"Chinook_Oracle"}
+						},
+						new Option 
+						{
+							Strategy = new PostgreSqlStrategy(),
+							ConnectionClass = "NpgsqlConnection",
+							AdapterClass = "NpgsqlDataAdapter",
+							Namespace = "Npgsql",
+							ConnectionNames = new[] {"Chinook_PostgreSql"}
 						}
 					};
 
