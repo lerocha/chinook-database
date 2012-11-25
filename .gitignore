@@ -1,0 +1,20 @@
+# use glob syntax.
+syntax: glob
+Command Prompt.lnk
+nuget.exe
+*.suo
+*.user
+
+*.sln.DotSettings
+syntax: regexp
+bin/
+bin/Debug
+bin/Release
+obj/
+obj/Debug
+obj/Release
+packages/*
+/TestResults/
+/TDD/
+/obj/
+_ReSharper.*
