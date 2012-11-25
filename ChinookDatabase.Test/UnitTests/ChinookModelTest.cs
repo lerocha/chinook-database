@@ -1,20 +1,19 @@
 ﻿using System.Data.Entity.Infrastructure;
 using ChinookDatabase.DataModel;
-using NUnit.Framework;
+using Xunit;
 
 namespace ChinookDatabase.Test.UnitTests
 {
-    [TestFixture]
     public class ChinookModelTest
     {
-        [Test]
+        [Fact]
         public void TestChinookModelCreation()
         {
             using (var entities = new ChinookEntities())
             {
                 var provider = new DbProviderInfo("System.Data.SqlClient", "2008");
                 var model = ChinookModel.CreateModel(provider);
-                Assert.IsNotNull(model);
+                Assert.NotNull(model);
             }
         }
     }

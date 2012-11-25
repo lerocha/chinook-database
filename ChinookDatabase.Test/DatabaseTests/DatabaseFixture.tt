@@ -97,8 +97,10 @@ using System;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
+using Xunit.Extensions;
 using <#= option.Namespace #>;
 
 <#
@@ -111,8 +113,7 @@ namespace ChinookDatabase.Test.DatabaseTests
     /// <summary>
     /// Test fixtures for <#= option.Strategy.Name #> databases.
     /// </summary>
-    [TestFixture]
-    public partial class <#= option.GetClassName() #>
+    public partial class <#= option.GetClassName() #> : IDisposable
     {
         protected IDictionary<string, <#= option.ConnectionClass #>> Connections;
 
@@ -173,8 +174,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Initialize connections dictionary.
         /// </summary>
-        [TestFixtureSetUp]
-        public void Init()
+        public <#= option.GetClassName() #>()
         {
             Connections = new Dictionary<string, <#= option.ConnectionClass #>>();
         }
@@ -182,7 +182,6 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Close all connections.
         /// </summary>
-        [TestFixtureTearDown]
         public void Dispose()
         {
             foreach (var connection in Connections.Values)
@@ -213,24 +212,30 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
-        [Test]
-        public void AllInvoicesMustHaveInvoiceLines([Values(<#= connectionValues #>)] string connectionName)
+        [Theory]
+<# foreach(var connectionName in option.ConnectionNames) {#>
+		[InlineData("<#= connectionName #>")]
+<# } #>
+        public void AllInvoicesMustHaveInvoiceLines(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "<#= query1 #>");
-            Assert.That(dataSet.Tables[0].Rows[0][0], Is.EqualTo(0), "The number of invoices with no invoice lines must be zero.");
+            Assert.Equal("0", dataSet.Tables[0].Rows[0][0].ToString());
         }
         
         /// <summary>
         /// Asserts that invoice total matches sum of invoice lines.
         /// </summary>
-        [Test]
-        public void InvoiceTotalMustMatchSumOfInvoiceLines([Values(<#= connectionValues #>)] string connectionName)
+        [Theory]
+<# foreach(var connectionName in option.ConnectionNames) {#>
+		[InlineData("<#= connectionName #>")]
+<# } #>
+        public void InvoiceTotalMustMatchSumOfInvoiceLines(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "<#= query2 #>");
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                Assert.That(row["CalculatedTotal"].ToString(), Is.EqualTo(row["Total"].ToString()), string.Format("The total field of InvoiceId={0} does not match its invoice lines.", row["InvoiceId"]));
+                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), string.Format("The total field of InvoiceId={0} does not match its invoice lines.", row["InvoiceId"]));
             }
         }
 <#
@@ -249,24 +254,30 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the <#= table.TableName #> table was populated properly.
         /// </summary>
-        [Test]
-        public void <#= table.TableName #>TableShouldBePopulated([Values(<#= connectionValues #>)] string connectionName)
+        [Theory]
+<# foreach(var connectionName in option.ConnectionNames) {#>
+		[InlineData("<#= connectionName #>")]
+<# } #>
+        public void <#= table.TableName #>TableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM <#= fqTableName #>");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(<#= table.Rows.Count #>), "Total number of records mismatch.");
+            Assert.Equal(<#= table.Rows.Count #>, dataSet.Tables[0].Rows.Count);
         }
 
         /// <summary>
         /// Verifies that last record of <#= table.TableName #> table has the proper information.
         /// </summary>
-        [Test]
-        public void <#= table.TableName #>LastRecordHasProperInfo([Values(<#= connectionValues #>)] string connectionName)
+        [Theory]
+<# foreach(var connectionName in option.ConnectionNames) {#>
+		[InlineData("<#= connectionName #>")]
+<# } #>
+        public void <#= table.TableName #>LastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM <#= fqTableName #> ORDER BY <#= fqPrimaryKeys #>");
             var table = dataSet.Tables[0];
-            Assert.IsNotNull(table);
+            Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
-            Assert.IsNotNull(row);
+            Assert.NotNull(row);
 
 			// Assert that the last record has the proper information.            
 <#
@@ -274,7 +285,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		foreach (DataColumn col in table.Columns)
 		{
 			string expected = DataSetHelper.GetExpectedValue(col, table.Rows[num][col.ColumnName].ToString());
-#>            Assert.That(row["<#= col.ColumnName #>"].ToString(), Is.EqualTo(<#= expected #>), "<#= col.ColumnName #> mismatch.");
+#>            Assert.Equal(<#= expected #>, row["<#= col.ColumnName #>"].ToString());
 <#
 		} // foreach column
 #>        }
@@ -296,18 +307,21 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Test]
-        public void CustomerId<#= (i+1).ToString("D2") #>HasProperUnicodeCharacters([Values(<#= connectionValues #>)] string connectionName)
+        [Theory]
+<# foreach(var connectionName in option.ConnectionNames) {#>
+		[InlineData("<#= connectionName #>")]
+<# } #>
+        public void CustomerId<#= (i+1).ToString("D2") #>HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM <#= customer #> WHERE <#= customerId #> = <#= i+1 #>");
-            Assert.That(dataSet.Tables[0].Rows.Count, Is.EqualTo(1), "Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.");
+            Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
 <#
 			foreach (DataColumn col in ds.Tables["Customer"].Columns)
 			{
 				string expected = DataSetHelper.GetExpectedValue(col, ds.Tables["Customer"].Rows[i][col.ColumnName].ToString());
-#>            Assert.That(row["<#= col.ColumnName #>"].ToString(), Is.EqualTo(<#= expected #>), "<#= col.ColumnName #> mismatch.");
+#>            Assert.Equal(<#= expected #>, row["<#= col.ColumnName #>"].ToString());
 <#
 			}
 #>

@@ -116,18 +116,7 @@ namespace ChinookDatabase.Utilities
 
         public static string GetExpectedValue(DataColumn col, string value)
         {
-            string expected;
-            if (col.DataType == typeof(DateTime))
-            {
-                expected = string.Format("Convert.ToDateTime(\"{0}\").ToString()", value);
-            }
-            else
-            {
-                expected = string.Format("\"{0}\"", value);
-            }
-
-            return expected;
+	        return string.Format("\"{0}\"", value);
         }
-
     }
 }

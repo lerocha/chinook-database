@@ -1,13 +1,12 @@
 ﻿using System.IO;
 using ChinookDatabase.Utilities;
-using NUnit.Framework;
+using Xunit;
 
 namespace ChinookDatabase.Test.UnitTests
 {
-    [TestFixture]
-    class EdmHelperTest
+    public class EdmHelperTest
     {
-        [Test]
+        [Fact]
         public void GetSsdlFromEdmxTest()
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), @"..\..\..\ChinookDatabase\Chinook.edmx");
