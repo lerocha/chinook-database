@@ -23,10 +23,11 @@ var options = new
 								new SqliteStrategy { IsIdentityEnabled = true, PrimaryKeyDef = KeyDefinition.OnCreateTableColumn },
 								new MySqlStrategy { IsIdentityEnabled = false },
 								new MySqlStrategy { IsIdentityEnabled = true },
-								new OracleStrategy { IsIdentityEnabled = false },
+								new OracleStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default },
 								new EffiProzStrategy { IsIdentityEnabled = false },
 								new EffiProzStrategy { IsIdentityEnabled = true },
-								new PostgreSqlStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default }
+								new PostgreSqlStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default },
+								new Db2Strategy { IsIdentityEnabled = false, Encoding = Encoding.Default }
 						   	},
 	OutputFiles = new List<OutputFile>()
 };
@@ -179,34 +180,34 @@ CREATE TABLE <#= tableName #>
 	}	// foreach EntityType
 #>
 
+
 /*******************************************************************************
    Create Primary Key Unique Indexes
 ********************************************************************************/
 <#
-    foreach (var entitySet in existingStore.GetAllEntitySets())
-    {
-		string tableName = strategy.GetFullyQualifiedName(entitySet.GetSchemaName(), entitySet.GetTableName());
-		string pkIndexName = strategy.FormatName("IPK_" + entitySet.GetTableName());
-		
-		// Create Primary Key Constraint.
-		if (strategy.PrimaryKeyDef==KeyDefinition.OnAlterTable)
-		{
-			string pkName = strategy.FormatName("PK_" + entitySet.GetTableName());
+   foreach (var entitySet in existingStore.GetAllEntitySets())
+   {
+        string tableName = strategy.GetFullyQualifiedName(entitySet.GetSchemaName(), entitySet.GetTableName());
+        string pkIndexName = strategy.FormatName("IPK_" + entitySet.GetTableName());
+        
+        // Create Primary Key Constraint.
+        if (strategy.PrimaryKeyDef==KeyDefinition.OnAlterTable)
+        {
+            string pkName = strategy.FormatName("PK_" + entitySet.GetTableName());
 #>
 ALTER TABLE <#= tableName #> ADD CONSTRAINT <#= pkName #> PRIMARY KEY (<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>);
 <#= strategy.WriteExecuteCommand() #>
-<#			
-		}
-
-		// Create Primary Key Unique Constraint.
-		if (strategy.IsIndexEnabled)
-		{
+<#            
+			// Create Primary Key Unique Constraint.
+			if (strategy.IsIndexEnabled)
+			{
 #>
 CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColumns(entitySet.ElementType.GetKeyProperties(), ',')#>);
 <#= strategy.WriteExecuteCommand() #>
 <#
-		}
-    }
+			}
+        }
+   }
 #>
 
 /*******************************************************************************

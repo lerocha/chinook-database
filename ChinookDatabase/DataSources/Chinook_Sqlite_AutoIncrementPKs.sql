@@ -195,31 +195,10 @@ CREATE TABLE [Track]
 );
 
 
+
 /*******************************************************************************
    Create Primary Key Unique Indexes
 ********************************************************************************/
-CREATE UNIQUE INDEX [IPK_Album] ON [Album]([AlbumId]);
-
-CREATE UNIQUE INDEX [IPK_Artist] ON [Artist]([ArtistId]);
-
-CREATE UNIQUE INDEX [IPK_Customer] ON [Customer]([CustomerId]);
-
-CREATE UNIQUE INDEX [IPK_Employee] ON [Employee]([EmployeeId]);
-
-CREATE UNIQUE INDEX [IPK_Genre] ON [Genre]([GenreId]);
-
-CREATE UNIQUE INDEX [IPK_Invoice] ON [Invoice]([InvoiceId]);
-
-CREATE UNIQUE INDEX [IPK_InvoiceLine] ON [InvoiceLine]([InvoiceLineId]);
-
-CREATE UNIQUE INDEX [IPK_MediaType] ON [MediaType]([MediaTypeId]);
-
-CREATE UNIQUE INDEX [IPK_Playlist] ON [Playlist]([PlaylistId]);
-
-CREATE UNIQUE INDEX [IPK_PlaylistTrack] ON [PlaylistTrack]([PlaylistId], [TrackId]);
-
-CREATE UNIQUE INDEX [IPK_Track] ON [Track]([TrackId]);
-
 
 /*******************************************************************************
    Create Foreign Keys

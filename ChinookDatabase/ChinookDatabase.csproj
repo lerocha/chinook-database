@@ -115,6 +115,7 @@
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="DdlStrategies\AbstractDdlStrategy.cs" />
+    <Compile Include="DdlStrategies\Db2Strategy.cs" />
     <Compile Include="DdlStrategies\EffiProzStrategy.cs" />
     <Compile Include="DdlStrategies\OracleStrategy.cs" />
     <Compile Include="DdlStrategies\KeyDefinition.cs" />
@@ -145,6 +146,9 @@
     <Content Include="DataSources\ChinookDatabase.txt">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+    </Content>
+    <Content Include="DataSources\Chinook_Db2.sql">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
     </Content>
     <Content Include="DataSources\Chinook_EffiProz_AutoIncrementPKs.sql">
@@ -192,6 +196,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="DataSources\CreateAll.bat" />
+    <None Include="DataSources\CreateDb2.bat">
+      <DependentUpon>ChinookDatabase.tt</DependentUpon>
+    </None>
     <None Include="DataSources\CreatePostgreSql.bat">
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
     </None>

@@ -40,6 +40,7 @@
 //          ChinookDataSet.cs
 //          ChinookDataSet.Designer.cs
 //          AbstractDdlStrategy.cs
+//          Db2Strategy.cs
 //          EffiProzStrategy.cs
 //          IDdlStrategy.cs
 //          KeyDefinition.cs
@@ -6422,6 +6423,59 @@
 
 
 //------------------------------------------------------------------------------
+// Filename: Db2Strategy.cs
+//------------------------------------------------------------------------------
+
+
+	public class Db2Strategy : AbstractDdlStrategy
+	{
+		public Db2Strategy()
+		{
+			Name = "Db2";
+			//Identity = "AUTO_INCREMENT";
+			IsReCreateDatabaseEnabled = true;
+
+			var builder = new StringBuilder();
+			builder.AppendLine("db2 disconnect ALL")
+				.AppendLine("db2 drop database Chinook")
+				.AppendLine("db2 create database Chinook")
+				.AppendLine("db2 connect to Chinook")
+				.AppendLine("db2 -tf {0} -z {0}.log");
+
+			CommandLineFormat = builder.ToString();
+		}
+
+		public override string FormatDateValue(string value)
+		{
+			var date = Convert.ToDateTime(value);
+			return string.Format("'{0}'", date.ToString("yyyy-MM-dd HH:mm:ss"));
+		}
+
+		public override string FormatName(string name)
+		{
+			return string.Format("\"{0}\"", name);
+		}
+
+		public override string GetFullyQualifiedName(string schema, string name)
+		{
+			return FormatName(name);
+		}
+
+		public override string GetStoreType(EdmProperty property)
+		{
+			switch (property.TypeUsage.EdmType.Name)
+			{
+				case "datetime":
+					return "DATE";
+				case "nvarchar":
+					return property.ToStoreType().Replace("nvarchar", "VARCHAR");
+				default:
+					return base.GetStoreType(property);
+			}
+		}
+	}
+
+//------------------------------------------------------------------------------
 // Filename: EffiProzStrategy.cs
 //------------------------------------------------------------------------------
 
@@ -7005,19 +7059,8 @@
 
         public static string GetExpectedValue(DataColumn col, string value)
         {
-            string expected;
-            if (col.DataType == typeof(DateTime))
-            {
-                expected = string.Format("Convert.ToDateTime(\"{0}\").ToString()", value);
-            }
-            else
-            {
-                expected = string.Format("\"{0}\"", value);
-            }
-
-            return expected;
+	        return string.Format("\"{0}\"", value);
         }
-
     }
 
 //------------------------------------------------------------------------------

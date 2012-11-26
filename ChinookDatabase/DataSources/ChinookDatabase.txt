@@ -19,6 +19,8 @@ Chinook Database 1.3
 !! Package Content
 This is the list of files included in the complete version.
 || Data Source || File || Description ||
+| Db2 | {"Chinook_Db2.sql"} | SQL script to create the Chinook database. Primary keys are not auto incremented by the database system, they must be set when inserting records. |
+| Db2 | {"CreateDb2.bat"} | Batch file to create the Chinook database. |
 | EffiProz | {"Chinook_EffiProz.sql"} | SQL script to create the Chinook database. Primary keys are not auto incremented by the database system, they must be set when inserting records. |
 | EffiProz | {"Chinook_EffiProz_AutoIncrementPKs.sql"} | SQL script to create the Chinook database. Primary keys are auto incremented. |
 | MySql | {"Chinook_MySql.sql"} | SQL script to create the Chinook database. Primary keys are not auto incremented by the database system, they must be set when inserting records. |
