@@ -64,6 +64,14 @@ var options = new [] {
 							AdapterClass = "NpgsqlDataAdapter",
 							Namespace = "Npgsql",
 							ConnectionNames = new[] {"Chinook_PostgreSql"}
+						},
+						new Option 
+						{
+							Strategy = new Db2Strategy(),
+							ConnectionClass = "DB2Connection",
+							AdapterClass = "DB2DataAdapter",
+							Namespace = "IBM.Data.DB2",
+							ConnectionNames = new[] {"Chinook_Db2"}
 						}
 					};
 

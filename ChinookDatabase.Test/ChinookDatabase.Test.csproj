@@ -68,6 +68,10 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="IBM.Data.DB2, Version=9.7.4.4, Culture=neutral, PublicKeyToken=7c307b91aa13d208, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DB2\netf40_32\IBM.Data.DB2.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.Entity.Design.DatabaseGeneration">
       <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll</HintPath>
     </Reference>
@@ -116,6 +120,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseTests\ChinookDb2Fixture.cs">
+      <DependentUpon>DatabaseFixture.tt</DependentUpon>
+    </Compile>
     <Compile Include="DatabaseTests\ChinookEffiProzFixture.cs">
       <DependentUpon>DatabaseFixture.tt</DependentUpon>
     </Compile>
