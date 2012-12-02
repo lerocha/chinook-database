@@ -31,6 +31,7 @@ dropdb --if-exists -U postgres Chinook
 createdb -U postgres Chinook
 psql -f %SQLFILE% -q Chinook postgres
 
+
 :END
 echo.
 set SQLFILE=

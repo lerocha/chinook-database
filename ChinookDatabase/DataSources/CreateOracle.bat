@@ -26,7 +26,10 @@ if (%ERRORLEVEL%)==(2) goto END
 :RUNSQL
 echo.
 echo Running %SQLFILE%...
+chcp 65001
+set NLS_LANG=.AL32UTF8
 sqlplus -S / as sysdba @ %SQLFILE%
+
 
 :END
 echo.

@@ -12,7 +12,13 @@ namespace ChinookDatabase.DdlStrategies
             Name = "Oracle";
             IsReCreateDatabaseEnabled = true;
             IsIndexEnabled = false;
-            CommandLineFormat = @"sqlplus -S / as sysdba @ {0}";
+
+	        var builder = new StringBuilder();
+	        builder.AppendLine("chcp 65001") // sets the active code page number
+		        .AppendLine("set NLS_LANG=.AL32UTF8") // set NLS_LANG so that sqlplus knows we are using unicode
+		        .AppendLine(@"sqlplus -S / as sysdba @ {0}");
+
+            CommandLineFormat = builder.ToString();
         }
 
         public override string FormatName(string name)

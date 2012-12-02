@@ -23,7 +23,7 @@ var options = new
 								new SqliteStrategy { IsIdentityEnabled = true, PrimaryKeyDef = KeyDefinition.OnCreateTableColumn },
 								new MySqlStrategy { IsIdentityEnabled = false },
 								new MySqlStrategy { IsIdentityEnabled = true },
-								new OracleStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default },
+								new OracleStrategy { IsIdentityEnabled = false, Encoding = Encoding.UTF8 },
 								new EffiProzStrategy { IsIdentityEnabled = false },
 								new EffiProzStrategy { IsIdentityEnabled = true },
 								new PostgreSqlStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default },

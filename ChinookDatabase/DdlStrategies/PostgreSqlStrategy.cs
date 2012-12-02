@@ -10,10 +10,10 @@ namespace ChinookDatabase.DdlStrategies
         {
             var builder = new StringBuilder();
 
-            builder.Append("SET \"PGOPTIONS=-c client_min_messages=WARNING\"\r\n")
-                .Append("dropdb --if-exists -U postgres Chinook\r\n")
-                .Append("createdb -U postgres Chinook\r\n")
-                .Append("psql -f {0} -q Chinook postgres");
+            builder.AppendLine("SET \"PGOPTIONS=-c client_min_messages=WARNING\"")
+				.AppendLine("dropdb --if-exists -U postgres Chinook")
+				.AppendLine("createdb -U postgres Chinook")
+				.AppendLine("psql -f {0} -q Chinook postgres");
 
             Name = "PostgreSql";
             IsReCreateDatabaseEnabled = true;
