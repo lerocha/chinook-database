@@ -409,9 +409,11 @@ Chinook Database <#= options.Version #>
 * The Chinook data model is available [here|Chinook_Schema].
 * <#=completePackageFile#> is a complete package for all supported databases/data sources. There are also packages for each specific data source.
 !! Supported Database Servers
+* [url:DB2|http://www-01.ibm.com/software/data/db2/express/]
 * [url:EffiProz|http://effiproz.codeplex.com/]
 * [url:MySQL|http://www.mysql.com/]
 * [url:Oracle|http://www.oracle.com/technetwork/database/express-edition/overview/index.html]
+* [url:PostgreSQL|http://www.postgresql.org/]
 * [url:SQL Server|http://www.microsoft.com/sqlserver/]
 * [url:SQL Server Compact|http://www.microsoft.com/sqlserver/2008/en/us/compact.aspx]
 * [url:SQLite|http://www.sqlite.org/]

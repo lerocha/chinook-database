@@ -1,5 +1,5 @@
 ﻿/*******************************************************************************
- * Chinook Database - Version 1.3
+ * Chinook Database - Version 1.4
  * Description: Test fixture for Chinook database.
  * DB Server: PostgreSql
  * Author: Luis Rocha

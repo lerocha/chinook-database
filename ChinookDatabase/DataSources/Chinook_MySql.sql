@@ -1,6 +1,6 @@
 ﻿
 /*******************************************************************************
-   Chinook Database - Version 1.3
+   Chinook Database - Version 1.4
    Script: Chinook_MySql.sql
    Description: Creates and populates the Chinook database.
    DB Server: MySql

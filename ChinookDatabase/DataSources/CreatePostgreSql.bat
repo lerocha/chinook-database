@@ -1,5 +1,5 @@
 @echo off
-echo Chinook Database Version 1.3
+echo Chinook Database Version 1.4
 echo.
 
 if "%1"=="" goto MENU

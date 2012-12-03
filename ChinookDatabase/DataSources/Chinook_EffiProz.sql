@@ -1,6 +1,6 @@
 ﻿
 /*******************************************************************************
-   Chinook Database - Version 1.3
+   Chinook Database - Version 1.4
    Script: Chinook_EffiProz.sql
    Description: Creates and populates the Chinook database.
    DB Server: EffiProz
