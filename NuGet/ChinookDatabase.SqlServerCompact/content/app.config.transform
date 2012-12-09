@@ -1,0 +1,5 @@
+﻿<configuration>
+	<connectionStrings>
+		<add name="ChinookSqlServerCe" connectionString="Data Source=.Chinook.sdf;Persist Security Info=False;" providerName="System.Data.SqlServerCe" />
+	</connectionStrings>
+</configuration>

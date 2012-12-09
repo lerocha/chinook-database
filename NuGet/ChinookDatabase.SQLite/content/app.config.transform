@@ -1,0 +1,5 @@
+﻿<configuration>
+	<connectionStrings>
+		<add name="ChinookSqlite" connectionString="Data Source=Chinook.sqlite" providerName="System.Data.SQLite" />
+	</connectionStrings>
+</configuration>

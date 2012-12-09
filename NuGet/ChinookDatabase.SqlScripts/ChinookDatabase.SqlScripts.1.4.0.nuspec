@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>ChinookDatabase.SqlScripts</id>
+        <version>1.4.0</version>
+        <title>Chinook Database SQL Scripts</title>
+        <authors>Luis Rocha</authors>
+        <owners>Luis Rocha</owners>
+        <licenseUrl>http://chinookdatabase.codeplex.com/license</licenseUrl>
+        <projectUrl>http://chinookdatabase.codeplex.com</projectUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>Chinook is a sample database of a digital media store, including tables for artists, albums, media tracks, invoices and customers. It is available for multiple database servers: SQL Server, SQL Server Compact Edition, SQLite, Oracle, MySQL, PostgreSQL, and DB2.</description>
+        <summary>This package contains SQL scripts to create the Chinook sample database for SQL Server, SQL Server Compact Edition, SQLite, Oracle, MySQL, PostgreSQL, DB2 and EffiProz.</summary>
+        <copyright>Luis Rocha</copyright>
+        <language>en-US</language>
+        <tags>chinook sample database sqlserver sqlservercompact oracle db2 mysql postgresql sqlite</tags>
+    </metadata>
+    <files>
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_Db2.sql" target="content\Chinook\Chinook_Db2.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_EffiProz_AutoIncrementPKs.sql" target="content\Chinook\Chinook_EffiProz_AutoIncrementPKs.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_EffiProz.sql" target="content\Chinook\Chinook_EffiProz.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_MySql_AutoIncrementPKs.sql" target="content\Chinook\Chinook_MySql_AutoIncrementPKs.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_MySql.sql" target="content\Chinook\Chinook_MySql.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_Oracle.sql" target="content\Chinook\Chinook_Oracle.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_PostgreSql.sql" target="content\Chinook\Chinook_PostgreSql.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_Sqlite_AutoIncrementPKs.sql" target="content\Chinook\Chinook_Sqlite_AutoIncrementPKs.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_Sqlite.sql" target="content\Chinook\Chinook_Sqlite.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_SqlServer_AutoIncrementPKs.sql" target="content\Chinook\Chinook_SqlServer_AutoIncrementPKs.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_SqlServer.sql" target="content\Chinook\Chinook_SqlServer.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_SqlServerCompact_AutoIncrementPKs.sqlce" target="content\Chinook\Chinook_SqlServerCompact_AutoIncrementPKs.sqlce" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_SqlServerCompact.sqlce" target="content\Chinook\Chinook_SqlServerCompact.sqlce" />
+		<file src="..\..\ChinookDatabase\DataSources\CreateDb2.bat" target="content\Chinook\CreateDb2.bat" />
+		<file src="..\..\ChinookDatabase\DataSources\CreateMySql.bat" target="content\Chinook\CreateMySql.bat" />
+		<file src="..\..\ChinookDatabase\DataSources\CreateOracle.bat" target="content\Chinook\CreateOracle.bat" />
+		<file src="..\..\ChinookDatabase\DataSources\CreatePostgreSql.bat" target="content\Chinook\CreatePostgreSql.bat" />
+		<file src="..\..\ChinookDatabase\DataSources\CreateSqlite.bat" target="content\Chinook\CreateSqlite.bat" />
+		<file src="..\..\ChinookDatabase\DataSources\CreateSqlServer.bat" target="content\Chinook\CreateSqlServer.bat" />
+	</files>
+</package>
