@@ -13,7 +13,7 @@
         <summary>Chinook is a sample database of a digital media store, including tables for artists, albums, media tracks, invoices and customers.</summary>
         <copyright>Luis Rocha</copyright>
         <language>en-US</language>
-        <tags>chinook sample database sqlserver sqlservercompact</tags>
+        <tags>chinook sample database sqlite</tags>
         <dependencies>
             <dependency id="System.Data.SQLite" version="1.0.82.0" />
         </dependencies>
