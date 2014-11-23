@@ -1,4 +1,4 @@
-MovieSharp
+Chinook Database
 --------------------------------------
 Copyright (c) 2008-2014 Luis Rocha
 
