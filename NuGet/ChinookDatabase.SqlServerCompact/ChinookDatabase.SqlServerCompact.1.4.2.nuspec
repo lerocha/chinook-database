@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>ChinookDatabase.SqlServerCompact</id>
+        <version>1.4.2</version>
+        <title>Chinook Database for SQL Server Compact 4.0</title>
+        <authors>Luis Rocha</authors>
+        <owners>Luis Rocha</owners>
+        <licenseUrl>http://chinookdatabase.codeplex.com/license</licenseUrl>
+        <projectUrl>http://chinookdatabase.codeplex.com</projectUrl>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <description>Chinook is a sample database of a digital media store, including tables for artists, albums, media tracks, invoices and customers. It is available for multiple database servers: SQL Server, SQL Server Compact Edition, SQLite, Oracle, MySQL, PostgreSQL, and DB2.</description>
+        <summary>Chinook is a sample database of a digital media store, including tables for artists, albums, media tracks, invoices and customers.</summary>
+        <copyright>Luis Rocha</copyright>
+        <language>en-US</language>
+        <tags>chinook sample database sqlserver sqlservercompact</tags>
+        <dependencies>
+            <dependency id="Microsoft.SqlServer.Compact" version="4.0.8876.1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\..\ChinookDatabase\DataSources\Chinook_SqlServerCompact_AutoIncrementPKs.sdf" target="content\net40\Chinook.sdf" />
+        <file src="content\app.config.transform" target="content\app.config.transform" />
+        <file src="content\web.config.transform" target="content\web.config.transform" />
+    </files>
+</package>
