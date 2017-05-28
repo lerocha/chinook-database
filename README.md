@@ -28,11 +28,11 @@ The name of this sample database was based on the Northwind database. Chinooks a
 
 ### How do I Download and Create the Chinook Database?
 
-Download and extract the zip file from the [Downloads page](https://chinookdatabase.codeplex.com/releases/view/55681). It is provided one or more SQL script file for each database vendor supported. You can run these SQL scripts with your preferred database tool.
+Download the files from the [Downloads page](ChinookDatabase/DataSources). It is provided one or more SQL script file for each database vendor supported. You can run these SQL scripts with your preferred database tool.
 
 For SQL Server, Oracle, MySQL and SQLite, there are available batch files that will execute the respective SQL script(s). These batch files use the database server command tool (**mysql.exe** for MySQL, **sqlcmd.exe** for SQL Server, **sqlplus.exe** for Oracle, and **sqlite3.exe** for SQLite). It is recommended to open a Command Prompt window as Administrator in order to run these batch files.
 
-For embedded databases, SQLite and SQL Server Compact, it is also provided the embedded database files in addition to the SQL script files. 
+For embedded databases, SQLite and SQL Server Compact, it is also provided the embedded database files in addition to the SQL script files.
 
 Notes:
 
