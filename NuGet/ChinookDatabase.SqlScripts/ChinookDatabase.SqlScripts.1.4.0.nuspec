@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>ChinookDatabase.SqlScripts</id>
@@ -23,6 +23,9 @@
 		<file src="..\..\ChinookDatabase\DataSources\Chinook_MySql.sql" target="content\Chinook\Chinook_MySql.sql" />
 		<file src="..\..\ChinookDatabase\DataSources\Chinook_Oracle.sql" target="content\Chinook\Chinook_Oracle.sql" />
 		<file src="..\..\ChinookDatabase\DataSources\Chinook_PostgreSql.sql" target="content\Chinook\Chinook_PostgreSql.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_PostgreSql_CaseInsensitive.sql" target="content\Chinook\Chinook_PostgreSql_CaseInsensitive.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_PostgreSql_SerialPKs.sql" target="content\Chinook\Chinook_PostgreSql_SerialPKs.sql" />
+		<file src="..\..\ChinookDatabase\DataSources\Chinook_PostgreSql_SerialPKs_CaseInsensitive.sql" target="content\Chinook\Chinook_PostgreSql_SerialPKs_CaseInsensitive.sql" />
 		<file src="..\..\ChinookDatabase\DataSources\Chinook_Sqlite_AutoIncrementPKs.sql" target="content\Chinook\Chinook_Sqlite_AutoIncrementPKs.sql" />
 		<file src="..\..\ChinookDatabase\DataSources\Chinook_Sqlite.sql" target="content\Chinook\Chinook_Sqlite.sql" />
 		<file src="..\..\ChinookDatabase\DataSources\Chinook_SqlServer_AutoIncrementPKs.sql" target="content\Chinook\Chinook_SqlServer_AutoIncrementPKs.sql" />

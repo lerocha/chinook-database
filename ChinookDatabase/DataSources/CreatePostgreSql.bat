@@ -17,11 +17,17 @@ goto END
 echo Options:
 echo.
 echo 1. Run Chinook_PostgreSql.sql
-echo 2. Exit
+echo 2. Run Chinook_PostgreSql_CaseInsensitive.sql
+echo 3. Run Chinook_PostgreSql_SerialPKs.sql
+echo 4. Run Chinook_PostgreSql_SerialPKs_CaseInsensitive.sql
+echo 5. Exit
 echo.
-choice /c 123
+choice /c 12345
 if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook_PostgreSql.sql
-if (%ERRORLEVEL%)==(2) goto END
+if (%ERRORLEVEL%)==(2) set SQLFILE=Chinook_PostgreSql_CaseInsensitive.sql
+if (%ERRORLEVEL%)==(3) set SQLFILE=Chinook_PostgreSql_SerialPKs.sql
+if (%ERRORLEVEL%)==(4) set SQLFILE=Chinook_PostgreSql_SerialPKs_CaseInsensitive.sql
+if (%ERRORLEVEL%)==(5) goto END
 
 :RUNSQL
 echo.
