@@ -1,4 +1,4 @@
-﻿<#@ template hostspecific="True"#>
+<#@ template hostspecific="True"#>
 <#@ output extension="cs" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
@@ -63,7 +63,7 @@ var options = new [] {
 							ConnectionClass = "NpgsqlConnection",
 							AdapterClass = "NpgsqlDataAdapter",
 							Namespace = "Npgsql",
-							ConnectionNames = new[] {"Chinook_PostgreSql"}
+							ConnectionNames = new[] {"Chinook_PostgreSql", "Chinook_PostgreSql_CaseInsensitive", "Chinook_PostgreSql_SerialPKs", "Chinook_PostgreSql_SerialPKs_CaseInsensitive"}
 						},
 						new Option 
 						{
