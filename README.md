@@ -15,6 +15,7 @@ Chinook is a sample database available for SQL Server, Oracle, MySQL, etc. It ca
 ### Data Model
 
 The Chinook data model represents a digital media store, including tables for artists, albums, media tracks, invoices and customers.
+You can see the Chinook data model [here](../../wiki/Chinook-Schema).
 
 ### Sample Data
 
