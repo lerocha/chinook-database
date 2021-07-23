@@ -43,14 +43,6 @@ var options = new [] {
 						},
 						new Option 
 						{
-							Strategy = new EffiProzStrategy(),
-							ConnectionClass = "EfzConnection",
-							AdapterClass = "EfzDataAdapter",
-							Namespace = "System.Data.EffiProz",
-							ConnectionNames = new[] {"Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement"}
-						},
-						new Option 
-						{
 							Strategy = new OracleStrategy(),
 							ConnectionClass = "OracleConnection",
 							AdapterClass = "OracleDataAdapter",

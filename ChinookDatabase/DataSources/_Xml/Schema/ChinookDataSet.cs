@@ -3,5 +3,5 @@
 
     partial class ChinookDataSet
     {
-    }    
+    }
 }

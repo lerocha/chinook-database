@@ -13,11 +13,9 @@ using System;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using Xunit;
-using Xunit.Extensions;
-using IBM.Data.DB2;
+using IBM.Data.DB2.Core;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {

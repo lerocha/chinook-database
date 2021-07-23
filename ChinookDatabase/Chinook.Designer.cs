@@ -9,26 +9,26 @@
 
 using System;
 using System.ComponentModel;
-using System.Data.EntityClient;
-using System.Data.Objects;
-using System.Data.Objects.DataClasses;
+using System.Data.Entity.Core.EntityClient;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Core.Objects.DataClasses;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-[assembly: EdmSchemaAttribute()]
+[assembly: EdmSchema()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_AlbumArtistId", "Artist", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Artist), "Album", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Album))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackAlbumId", "Album", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Album), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_CustomerSupportRepId", "Employee", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Employee), "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Customer))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceCustomerId", "Customer", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Customer), "Invoice", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Invoice))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_EmployeeReportsTo", "Employee", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Employee), "Employee1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Employee))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackGenreId", "Genre", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Genre), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceLineInvoiceId", "Invoice", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Invoice), "InvoiceLine", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.InvoiceLine))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceLineTrackId", "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Track), "InvoiceLine", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.InvoiceLine))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackMediaTypeId", "MediaType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.MediaType), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
-[assembly: EdmRelationshipAttribute("ChinookModel", "FK_PlaylistTrackPlaylistId", "Playlist", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Playlist), "Track", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_AlbumArtistId", "Artist", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Artist), "Album", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Album))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackAlbumId", "Album", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Album), "Track", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_CustomerSupportRepId", "Employee", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Employee), "Customer", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Customer))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceCustomerId", "Customer", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Customer), "Invoice", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Invoice))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_EmployeeReportsTo", "Employee", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Employee), "Employee1", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Employee))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackGenreId", "Genre", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(ChinookDatabase.Genre), "Track", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceLineInvoiceId", "Invoice", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Invoice), "InvoiceLine", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.InvoiceLine))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_InvoiceLineTrackId", "Track", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.Track), "InvoiceLine", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.InvoiceLine))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_TrackMediaTypeId", "MediaType", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.One, typeof(ChinookDatabase.MediaType), "Track", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
+[assembly: EdmRelationshipAttribute("ChinookModel", "FK_PlaylistTrackPlaylistId", "Playlist", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Playlist), "Track", System.Data.Entity.Core.Metadata.Edm.RelationshipMultiplicity.Many, typeof(ChinookDatabase.Track))]
 
 #endregion
 

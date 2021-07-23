@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.Metadata.Edm;
+using System.Data.Entity.Core.Metadata.Edm;
 
 namespace ChinookDatabase.DdlStrategies
 {

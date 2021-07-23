@@ -17,7 +17,7 @@ using System.Globalization;
 using System.Linq;
 using Xunit;
 using Xunit.Extensions;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {
