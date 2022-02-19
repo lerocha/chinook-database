@@ -1610,7 +1610,7 @@ INSERT INTO [Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds]
 INSERT INTO [Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES ('Vida Bandida (Ao Vivo)', 56, 1, 7, 192626, 6360785, 0.99);
 INSERT INTO [Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES ('Palavras Ao Vento', 56, 1, 7, 212453, 7048676, 0.99);
 INSERT INTO [Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES ('Não Sei O Que Eu Quero Da Vida', 56, 1, 7, 151849, 5024963, 0.99);
-INSERT INTO [Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES ('Woman Is The Nigger Of The World (Ao Vivo)', 56, 1, 7, 298919, 9724145, 0.99);
+INSERT INTO [Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES ('Woman Of The World (Ao Vivo)', 56, 1, 7, 298919, 9724145, 0.99);
 INSERT INTO [Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES ('Juventude Transviada (Ao Vivo)', 56, 1, 7, 278622, 9183808, 0.99);
 INSERT INTO [Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES ('Malandragem', 57, 1, 7, 247588, 8165048, 0.99);
 INSERT INTO [Track] ([Name], [AlbumId], [MediaTypeId], [GenreId], [Milliseconds], [Bytes], [UnitPrice]) VALUES ('O Segundo Sol', 57, 1, 7, 252133, 8335629, 0.99);
