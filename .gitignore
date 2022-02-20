@@ -19,3 +19,5 @@ Packages/
 /obj/
 _ReSharper.*
 *.nupkg
+.DS_Store
+.idea/
