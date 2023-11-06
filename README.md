@@ -77,3 +77,22 @@ Notes:
   * The generated Oracle SQL script creates a new user chinook, with the password p4ssw0rd. You might want to change this to use a different user/password.
 * Create the database using the appropriate scripts.
 * Run the database tests in ChinookDatabase.Test to make sure your database was created properly.
+
+  #### Possible error when downloading raw from github
+  
+* The next steps are *all* performed from a linux terminal (should not change with MacOs, could change for Windows users)
+* Download the file using the *raw github path* as:
+```shell
+curl https://raw.githubusercontent.com/lerocha/chinook-database/master/ChinookDatabase/DataSources/Chinook_Sqlite.sql > ~/path_to_project/data/Chinook_Sqlite.sql
+```
+* Open it using `sqlite3 Chinook_cleaned.db < Chinook_Cleaned.sql`
+* Try reading the database as `sqlite3 Chinook.db < Chinook_Sqlite.sql`
+* If you get an error that says
+```shell
+Error: near line 1: near "﻿": syntax error
+```
+it can be related to *Byte Order Mark (BOM)* which are invisible in text editors but can cause syntax errors when processed by SQLite or other database systems.
+* If such a thing happens, get rid of the BOMs by using
+```shell
+sed '1s/^\xEF\xBB\xBF//' Chinook_Sqlite.sql > Chinook_Cleaned.sql
+```
