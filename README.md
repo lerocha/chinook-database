@@ -78,7 +78,7 @@ Notes:
 * Create the database using the appropriate scripts.
 * Run the database tests in ChinookDatabase.Test to make sure your database was created properly.
 
-  #### Possible error when downloading raw from github
+#### Possible error when downloading raw from github
   
 * The next steps are *all* performed from a linux terminal (should not change with MacOs, could change for Windows users)
 * Download the file using the *raw github path* as:
