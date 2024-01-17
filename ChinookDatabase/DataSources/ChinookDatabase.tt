@@ -10,8 +10,6 @@ var options = new
 	DatabaseName = "Chinook",
 	PopulateDatabase = true,
 	Version = DataSetHelper.GetVersionNumber(),
-	EFVersion = new Version("2.0.0.0"),
-	ModelFile = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"..\Chinook.edmx"),
 	DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"_Xml\ChinookData.xml"),
 	DdlStrategies = new IDdlStrategy[] 
 							{
@@ -24,8 +22,6 @@ var options = new
 								new MySqlStrategy { IsIdentityEnabled = false },
 								new MySqlStrategy { IsIdentityEnabled = true },
 								new OracleStrategy { IsIdentityEnabled = false, Encoding = Encoding.UTF8 },
-								new EffiProzStrategy { IsIdentityEnabled = false },
-								new EffiProzStrategy { IsIdentityEnabled = true },
 								new PostgreSqlStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default },
 								new Db2Strategy { IsIdentityEnabled = false, Encoding = Encoding.Default }
 						   	},
