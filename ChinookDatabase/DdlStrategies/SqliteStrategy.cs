@@ -1,8 +1,4 @@
-﻿using System;
-using System.Data;
-using System.Data.Common;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Linq;
+﻿using System.Data;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -31,14 +27,6 @@ namespace ChinookDatabase.DdlStrategies
         public override string GetFullyQualifiedName(string schema, string name)
         {
             return FormatName(name);
-        }
-
-        public override string GetStoreType(EdmProperty property)
-        {
-            if (property.TypeUsage.EdmType.Name == "int")
-                return "INTEGER";
-
-            return base.GetStoreType(property);
         }
 
         public override string WriteCreateColumn(DataColumn column)

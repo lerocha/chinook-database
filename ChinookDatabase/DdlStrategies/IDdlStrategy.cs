@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
 
@@ -35,10 +33,7 @@ namespace ChinookDatabase.DdlStrategies
         string FormatStringValue(string value);
         string FormatDateValue(string date);
         string GetFullyQualifiedName(string schema, string name);
-        string GetStoreType(EdmProperty property);
         string GetStoreType(DataColumn column);
-        string GetIdentity(EdmProperty property, Version targetVersion);
-        string GetClustered(StoreItemCollection store, EntityType entityType);
         string GetClustered(DataTable table);
         string GetForeignKeyConstraintName(ReferentialConstraint constraint);
         string GetColumns(IEnumerable<EdmProperty> properties, char delimiter);

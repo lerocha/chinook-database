@@ -1,6 +1,7 @@
 using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
+using ChinookDatabase.Utilities;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -56,34 +57,11 @@ namespace ChinookDatabase.DdlStrategies
             return string.Format("{0}.{1}", FormatName(schema), FormatName(name));
         }
 
-        public virtual string GetStoreType(EdmProperty property)
-        {
-            return property.ToStoreType().ToUpper();
-        }
-
         public virtual string GetStoreType(DataColumn column)
         {
-            // TODO
-            return String.Empty;
+            return DataSetHelper.GetMySqlType(column);
         }
-
-        public virtual string GetIdentity(EdmProperty property, Version targetVersion)
-        {
-            if (IsIdentityEnabled &&
-                property.GetStoreGeneratedPatternValue(targetVersion, DataSpace.SSpace) ==
-                StoreGeneratedPattern.Identity)
-            {
-                return Identity;
-            }
-
-            return String.Empty;
-        }
-
-        public virtual string GetClustered(StoreItemCollection store, EntityType entityType)
-        {
-            return string.Empty;
-        }
-
+        
         public virtual string GetClustered(DataTable table)
         {
             return string.Empty;

@@ -1,6 +1,4 @@
-﻿using System.Data.Entity.Core.Metadata.Edm;
-
-namespace ChinookDatabase.DdlStrategies
+﻿namespace ChinookDatabase.DdlStrategies
 {
     public class MySqlStrategy : AbstractDdlStrategy
     {
@@ -20,14 +18,6 @@ namespace ChinookDatabase.DdlStrategies
         public override string GetFullyQualifiedName(string schema, string name)
         {
             return FormatName(name);
-        }
-
-        public override string GetStoreType(EdmProperty property)
-        {
-            if (property.TypeUsage.EdmType.Name == "guid")
-                return "CHAR(36) BINARY";
-
-            return base.GetStoreType(property);
         }
 
         public override string WriteDropDatabase(string databaseName)

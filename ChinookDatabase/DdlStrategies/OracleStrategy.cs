@@ -1,5 +1,7 @@
-﻿using System.Data.Entity.Core.Metadata.Edm;
+﻿using System.Data;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
+using ChinookDatabase.Utilities;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -40,21 +42,9 @@ namespace ChinookDatabase.DdlStrategies
             return FormatName(name);
         }
 
-        public override string GetStoreType(EdmProperty property)
+        public override string GetStoreType(DataColumn column)
         {
-            switch (property.TypeUsage.EdmType.Name)
-            {
-                case "datetime":
-                    return "DATE";
-                case "int":
-                    return "NUMBER";
-                case "numeric":
-                    return property.ToStoreType().Replace("numeric", "NUMBER");
-                case "nvarchar":
-                    return property.ToStoreType().Replace("nvarchar", "VARCHAR2");
-                default:
-                    return base.GetStoreType(property);
-            }
+            return DataSetHelper.GetOracleType(column);
         }
 
         public override string WriteDropDatabase(string databaseName)

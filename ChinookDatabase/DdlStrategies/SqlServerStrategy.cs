@@ -14,15 +14,10 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
         }
 
-        public override string GetClustered(StoreItemCollection store, EntityType entityType)
-        {
-            return entityType.IsJoinTable(store) ? "NONCLUSTERED" : "CLUSTERED";
-        }
-
         public override string GetClustered(DataTable table)
         {
-            // TODO
-            return base.GetClustered(table);
+            // TODO: entityType.IsJoinTable(store) ? "NONCLUSTERED" : "CLUSTERED";
+            return "CLUSTERED";
         }
 
         public override string WriteDropDatabase(string databaseName)

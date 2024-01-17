@@ -1,5 +1,4 @@
-﻿using System.Data.Entity.Core.Metadata.Edm;
-using System.Text;
+﻿using System.Text;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -35,19 +34,6 @@ namespace ChinookDatabase.DdlStrategies
 		public override string GetFullyQualifiedName(string schema, string name)
 		{
 			return FormatName(name);
-		}
-
-		public override string GetStoreType(EdmProperty property)
-		{
-			switch (property.TypeUsage.EdmType.Name)
-			{
-				case "datetime":
-					return "DATE";
-				case "nvarchar":
-					return property.ToStoreType().Replace("nvarchar", "VARCHAR");
-				default:
-					return base.GetStoreType(property);
-			}
 		}
 	}
 }
