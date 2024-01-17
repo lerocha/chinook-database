@@ -43,7 +43,6 @@
 //          EffiProzStrategy.cs
 //          IDdlStrategy.cs
 //          KeyDefinition.cs
-//          MetadataEdmExtensions.cs
 //          MySqlStrategy.cs
 //          OracleStrategy.cs
 //          PostgreSqlStrategy.cs
@@ -72,9 +71,6 @@
 
     partial class ChinookDataSet
     {
-        partial class ArtistDataTable
-        {
-        }
     }
 
 //------------------------------------------------------------------------------
@@ -6321,34 +6317,11 @@
             return string.Format("{0}.{1}", FormatName(schema), FormatName(name));
         }
 
-        public virtual string GetStoreType(EdmProperty property)
-        {
-            return property.ToStoreType().ToUpper();
-        }
-
         public virtual string GetStoreType(DataColumn column)
         {
-            // TODO
-            return String.Empty;
+            return DataSetHelper.GetMySqlType(column);
         }
-
-        public virtual string GetIdentity(EdmProperty property, Version targetVersion)
-        {
-            if (IsIdentityEnabled &&
-                property.GetStoreGeneratedPatternValue(targetVersion, DataSpace.SSpace) ==
-                StoreGeneratedPattern.Identity)
-            {
-                return Identity;
-            }
-
-            return String.Empty;
-        }
-
-        public virtual string GetClustered(StoreItemCollection store, EntityType entityType)
-        {
-            return string.Empty;
-        }
-
+        
         public virtual string GetClustered(DataTable table)
         {
             return string.Empty;
@@ -6484,19 +6457,6 @@
 		{
 			return FormatName(name);
 		}
-
-		public override string GetStoreType(EdmProperty property)
-		{
-			switch (property.TypeUsage.EdmType.Name)
-			{
-				case "datetime":
-					return "DATE";
-				case "nvarchar":
-					return property.ToStoreType().Replace("nvarchar", "VARCHAR");
-				default:
-					return base.GetStoreType(property);
-			}
-		}
 	}
 
 //------------------------------------------------------------------------------
@@ -6579,10 +6539,7 @@
         string FormatStringValue(string value);
         string FormatDateValue(string date);
         string GetFullyQualifiedName(string schema, string name);
-        string GetStoreType(EdmProperty property);
         string GetStoreType(DataColumn column);
-        string GetIdentity(EdmProperty property, Version targetVersion);
-        string GetClustered(StoreItemCollection store, EntityType entityType);
         string GetClustered(DataTable table);
         string GetForeignKeyConstraintName(ReferentialConstraint constraint);
         string GetColumns(IEnumerable<EdmProperty> properties, char delimiter);
@@ -6620,112 +6577,8 @@
     }
 
 //------------------------------------------------------------------------------
-// Filename: MetadataEdmExtensions.cs
-//------------------------------------------------------------------------------
-
-
-
-    /// <summary>
-    /// Extensions from Microsoft.Data.Entity.Design.DatabaseGeneration.dll
-    /// https://github.com/dotnet/ef6tools/blob/main/src/EFTools/EntityDesignDatabaseGeneration/MetadataWorkspaceExtensions.cs
-    /// </summary>
-    public static class MetadataEdmExtensions
-    {
-
-        //public static string ToStoreType(this EdmProperty property)
-        //{
-        //    var sqlTypeName = String.Empty;
-        //    var storeTypeUsage = property.TypeUsage;
-        //    Debug.Assert(storeTypeUsage != null, "TypeUsage for property: " + property.Name + " is null");
-        //    if (storeTypeUsage != null)
-        //    {
-        //        var edmType = storeTypeUsage.EdmType;
-        //        Debug.Assert(edmType != null, "Edm Type for: " + storeTypeUsage + " is null");
-        //        if (edmType != null)
-        //        {
-        //            sqlTypeName = storeTypeUsage.EdmType.Name;
-        //            var primType = storeTypeUsage.EdmType as PrimitiveType;
-        //            if (primType != null)
-        //            {
-        //                Facet maxLengthFacet = null;
-        //                Facet precisionFacet = null;
-        //                Facet scaleFacet = null;
-        //                switch (primType.PrimitiveTypeKind)
-        //                {
-        //                    case PrimitiveTypeKind.Binary:
-        //                        storeTypeUsage.Facets.TryGetValue("MaxLength", false, out maxLengthFacet);
-        //                        Debug.Assert(
-        //                            maxLengthFacet != null, "MaxLength facet should exist for binary Store Type: " + storeTypeUsage);
-        //                        if (maxLengthFacet != null
-        //                            && maxLengthFacet.Description.IsConstant == false)
-        //                        {
-        //                            sqlTypeName = String.Format(CultureInfo.CurrentCulture, "{0}({1})", sqlTypeName, maxLengthFacet.Value);
-        //                        }
-        //                        break;
-        //                    case PrimitiveTypeKind.String:
-        //                        storeTypeUsage.Facets.TryGetValue("MaxLength", false, out maxLengthFacet);
-        //                        Debug.Assert(
-        //                            maxLengthFacet != null, "MaxLength facet should exist for string Store Type: " + storeTypeUsage);
-        //                        if (maxLengthFacet != null
-        //                            && maxLengthFacet.Description.IsConstant == false)
-        //                        {
-        //                            sqlTypeName = String.Format(CultureInfo.CurrentCulture, "{0}({1})", sqlTypeName, maxLengthFacet.Value);
-        //                        }
-        //                        break;
-        //                    case PrimitiveTypeKind.Decimal:
-        //                        storeTypeUsage.Facets.TryGetValue("Precision", false, out precisionFacet);
-        //                        storeTypeUsage.Facets.TryGetValue("Scale", false, out scaleFacet);
-        //                        Debug.Assert(
-        //                            precisionFacet != null, "Precision facet should exist for decimal Store Type: " + storeTypeUsage);
-        //                        Debug.Assert(scaleFacet != null, "Scale facet should exist for decimal Store Type: " + storeTypeUsage);
-        //                        if (precisionFacet != null
-        //                            &&
-        //                            scaleFacet != null
-        //                            &&
-        //                            precisionFacet.Description.IsConstant == false)
-        //                        {
-        //                            sqlTypeName = String.Format(
-        //                                CultureInfo.CurrentCulture,
-        //                                "{0}({1},{2})", sqlTypeName, precisionFacet.Value, scaleFacet.Value);
-        //                        }
-
-        //                        break;
-        //                    default:
-        //                        break;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return sqlTypeName;
-        //}
-
-        //public static StoreGeneratedPattern GetStoreGeneratedPatternValue(this EdmProperty property, Version targetVersion, DataSpace dataSpace)
-        //{
-        //    return StoreGeneratedPattern.None;
-        //}
-
-        //public static string GetTableName(this EntitySet entitySet)
-        //{
-        //    return "";
-        //}
-
-        //public static string GetSchemaName(this EntitySet entitySet)
-        //{
-        //    return "";
-        //}
-
-        //public static bool IsJoinTable(this EntityType entityType, StoreItemCollection store)
-        //{
-        //    return false;
-        //}
-
-    }
-
-
-//------------------------------------------------------------------------------
 // Filename: MySqlStrategy.cs
 //------------------------------------------------------------------------------
-
 
     public class MySqlStrategy : AbstractDdlStrategy
     {
@@ -6745,14 +6598,6 @@
         public override string GetFullyQualifiedName(string schema, string name)
         {
             return FormatName(name);
-        }
-
-        public override string GetStoreType(EdmProperty property)
-        {
-            if (property.TypeUsage.EdmType.Name == "guid")
-                return "CHAR(36) BINARY";
-
-            return base.GetStoreType(property);
         }
 
         public override string WriteDropDatabase(string databaseName)
@@ -6818,21 +6663,9 @@
             return FormatName(name);
         }
 
-        public override string GetStoreType(EdmProperty property)
+        public override string GetStoreType(DataColumn column)
         {
-            switch (property.TypeUsage.EdmType.Name)
-            {
-                case "datetime":
-                    return "DATE";
-                case "int":
-                    return "NUMBER";
-                case "numeric":
-                    return property.ToStoreType().Replace("numeric", "NUMBER");
-                case "nvarchar":
-                    return property.ToStoreType().Replace("nvarchar", "VARCHAR2");
-                default:
-                    return base.GetStoreType(property);
-            }
+            return DataSetHelper.GetOracleType(column);
         }
 
         public override string WriteDropDatabase(string databaseName)
@@ -6911,19 +6744,6 @@
         {
             return FormatName(name);
         }
-
-        public override string GetStoreType(EdmProperty property)
-        {
-            switch (property.TypeUsage.EdmType.Name)
-            {
-                case "datetime":
-                    return "TIMESTAMP";
-                case "nvarchar":
-                    return property.ToStoreType().Replace("nvarchar", "VARCHAR");
-                default:
-                    return base.GetStoreType(property);
-            }
-        }
     }
 
 //------------------------------------------------------------------------------
@@ -6956,14 +6776,6 @@
         public override string GetFullyQualifiedName(string schema, string name)
         {
             return FormatName(name);
-        }
-
-        public override string GetStoreType(EdmProperty property)
-        {
-            if (property.TypeUsage.EdmType.Name == "int")
-                return "INTEGER";
-
-            return base.GetStoreType(property);
         }
 
         public override string WriteCreateColumn(DataColumn column)
@@ -7024,15 +6836,10 @@
             CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
         }
 
-        public override string GetClustered(StoreItemCollection store, EntityType entityType)
-        {
-            return entityType.IsJoinTable(store) ? "NONCLUSTERED" : "CLUSTERED";
-        }
-
         public override string GetClustered(DataTable table)
         {
-            // TODO
-            return base.GetClustered(table);
+            // TODO: entityType.IsJoinTable(store) ? "NONCLUSTERED" : "CLUSTERED";
+            return "CLUSTERED";
         }
 
         public override string WriteDropDatabase(string databaseName)
