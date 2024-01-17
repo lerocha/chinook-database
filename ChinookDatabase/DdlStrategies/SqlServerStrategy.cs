@@ -1,4 +1,3 @@
-using Microsoft.Data.Entity.Design.DatabaseGeneration;
 using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;

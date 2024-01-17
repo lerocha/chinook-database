@@ -21,12 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Microsoft.Data.Entity.Design.DatabaseGeneration">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="DataSources\_Xml\Schema\ChinookDataSet.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

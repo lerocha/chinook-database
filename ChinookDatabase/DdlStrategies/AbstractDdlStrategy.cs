@@ -1,7 +1,5 @@
-using Microsoft.Data.Entity.Design.DatabaseGeneration;
 using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
-using System.Reflection.Metadata;
 using System.Text;
 
 namespace ChinookDatabase.DdlStrategies

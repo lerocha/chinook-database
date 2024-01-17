@@ -5,7 +5,6 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ import namespace="Microsoft.Data.Entity.Design.DatabaseGeneration" #>
 <#@ import namespace="System.Data.Entity.Core.Metadata.Edm" #>
 <#@ include file="..\..\_T4Templates\Chinook.ttinclude" #><?xml version="1.0" encoding="UTF-16"?>
 <!--
