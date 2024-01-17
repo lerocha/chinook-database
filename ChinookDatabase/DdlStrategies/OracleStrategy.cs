@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.Entity.Design.DatabaseGeneration;
+using System;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
 
@@ -92,7 +93,7 @@ namespace ChinookDatabase.DdlStrategies
             return refConstraint.FromRole.DeleteBehavior == OperationAction.Cascade ? "ON DELETE CASCADE" : "";
         }
 
-        public override string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint)
+        public override string WriteForeignKeyUpdateAction()
         {
             return string.Empty;
         }

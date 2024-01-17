@@ -1,4 +1,5 @@
-﻿using System.Data.Entity.Core.Metadata.Edm;
+﻿using Microsoft.Data.Entity.Design.DatabaseGeneration;
+using System.Data.Entity.Core.Metadata.Edm;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -35,9 +36,9 @@ namespace ChinookDatabase.DdlStrategies
             return string.Format("DROP DATABASE IF EXISTS {0};", FormatName(databaseName));
         }
 
-        public override string WriteDropTable(EntitySet entitySet)
+        public override string WriteDropTable(string tableName)
         {
-            return string.Format("DROP TABLE IF EXISTS {0};", FormatName(entitySet.GetTableName()));
+            return string.Format("DROP TABLE IF EXISTS {0};", FormatName(tableName));
         }
 
         public override string WriteCreateDatabase(string databaseName)

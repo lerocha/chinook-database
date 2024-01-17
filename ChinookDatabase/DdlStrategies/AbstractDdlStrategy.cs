@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
+using Microsoft.Data.Entity.Design.DatabaseGeneration;
+using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
-using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 
 namespace ChinookDatabase.DdlStrategies
@@ -63,6 +63,12 @@ namespace ChinookDatabase.DdlStrategies
             return property.ToStoreType().ToUpper();
         }
 
+        public virtual string GetStoreType(DataColumn column)
+        {
+            // TODO
+            return String.Empty;
+        }
+
         public virtual string GetIdentity(EdmProperty property, Version targetVersion)
         {
             if (IsIdentityEnabled &&
@@ -76,6 +82,11 @@ namespace ChinookDatabase.DdlStrategies
         }
 
         public virtual string GetClustered(StoreItemCollection store, EntityType entityType)
+        {
+            return string.Empty;
+        }
+
+        public virtual string GetClustered(DataTable table)
         {
             return string.Empty;
         }
@@ -102,26 +113,30 @@ namespace ChinookDatabase.DdlStrategies
             return builder.ToString().Trim().TrimEnd(delimiter);
         }
 
+        public virtual string GetColumns(HashSet<String> properties, char delimiter)
+        {
+            var builder = new StringBuilder();
+            foreach (var property in properties)
+            {
+                builder.AppendFormat("{0}{1} ", FormatName(property), delimiter);
+            }
+            return builder.ToString().Trim().TrimEnd(delimiter);
+
+        }
+
         public virtual string WriteDropDatabase(string databaseName)
         {
             return string.Empty;
         }
 
-        public virtual string WriteDropTable(EntitySet entitySet)
+        public virtual string WriteDropTable(string tableName)
         {
-            return string.Format("DROP TABLE {0};", FormatName(entitySet.GetTableName()));
+            return string.Format("DROP TABLE {0};", tableName);
         }
 
-        public virtual string WriteDropForeignKey(AssociationSet associationSet)
+        public virtual string WriteDropForeignKey(string tableName, string columnName)
         {
-            var constraint = associationSet.ElementType.ReferentialConstraints.Single();
-            var constraintName = GetForeignKeyConstraintName(constraint);
-            var end = associationSet.AssociationSetEnds
-                .Where(a => a.CorrespondingAssociationEndMember == constraint.ToRole)
-                .Single();
-            var fqTableName = GetFullyQualifiedName(end.EntitySet.GetSchemaName(), end.EntitySet.GetTableName());
-            var name = FormatName(constraintName);
-            return string.Format("ALTER TABLE {0} DROP CONSTRAINT {1};", fqTableName, name);
+            return string.Format("ALTER TABLE {0} DROP CONSTRAINT {1};", tableName, columnName);
         }
 
         public virtual string WriteCreateDatabase(string databaseName)
@@ -134,13 +149,13 @@ namespace ChinookDatabase.DdlStrategies
             return string.Empty;
         }
 
-        public virtual string WriteCreateColumn(EdmProperty property, Version targetVersion)
+        public virtual string WriteCreateColumn(DataColumn column)
         {
-            var notnull = (property.Nullable ? "" : "NOT NULL");
-            var identity = GetIdentity(property, targetVersion);
+            var notnull = (column.AllowDBNull ? "" : "NOT NULL");
+            var identity = IsIdentityEnabled ? Identity : String.Empty;
             return string.Format("{0} {1} {2} {3}",
-                                 FormatName(property.Name),
-                                 GetStoreType(property),
+                                 FormatName(column.ColumnName),
+                                 GetStoreType(column),
                                  notnull, identity).Trim();
         }
 
@@ -149,7 +164,7 @@ namespace ChinookDatabase.DdlStrategies
             return refConstraint.FromRole.DeleteBehavior == OperationAction.Cascade ? "ON DELETE CASCADE" : "ON DELETE NO ACTION";
         }
 
-        public virtual string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint)
+        public virtual string WriteForeignKeyUpdateAction()
         {
             return "ON UPDATE NO ACTION";
         }

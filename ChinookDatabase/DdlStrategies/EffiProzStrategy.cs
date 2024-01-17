@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
 
 namespace ChinookDatabase.DdlStrategies
@@ -35,16 +36,6 @@ namespace ChinookDatabase.DdlStrategies
         public override string WriteCreateDatabase(string databaseName)
         {
             return string.Format("CREATE SCHEMA {0} AUTHORIZATION DBA;", FormatName(SchemaName));
-        }
-
-        public override string WriteCreateColumn(EdmProperty property, Version targetVersion)
-        {
-            var notnull = (property.Nullable ? "" : "NOT NULL");
-            var identity = GetIdentity(property, targetVersion);
-            return string.Format("{0} {1} {2} {3}",
-                                 FormatName(property.Name),
-                                 GetStoreType(property),
-                                 identity, notnull).Trim();
         }
 
         public override string WriteExecuteCommand()

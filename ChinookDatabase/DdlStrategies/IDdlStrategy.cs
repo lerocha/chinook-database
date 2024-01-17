@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
 
@@ -35,23 +36,25 @@ namespace ChinookDatabase.DdlStrategies
         string FormatDateValue(string date);
         string GetFullyQualifiedName(string schema, string name);
         string GetStoreType(EdmProperty property);
+        string GetStoreType(DataColumn column);
         string GetIdentity(EdmProperty property, Version targetVersion);
         string GetClustered(StoreItemCollection store, EntityType entityType);
+        string GetClustered(DataTable table);
         string GetForeignKeyConstraintName(ReferentialConstraint constraint);
         string GetColumns(IEnumerable<EdmProperty> properties, char delimiter);
-
+        string GetColumns(HashSet<String> properties, char delimiter);
         #endregion
 
         #region Methods used to write full SQL commands.
 
         string WriteDropDatabase(string databaseName);
-        string WriteDropTable(EntitySet entitySet);
-        string WriteDropForeignKey(AssociationSet associationSet);
+        string WriteDropTable(string tableName);
+        string WriteDropForeignKey(string tableName, string columnName);
         string WriteCreateDatabase(string databaseName);
         string WriteUseDatabase(string databaseName);
-        string WriteCreateColumn(EdmProperty property, Version targetVersion);
+        string WriteCreateColumn(DataColumn column);
         string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint);
-        string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint);
+        string WriteForeignKeyUpdateAction();
         string WriteExecuteCommand();
         string WriteFinishCommit();
 

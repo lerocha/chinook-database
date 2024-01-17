@@ -1,3 +1,5 @@
+using Microsoft.Data.Entity.Design.DatabaseGeneration;
+using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
 
@@ -18,6 +20,12 @@ namespace ChinookDatabase.DdlStrategies
             return entityType.IsJoinTable(store) ? "NONCLUSTERED" : "CLUSTERED";
         }
 
+        public override string GetClustered(DataTable table)
+        {
+            // TODO
+            return base.GetClustered(table);
+        }
+
         public override string WriteDropDatabase(string databaseName)
         {
             var name = FormatName(databaseName);
@@ -34,9 +42,10 @@ namespace ChinookDatabase.DdlStrategies
             return builder.ToString();
         }
 
-        public override string WriteDropTable(EntitySet entitySet)
+        public override string WriteDropTable(string tableName)
         {
-            var fqName = GetFullyQualifiedName(entitySet.GetSchemaName(), entitySet.GetTableName());
+            // TODO
+            var fqName = GetFullyQualifiedName("chinook", tableName);
             return string.Format("IF OBJECT_ID(N'{0}', 'U') IS NOT NULL DROP TABLE {0};", fqName);
         }
 

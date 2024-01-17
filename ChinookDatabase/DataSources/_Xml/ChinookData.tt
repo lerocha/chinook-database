@@ -5,11 +5,13 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="Microsoft.Data.Entity.Design.DatabaseGeneration" #>
+<#@ import namespace="System.Data.Entity.Core.Metadata.Edm" #>
 <#@ include file="..\..\_T4Templates\Chinook.ttinclude" #><?xml version="1.0" encoding="UTF-16"?>
 <!--
    Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
    Author: Luis Rocha
-   License: http://www.codeplex.com/ChinookDatabase/license
+   License: https://github.com/lerocha/chinook-database/blob/master/LICENSE.md
 -->
 <#
             var thisFile = new FileInfo(Host.TemplateFile);
@@ -89,5 +91,6 @@
             ds.WriteXml(memstream);
             memstream.Position = 0;
             var sr = new StreamReader(memstream);
+
 #>
 <#= sr.ReadToEnd() #>

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Data.Entity.Design.DatabaseGeneration;
+using System;
+using System.Data;
+using System.Data.Common;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 
@@ -39,22 +42,22 @@ namespace ChinookDatabase.DdlStrategies
             return base.GetStoreType(property);
         }
 
-        public override string WriteCreateColumn(EdmProperty property, Version targetVersion)
+        public override string WriteCreateColumn(DataColumn column)
         {
-            var notnull = (property.Nullable ? "" : "NOT NULL");
-            var identity = GetIdentity(property, targetVersion);
+            var notnull = (column.AllowDBNull ? "" : "NOT NULL");
+            var identity = IsIdentityEnabled ? Identity : String.Empty;
             return string.Format("{0} {1} {2} {3}",
-                                 FormatName(property.Name),
-                                 GetStoreType(property),
+                                 FormatName(column.ColumnName),
+                                 GetStoreType(column),
                                  identity, notnull).Trim();
         }
 
-        public override string WriteDropTable(EntitySet entitySet)
+        public override string WriteDropTable(string tableName)
         {
-            return string.Format("DROP TABLE IF EXISTS {0};", FormatName(entitySet.GetTableName()));
+            return string.Format("DROP TABLE IF EXISTS {0};", FormatName(tableName));
         }
 
-        public override string WriteDropForeignKey(AssociationSet associationSet)
+        public override string WriteDropForeignKey(string tableName, string columnName)
         {
             return string.Empty;
         }

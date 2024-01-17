@@ -8,6 +8,7 @@
 <#@ assembly name="EnvDTE"#>
 <#@ assembly name="System.Xml"#>
 <#@ assembly name="System.Xml.Linq"#>
+<#@ assembly name="$(DevEnvDir)EntityFramework.dll"#>
 <#@ assembly name="$(DevEnvDir)Microsoft.Data.Entity.Design.DatabaseGeneration.dll"#>
 <#@ import namespace="System"#>
 <#@ import namespace="System.CodeDom"#>
@@ -17,7 +18,8 @@
 <#@ import namespace="System.Data"#>
 <#@ import namespace="System.Data.Linq"#>
 <#@ import namespace="System.Data.Linq.Mapping"#>
-<#@ import namespace="System.Data.Metadata.Edm"#>
+<#@ import namespace="System.Data.Entity.Core.Metadata.Edm"#>
+<#@ import namespace="System.Globalization"#>
 <#@ import namespace="System.IO"#>
 <#@ import namespace="System.Linq"#>
 <#@ import namespace="System.Reflection"#>
@@ -25,9 +27,8 @@
 <#@ import namespace="System.Xml"#>
 <#@ import namespace="System.Xml.Linq"#>
 <#@ import namespace="System.Xml.XPath"#>
+<#@ import namespace="Microsoft.Data.Entity.Design.DatabaseGeneration"#>
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating"#>
-<#@ import namespace="Microsoft.Data.Entity.Design.DatabaseGeneration" #>
-
 <# 
 	// Set options here
 	var options = new {
@@ -67,8 +68,10 @@
 	foreach (FileInfo file in files)
 	{
 		// Skip any unwanted source file.
-		if (file.Name.StartsWith("AssemblyInfo") || 
+		if (file.Name.Contains("AssemblyInfo") || 
+		    file.Name.Contains("AssemblyAttributes") || 
 			file.Name.Equals("Chinook.Designer.cs") ||
+			file.Name.Contains("GlobalUsings.g.cs") ||
 			file.FullName.Contains("DataModel") ||
 			file.Name.StartsWith("TemporaryGeneratedFile_")) 
 		{
@@ -84,6 +87,12 @@
 //
 // </auto-generated>
 //------------------------------------------------------------------------------
+
+	// Function needed by EF6.Utility.CS.ttinclude
+    public static void ArgumentNotNull(Object param, String name)
+    {
+        if (param == null) { throw new ArgumentNullException("name"); }
+    }
 
 <#
 	// Reads all the classes and append them to output.
