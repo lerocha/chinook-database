@@ -234,35 +234,35 @@ CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColum
 <#
     foreach (DataTable table in tables)
     {
-        foreach (Constraint constraint in table.Constraints)
+		var foreignKeys = table.Constraints.Cast<Constraint>()
+			.Where(constraint => constraint.GetType() == typeof(ForeignKeyConstraint))
+			.Select(constraint => (ForeignKeyConstraint) constraint)
+			.OrderBy(constraint => constraint.ConstraintName);
+
+        foreach (var fk in foreignKeys)
         {
-			if (constraint.GetType() == typeof(ForeignKeyConstraint))
+			var toTableName = fk.RelatedTable.TableName;
+			var fromTableName = table.TableName;
+			var constraintName = "FK_" + fromTableName + fk.Columns[0].ColumnName;
+			var fkName = strategy.FormatName(constraintName);
+			var ifkName = strategy.FormatName("I" + constraintName);
+		
+			if (strategy.ForeignKeyDef==KeyDefinition.OnAlterTable)
 			{
-				ForeignKeyConstraint fk = (ForeignKeyConstraint) constraint;
-				
-				var toTableName = fk.RelatedTable.TableName;
-				var fromTableName = table.TableName;
-				var constraintName = "FK_" + fk.Columns[0].ColumnName;
-				var fkName = strategy.FormatName(constraintName);
-				var ifkName = strategy.FormatName("I" + constraintName);
-		
-				if (strategy.ForeignKeyDef==KeyDefinition.OnAlterTable)
-				{
 #>
-ALTER TABLE <#= toTableName #> ADD CONSTRAINT <#= fkName #>
-    FOREIGN KEY (<#= fk.Columns[0].ColumnName #>) REFERENCES <#= fromTableName #> (<#= fk.RelatedColumns[0].ColumnName #>) <#= strategy.WriteForeignKeyUpdateAction() #>;
+ALTER TABLE <#= strategy.FormatName(fromTableName) #> ADD CONSTRAINT <#= fkName #>
+    FOREIGN KEY (<#= strategy.FormatName(fk.Columns[0].ColumnName) #>) REFERENCES <#= strategy.FormatName(toTableName) #> (<#= strategy.FormatName(fk.RelatedColumns[0].ColumnName) #>) ON DELETE NO ACTION <#= strategy.WriteForeignKeyUpdateAction() #>;
 <#= strategy.WriteExecuteCommand() #>
 <#      
-				} 
+			} 
 		
-				// if the foreign keys are part of the primary key on the dependent end, then we should not add a constraint.
-				if (strategy.IsIndexEnabled)
-				{
+			// if the foreign keys are part of the primary key on the dependent end, then we should not add a constraint.
+			if (strategy.IsIndexEnabled)
+			{
 #>
-CREATE INDEX <#= ifkName #> ON <#= toTableName #> (<#= fk.Columns[0].ColumnName #>);
+CREATE INDEX <#= ifkName #> ON <#= strategy.FormatName(fromTableName) #> (<#= strategy.FormatName(fk.Columns[0].ColumnName) #>);
 <#= strategy.WriteExecuteCommand() #>
 <#      
-				}
 			}
         }
     }
