@@ -116,16 +116,17 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 <#	
     foreach (DataTable table in tables)
     {
-        foreach (Constraint constraint in table.Constraints)
+		var foreignKeys = table.Constraints.Cast<Constraint>()
+			.Where(constraint => constraint.GetType() == typeof(ForeignKeyConstraint))
+			.Select(constraint => (ForeignKeyConstraint) constraint)
+			.OrderBy(constraint => constraint.ConstraintName);
+
+        foreach (var fk in foreignKeys)
         {
-			if (constraint.GetType() == typeof(ForeignKeyConstraint))
-			{
-				ForeignKeyConstraint fk = (ForeignKeyConstraint) constraint;
 #>
 <#= strategy.WriteDropForeignKey(table.TableName, fk.Columns[0].ColumnName) #>
 <#= strategy.WriteExecuteCommand() #>
 <#
-			}
         }
 	}
 #>
@@ -196,15 +197,7 @@ CREATE TABLE <#= strategy.FormatName(tableName) #>
 <#
     foreach (DataTable table in tables)
     {
-		var keys = new HashSet<String>();
-		foreach(var constraint in table.Constraints)
-		{
-			if (constraint.GetType() == typeof(UniqueConstraint))
-			{
-				UniqueConstraint pk = (UniqueConstraint) constraint;
-				keys.Add(pk.ConstraintName);
-			}
-		}
+		var keys = table.PrimaryKey.Cast<DataColumn>().Select(column => column.ColumnName);
         string tableName = table.TableName;
         string pkIndexName = strategy.FormatName("IPK_" + tableName);
         
