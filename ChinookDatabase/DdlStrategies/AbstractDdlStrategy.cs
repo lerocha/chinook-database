@@ -85,22 +85,12 @@ namespace ChinookDatabase.DdlStrategies
             return name;
         }
 
-        public virtual string GetColumns(IEnumerable<EdmProperty> properties, char delimiter)
+        public virtual string GetColumns(IEnumerable<String> keys, char delimiter)
         {
             var builder = new StringBuilder();
-            foreach (var property in properties)
+            foreach (var key in keys)
             {
-                builder.AppendFormat("{0}{1} ", FormatName(property.Name), delimiter);
-            }
-            return builder.ToString().Trim().TrimEnd(delimiter);
-        }
-
-        public virtual string GetColumns(HashSet<String> properties, char delimiter)
-        {
-            var builder = new StringBuilder();
-            foreach (var property in properties)
-            {
-                builder.AppendFormat("{0}{1} ", FormatName(property), delimiter);
+                builder.AppendFormat("{0}{1} ", FormatName(key), delimiter);
             }
             return builder.ToString().Trim().TrimEnd(delimiter);
 

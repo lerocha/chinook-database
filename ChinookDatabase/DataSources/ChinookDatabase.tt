@@ -158,15 +158,7 @@ CREATE TABLE <#= strategy.FormatName(tableName) #>
 	}
 
 	// Create Primary Key Constraint.
-    var keys = new HashSet<String>();
-    foreach(var constraint in table.Constraints)
-    {
-        if (constraint.GetType() == typeof(UniqueConstraint))
-        {
-            UniqueConstraint pk = (UniqueConstraint) constraint;
-            keys.Add(pk.ConstraintName);
-        }
-    }
+    var keys = table.PrimaryKey.Cast<DataColumn>().Select(column => column.ColumnName);
 	if (strategy.PrimaryKeyDef==KeyDefinition.OnCreateTableBottom ||
 		(strategy.PrimaryKeyDef==KeyDefinition.OnCreateTableColumn && keys.Count() > 1))
 	{

@@ -36,8 +36,7 @@ namespace ChinookDatabase.DdlStrategies
         string GetStoreType(DataColumn column);
         string GetClustered(DataTable table);
         string GetForeignKeyConstraintName(ReferentialConstraint constraint);
-        string GetColumns(IEnumerable<EdmProperty> properties, char delimiter);
-        string GetColumns(HashSet<String> properties, char delimiter);
+        string GetColumns(IEnumerable<String> keys, char delimiter);
         #endregion
 
         #region Methods used to write full SQL commands.
