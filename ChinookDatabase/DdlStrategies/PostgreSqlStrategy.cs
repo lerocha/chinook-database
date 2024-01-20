@@ -34,7 +34,7 @@ namespace ChinookDatabase.DdlStrategies
             return column.DataType.ToString() switch
             {
                 "System.String" => $"VARCHAR({column.MaxLength})",
-                "System.Int32" => "INTEGER",
+                "System.Int32" => "INT",
                 "System.Decimal" => "NUMERIC(10,2)",
                 "System.DateTime" => "TIMESTAMP",
                 _ => "error_" + column.DataType
