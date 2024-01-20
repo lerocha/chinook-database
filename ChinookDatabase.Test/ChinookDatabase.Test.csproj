@@ -27,4 +27,16 @@
     <ProjectReference Include="..\ChinookDatabase\ChinookDatabase.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\ExpectedDataSet.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\iTunesLibraryTestData.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\NonMediaTestData.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
