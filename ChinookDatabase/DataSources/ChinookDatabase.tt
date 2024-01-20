@@ -34,6 +34,7 @@ var options = new
 // var existingStore = EdmExtension.CreateStoreItemCollection(EdmHelper.GetSsdlFromEdmx(options.ModelFile), options.EFVersion, null, out existingSsdlErrors);
 var ds = new ChinookDataSet();
 ds.ReadXml(options.DataSource);
+var tables = ds.Tables.Cast<DataTable>().OrderBy(t => t.TableName);
 
 var fileManager = Manager.Create(Host, GenerationEnvironment);
 
@@ -113,7 +114,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
    Drop Foreign Keys Constraints
 ********************************************************************************/
 <#	
-    foreach (DataTable table in ds.Tables)
+    foreach (DataTable table in tables)
     {
         foreach (Constraint constraint in table.Constraints)
         {
@@ -132,7 +133,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 /*******************************************************************************
    Drop Tables
 ********************************************************************************/
-<# 		foreach (DataTable table in ds.Tables) {#>
+<# 		foreach (DataTable table in tables) {#>
 <#= strategy.WriteDropTable(table.TableName) #>
 <#= strategy.WriteExecuteCommand() #>
 <#		} 
@@ -143,7 +144,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
    Create Tables
 ********************************************************************************/
 <#
-	foreach (DataTable table in ds.Tables)
+	foreach (DataTable table in tables)
 	{
 		var tableName = table.TableName;
 #>
@@ -201,7 +202,7 @@ CREATE TABLE <#= tableName #>
    Create Primary Key Unique Indexes
 ********************************************************************************/
 <#
-    foreach (DataTable table in ds.Tables)
+    foreach (DataTable table in tables)
     {
 		var keys = new HashSet<String>();
 		foreach(var constraint in table.Constraints)
@@ -239,7 +240,7 @@ CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColum
    Create Foreign Keys
 ********************************************************************************/
 <#
-    foreach (DataTable table in ds.Tables)
+    foreach (DataTable table in tables)
     {
         foreach (Constraint constraint in table.Constraints)
         {
@@ -283,7 +284,7 @@ CREATE INDEX <#= ifkName #> ON <#= toTableName #> (<#= fk.Columns[0].ColumnName 
     var sbValues = new StringBuilder();
 	char delimiter = ',';
 
-	foreach (DataTable table in ds.Tables)
+	foreach (DataTable table in tables)
 	{
 		//var entitySet = (from e in existingStore.GetAllEntitySets() where e.Name == table.TableName select e).FirstOrDefault();
 		//if (entitySet == null) continue;
