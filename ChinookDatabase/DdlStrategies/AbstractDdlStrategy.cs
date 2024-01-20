@@ -1,7 +1,6 @@
 using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
-using ChinookDatabase.Utilities;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -38,28 +37,35 @@ namespace ChinookDatabase.DdlStrategies
 
         public virtual string FormatName(string name)
         {
-            return string.Format("[{0}]", name);
+            return $"[{name}]";
         }
 
         public virtual string FormatStringValue(string value)
         {
-            return string.Format("N'{0}'", value.Replace("'", "''"));
+            return $"N'{value.Replace("'", "''")}'";
         }
 
         public virtual string FormatDateValue(string value)
         {
             var date = Convert.ToDateTime(value);
-            return string.Format("'{0}/{1:0}/{2:0}'", date.Year, date.Month, date.Day);
+            return $"'{date.Year}/{date.Month:0}/{date.Day:0}'";
         }
 
         public virtual string GetFullyQualifiedName(string schema, string name)
         {
-            return string.Format("{0}.{1}", FormatName(schema), FormatName(name));
+            return $"{FormatName(schema)}.{FormatName(name)}";
         }
 
         public virtual string GetStoreType(DataColumn column)
         {
-            return DataSetHelper.GetMySqlType(column);
+            return column.DataType.ToString() switch
+            {
+                "System.String" => $"NVARCHAR({column.MaxLength})",
+                "System.Int32" => "INT",
+                "System.Decimal" => "NUMERIC(10,2)",
+                "System.DateTime" => "DATETIME",
+                _ => "error_" + column.DataType
+            };
         }
         
         public virtual string GetClustered(DataTable table)
@@ -107,12 +113,12 @@ namespace ChinookDatabase.DdlStrategies
 
         public virtual string WriteDropTable(string tableName)
         {
-            return string.Format("DROP TABLE {0};", tableName);
+            return $"DROP TABLE {tableName};";
         }
 
         public virtual string WriteDropForeignKey(string tableName, string columnName)
         {
-            return string.Format("ALTER TABLE {0} DROP CONSTRAINT {1};", tableName, columnName);
+            return $"ALTER TABLE {tableName} DROP CONSTRAINT {columnName};";
         }
 
         public virtual string WriteCreateDatabase(string databaseName)

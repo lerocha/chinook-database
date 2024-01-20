@@ -1,4 +1,6 @@
-﻿namespace ChinookDatabase.DdlStrategies
+﻿using System.Data;
+
+namespace ChinookDatabase.DdlStrategies
 {
     public class SqlServerCompactStrategy : AbstractDdlStrategy
     {
@@ -16,5 +18,16 @@
             return FormatName(name);
         }
 
+        public override string GetStoreType(DataColumn column)
+        {
+            return column.DataType.ToString() switch
+            {
+                "System.String" => $"NVARCHAR({column.MaxLength})",
+                "System.Int32" => "INT",
+                "System.Decimal" => "NUMERIC(10,2)",
+                "System.DateTime" => "DATETIME",
+                _ => "error_" + column.DataType
+            };
+        }
     }
 }

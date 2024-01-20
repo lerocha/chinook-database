@@ -29,6 +29,18 @@ namespace ChinookDatabase.DdlStrategies
             return FormatName(name);
         }
 
+        public override string GetStoreType(DataColumn column)
+        {
+            return column.DataType.ToString() switch
+            {
+                "System.String" => $"NVARCHAR({column.MaxLength})",
+                "System.Int32" => "INTEGER",
+                "System.Decimal" => "NUMERIC(10,2)",
+                "System.DateTime" => "DATETIME",
+                _ => "error_" + column.DataType
+            };
+        }
+        
         public override string WriteCreateColumn(DataColumn column)
         {
             var notnull = (column.AllowDBNull ? "" : "NOT NULL");
@@ -41,7 +53,7 @@ namespace ChinookDatabase.DdlStrategies
 
         public override string WriteDropTable(string tableName)
         {
-            return string.Format("DROP TABLE IF EXISTS {0};", FormatName(tableName));
+            return $"DROP TABLE IF EXISTS {FormatName(tableName)};";
         }
 
         public override string WriteDropForeignKey(string tableName, string columnName)

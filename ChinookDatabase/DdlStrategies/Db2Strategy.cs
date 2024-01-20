@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Data;
+using System.Text;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -23,17 +24,29 @@ namespace ChinookDatabase.DdlStrategies
 		public override string FormatDateValue(string value)
 		{
 			var date = Convert.ToDateTime(value);
-			return string.Format("'{0}'", date.ToString("yyyy-MM-dd HH:mm:ss"));
+			return $"'{date:yyyy-MM-dd HH:mm:ss}'";
 		}
 
 		public override string FormatName(string name)
 		{
-			return string.Format("\"{0}\"", name);
+			return $"\"{name}\"";
 		}
 
 		public override string GetFullyQualifiedName(string schema, string name)
 		{
 			return FormatName(name);
 		}
+		
+		public override string GetStoreType(DataColumn column)
+		{
+			return column.DataType.ToString() switch
+			{
+				"System.String" => $"VARCHAR({column.MaxLength})",
+				"System.Int32" => "INT",
+				"System.Decimal" => "NUMERIC(10,2)",
+				"System.DateTime" => "DATE",
+				_ => "error_" + column.DataType
+			};
+		}		
 	}
 }

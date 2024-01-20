@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
-using ChinookDatabase.Utilities;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -23,18 +22,18 @@ namespace ChinookDatabase.DdlStrategies
 
         public override string FormatName(string name)
         {
-            return string.Format("{0}", name);
+            return name;
         }
 
         public override string FormatStringValue(string value)
         {
-            return string.Format("'{0}'", value.Replace("'", "'||chr(39)||'").Replace("&", "'||chr(38)||'"));
+            return $"'{value.Replace("'", "'||chr(39)||'").Replace("&", "'||chr(38)||'")}'";
         }
 
         public override string FormatDateValue(string value)
         {
             var date = Convert.ToDateTime(value);
-            return string.Format("TO_DATE('{0}-{1}-{2} 00:00:00','yyyy-mm-dd hh24:mi:ss')", date.Year, date.Month, date.Day);
+            return $"TO_DATE('{date.Year}-{date.Month}-{date.Day} 00:00:00','yyyy-mm-dd hh24:mi:ss')";
         }
 
         public override string GetFullyQualifiedName(string schema, string name)
@@ -44,12 +43,19 @@ namespace ChinookDatabase.DdlStrategies
 
         public override string GetStoreType(DataColumn column)
         {
-            return DataSetHelper.GetOracleType(column);
+            return column.DataType.ToString() switch
+            {
+                "System.String" => $"VARCHAR2({column.MaxLength})",
+                "System.Int32" => "NUMBER",
+                "System.Decimal" => "NUMBER",
+                "System.DateTime" => "DATE",
+                _ => "error_" + column.DataType
+            };
         }
 
         public override string WriteDropDatabase(string databaseName)
         {
-            return string.Format("DROP USER {0} CASCADE;", databaseName.ToLower());
+            return $"DROP USER {databaseName.ToLower()} CASCADE;";
         }
 
         public override string WriteCreateDatabase(string databaseName)
@@ -73,7 +79,7 @@ namespace ChinookDatabase.DdlStrategies
 
         public override string WriteUseDatabase(string databaseName)
         {
-            return string.Format("conn {0}/p4ssw0rd", databaseName.ToLower());
+            return $"conn {databaseName.ToLower()}/p4ssw0rd";
         }
 
         public override string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint)
