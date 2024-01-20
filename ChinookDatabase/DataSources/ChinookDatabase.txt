@@ -25,8 +25,6 @@ This is the list of files included in the complete version.
 || Data Source || File || Description ||
 | Db2 | {"Chinook_Db2.sql"} | SQL script to create the Chinook database.  |
 | Db2 | {"CreateDb2.bat"} | Batch file to create the Chinook database. |
-| EffiProz | {"Chinook_EffiProz.sql"} | SQL script to create the Chinook database.  |
-| EffiProz | {"Chinook_EffiProz_AutoIncrementPKs.sql"} | SQL script to create the Chinook database. Auto incremented primary keys. |
 | MySql | {"Chinook_MySql.sql"} | SQL script to create the Chinook database.  |
 | MySql | {"Chinook_MySql_AutoIncrementPKs.sql"} | SQL script to create the Chinook database. Auto incremented primary keys. |
 | MySql | {"CreateMySql.bat"} | Batch file to create the Chinook database. |

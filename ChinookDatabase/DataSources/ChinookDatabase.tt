@@ -148,7 +148,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 	{
 		var tableName = table.TableName;
 #>
-CREATE TABLE <#= tableName #>
+CREATE TABLE <#= strategy.FormatName(tableName) #>
 (<#
 
     for (int i = 0; i < table.Columns.Count; i++)
