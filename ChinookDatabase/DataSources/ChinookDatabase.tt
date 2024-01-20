@@ -1,6 +1,5 @@
 ﻿<#@ template language="C#" debug="true" hostSpecific="true" #>
 <#@ output extension=".txt" #>
-<#@ include file="EF6.Utility.CS.ttinclude"#>
 <#@ include file="..\_T4Templates\Chinook.ttinclude"#>
 <#@ include file="..\_T4Templates\Manager.ttinclude"#>
 <#
@@ -29,9 +28,7 @@ var options = new
 };
 
 
-// Read the existing store item collection from the edmx file.
-// IList<EdmSchemaError> existingSsdlErrors;
-// var existingStore = EdmExtension.CreateStoreItemCollection(EdmHelper.GetSsdlFromEdmx(options.ModelFile), options.EFVersion, null, out existingSsdlErrors);
+// Read the data model
 var ds = new ChinookDataSet();
 ds.ReadXml(options.DataSource);
 var tables = ds.Tables.Cast<DataTable>().OrderBy(t => t.TableName);
@@ -170,15 +167,16 @@ CREATE TABLE <#= strategy.FormatName(tableName) #>
 	// Create Foreign Key depending on the strategy.
 	if (strategy.ForeignKeyDef==KeyDefinition.OnCreateTableBottom)
 	{
-		foreach (Constraint constraint in table.Constraints)
+		var foreignKeys = table.Constraints.Cast<Constraint>()
+			.Where(constraint => constraint.GetType() == typeof(ForeignKeyConstraint))
+			.Select(constraint => (ForeignKeyConstraint) constraint)
+			.OrderBy(constraint => constraint.ConstraintName);
+
+		foreach (var fk in foreignKeys)
 		{
-			if (constraint.GetType() == typeof(ForeignKeyConstraint))
-			{
-				ForeignKeyConstraint fk = (ForeignKeyConstraint) constraint;
 		#>,
     FOREIGN KEY (<#= fk.Columns[0].ColumnName #>) REFERENCES <#= fk.RelatedTable.TableName #> (<#= fk.RelatedColumns[0].ColumnName #>) 
 		<#= strategy.WriteForeignKeyUpdateAction() #><#
-			}
 		}
 	
 	}
