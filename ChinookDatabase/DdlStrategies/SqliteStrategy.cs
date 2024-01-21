@@ -24,11 +24,6 @@ namespace ChinookDatabase.DdlStrategies
             return string.Format("'{0}'", date.ToString("yyyy-MM-dd HH:mm:ss"));
         }
 
-        public override string GetFullyQualifiedName(string schema, string name)
-        {
-            return FormatName(name);
-        }
-
         public override string GetStoreType(DataColumn column)
         {
             return column.DataType.ToString() switch

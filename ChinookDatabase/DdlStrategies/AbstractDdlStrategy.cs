@@ -35,15 +35,9 @@ namespace ChinookDatabase.DdlStrategies
         public string CommandLineFormat { get; set; }
         public Encoding Encoding { get; set; }
 
-        public virtual string FormatName(string name)
-        {
-            return $"[{name}]";
-        }
+        public virtual string FormatName(string name) => $"[{name}]";
 
-        public virtual string FormatStringValue(string value)
-        {
-            return $"N'{value.Replace("'", "''")}'";
-        }
+        public virtual string FormatStringValue(string value) => $"N'{value.Replace("'", "''")}'";
 
         public virtual string FormatDateValue(string value)
         {
@@ -51,27 +45,18 @@ namespace ChinookDatabase.DdlStrategies
             return $"'{date.Year}/{date.Month:0}/{date.Day:0}'";
         }
 
-        public virtual string GetFullyQualifiedName(string schema, string name)
-        {
-            return $"{FormatName(schema)}.{FormatName(name)}";
-        }
+        public virtual string GetFullyQualifiedName(string name) => $"{FormatName(name)}";
 
-        public virtual string GetStoreType(DataColumn column)
+        public virtual string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return column.DataType.ToString() switch
-            {
-                "System.String" => $"NVARCHAR({column.MaxLength})",
-                "System.Int32" => "INT",
-                "System.Decimal" => "NUMERIC(10,2)",
-                "System.DateTime" => "DATETIME",
-                _ => "error_" + column.DataType
-            };
-        }
-        
-        public virtual string GetClustered(DataTable table)
-        {
-            return string.Empty;
-        }
+            "System.String" => $"NVARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATETIME",
+            _ => "error_" + column.DataType
+        };
+
+        public virtual string GetClustered(DataTable table) => string.Empty;
 
         public virtual string GetForeignKeyConstraintName(ReferentialConstraint constraint)
         {
@@ -96,30 +81,15 @@ namespace ChinookDatabase.DdlStrategies
 
         }
 
-        public virtual string WriteDropDatabase(string databaseName)
-        {
-            return string.Empty;
-        }
+        public virtual string WriteDropDatabase(string databaseName) => string.Empty;
 
-        public virtual string WriteDropTable(string tableName)
-        {
-            return $"DROP TABLE {tableName};";
-        }
+        public virtual string WriteDropTable(string tableName) => $"DROP TABLE {tableName};";
 
-        public virtual string WriteDropForeignKey(string tableName, string columnName)
-        {
-            return $"ALTER TABLE {tableName} DROP CONSTRAINT {columnName};";
-        }
+        public virtual string WriteDropForeignKey(string tableName, string columnName) => $"ALTER TABLE {tableName} DROP CONSTRAINT {columnName};";
 
-        public virtual string WriteCreateDatabase(string databaseName)
-        {
-            return string.Empty;
-        }
+        public virtual string WriteCreateDatabase(string databaseName) => string.Empty;
 
-        public virtual string WriteUseDatabase(string databaseName)
-        {
-            return string.Empty;
-        }
+        public virtual string WriteUseDatabase(string databaseName) => string.Empty;
 
         public virtual string WriteCreateColumn(DataColumn column)
         {
@@ -131,25 +101,17 @@ namespace ChinookDatabase.DdlStrategies
                                  notnull, identity).Trim();
         }
 
-        public virtual string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint)
+        public virtual string WriteForeignKeyDeleteAction(ForeignKeyConstraint foreignKeyConstraint) => foreignKeyConstraint.DeleteRule switch
         {
-            return refConstraint.FromRole.DeleteBehavior == OperationAction.Cascade ? "ON DELETE CASCADE" : "ON DELETE NO ACTION";
-        }
+            Rule.Cascade => "ON DELETE CASCADE",
+            _ => "ON DELETE NO ACTION"
+        };
 
-        public virtual string WriteForeignKeyUpdateAction()
-        {
-            return "ON UPDATE NO ACTION";
-        }
+        public virtual string WriteForeignKeyUpdateAction(ForeignKeyConstraint foreignKeyConstraint) => "ON UPDATE NO ACTION";
 
-        public virtual string WriteExecuteCommand()
-        {
-            return string.Empty;
-        }
+        public virtual string WriteExecuteCommand() => string.Empty;
 
-        public virtual string WriteFinishCommit()
-        {
-            return string.Empty;
-        }
+        public virtual string WriteFinishCommit() => string.Empty;
 
         #endregion
     }

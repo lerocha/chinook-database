@@ -14,10 +14,14 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
         }
 
+        public override string GetFullyQualifiedName(string name)
+        {
+            return $"[dbo].{FormatName(name)}";
+        }
+
         public override string GetClustered(DataTable table)
         {
-            // TODO: entityType.IsJoinTable(store) ? "NONCLUSTERED" : "CLUSTERED";
-            return "CLUSTERED";
+            return table.PrimaryKey.Length > 1 ? "NONCLUSTERED" : "CLUSTERED";
         }
 
         public override string WriteDropDatabase(string databaseName)
@@ -39,7 +43,7 @@ namespace ChinookDatabase.DdlStrategies
         public override string WriteDropTable(string tableName)
         {
             // TODO
-            var fqName = GetFullyQualifiedName("chinook", tableName);
+            var fqName = GetFullyQualifiedName(tableName);
             return string.Format("IF OBJECT_ID(N'{0}', 'U') IS NOT NULL DROP TABLE {0};", fqName);
         }
 

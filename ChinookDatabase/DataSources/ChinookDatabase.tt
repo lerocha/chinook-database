@@ -146,7 +146,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 	{
 		var tableName = table.TableName;
 #>
-CREATE TABLE <#= strategy.FormatName(tableName) #>
+CREATE TABLE <#= strategy.GetFullyQualifiedName(tableName) #>
 (<#
 
     for (int i = 0; i < table.Columns.Count; i++)
@@ -176,7 +176,7 @@ CREATE TABLE <#= strategy.FormatName(tableName) #>
 		{
 		#>,
     FOREIGN KEY (<#= fk.Columns[0].ColumnName #>) REFERENCES <#= fk.RelatedTable.TableName #> (<#= fk.RelatedColumns[0].ColumnName #>) 
-		<#= strategy.WriteForeignKeyUpdateAction() #><#
+		<#= strategy.WriteForeignKeyDeleteAction(fk) #> <#= strategy.WriteForeignKeyUpdateAction(fk) #><#
 		}
 	
 	}
@@ -241,8 +241,8 @@ CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColum
 			if (strategy.ForeignKeyDef==KeyDefinition.OnAlterTable)
 			{
 #>
-ALTER TABLE <#= strategy.FormatName(fromTableName) #> ADD CONSTRAINT <#= fkName #>
-    FOREIGN KEY (<#= strategy.FormatName(fk.Columns[0].ColumnName) #>) REFERENCES <#= strategy.FormatName(toTableName) #> (<#= strategy.FormatName(fk.RelatedColumns[0].ColumnName) #>) ON DELETE NO ACTION <#= strategy.WriteForeignKeyUpdateAction() #>;
+ALTER TABLE <#= strategy.GetFullyQualifiedName(fromTableName) #> ADD CONSTRAINT <#= fkName #>
+    FOREIGN KEY (<#= strategy.FormatName(fk.Columns[0].ColumnName) #>) REFERENCES <#= strategy.GetFullyQualifiedName(toTableName) #> (<#= strategy.FormatName(fk.RelatedColumns[0].ColumnName) #>) <#= strategy.WriteForeignKeyDeleteAction(fk) #> <#= strategy.WriteForeignKeyUpdateAction(fk) #>;
 <#= strategy.WriteExecuteCommand() #>
 <#      
 			} 
@@ -251,7 +251,7 @@ ALTER TABLE <#= strategy.FormatName(fromTableName) #> ADD CONSTRAINT <#= fkName 
 			if (strategy.IsIndexEnabled)
 			{
 #>
-CREATE INDEX <#= ifkName #> ON <#= strategy.FormatName(fromTableName) #> (<#= strategy.FormatName(fk.Columns[0].ColumnName) #>);
+CREATE INDEX <#= ifkName #> ON <#= strategy.GetFullyQualifiedName(fromTableName) #> (<#= strategy.FormatName(fk.Columns[0].ColumnName) #>);
 <#= strategy.WriteExecuteCommand() #>
 <#      
 			}
@@ -271,7 +271,7 @@ CREATE INDEX <#= ifkName #> ON <#= strategy.FormatName(fromTableName) #> (<#= st
 	{
 		//var entitySet = (from e in existingStore.GetAllEntitySets() where e.Name == table.TableName select e).FirstOrDefault();
 		//if (entitySet == null) continue;
-		var tableName = strategy.GetFullyQualifiedName("chinook", table.TableName);
+		var tableName = strategy.GetFullyQualifiedName(table.TableName);
 #>
 <#
         foreach (DataRow row in table.Rows)

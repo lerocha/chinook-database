@@ -13,11 +13,6 @@ namespace ChinookDatabase.DdlStrategies
             IsReCreateDatabaseEnabled = true;
         }
 
-        public override string GetFullyQualifiedName(string schema, string name)
-        {
-            return FormatName(name);
-        }
-
         public override string GetStoreType(DataColumn column)
         {
             return column.DataType.ToString() switch

@@ -32,7 +32,7 @@ namespace ChinookDatabase.DdlStrategies
         string FormatName(string name);
         string FormatStringValue(string value);
         string FormatDateValue(string date);
-        string GetFullyQualifiedName(string schema, string name);
+        string GetFullyQualifiedName(string name);
         string GetStoreType(DataColumn column);
         string GetClustered(DataTable table);
         string GetForeignKeyConstraintName(ReferentialConstraint constraint);
@@ -47,8 +47,8 @@ namespace ChinookDatabase.DdlStrategies
         string WriteCreateDatabase(string databaseName);
         string WriteUseDatabase(string databaseName);
         string WriteCreateColumn(DataColumn column);
-        string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint);
-        string WriteForeignKeyUpdateAction();
+        string WriteForeignKeyDeleteAction(ForeignKeyConstraint foreignKeyConstraint);
+        string WriteForeignKeyUpdateAction(ForeignKeyConstraint foreignKeyConstraint);
         string WriteExecuteCommand();
         string WriteFinishCommit();
 
