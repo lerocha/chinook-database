@@ -23,7 +23,6 @@
 <#@ import namespace="System.Xml"#>
 <#@ import namespace="System.Xml.Linq"#>
 <#@ import namespace="System.Xml.XPath"#>
-<#@ import namespace="Microsoft.VisualStudio.TextTemplating"#>
 <# 
 	// Set options here
 	var options = new {
