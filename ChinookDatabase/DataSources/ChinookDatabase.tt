@@ -175,7 +175,7 @@ CREATE TABLE <#= strategy.GetFullyQualifiedName(tableName) #>
 		foreach (var fk in foreignKeys)
 		{
 		#>,
-    FOREIGN KEY (<#= fk.Columns[0].ColumnName #>) REFERENCES <#= fk.RelatedTable.TableName #> (<#= fk.RelatedColumns[0].ColumnName #>) 
+    FOREIGN KEY (<#= strategy.GetFullyQualifiedName(fk.Columns[0].ColumnName) #>) REFERENCES <#= strategy.GetFullyQualifiedName(fk.RelatedTable.TableName) #> (<#= strategy.GetFullyQualifiedName(fk.RelatedColumns[0].ColumnName) #>) 
 		<#= strategy.WriteForeignKeyDeleteAction(fk) #> <#= strategy.WriteForeignKeyUpdateAction(fk) #><#
 		}
 	

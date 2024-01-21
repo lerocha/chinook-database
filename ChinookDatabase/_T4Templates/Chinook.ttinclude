@@ -56,12 +56,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-	// Function needed by EF6.Utility.CS.ttinclude
-    public static void ArgumentNotNull(Object param, String name)
-    {
-        if (param == null) { throw new ArgumentNullException("name"); }
-    }
-
 
 //------------------------------------------------------------------------------
 // Filename: ChinookDataSet.cs
@@ -6354,7 +6348,8 @@
         public virtual string WriteCreateColumn(DataColumn column)
         {
             var notnull = (column.AllowDBNull ? "" : "NOT NULL");
-            var identity = IsIdentityEnabled ? Identity : String.Empty;
+            var isPrimaryKey = column.Table?.PrimaryKey.Length == 1 && column.Table?.PrimaryKey.Contains(column) == true;
+            var identity = IsIdentityEnabled && isPrimaryKey ? Identity : String.Empty;
             return string.Format("{0} {1} {2} {3}",
                                  FormatName(column.ColumnName),
                                  GetStoreType(column),
@@ -6667,7 +6662,8 @@
         public override string WriteCreateColumn(DataColumn column)
         {
             var notnull = (column.AllowDBNull ? "" : "NOT NULL");
-            var identity = IsIdentityEnabled ? Identity : String.Empty;
+            var isPrimaryKey = column.Table?.PrimaryKey.Length == 1 && column.Table?.PrimaryKey.Contains(column) == true;
+            var identity = IsIdentityEnabled && isPrimaryKey ? Identity : String.Empty;
             return string.Format("{0} {1} {2} {3}",
                                  FormatName(column.ColumnName),
                                  GetStoreType(column),

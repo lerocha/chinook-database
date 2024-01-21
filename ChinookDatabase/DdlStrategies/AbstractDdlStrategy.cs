@@ -94,7 +94,8 @@ namespace ChinookDatabase.DdlStrategies
         public virtual string WriteCreateColumn(DataColumn column)
         {
             var notnull = (column.AllowDBNull ? "" : "NOT NULL");
-            var identity = IsIdentityEnabled ? Identity : String.Empty;
+            var isPrimaryKey = column.Table?.PrimaryKey.Length == 1 && column.Table?.PrimaryKey.Contains(column) == true;
+            var identity = IsIdentityEnabled && isPrimaryKey ? Identity : String.Empty;
             return string.Format("{0} {1} {2} {3}",
                                  FormatName(column.ColumnName),
                                  GetStoreType(column),

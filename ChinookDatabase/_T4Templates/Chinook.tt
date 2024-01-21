@@ -86,12 +86,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-	// Function needed by EF6.Utility.CS.ttinclude
-    public static void ArgumentNotNull(Object param, String name)
-    {
-        if (param == null) { throw new ArgumentNullException("name"); }
-    }
-
 <#
 	// Reads all the classes and append them to output.
 	output = new StringBuilder();
