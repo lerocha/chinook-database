@@ -19,7 +19,7 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = builder.ToString();
         }
 
-        public override string FormatName(string name) => $"\"{name}\"";
+        public override string FormatName(string name) => $"{name}";
 
         public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
