@@ -269,8 +269,6 @@ CREATE INDEX <#= ifkName #> ON <#= strategy.GetFullyQualifiedName(fromTableName)
 
 	foreach (DataTable table in tables)
 	{
-		//var entitySet = (from e in existingStore.GetAllEntitySets() where e.Name == table.TableName select e).FirstOrDefault();
-		//if (entitySet == null) continue;
 		var tableName = strategy.GetFullyQualifiedName(table.TableName);
 #>
 <#

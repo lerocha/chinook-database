@@ -13,10 +13,7 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = "if exist {0}ite del {0}ite\nsqlite3 -init {0} {0}ite";
         }
 
-        public override string FormatStringValue(string value)
-        {
-            return string.Format("'{0}'", value.Replace("'", "''"));
-        }
+        public override string FormatStringValue(string value) => string.Format("'{0}'", value.Replace("'", "''"));
 
         public override string FormatDateValue(string value)
         {
@@ -24,18 +21,15 @@ namespace ChinookDatabase.DdlStrategies
             return string.Format("'{0}'", date.ToString("yyyy-MM-dd HH:mm:ss"));
         }
 
-        public override string GetStoreType(DataColumn column)
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return column.DataType.ToString() switch
-            {
-                "System.String" => $"NVARCHAR({column.MaxLength})",
-                "System.Int32" => "INTEGER",
-                "System.Decimal" => "NUMERIC(10,2)",
-                "System.DateTime" => "DATETIME",
-                _ => "error_" + column.DataType
-            };
-        }
-        
+            "System.String" => $"NVARCHAR({column.MaxLength})",
+            "System.Int32" => "INTEGER",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATETIME",
+            _ => "error_" + column.DataType
+        };
+
         public override string WriteCreateColumn(DataColumn column)
         {
             var notnull = (column.AllowDBNull ? "" : "NOT NULL");
@@ -46,14 +40,8 @@ namespace ChinookDatabase.DdlStrategies
                                  identity, notnull).Trim();
         }
 
-        public override string WriteDropTable(string tableName)
-        {
-            return $"DROP TABLE IF EXISTS {FormatName(tableName)};";
-        }
+        public override string WriteDropTable(string tableName) => $"DROP TABLE IF EXISTS {FormatName(tableName)};";
 
-        public override string WriteDropForeignKey(string tableName, string columnName)
-        {
-            return string.Empty;
-        }
+        public override string WriteDropForeignKey(string tableName, string columnName) => string.Empty;
     }
 }

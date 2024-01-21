@@ -27,21 +27,15 @@ namespace ChinookDatabase.DdlStrategies
 			return $"'{date:yyyy-MM-dd HH:mm:ss}'";
 		}
 
-		public override string FormatName(string name)
-		{
-			return $"\"{name}\"";
-		}
+        public override string FormatName(string name) => $"\"{name}\"";
 
-		public override string GetStoreType(DataColumn column)
-		{
-			return column.DataType.ToString() switch
-			{
-				"System.String" => $"VARCHAR({column.MaxLength})",
-				"System.Int32" => "INT",
-				"System.Decimal" => "NUMERIC(10,2)",
-				"System.DateTime" => "DATE",
-				_ => "error_" + column.DataType
-			};
-		}		
-	}
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
+        {
+            "System.String" => $"VARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATE",
+            _ => "error_" + column.DataType
+        };
+    }
 }

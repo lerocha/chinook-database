@@ -6406,23 +6406,17 @@
 			return $"'{date:yyyy-MM-dd HH:mm:ss}'";
 		}
 
-		public override string FormatName(string name)
-		{
-			return $"\"{name}\"";
-		}
+        public override string FormatName(string name) => $"\"{name}\"";
 
-		public override string GetStoreType(DataColumn column)
-		{
-			return column.DataType.ToString() switch
-			{
-				"System.String" => $"VARCHAR({column.MaxLength})",
-				"System.Int32" => "INT",
-				"System.Decimal" => "NUMERIC(10,2)",
-				"System.DateTime" => "DATE",
-				_ => "error_" + column.DataType
-			};
-		}		
-	}
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
+        {
+            "System.String" => $"VARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATE",
+            _ => "error_" + column.DataType
+        };
+    }
 
 //------------------------------------------------------------------------------
 // Filename: IDdlStrategy.cs
@@ -6509,42 +6503,24 @@
             CommandLineFormat = @"mysql -h localhost -u root --password=p4ssw0rd <{0}";
         }
 
-        public override string FormatName(string name)
-        {
-            return $"`{name}`";
-        }
+        public override string FormatName(string name) => $"`{name}`";
 
-        public override string GetStoreType(DataColumn column)
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return column.DataType.ToString() switch
-            {
-                "System.String" => $"NVARCHAR({column.MaxLength})",
-                "System.Int32" => "INT",
-                "System.Decimal" => "NUMERIC(10,2)",
-                "System.DateTime" => "DATETIME",
-                _ => "error_" + column.DataType
-            };
-        }
-        
-        public override string WriteDropDatabase(string databaseName)
-        {
-            return string.Format("DROP DATABASE IF EXISTS {0};", FormatName(databaseName));
-        }
+            "System.String" => $"NVARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATETIME",
+            _ => "error_" + column.DataType
+        };
 
-        public override string WriteDropTable(string tableName)
-        {
-            return $"DROP TABLE IF EXISTS {FormatName(tableName)};";
-        }
+        public override string WriteDropDatabase(string databaseName) => string.Format("DROP DATABASE IF EXISTS {0};", FormatName(databaseName));
 
-        public override string WriteCreateDatabase(string databaseName)
-        {
-            return $"CREATE DATABASE {FormatName(databaseName)};";
-        }
+        public override string WriteDropTable(string tableName) => $"DROP TABLE IF EXISTS {FormatName(tableName)};";
 
-        public override string WriteUseDatabase(string databaseName)
-        {
-            return $"USE {FormatName(databaseName)};";
-        }
+        public override string WriteCreateDatabase(string databaseName) => $"CREATE DATABASE {FormatName(databaseName)};";
+
+        public override string WriteUseDatabase(string databaseName) => $"USE {FormatName(databaseName)};";
     }
 
 //------------------------------------------------------------------------------
@@ -6643,22 +6619,16 @@
             CommandLineFormat = builder.ToString();
         }
 
-        public override string FormatName(string name)
-        {
-            return $"\"{name}\"";
-        }
+        public override string FormatName(string name) => $"\"{name}\"";
 
-        public override string GetStoreType(DataColumn column)
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return column.DataType.ToString() switch
-            {
-                "System.String" => $"VARCHAR({column.MaxLength})",
-                "System.Int32" => "INT",
-                "System.Decimal" => "NUMERIC(10,2)",
-                "System.DateTime" => "TIMESTAMP",
-                _ => "error_" + column.DataType
-            };
-        }
+            "System.String" => $"VARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "TIMESTAMP",
+            _ => "error_" + column.DataType
+        };
     }
 
 //------------------------------------------------------------------------------
@@ -6677,10 +6647,7 @@
             CommandLineFormat = "if exist {0}ite del {0}ite\nsqlite3 -init {0} {0}ite";
         }
 
-        public override string FormatStringValue(string value)
-        {
-            return string.Format("'{0}'", value.Replace("'", "''"));
-        }
+        public override string FormatStringValue(string value) => string.Format("'{0}'", value.Replace("'", "''"));
 
         public override string FormatDateValue(string value)
         {
@@ -6688,18 +6655,15 @@
             return string.Format("'{0}'", date.ToString("yyyy-MM-dd HH:mm:ss"));
         }
 
-        public override string GetStoreType(DataColumn column)
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return column.DataType.ToString() switch
-            {
-                "System.String" => $"NVARCHAR({column.MaxLength})",
-                "System.Int32" => "INTEGER",
-                "System.Decimal" => "NUMERIC(10,2)",
-                "System.DateTime" => "DATETIME",
-                _ => "error_" + column.DataType
-            };
-        }
-        
+            "System.String" => $"NVARCHAR({column.MaxLength})",
+            "System.Int32" => "INTEGER",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATETIME",
+            _ => "error_" + column.DataType
+        };
+
         public override string WriteCreateColumn(DataColumn column)
         {
             var notnull = (column.AllowDBNull ? "" : "NOT NULL");
@@ -6710,15 +6674,9 @@
                                  identity, notnull).Trim();
         }
 
-        public override string WriteDropTable(string tableName)
-        {
-            return $"DROP TABLE IF EXISTS {FormatName(tableName)};";
-        }
+        public override string WriteDropTable(string tableName) => $"DROP TABLE IF EXISTS {FormatName(tableName)};";
 
-        public override string WriteDropForeignKey(string tableName, string columnName)
-        {
-            return string.Empty;
-        }
+        public override string WriteDropForeignKey(string tableName, string columnName) => string.Empty;
     }
 
 //------------------------------------------------------------------------------
@@ -6737,17 +6695,14 @@
             IsReCreateDatabaseEnabled = true;
         }
 
-        public override string GetStoreType(DataColumn column)
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return column.DataType.ToString() switch
-            {
-                "System.String" => $"NVARCHAR({column.MaxLength})",
-                "System.Int32" => "INT",
-                "System.Decimal" => "NUMERIC(10,2)",
-                "System.DateTime" => "DATETIME",
-                _ => "error_" + column.DataType
-            };
-        }
+            "System.String" => $"NVARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATETIME",
+            _ => "error_" + column.DataType
+        };
     }
 
 //------------------------------------------------------------------------------
@@ -6765,15 +6720,9 @@
             CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
         }
 
-        public override string GetFullyQualifiedName(string name)
-        {
-            return $"[dbo].{FormatName(name)}";
-        }
+        public override string GetFullyQualifiedName(string name) => $"[dbo].{FormatName(name)}";
 
-        public override string GetClustered(DataTable table)
-        {
-            return table.PrimaryKey.Length > 1 ? "NONCLUSTERED" : "CLUSTERED";
-        }
+        public override string GetClustered(DataTable table) => table.PrimaryKey.Length > 1 ? "NONCLUSTERED" : "CLUSTERED";
 
         public override string WriteDropDatabase(string databaseName)
         {
@@ -6791,27 +6740,13 @@
             return builder.ToString();
         }
 
-        public override string WriteDropTable(string tableName)
-        {
-            // TODO
-            var fqName = GetFullyQualifiedName(tableName);
-            return string.Format("IF OBJECT_ID(N'{0}', 'U') IS NOT NULL DROP TABLE {0};", fqName);
-        }
+        public override string WriteDropTable(string tableName) => $"IF OBJECT_ID(N'{GetFullyQualifiedName(tableName)}', 'U') IS NOT NULL DROP TABLE {GetFullyQualifiedName(tableName)};";
 
-        public override string WriteCreateDatabase(string databaseName)
-        {
-            return string.Format("CREATE DATABASE {0};", FormatName(databaseName));
-        }
+        public override string WriteCreateDatabase(string databaseName) => $"CREATE DATABASE {FormatName(databaseName)};";
 
-        public override string WriteUseDatabase(string databaseName)
-        {
-            return string.Format("USE {0};", FormatName(databaseName));
-        }
+        public override string WriteUseDatabase(string databaseName) => $"USE {FormatName(databaseName)};";
 
-        public override string WriteExecuteCommand()
-        {
-            return "GO";
-        }
+        public override string WriteExecuteCommand() => "GO";
     }
 
 //------------------------------------------------------------------------------
