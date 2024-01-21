@@ -1,5 +1,4 @@
 ﻿using System.Data;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
 
 namespace ChinookDatabase.DdlStrategies
@@ -35,7 +34,6 @@ namespace ChinookDatabase.DdlStrategies
         string GetFullyQualifiedName(string name);
         string GetStoreType(DataColumn column);
         string GetClustered(DataTable table);
-        string GetForeignKeyConstraintName(ReferentialConstraint constraint);
         string GetColumns(IEnumerable<String> keys, char delimiter);
         #endregion
 

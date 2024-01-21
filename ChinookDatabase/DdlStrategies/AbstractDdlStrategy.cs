@@ -1,5 +1,4 @@
 using System.Data;
-using System.Data.Entity.Core.Metadata.Edm;
 using System.Text;
 
 namespace ChinookDatabase.DdlStrategies
@@ -57,18 +56,6 @@ namespace ChinookDatabase.DdlStrategies
         };
 
         public virtual string GetClustered(DataTable table) => string.Empty;
-
-        public virtual string GetForeignKeyConstraintName(ReferentialConstraint constraint)
-        {
-            var name = constraint.FromRole.DeclaringType.Name;
-
-            if (!name.StartsWith("FK_", StringComparison.InvariantCultureIgnoreCase))
-            {
-                name = "FK_" + name;
-            }
-
-            return name;
-        }
 
         public virtual string GetColumns(IEnumerable<String> keys, char delimiter)
         {
