@@ -267,7 +267,7 @@ CREATE INDEX <#= ifkName #> ON <#= strategy.GetFullyQualifiedName(fromTableName)
     var sbValues = new StringBuilder();
 	char delimiter = ',';
 
-	foreach (DataTable table in tables)
+	foreach (DataTable table in ds.Tables)
 	{
 		var tableName = strategy.GetFullyQualifiedName(table.TableName);
 #>
