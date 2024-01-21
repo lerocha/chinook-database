@@ -28,6 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="DatabaseTests\DatabaseFixture.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DatabaseFixture.cs</LastGenOutput>
+    </None>
     <None Update="TestData\ExpectedDataSet.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -37,6 +41,18 @@
     <None Update="TestData\NonMediaTestData.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DatabaseTests\DatabaseFixture.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DatabaseFixture.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>
