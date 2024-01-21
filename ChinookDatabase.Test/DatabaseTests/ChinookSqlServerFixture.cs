@@ -3,7 +3,7 @@
  * Description: Test fixture for Chinook database.
  * DB Server: SqlServer
  * Author: Luis Rocha
- * License: http://www.codeplex.com/ChinookDatabase/license
+ * License: https://github.com/lerocha/chinook-database/blob/master/LICENSE.md
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
  *            1. Run the generated SQL script to create the database to be tested.

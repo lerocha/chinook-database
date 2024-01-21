@@ -5,7 +5,6 @@ Chinook Database 1.4
 * ChinookDatabase1.4_CompleteVersion.zip is a complete package for all supported databases/data sources. There are also packages for each specific data source.
 !! Supported Database Servers
 * [url:DB2|http://www-01.ibm.com/software/data/db2/express/]
-* [url:EffiProz|http://effiproz.codeplex.com/]
 * [url:MySQL|http://www.mysql.com/]
 * [url:Oracle|http://www.oracle.com/technetwork/database/express-edition/overview/index.html]
 * [url:PostgreSQL|http://www.postgresql.org/]

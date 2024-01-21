@@ -5,7 +5,7 @@
    Description: Creates and populates the Chinook database.
    DB Server: MySql
    Author: Luis Rocha
-   License: http://www.codeplex.com/ChinookDatabase/license
+   License: https://github.com/lerocha/chinook-database/blob/master/LICENSE.md
 ********************************************************************************/
 
 /*******************************************************************************
