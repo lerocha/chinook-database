@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Metadata.Edm;
-using System.Linq;
+using System.Data;
 using System.Text;
-using Microsoft.Data.Entity.Design.DatabaseGeneration;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -38,132 +34,72 @@ namespace ChinookDatabase.DdlStrategies
         public string CommandLineFormat { get; set; }
         public Encoding Encoding { get; set; }
 
-        public virtual string FormatName(string name)
-        {
-            return string.Format("[{0}]", name);
-        }
+        public virtual string FormatName(string name) => $"[{name}]";
 
-        public virtual string FormatStringValue(string value)
-        {
-            return string.Format("N'{0}'", value.Replace("'", "''"));
-        }
+        public virtual string FormatStringValue(string value) => $"N'{value.Replace("'", "''")}'";
 
         public virtual string FormatDateValue(string value)
         {
             var date = Convert.ToDateTime(value);
-            return string.Format("'{0}/{1:0}/{2:0}'", date.Year, date.Month, date.Day);
+            return $"'{date.Year}/{date.Month:0}/{date.Day:0}'";
         }
 
-        public virtual string GetFullyQualifiedName(string schema, string name)
+        public virtual string GetFullyQualifiedName(string name) => $"{FormatName(name)}";
+
+        public virtual string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return string.Format("{0}.{1}", FormatName(schema), FormatName(name));
-        }
+            "System.String" => $"NVARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATETIME",
+            _ => "error_" + column.DataType
+        };
 
-        public virtual string GetStoreType(EdmProperty property)
-        {
-            return property.ToStoreType().ToUpper();
-        }
+        public virtual string GetClustered(DataTable table) => string.Empty;
 
-        public virtual string GetIdentity(EdmProperty property, Version targetVersion)
-        {
-            if (IsIdentityEnabled &&
-                property.GetStoreGeneratedPatternValue(targetVersion, DataSpace.SSpace) ==
-                StoreGeneratedPattern.Identity)
-            {
-                return Identity;
-            }
-
-            return String.Empty;
-        }
-
-        public virtual string GetClustered(StoreItemCollection store, EntityType entityType)
-        {
-            return string.Empty;
-        }
-
-        public virtual string GetForeignKeyConstraintName(ReferentialConstraint constraint)
-        {
-            var name = constraint.FromRole.DeclaringType.Name;
-
-            if (!name.StartsWith("FK_", StringComparison.InvariantCultureIgnoreCase))
-            {
-                name = "FK_" + name;
-            }
-
-            return name;
-        }
-
-        public virtual string GetColumns(IEnumerable<EdmProperty> properties, char delimiter)
+        public virtual string GetColumns(IEnumerable<String> keys, char delimiter)
         {
             var builder = new StringBuilder();
-            foreach (var property in properties)
+            foreach (var key in keys)
             {
-                builder.AppendFormat("{0}{1} ", FormatName(property.Name), delimiter);
+                builder.AppendFormat("{0}{1} ", FormatName(key), delimiter);
             }
             return builder.ToString().Trim().TrimEnd(delimiter);
+
         }
 
-        public virtual string WriteDropDatabase(string databaseName)
-        {
-            return string.Empty;
-        }
+        public virtual string WriteDropDatabase(string databaseName) => string.Empty;
 
-        public virtual string WriteDropTable(EntitySet entitySet)
-        {
-            return string.Format("DROP TABLE {0};", FormatName(entitySet.GetTableName()));
-        }
+        public virtual string WriteDropTable(string tableName) => $"DROP TABLE {tableName};";
 
-        public virtual string WriteDropForeignKey(AssociationSet associationSet)
-        {
-            var constraint = associationSet.ElementType.ReferentialConstraints.Single();
-            var constraintName = GetForeignKeyConstraintName(constraint);
-            var end = associationSet.AssociationSetEnds
-                .Where(a => a.CorrespondingAssociationEndMember == constraint.ToRole)
-                .Single();
-            var fqTableName = GetFullyQualifiedName(end.EntitySet.GetSchemaName(), end.EntitySet.GetTableName());
-            var name = FormatName(constraintName);
-            return string.Format("ALTER TABLE {0} DROP CONSTRAINT {1};", fqTableName, name);
-        }
+        public virtual string WriteDropForeignKey(string tableName, string columnName) => $"ALTER TABLE {tableName} DROP CONSTRAINT {columnName};";
 
-        public virtual string WriteCreateDatabase(string databaseName)
-        {
-            return string.Empty;
-        }
+        public virtual string WriteCreateDatabase(string databaseName) => string.Empty;
 
-        public virtual string WriteUseDatabase(string databaseName)
-        {
-            return string.Empty;
-        }
+        public virtual string WriteUseDatabase(string databaseName) => string.Empty;
 
-        public virtual string WriteCreateColumn(EdmProperty property, Version targetVersion)
+        public virtual string WriteCreateColumn(DataColumn column)
         {
-            var notnull = (property.Nullable ? "" : "NOT NULL");
-            var identity = GetIdentity(property, targetVersion);
+            var notnull = (column.AllowDBNull ? "" : "NOT NULL");
+            var isPrimaryKey = column.Table?.PrimaryKey.Length == 1 && column.Table?.PrimaryKey.Contains(column) == true;
+            var identity = IsIdentityEnabled && isPrimaryKey ? Identity : String.Empty;
             return string.Format("{0} {1} {2} {3}",
-                                 FormatName(property.Name),
-                                 GetStoreType(property),
+                                 FormatName(column.ColumnName),
+                                 GetStoreType(column),
                                  notnull, identity).Trim();
         }
 
-        public virtual string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint)
+        public virtual string WriteForeignKeyDeleteAction(ForeignKeyConstraint foreignKeyConstraint) => foreignKeyConstraint.DeleteRule switch
         {
-            return refConstraint.FromRole.DeleteBehavior == OperationAction.Cascade ? "ON DELETE CASCADE" : "ON DELETE NO ACTION";
-        }
+            Rule.Cascade => "ON DELETE CASCADE",
+            _ => "ON DELETE NO ACTION"
+        };
 
-        public virtual string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint)
-        {
-            return "ON UPDATE NO ACTION";
-        }
+        public virtual string WriteForeignKeyUpdateAction(ForeignKeyConstraint foreignKeyConstraint) => "ON UPDATE NO ACTION";
 
-        public virtual string WriteExecuteCommand()
-        {
-            return string.Empty;
-        }
+        public virtual string WriteExecuteCommand() => string.Empty;
 
-        public virtual string WriteFinishCommit()
-        {
-            return string.Empty;
-        }
+        public virtual string WriteFinishCommit() => string.Empty;
 
         #endregion
     }

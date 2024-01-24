@@ -1,6 +1,5 @@
-﻿using System.Data.Metadata.Edm;
+﻿using System.Data;
 using System.Text;
-using Microsoft.Data.Entity.Design.DatabaseGeneration;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -20,27 +19,15 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = builder.ToString();
         }
 
-        public override string FormatName(string name)
-        {
-            return string.Format("\"{0}\"", name);
-        }
+        public override string FormatName(string name) => $"{name}";
 
-        public override string GetFullyQualifiedName(string schema, string name)
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return FormatName(name);
-        }
-
-        public override string GetStoreType(EdmProperty property)
-        {
-            switch (property.TypeUsage.EdmType.Name)
-            {
-                case "datetime":
-                    return "TIMESTAMP";
-                case "nvarchar":
-                    return property.ToStoreType().Replace("nvarchar", "VARCHAR");
-                default:
-                    return base.GetStoreType(property);
-            }
-        }
+            "System.String" => $"VARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "TIMESTAMP",
+            _ => "error_" + column.DataType
+        };
     }
 }

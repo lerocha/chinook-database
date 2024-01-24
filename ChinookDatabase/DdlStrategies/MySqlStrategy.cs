@@ -1,5 +1,4 @@
-﻿using System.Data.Metadata.Edm;
-using Microsoft.Data.Entity.Design.DatabaseGeneration;
+﻿using System.Data;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -13,42 +12,23 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = @"mysql -h localhost -u root --password=p4ssw0rd <{0}";
         }
 
-        public override string FormatName(string name)
-        {
-            return string.Format("`{0}`", name);
-        }
+        public override string FormatName(string name) => $"`{name}`";
 
-        public override string GetFullyQualifiedName(string schema, string name)
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return FormatName(name);
-        }
+            "System.String" => $"NVARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATETIME",
+            _ => "error_" + column.DataType
+        };
 
-        public override string GetStoreType(EdmProperty property)
-        {
-            if (property.TypeUsage.EdmType.Name == "guid")
-                return "CHAR(36) BINARY";
+        public override string WriteDropDatabase(string databaseName) => string.Format("DROP DATABASE IF EXISTS {0};", FormatName(databaseName));
 
-            return base.GetStoreType(property);
-        }
+        public override string WriteDropTable(string tableName) => $"DROP TABLE IF EXISTS {FormatName(tableName)};";
 
-        public override string WriteDropDatabase(string databaseName)
-        {
-            return string.Format("DROP DATABASE IF EXISTS {0};", FormatName(databaseName));
-        }
+        public override string WriteCreateDatabase(string databaseName) => $"CREATE DATABASE {FormatName(databaseName)};";
 
-        public override string WriteDropTable(EntitySet entitySet)
-        {
-            return string.Format("DROP TABLE IF EXISTS {0};", FormatName(entitySet.GetTableName()));
-        }
-
-        public override string WriteCreateDatabase(string databaseName)
-        {
-            return string.Format("CREATE DATABASE {0};", FormatName(databaseName));
-        }
-
-        public override string WriteUseDatabase(string databaseName)
-        {
-            return string.Format("USE {0};", FormatName(databaseName));
-        }
+        public override string WriteUseDatabase(string databaseName) => $"USE {FormatName(databaseName)};";
     }
 }

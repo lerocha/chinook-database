@@ -1,4 +1,6 @@
-﻿namespace ChinookDatabase.DdlStrategies
+﻿using System.Data;
+
+namespace ChinookDatabase.DdlStrategies
 {
     public class SqlServerCompactStrategy : AbstractDdlStrategy
     {
@@ -11,10 +13,13 @@
             IsReCreateDatabaseEnabled = true;
         }
 
-        public override string GetFullyQualifiedName(string schema, string name)
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return FormatName(name);
-        }
-
+            "System.String" => $"NVARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "DATETIME",
+            _ => "error_" + column.DataType
+        };
     }
 }

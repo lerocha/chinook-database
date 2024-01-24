@@ -9,7 +9,7 @@
 <!--
    Chinook Database - Version <#= DataSetHelper.GetVersionNumber() #>
    Author: Luis Rocha
-   License: http://www.codeplex.com/ChinookDatabase/license
+   License: https://github.com/lerocha/chinook-database/blob/master/LICENSE.md
 -->
 <#
             var thisFile = new FileInfo(Host.TemplateFile);
@@ -89,5 +89,6 @@
             ds.WriteXml(memstream);
             memstream.Position = 0;
             var sr = new StreamReader(memstream);
+
 #>
 <#= sr.ReadToEnd() #>

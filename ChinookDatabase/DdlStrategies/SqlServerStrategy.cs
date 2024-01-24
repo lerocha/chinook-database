@@ -1,6 +1,5 @@
-using System.Data.Metadata.Edm;
+using System.Data;
 using System.Text;
-using Microsoft.Data.Entity.Design.DatabaseGeneration;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -14,10 +13,9 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = @"sqlcmd -E -S .\sqlexpress -i {0} -b -m 1";
         }
 
-        public override string GetClustered(StoreItemCollection store, EntityType entityType)
-        {
-            return entityType.IsJoinTable(store) ? "NONCLUSTERED" : "CLUSTERED";
-        }
+        public override string GetFullyQualifiedName(string name) => $"[dbo].{FormatName(name)}";
+
+        public override string GetClustered(DataTable table) => table.PrimaryKey.Length > 1 ? "NONCLUSTERED" : "CLUSTERED";
 
         public override string WriteDropDatabase(string databaseName)
         {
@@ -35,25 +33,12 @@ namespace ChinookDatabase.DdlStrategies
             return builder.ToString();
         }
 
-        public override string WriteDropTable(EntitySet entitySet)
-        {
-            var fqName = GetFullyQualifiedName(entitySet.GetSchemaName(), entitySet.GetTableName());
-            return string.Format("IF OBJECT_ID(N'{0}', 'U') IS NOT NULL DROP TABLE {0};", fqName);
-        }
+        public override string WriteDropTable(string tableName) => $"IF OBJECT_ID(N'{GetFullyQualifiedName(tableName)}', 'U') IS NOT NULL DROP TABLE {GetFullyQualifiedName(tableName)};";
 
-        public override string WriteCreateDatabase(string databaseName)
-        {
-            return string.Format("CREATE DATABASE {0};", FormatName(databaseName));
-        }
+        public override string WriteCreateDatabase(string databaseName) => $"CREATE DATABASE {FormatName(databaseName)};";
 
-        public override string WriteUseDatabase(string databaseName)
-        {
-            return string.Format("USE {0};", FormatName(databaseName));
-        }
+        public override string WriteUseDatabase(string databaseName) => $"USE {FormatName(databaseName)};";
 
-        public override string WriteExecuteCommand()
-        {
-            return "GO";
-        }
+        public override string WriteExecuteCommand() => "GO";
     }
 }

@@ -1,22 +1,17 @@
-﻿/*******************************************************************************
- * Chinook Database - Version 1.4
+/*******************************************************************************
+ * Chinook Database - Version 1.4.2
  * Description: Test fixture for Chinook database.
  * DB Server: PostgreSql
  * Author: Luis Rocha
- * License: http://www.codeplex.com/ChinookDatabase/license
+ * License: https://github.com/lerocha/chinook-database/blob/master/LICENSE.md
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
  *            1. Run the generated SQL script to create the database to be tested.
  *            2. Verify that app.config has the proper connection string (user/password).
  ********************************************************************************/
-using System;
 using System.Configuration;
-using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
-using System.Linq;
 using Xunit;
-using Xunit.Extensions;
 using Npgsql;
 
 namespace ChinookDatabase.Test.DatabaseTests
@@ -101,7 +96,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void AllInvoicesMustHaveInvoiceLines(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT count(\"InvoiceId\") FROM \"Invoice\" WHERE \"InvoiceId\" NOT IN (SELECT \"InvoiceId\" FROM \"InvoiceLine\" GROUP BY \"InvoiceId\")");
+            var dataSet = ExecuteQuery(connectionName, "SELECT count(InvoiceId) FROM Invoice WHERE InvoiceId NOT IN (SELECT InvoiceId FROM InvoiceLine GROUP BY InvoiceId)");
             Assert.Equal("0", dataSet.Tables[0].Rows[0][0].ToString());
         }
         
@@ -112,7 +107,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void InvoiceTotalMustMatchSumOfInvoiceLines(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT \"Invoice\".\"InvoiceId\", SUM(\"InvoiceLine\".\"UnitPrice\" * \"InvoiceLine\".\"Quantity\") AS CalculatedTotal, \"Invoice\".\"Total\" AS Total FROM \"InvoiceLine\" INNER JOIN \"Invoice\" ON \"InvoiceLine\".\"InvoiceId\" = \"Invoice\".\"InvoiceId\" GROUP BY \"Invoice\".\"InvoiceId\", \"Invoice\".\"Total\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT Invoice.InvoiceId, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS CalculatedTotal, Invoice.Total AS Total FROM InvoiceLine INNER JOIN Invoice ON InvoiceLine.InvoiceId = Invoice.InvoiceId GROUP BY Invoice.InvoiceId, Invoice.Total");
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
@@ -127,7 +122,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void GenreTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Genre\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Genre");
             Assert.Equal(25, dataSet.Tables[0].Rows.Count);
         }
 
@@ -138,7 +133,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void GenreLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Genre\" ORDER BY \"GenreId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Genre ORDER BY GenreId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -156,7 +151,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void MediaTypeTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"MediaType\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM MediaType");
             Assert.Equal(5, dataSet.Tables[0].Rows.Count);
         }
 
@@ -167,7 +162,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void MediaTypeLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"MediaType\" ORDER BY \"MediaTypeId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM MediaType ORDER BY MediaTypeId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -185,7 +180,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void ArtistTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Artist\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Artist");
             Assert.Equal(275, dataSet.Tables[0].Rows.Count);
         }
 
@@ -196,7 +191,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void ArtistLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Artist\" ORDER BY \"ArtistId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Artist ORDER BY ArtistId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -214,7 +209,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void AlbumTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Album\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Album");
             Assert.Equal(347, dataSet.Tables[0].Rows.Count);
         }
 
@@ -225,7 +220,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void AlbumLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Album\" ORDER BY \"AlbumId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Album ORDER BY AlbumId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -244,7 +239,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void TrackTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Track\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Track");
             Assert.Equal(3503, dataSet.Tables[0].Rows.Count);
         }
 
@@ -255,7 +250,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void TrackLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Track\" ORDER BY \"TrackId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Track ORDER BY TrackId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -280,7 +275,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void EmployeeTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Employee\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Employee");
             Assert.Equal(8, dataSet.Tables[0].Rows.Count);
         }
 
@@ -291,7 +286,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void EmployeeLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Employee\" ORDER BY \"EmployeeId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Employee ORDER BY EmployeeId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -322,7 +317,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer");
             Assert.Equal(59, dataSet.Tables[0].Rows.Count);
         }
 
@@ -333,7 +328,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" ORDER BY \"CustomerId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer ORDER BY CustomerId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -362,7 +357,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void InvoiceTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Invoice\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Invoice");
             Assert.Equal(412, dataSet.Tables[0].Rows.Count);
         }
 
@@ -373,7 +368,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void InvoiceLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Invoice\" ORDER BY \"InvoiceId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Invoice ORDER BY InvoiceId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -382,7 +377,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 			// Assert that the last record has the proper information.            
             Assert.Equal("412", row["InvoiceId"].ToString());
             Assert.Equal("58", row["CustomerId"].ToString());
-            Assert.Equal("12/22/2013 12:00:00 AM", row["InvoiceDate"].ToString());
+            Assert.Equal("12/22/2025 12:00:00 AM", row["InvoiceDate"].ToString());
             Assert.Equal("12,Community Centre", row["BillingAddress"].ToString());
             Assert.Equal("Delhi", row["BillingCity"].ToString());
             Assert.Equal("", row["BillingState"].ToString());
@@ -398,7 +393,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void InvoiceLineTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"InvoiceLine\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM InvoiceLine");
             Assert.Equal(2240, dataSet.Tables[0].Rows.Count);
         }
 
@@ -409,7 +404,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void InvoiceLineLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"InvoiceLine\" ORDER BY \"InvoiceLineId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM InvoiceLine ORDER BY InvoiceLineId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -430,7 +425,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void PlaylistTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Playlist\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Playlist");
             Assert.Equal(18, dataSet.Tables[0].Rows.Count);
         }
 
@@ -441,7 +436,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void PlaylistLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Playlist\" ORDER BY \"PlaylistId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Playlist ORDER BY PlaylistId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -459,7 +454,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void PlaylistTrackTableShouldBePopulated(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"PlaylistTrack\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM PlaylistTrack");
             Assert.Equal(8715, dataSet.Tables[0].Rows.Count);
         }
 
@@ -470,7 +465,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void PlaylistTrackLastRecordHasProperInfo(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"PlaylistTrack\" ORDER BY \"PlaylistId\", \"TrackId\"");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM PlaylistTrack ORDER BY PlaylistId, TrackId");
             var table = dataSet.Tables[0];
             Assert.NotNull(table);
             var row = table.Rows[table.Rows.Count - 1];
@@ -488,7 +483,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId01HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 1");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 1");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -514,7 +509,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId02HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 2");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 2");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -540,7 +535,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId03HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 3");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 3");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -566,7 +561,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId04HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 4");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 4");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -592,7 +587,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId05HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 5");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 5");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -618,7 +613,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId06HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 6");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 6");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -644,7 +639,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId07HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 7");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 7");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -670,7 +665,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId08HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 8");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 8");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -696,7 +691,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId09HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 9");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 9");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -722,7 +717,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId10HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 10");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 10");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             
@@ -748,7 +743,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql")]
         public void CustomerId11HasProperUnicodeCharacters(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM \"Customer\" WHERE \"CustomerId\" = 11");
+            var dataSet = ExecuteQuery(connectionName, "SELECT * FROM Customer WHERE CustomerId = 11");
             Assert.Equal(1, dataSet.Tables[0].Rows.Count); // Cannot find the Customer record that contains unicode characters. This record was not added to the Customer table or the SQL script did not use Unicode characters properly.
             var row = dataSet.Tables[0].Rows[0];
             

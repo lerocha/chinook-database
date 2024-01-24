@@ -4,7 +4,6 @@
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ include file="EF.Utility.CS.ttinclude"#>
 <#@ include file="..\..\ChinookDatabase\_T4Templates\Chinook.ttinclude" #>
 <#@ include file="..\..\ChinookDatabase\_T4Templates\Manager.ttinclude" #>
 <#
@@ -43,18 +42,10 @@ var options = new [] {
 						},
 						new Option 
 						{
-							Strategy = new EffiProzStrategy(),
-							ConnectionClass = "EfzConnection",
-							AdapterClass = "EfzDataAdapter",
-							Namespace = "System.Data.EffiProz",
-							ConnectionNames = new[] {"Chinook_EffiProz", "Chinook_EffiProz_AutoIncrement"}
-						},
-						new Option 
-						{
 							Strategy = new OracleStrategy(),
 							ConnectionClass = "OracleConnection",
 							AdapterClass = "OracleDataAdapter",
-							Namespace = "Oracle.DataAccess.Client",
+							Namespace = "Oracle.ManagedDataAccess.Client",
 							ConnectionNames = new[] {"Chinook_Oracle"}
 						},
 						new Option 
@@ -70,18 +61,10 @@ var options = new [] {
 							Strategy = new Db2Strategy(),
 							ConnectionClass = "DB2Connection",
 							AdapterClass = "DB2DataAdapter",
-							Namespace = "IBM.Data.DB2",
+							Namespace = "IBM.Data.DB2.Core",
 							ConnectionNames = new[] {"Chinook_Db2"}
 						}
 					};
-
-// Read the existing store item collection from the edmx file.
-var version = new Version("2.0.0.0");
-var modelFile = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"..\..\ChinookDatabase\Chinook.edmx");
-IList<EdmSchemaError> existingSsdlErrors;
-var existingStore = EdmExtension.CreateStoreItemCollection(EdmHelper.GetSsdlFromEdmx(modelFile), 
-														   version,
-														   out existingSsdlErrors);
 
 var fileManager = Manager.Create(Host, GenerationEnvironment);
 foreach (Option option in options)
@@ -95,20 +78,15 @@ foreach (Option option in options)
  * Description: Test fixture for Chinook database.
  * DB Server: <#= option.Strategy.Name #>
  * Author: Luis Rocha
- * License: http://www.codeplex.com/ChinookDatabase/license
+ * License: https://github.com/lerocha/chinook-database/blob/master/LICENSE.md
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
  *            1. Run the generated SQL script to create the database to be tested.
  *            2. Verify that app.config has the proper connection string (user/password).
  ********************************************************************************/
-using System;
 using System.Configuration;
-using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
-using System.Linq;
 using Xunit;
-using Xunit.Extensions;
 using <#= option.Namespace #>;
 
 <#
@@ -125,10 +103,6 @@ namespace ChinookDatabase.Test.DatabaseTests
     {
         protected IDictionary<string, <#= option.ConnectionClass #>> Connections;
 
-<#
-	if ((option.Strategy as EffiProzStrategy)==null)
-	{
-#>
         /// <summary>
         /// Retrieves the cached connection object.
         /// </summary>
@@ -156,9 +130,6 @@ namespace ChinookDatabase.Test.DatabaseTests
             return Connections[connectionName];
         }
 
-<#
-	}
-#>
         /// <summary>
         /// Method to execute a SQL query and return a dataset.
         /// </summary>
@@ -199,14 +170,12 @@ namespace ChinookDatabase.Test.DatabaseTests
         }
 
 <# 
-	var invoiceEntity = (from e in existingStore.GetAllEntitySets() where e.Name == "Invoice" select e).FirstOrDefault();
-	if (invoiceEntity != null)
+	var invoiceTable = ds.Invoice;
+	if (invoiceTable != null)
     {
-		var schema = invoiceEntity.GetSchemaName();
-	
-		var invoice = option.Strategy.GetFullyQualifiedName(schema, invoiceEntity.Name);
+		var invoice = option.Strategy.GetFullyQualifiedName(invoiceTable.TableName);
 		var invoiceId = option.Strategy.FormatName("InvoiceId");
-		var invoiceLine = option.Strategy.GetFullyQualifiedName(schema, "InvoiceLine");
+		var invoiceLine = option.Strategy.GetFullyQualifiedName("InvoiceLine");
 		var total = option.Strategy.FormatName("Total");
 		var unitPrice = option.Strategy.FormatName("UnitPrice");
 		var quantity = option.Strategy.FormatName("Quantity");
@@ -251,11 +220,8 @@ namespace ChinookDatabase.Test.DatabaseTests
 
     foreach (DataTable table in ds.Tables)
     {
-		var entitySet = (from e in existingStore.GetAllEntitySets() where e.Name == table.TableName select e).FirstOrDefault();
-		if (entitySet == null) continue;
-
-		var fqTableName = option.Strategy.GetFullyQualifiedName(entitySet.GetSchemaName(), table.TableName).Replace("\"","\\\"");
-		var keys = from item in entitySet.ElementType.GetKeyProperties() select item;
+		var fqTableName = option.Strategy.GetFullyQualifiedName(table.TableName).Replace("\"","\\\"");
+		var keys = table.PrimaryKey.Cast<DataColumn>().Select(column => column.ColumnName);
 		var fqPrimaryKeys = option.Strategy.GetColumns(keys, ',').Replace("\"","\\\"");
 #>
 
@@ -302,11 +268,10 @@ namespace ChinookDatabase.Test.DatabaseTests
 #>
 
 <#
-	var customerEntity = (from e in existingStore.GetAllEntitySets() where e.Name == "Customer" select e).FirstOrDefault();
-	if (customerEntity != null)
+	var customerTable = ds.Customer;
+	if (customerTable != null)
     {
-		var customerSchema = customerEntity.GetSchemaName();
-		var customer = option.Strategy.GetFullyQualifiedName(customerSchema, "Customer").Replace("\"","\\\"");
+		var customer = option.Strategy.GetFullyQualifiedName(customerTable.TableName).Replace("\"","\\\"");
 		var customerId = option.Strategy.FormatName("CustomerId").Replace("\"","\\\"");
 	
 		for (int i=0; i <= 10; i++)

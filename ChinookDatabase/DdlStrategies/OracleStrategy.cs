@@ -1,7 +1,5 @@
-﻿using System;
-using System.Data.Metadata.Edm;
+﻿using System.Data;
 using System.Text;
-using Microsoft.Data.Entity.Design.DatabaseGeneration;
 
 namespace ChinookDatabase.DdlStrategies
 {
@@ -21,48 +19,26 @@ namespace ChinookDatabase.DdlStrategies
             CommandLineFormat = builder.ToString();
         }
 
-        public override string FormatName(string name)
-        {
-            return string.Format("{0}", name);
-        }
+        public override string FormatName(string name) => name;
 
-        public override string FormatStringValue(string value)
-        {
-            return string.Format("'{0}'", value.Replace("'", "'||chr(39)||'").Replace("&", "'||chr(38)||'"));
-        }
+        public override string FormatStringValue(string value) => $"'{value.Replace("'", "'||chr(39)||'").Replace("&", "'||chr(38)||'")}'";
 
         public override string FormatDateValue(string value)
         {
             var date = Convert.ToDateTime(value);
-            return string.Format("TO_DATE('{0}-{1}-{2} 00:00:00','yyyy-mm-dd hh24:mi:ss')", date.Year, date.Month, date.Day);
+            return $"TO_DATE('{date.Year}-{date.Month}-{date.Day} 00:00:00','yyyy-mm-dd hh24:mi:ss')";
         }
 
-        public override string GetFullyQualifiedName(string schema, string name)
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            return FormatName(name);
-        }
+            "System.String" => $"VARCHAR2({column.MaxLength})",
+            "System.Int32" => "NUMBER",
+            "System.Decimal" => "NUMBER(10,2)",
+            "System.DateTime" => "DATE",
+            _ => "error_" + column.DataType
+        };
 
-        public override string GetStoreType(EdmProperty property)
-        {
-            switch (property.TypeUsage.EdmType.Name)
-            {
-                case "datetime":
-                    return "DATE";
-                case "int":
-                    return "NUMBER";
-                case "numeric":
-                    return property.ToStoreType().Replace("numeric", "NUMBER");
-                case "nvarchar":
-                    return property.ToStoreType().Replace("nvarchar", "VARCHAR2");
-                default:
-                    return base.GetStoreType(property);
-            }
-        }
-
-        public override string WriteDropDatabase(string databaseName)
-        {
-            return string.Format("DROP USER {0} CASCADE;", databaseName.ToLower());
-        }
+        public override string WriteDropDatabase(string databaseName) => $"DROP USER {databaseName.ToLower()} CASCADE;";
 
         public override string WriteCreateDatabase(string databaseName)
         {
@@ -83,25 +59,17 @@ namespace ChinookDatabase.DdlStrategies
             return builder.ToString();
         }
 
-        public override string WriteUseDatabase(string databaseName)
-        {
-            return string.Format("conn {0}/p4ssw0rd", databaseName.ToLower());
-        }
+        public override string WriteUseDatabase(string databaseName) => $"conn {databaseName.ToLower()}/p4ssw0rd";
 
-        public override string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint)
+        public override string WriteForeignKeyDeleteAction(ForeignKeyConstraint foreignKeyConstraint) => foreignKeyConstraint.DeleteRule switch
         {
-            return refConstraint.FromRole.DeleteBehavior == OperationAction.Cascade ? "ON DELETE CASCADE" : "";
-        }
+            Rule.Cascade => "ON DELETE CASCADE",
+            _ => ""
+        };
 
-        public override string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint)
-        {
-            return string.Empty;
-        }
+        public override string WriteForeignKeyUpdateAction(ForeignKeyConstraint foreignKeyConstraint) => string.Empty;
 
-        public override string WriteFinishCommit()
-        {
-            return "commit;\r\nexit;";
-        }
+        public override string WriteFinishCommit() => "commit;\r\nexit;";
     }
 
 }

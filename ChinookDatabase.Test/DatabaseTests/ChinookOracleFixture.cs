@@ -1,23 +1,18 @@
-﻿/*******************************************************************************
- * Chinook Database - Version 1.4
+/*******************************************************************************
+ * Chinook Database - Version 1.4.2
  * Description: Test fixture for Chinook database.
  * DB Server: Oracle
  * Author: Luis Rocha
- * License: http://www.codeplex.com/ChinookDatabase/license
+ * License: https://github.com/lerocha/chinook-database/blob/master/LICENSE.md
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
  *            1. Run the generated SQL script to create the database to be tested.
  *            2. Verify that app.config has the proper connection string (user/password).
  ********************************************************************************/
-using System;
 using System.Configuration;
-using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
-using System.Linq;
 using Xunit;
-using Xunit.Extensions;
-using Oracle.DataAccess.Client;
+using Oracle.ManagedDataAccess.Client;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {
@@ -382,7 +377,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 			// Assert that the last record has the proper information.            
             Assert.Equal("412", row["InvoiceId"].ToString());
             Assert.Equal("58", row["CustomerId"].ToString());
-            Assert.Equal("12/22/2013 12:00:00 AM", row["InvoiceDate"].ToString());
+            Assert.Equal("12/22/2025 12:00:00 AM", row["InvoiceDate"].ToString());
             Assert.Equal("12,Community Centre", row["BillingAddress"].ToString());
             Assert.Equal("Delhi", row["BillingCity"].ToString());
             Assert.Equal("", row["BillingState"].ToString());

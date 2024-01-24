@@ -8,58 +8,7 @@ namespace ChinookDatabase.Utilities
     {
         public static string GetVersionNumber()
         {
-            return "1.4";
-        }
-
-        public static string GetOracleType(DataColumn col)
-        {
-            switch (col.DataType.ToString())
-            {
-                case "System.String":
-                    return string.Format("VARCHAR2({0})", col.MaxLength);
-                case "System.Int32":
-                    return "NUMBER";
-                case "System.Decimal":
-                    return "NUMBER";
-                case "System.DateTime":
-                    return "DATE";
-                default:
-                    return "error_" + col.DataType;
-            }
-        }
-
-        public static string GetSqlServerType(DataColumn col)
-        {
-            switch (col.DataType.ToString())
-            {
-                case "System.String":
-                    return string.Format("NVARCHAR({0})", col.MaxLength);
-                case "System.Int32":
-                    return "INTEGER";
-                case "System.Decimal":
-                    return "NUMERIC(10,2)";
-                case "System.DateTime":
-                    return "DATETIME";
-                default:
-                    return "error_" + col.DataType;
-            }
-        }
-
-        public static string GetMySqlType(DataColumn col)
-        {
-            switch (col.DataType.ToString())
-            {
-                case "System.String":
-                    return string.Format("VARCHAR({0})", col.MaxLength);
-                case "System.Int32":
-                    return "INTEGER";
-                case "System.Decimal":
-                    return "NUMERIC(10,2)";
-                case "System.DateTime":
-                    return "DATE";
-                default:
-                    return "error_" + col.DataType;
-            }
+            return "1.4.2";
         }
 
         public static bool IsLastCreateTableElement(DataTable table, DataColumn col)
@@ -116,7 +65,7 @@ namespace ChinookDatabase.Utilities
 
         public static string GetExpectedValue(DataColumn col, string value)
         {
-	        return string.Format("\"{0}\"", value);
+	        return $"\"{value}\"";
         }
     }
 }
