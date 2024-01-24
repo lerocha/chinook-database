@@ -8,7 +8,7 @@ namespace ChinookDatabase.Utilities
     {
         public static string GetVersionNumber()
         {
-            return "1.4";
+            return "1.4.2";
         }
 
         public static bool IsLastCreateTableElement(DataTable table, DataColumn col)

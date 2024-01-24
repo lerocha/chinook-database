@@ -1,6 +1,6 @@
 
 /*******************************************************************************
-   Chinook Database - Version 1.4
+   Chinook Database - Version 1.4.2
    Script: Chinook_Sqlite_AutoIncrementPKs.sql
    Description: Creates and populates the Chinook database.
    DB Server: Sqlite
