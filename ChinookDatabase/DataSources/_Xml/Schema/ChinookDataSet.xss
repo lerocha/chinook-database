@@ -11,23 +11,35 @@
     <Shape ID="DesignTable:Artist" ZOrder="18" X="-146" Y="-23" Height="115" Width="156" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="111" />
     <Shape ID="DesignTable:Album" ZOrder="10" X="151" Y="-31" Height="150" Width="171" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="22" SplitterPosition="146" />
     <Shape ID="DesignTable:Track" ZOrder="17" X="429" Y="-37" Height="360" Width="219" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="356" />
-    <Shape ID="DesignTable:Employee" ZOrder="16" X="-164" Y="583" Height="465" Width="206" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="461" />
-    <Shape ID="DesignTable:Customer" ZOrder="8" X="93" Y="596" Height="465" Width="202" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="461" />
+    <Shape ID="DesignTable:Employee" ZOrder="16" X="-164" Y="583" Height="571" Width="206" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="567" />
+    <Shape ID="DesignTable:Customer" ZOrder="8" X="93" Y="596" Height="501" Width="202" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="497" />
     <Shape ID="DesignTable:Invoice" ZOrder="6" X="402" Y="719" Height="360" Width="265" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="356" />
     <Shape ID="DesignTable:InvoiceLine" ZOrder="7" X="424" Y="393" Height="220" Width="222" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="22" SplitterPosition="216" />
     <Shape ID="DesignTable:Playlist" ZOrder="15" X="-153" Y="236" Height="115" Width="174" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="111" />
     <Shape ID="DesignTable:PlaylistTrack" ZOrder="14" X="92" Y="240" Height="115" Width="237" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="111" />
   </Shapes>
   <Connectors>
-    <Connector ID="DesignRelation:FK_MediaType_Track" ZOrder="21" LineWidth="11">
+    <Connector ID="DesignRelation:FK_Artist_Album" ZOrder="5" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>780</X>
-          <Y>7</Y>
+          <X>10</X>
+          <Y>10</Y>
         </Point>
         <Point>
-          <X>648</X>
-          <Y>7</Y>
+          <X>151</X>
+          <Y>10</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:FK_Album_Track" ZOrder="2" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>322</X>
+          <Y>6</Y>
+        </Point>
+        <Point>
+          <X>429</X>
+          <Y>6</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -40,6 +52,18 @@
         <Point>
           <X>648</X>
           <Y>209</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
+    <Connector ID="DesignRelation:FK_MediaType_Track" ZOrder="21" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>780</X>
+          <Y>7</Y>
+        </Point>
+        <Point>
+          <X>648</X>
+          <Y>7</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -87,6 +111,18 @@
         </Point>
       </RoutePoints>
     </Connector>
+    <Connector ID="DesignRelation:FK_Invoice_InvoiceLine" ZOrder="1" LineWidth="11">
+      <RoutePoints>
+        <Point>
+          <X>535</X>
+          <Y>719</Y>
+        </Point>
+        <Point>
+          <X>535</X>
+          <Y>613</Y>
+        </Point>
+      </RoutePoints>
+    </Connector>
     <Connector ID="DesignRelation:FK_Track_InvoiceLine" ZOrder="11" LineWidth="11">
       <RoutePoints>
         <Point>
@@ -96,30 +132,6 @@
         <Point>
           <X>497</X>
           <Y>393</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:FK_Artist_Album" ZOrder="5" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>10</X>
-          <Y>10</Y>
-        </Point>
-        <Point>
-          <X>151</X>
-          <Y>10</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:FK_Playlist_PlaylistTrack" ZOrder="4" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>21</X>
-          <Y>285</Y>
-        </Point>
-        <Point>
-          <X>92</X>
-          <Y>285</Y>
         </Point>
       </RoutePoints>
     </Connector>
@@ -135,27 +147,15 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_Album_Track" ZOrder="2" LineWidth="11">
+    <Connector ID="DesignRelation:FK_Playlist_PlaylistTrack" ZOrder="4" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>322</X>
-          <Y>6</Y>
+          <X>21</X>
+          <Y>285</Y>
         </Point>
         <Point>
-          <X>429</X>
-          <Y>6</Y>
-        </Point>
-      </RoutePoints>
-    </Connector>
-    <Connector ID="DesignRelation:FK_Invoice_InvoiceLine" ZOrder="1" LineWidth="11">
-      <RoutePoints>
-        <Point>
-          <X>535</X>
-          <Y>719</Y>
-        </Point>
-        <Point>
-          <X>535</X>
-          <Y>613</Y>
+          <X>92</X>
+          <Y>285</Y>
         </Point>
       </RoutePoints>
     </Connector>
