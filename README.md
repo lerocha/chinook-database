@@ -39,5 +39,5 @@ System Requirements:
 
 Notes:
 * The SQL scripts are auto-generated using [Text Template Transformation](https://learn.microsoft.com/en-us/visualstudio/modeling/code-generation-and-t4-text-templates?view=vs-2022).
-* The `ChinookDataSet.xsd` file contains the schema definition, `ChinookData.xml` contains the data, and the `*.tt` files are the text templates that are used to generate all SQL scripts.
+* The `ChinookDataSet.xsd` file contains the schema definition, `ChinookData.json` contains the data, and the `*.tt` files are the text templates that are used to generate all SQL scripts.
 * You can build the solution using any IDE (Visual Studio, Rider) or using `dotnet build` in any OS since I just migrated it to .NET 8, but to auto-generate the SQL scripts we still need Visual Studio. I will update here once I find a good way to auto-generate the scripts by using tools like [dotnet-t4](https://www.nuget.org/packages/dotnet-t4/).
