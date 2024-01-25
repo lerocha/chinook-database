@@ -32,15 +32,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DatabaseFixture.cs</LastGenOutput>
     </None>
-    <None Update="TestData\ExpectedDataSet.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\iTunesLibraryTestData.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\NonMediaTestData.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>
