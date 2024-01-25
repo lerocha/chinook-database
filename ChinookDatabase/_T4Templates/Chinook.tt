@@ -7,6 +7,7 @@
 <#@ assembly name="EnvDTE"#>
 <#@ assembly name="System.Xml"#>
 <#@ assembly name="System.Xml.Linq"#>
+<#@ assembly name="Newtonsoft.Json"#>
 <#@ import namespace="System"#>
 <#@ import namespace="System.CodeDom"#>
 <#@ import namespace="System.CodeDom.Compiler"#>
@@ -23,6 +24,7 @@
 <#@ import namespace="System.Xml"#>
 <#@ import namespace="System.Xml.Linq"#>
 <#@ import namespace="System.Xml.XPath"#>
+<#@ import namespace="Newtonsoft.Json"#>
 <# 
 	// Set options here
 	var options = new {

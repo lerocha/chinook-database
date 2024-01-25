@@ -29,8 +29,8 @@ var options = new
 
 
 // Read the data model
-var ds = new ChinookDataSet();
-ds.ReadXml(options.DataSource);
+var json = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "ChinookData.json"));
+var ds = JsonConvert.DeserializeObject<ChinookDataSet>(json);
 var tables = ds.Tables.Cast<DataTable>().OrderBy(t => t.TableName);
 
 var fileManager = Manager.Create(Host, GenerationEnvironment);

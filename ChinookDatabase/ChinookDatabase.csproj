@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="DataSources\_Xml\Schema\ChinookDataSet.Designer.cs">
+    <Compile Update="DataSources\ChinookDataSet.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ChinookDataSet.xsd</DependentUpon>
@@ -30,16 +30,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ChinookDatabase.tt</DependentUpon>
     </None>
-    <None Update="DataSources\_Xml\ChinookData.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ChinookData.xml</LastGenOutput>
-    </None>
-    <None Update="DataSources\_Xml\ChinookData.xml">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ChinookData.tt</DependentUpon>
-    </None>
-    <None Update="DataSources\_Xml\Schema\ChinookDataSet.xsd">
+    <None Update="DataSources\ChinookDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>ChinookDataSet.Designer.cs</LastGenOutput>
     </None>
