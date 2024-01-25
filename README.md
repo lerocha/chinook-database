@@ -13,7 +13,7 @@ Chinook is a sample database available for SQL Server, Oracle, MySQL, etc. It ca
 * SQLite
 
 ### Download
-Download the SQL scripts from the [latest release](../../releases) artifacts. One or more SQL script files are provided for each database vendor supported. You can run these SQL scripts with your preferred database tool.
+Download the SQL scripts from the [latest release](../../releases) assets. One or more SQL script files are provided for each database vendor supported. You can run these SQL scripts with your preferred database tool.
 
 ### Data Model
 
