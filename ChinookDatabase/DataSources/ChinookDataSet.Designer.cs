@@ -474,9 +474,9 @@ namespace ChinookDatabase.DataSources {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Album_Track", new global::System.Data.DataColumn[] {
-                        this.tableAlbum.AlbumIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTrack.AlbumIdColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_MediaType_Track", new global::System.Data.DataColumn[] {
+                        this.tableMediaType.MediaTypeIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTrack.MediaTypeIdColumn});
             this.tableTrack.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
@@ -488,9 +488,9 @@ namespace ChinookDatabase.DataSources {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_MediaType_Track", new global::System.Data.DataColumn[] {
-                        this.tableMediaType.MediaTypeIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableTrack.MediaTypeIdColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Album_Track", new global::System.Data.DataColumn[] {
+                        this.tableAlbum.AlbumIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableTrack.AlbumIdColumn});
             this.tableTrack.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
@@ -516,13 +516,6 @@ namespace ChinookDatabase.DataSources {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Invoice_InvoiceLine", new global::System.Data.DataColumn[] {
-                        this.tableInvoice.InvoiceIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableInvoiceLine.InvoiceIdColumn});
-            this.tableInvoiceLine.Constraints.Add(fkc);
-            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
-            fkc.DeleteRule = global::System.Data.Rule.None;
-            fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Track_InvoiceLine", new global::System.Data.DataColumn[] {
                         this.tableTrack.TrackIdColumn}, new global::System.Data.DataColumn[] {
                         this.tableInvoiceLine.TrackIdColumn});
@@ -530,16 +523,23 @@ namespace ChinookDatabase.DataSources {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_Track_PlaylistTrack", new global::System.Data.DataColumn[] {
-                        this.tableTrack.TrackIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePlaylistTrack.TrackIdColumn});
-            this.tablePlaylistTrack.Constraints.Add(fkc);
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Invoice_InvoiceLine", new global::System.Data.DataColumn[] {
+                        this.tableInvoice.InvoiceIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableInvoiceLine.InvoiceIdColumn});
+            this.tableInvoiceLine.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Playlist_PlaylistTrack", new global::System.Data.DataColumn[] {
                         this.tablePlaylist.PlaylistIdColumn}, new global::System.Data.DataColumn[] {
                         this.tablePlaylistTrack.PlaylistIdColumn});
+            this.tablePlaylistTrack.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.None;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_Track_PlaylistTrack", new global::System.Data.DataColumn[] {
+                        this.tableTrack.TrackIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tablePlaylistTrack.TrackIdColumn});
             this.tablePlaylistTrack.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
