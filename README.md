@@ -19,7 +19,7 @@ Download the SQL scripts from the [latest release](../../releases) assets. One o
 
 The Chinook data model represents a digital media store, including tables for artists, albums, media tracks, invoices and customers.
 
-<img width="614" alt="image" src="https://github.com/lerocha/chinook-database/assets/135025/a23c9f80-73ff-48d0-9535-b0f1af820d6a">
+<img width="836" alt="image" src="https://github.com/lerocha/chinook-database/assets/135025/cea7a05a-5c36-40cd-84c7-488307a123f4">
 
 ### Sample Data
 
