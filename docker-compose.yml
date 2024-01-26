@@ -1,5 +1,16 @@
 version: '3.8'
 services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_USER: chinook
+      MYSQL_PASSWORD: chinook
+      MYSQL_ROOT_PASSWORD: chinook
+      MYSQL_DATABASE: Chinook
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/create_database.sql
   postgres:
     image: postgres:15.3-alpine
     environment:
