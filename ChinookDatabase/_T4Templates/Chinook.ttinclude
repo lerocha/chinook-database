@@ -1,4 +1,4 @@
-﻿<#@ assembly name="System.Core"#>
+<#@ assembly name="System.Core"#>
 <#@ assembly name="System.Data"#>
 <#@ assembly name="System.Data.DataSetExtensions.dll"#>
 <#@ assembly name="System.Data.Linq"#>
@@ -6286,6 +6286,12 @@
 
         public virtual string FormatName(string name) => $"[{name}]";
 
+        public virtual string FormatPrimaryKey(string name) => FormatName($"PK_{name}");
+
+        public virtual string FormatForeignKey(string table, string column) => FormatName($"FK_{table}{column}");
+
+        public virtual string FormatForeignKeyIndex(string table, string column) => FormatName($"IFK_{table}{column}");
+
         public virtual string FormatStringValue(string value) => $"N'{value.Replace("'", "''")}'";
 
         public virtual string FormatDateValue(string value)
@@ -6427,6 +6433,9 @@
         #region Methods used to build SQL commands.
 
         string FormatName(string name);
+        string FormatPrimaryKey(string name);
+        string FormatForeignKey(string table, string column);
+        string FormatForeignKeyIndex(string table, string column);
         string FormatStringValue(string value);
         string FormatDateValue(string date);
         string GetFullyQualifiedName(string name);
@@ -6592,11 +6601,18 @@
 				.AppendLine("psql -f {0} -q Chinook postgres");
 
             Name = "PostgreSql";
+            Identity = "GENERATED ALWAYS AS IDENTITY";
             IsReCreateDatabaseEnabled = true;
             CommandLineFormat = builder.ToString();
         }
 
-        public override string FormatName(string name) => $"{name}";
+        public override string FormatName(string name) => ToSnakeCase(name);
+
+        public override string FormatPrimaryKey(string name) => $"{ToSnakeCase(name)}_pkey";
+
+        public override string FormatForeignKey(string table, string column) => $"{ToSnakeCase(table)}_{ToSnakeCase(column)}_fkey";
+
+        public override string FormatForeignKeyIndex(string table, string column) => $"{ToSnakeCase(table)}_{ToSnakeCase(column)}_idx";
 
         public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
@@ -6606,6 +6622,27 @@
             "System.DateTime" => "TIMESTAMP",
             _ => "error_" + column.DataType
         };
+
+        private static string ToSnakeCase(string text)
+        {
+            var result = new StringBuilder();
+            foreach (var c in text)
+            {
+                if (char.IsUpper(c))
+                {
+                    if (result.Length > 0)
+                    {
+                        result.Append('_');
+                    }
+                    result.Append(char.ToLowerInvariant(c));
+                }
+                else
+                {
+                    result.Append(c);
+                }
+            }
+            return result.ToString();
+        }
     }
 
 //------------------------------------------------------------------------------

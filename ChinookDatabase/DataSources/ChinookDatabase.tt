@@ -22,6 +22,7 @@ var options = new
 								new MySqlStrategy { IsIdentityEnabled = true },
 								new OracleStrategy { IsIdentityEnabled = false, Encoding = Encoding.UTF8 },
 								new PostgreSqlStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default },
+								new PostgreSqlStrategy { IsIdentityEnabled = true, Encoding = Encoding.Default },
 								new Db2Strategy { IsIdentityEnabled = false, Encoding = Encoding.Default }
 						   	},
 	OutputFiles = new List<OutputFile>()
@@ -160,7 +161,7 @@ CREATE TABLE <#= strategy.GetFullyQualifiedName(tableName) #>
 	if (strategy.PrimaryKeyDef==KeyDefinition.OnCreateTableBottom ||
 		(strategy.PrimaryKeyDef==KeyDefinition.OnCreateTableColumn && keys.Count() > 1))
 	{
-		string pkName = strategy.FormatName("PK_" + tableName);#>,
+		string pkName = strategy.FormatPrimaryKey(tableName);#>,
     CONSTRAINT <#= pkName #> PRIMARY KEY <#= strategy.GetClustered(table)#> (<#= strategy.GetColumns(keys, ',')#>)<#
 	}
 	
@@ -202,7 +203,7 @@ CREATE TABLE <#= strategy.GetFullyQualifiedName(tableName) #>
         // Create Primary Key Constraint.
         if (strategy.PrimaryKeyDef==KeyDefinition.OnAlterTable)
         {
-            string pkName = strategy.FormatName("PK_" + tableName);
+            string pkName = strategy.FormatPrimaryKey(tableName);
 #>
 ALTER TABLE <#= tableName #> ADD CONSTRAINT <#= pkName #> PRIMARY KEY (<#= strategy.GetColumns(keys, ',')#>);
 <#= strategy.WriteExecuteCommand() #>
@@ -234,9 +235,8 @@ CREATE UNIQUE INDEX <#= pkIndexName #> ON <#= tableName #>(<#= strategy.GetColum
         {
 			var toTableName = fk.RelatedTable.TableName;
 			var fromTableName = table.TableName;
-			var constraintName = "FK_" + fromTableName + fk.Columns[0].ColumnName;
-			var fkName = strategy.FormatName(constraintName);
-			var ifkName = strategy.FormatName("I" + constraintName);
+			var fkName = strategy.FormatForeignKey(fromTableName, fk.Columns[0].ColumnName);
+			var ifkName = strategy.FormatForeignKeyIndex(fromTableName, fk.Columns[0].ColumnName);
 		
 			if (strategy.ForeignKeyDef==KeyDefinition.OnAlterTable)
 			{
