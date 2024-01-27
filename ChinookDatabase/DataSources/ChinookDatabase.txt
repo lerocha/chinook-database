@@ -1,3 +1,4 @@
+﻿
 Chinook Database 1.4.2
 * This is a sample database available in multiple formats: SQL scripts for multiple database vendors, embeded database files, and XML format.
 * The Chinook data model is available [here|Chinook_Schema].

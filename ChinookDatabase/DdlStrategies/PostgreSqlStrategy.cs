@@ -1,10 +1,13 @@
 ﻿using System.Data;
 using System.Text;
+using Newtonsoft.Json.Serialization;
 
 namespace ChinookDatabase.DdlStrategies
 {
     public class PostgreSqlStrategy : AbstractDdlStrategy
     {
+        private static readonly SnakeCaseNamingStrategy snakeCaseNamingStrategy = new();
+
         public PostgreSqlStrategy()
         {
             var builder = new StringBuilder();
@@ -37,25 +40,6 @@ namespace ChinookDatabase.DdlStrategies
             _ => "error_" + column.DataType
         };
 
-        private static string ToSnakeCase(string text)
-        {
-            var result = new StringBuilder();
-            foreach (var c in text)
-            {
-                if (char.IsUpper(c))
-                {
-                    if (result.Length > 0)
-                    {
-                        result.Append('_');
-                    }
-                    result.Append(char.ToLowerInvariant(c));
-                }
-                else
-                {
-                    result.Append(c);
-                }
-            }
-            return result.ToString();
-        }
+        private static string ToSnakeCase(string text) => snakeCaseNamingStrategy.GetPropertyName(text, false);
     }
 }

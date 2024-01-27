@@ -25,6 +25,7 @@
 <#@ import namespace="System.Xml.Linq"#>
 <#@ import namespace="System.Xml.XPath"#>
 <#@ import namespace="Newtonsoft.Json"#>
+<#@ import namespace="Newtonsoft.Json.Serialization"#>
 <# 
 	// Set options here
 	var options = new {
