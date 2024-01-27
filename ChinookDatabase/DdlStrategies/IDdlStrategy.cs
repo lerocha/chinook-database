@@ -29,6 +29,9 @@ namespace ChinookDatabase.DdlStrategies
         #region Methods used to build SQL commands.
 
         string FormatName(string name);
+        string FormatPrimaryKey(string name);
+        string FormatForeignKey(string table, string column);
+        string FormatForeignKeyIndex(string table, string column);
         string FormatStringValue(string value);
         string FormatDateValue(string date);
         string GetFullyQualifiedName(string name);

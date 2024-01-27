@@ -15,11 +15,18 @@ namespace ChinookDatabase.DdlStrategies
 				.AppendLine("psql -f {0} -q Chinook postgres");
 
             Name = "PostgreSql";
+            Identity = "GENERATED ALWAYS AS IDENTITY";
             IsReCreateDatabaseEnabled = true;
             CommandLineFormat = builder.ToString();
         }
 
-        public override string FormatName(string name) => $"{name}";
+        public override string FormatName(string name) => ToSnakeCase(name);
+
+        public override string FormatPrimaryKey(string name) => $"{ToSnakeCase(name)}_pkey";
+
+        public override string FormatForeignKey(string table, string column) => $"{ToSnakeCase(table)}_{ToSnakeCase(column)}_fkey";
+
+        public override string FormatForeignKeyIndex(string table, string column) => $"{ToSnakeCase(table)}_{ToSnakeCase(column)}_idx";
 
         public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
@@ -29,5 +36,26 @@ namespace ChinookDatabase.DdlStrategies
             "System.DateTime" => "TIMESTAMP",
             _ => "error_" + column.DataType
         };
+
+        private static string ToSnakeCase(string text)
+        {
+            var result = new StringBuilder();
+            foreach (var c in text)
+            {
+                if (char.IsUpper(c))
+                {
+                    if (result.Length > 0)
+                    {
+                        result.Append('_');
+                    }
+                    result.Append(char.ToLowerInvariant(c));
+                }
+                else
+                {
+                    result.Append(c);
+                }
+            }
+            return result.ToString();
+        }
     }
 }

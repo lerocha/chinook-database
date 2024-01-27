@@ -36,6 +36,12 @@ namespace ChinookDatabase.DdlStrategies
 
         public virtual string FormatName(string name) => $"[{name}]";
 
+        public virtual string FormatPrimaryKey(string name) => FormatName($"PK_{name}");
+
+        public virtual string FormatForeignKey(string table, string column) => FormatName($"FK_{table}{column}");
+
+        public virtual string FormatForeignKeyIndex(string table, string column) => FormatName($"IFK_{table}{column}");
+
         public virtual string FormatStringValue(string value) => $"N'{value.Replace("'", "''")}'";
 
         public virtual string FormatDateValue(string value)
