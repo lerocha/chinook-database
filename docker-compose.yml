@@ -11,6 +11,17 @@ services:
       - "3306:3306"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/create_database.sql
+  oracle:
+    image: container-registry.oracle.com/database/express:latest
+    platform: linux/amd64
+    environment:
+      ORACLE_PWD: Test123!
+    ports:
+      - "1521:1521"
+    volumes:
+      - ./ChinookDatabase/DataSources/Chinook_Oracle.sql:/docker-entrypoint-initdb.d/create_database.sql
+    # command:
+    #   - sqlplus -S / as sysdba @ create_database.sql
   postgres:
     image: postgres:15.3-alpine
     environment:
