@@ -9,10 +9,10 @@
  *            1. Run the generated SQL script to create the database to be tested.
  *            2. Verify that app.config has the proper connection string (user/password).
  ********************************************************************************/
-using System.Configuration;
 using System.Data;
 using Xunit;
 using System.Data.SQLite;
+using Microsoft.Extensions.Configuration;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {
@@ -31,22 +31,14 @@ namespace ChinookDatabase.Test.DatabaseTests
         protected SQLiteConnection GetConnection(string connectionName)
         {
             // Creates an ADO.NET connection to the database, if not created yet.
-            if (!Connections.ContainsKey(connectionName))
+            if (Connections.ContainsKey(connectionName))
             {
-                var section = (ConnectionStringsSection)ConfigurationManager.GetSection("connectionStrings");
-
-                foreach (var entry in section.ConnectionStrings.Cast<ConnectionStringSettings>()
-                                                                .Where(entry => entry.Name == connectionName))
-                {
-                    Connections[connectionName] = new SQLiteConnection(entry.ConnectionString);
-                    break;
-                }
-
-                // If we failed to create a connection, then throw an exception.
-                if (!Connections.ContainsKey(connectionName))
-                    throw new ApplicationException("There is no connection string defined in app.config file.");
+                return Connections[connectionName];
             }
 
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.test.json").Build();
+            var connectionString = config.GetConnectionString(connectionName) ?? throw new ApplicationException("There is no connection string defined in app.config file.");
+            Connections[connectionName] = new SQLiteConnection(connectionString);
             return Connections[connectionName];
         }
 
