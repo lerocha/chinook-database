@@ -37,7 +37,7 @@ namespace ChinookDatabase.Test.DatabaseTests
             }
 
             var config = new ConfigurationBuilder().AddJsonFile("appsettings.test.json").Build();
-            var connectionString = config.GetConnectionString(connectionName) ?? throw new ApplicationException("There is no connection string defined in app.config file.");
+            var connectionString = config.GetConnectionString(connectionName) ?? throw new ApplicationException("Cannot find connection string in appsettings.test.json");
             Connections[connectionName] = new SqlConnection(connectionString);
             return Connections[connectionName];
         }
