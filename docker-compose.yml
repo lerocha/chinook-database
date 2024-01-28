@@ -1,5 +1,15 @@
 version: '3.8'
+name: chinook
 services:
+  
+  #----------------------------------------------------------------------------
+  # DB2 Container
+  # https://www.ibm.com/docs/en/db2/11.5?topic=system-macos
+  # Commands:
+  #   su - chinook
+  #   db2 connect to Chinook
+  #   db2 -tf /docker-entrypoint-initdb.d/create_database.sql
+  #----------------------------------------------------------------------------
   db2:
     image: icr.io/db2_community/db2:latest
     platform: linux/amd64
@@ -7,8 +17,8 @@ services:
     restart: always
     environment:
       LICENSE: accept
-      DB2INSTANCE: db2inst1
-      DB2INST1_PASSWORD: Test123
+      DB2INSTANCE: chinook
+      DB2INST1_PASSWORD: chinook
       DBNAME: Chinook
       BLU=: false
       ENABLE_ORACLE_COMPATIBILITY: false
@@ -25,6 +35,13 @@ services:
       - "50000:50000"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_Db2.sql:/docker-entrypoint-initdb.d/create_database.sql
+  
+  #----------------------------------------------------------------------------
+  # MySQL Container
+  # https://hub.docker.com/_/mysql
+  # Commands:
+  #   mysql -u chinook -p Chinook
+  #----------------------------------------------------------------------------
   mysql:
     image: mysql:latest
     environment:
@@ -36,6 +53,14 @@ services:
       - "3306:3306"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/create_database.sql
+
+  #----------------------------------------------------------------------------
+  # Oracle Container
+  # https://container-registry.oracle.com/ords/ocr/ba/database/express
+  # https://hub.docker.com/r/gvenzl/oracle-xe (Apple M chips)
+  # Commands:
+  #   sqlplus -S / as sysdba @ /container-entrypoint-initdb.d/create_database.sql
+  #----------------------------------------------------------------------------
   oracle:
     image: gvenzl/oracle-xe:18-slim
     # image: container-registry.oracle.com/database/express:latest
@@ -46,10 +71,17 @@ services:
       APP_USER_PASSWORD: chinook
     ports:
       - "1521:1521"
-    # volumes:
-    #   - ./ChinookDatabase/DataSources/Chinook_Oracle.sql:/docker-entrypoint-initdb.d/create_database.sql
+    volumes:
+      - ./ChinookDatabase/DataSources/Chinook_Oracle.sql:/container-entrypoint-initdb.d/create_database.sql
     # command:
     #   - sqlplus -S / as sysdba @ create_database.sql
+
+  #----------------------------------------------------------------------------
+  # PostgreSQL Container
+  # https://hub.docker.com/_/postgres
+  # Commands:
+  #   psql -U chinook chinook
+  #----------------------------------------------------------------------------
   postgres:
     image: postgres:15.3-alpine
     environment:
@@ -60,6 +92,14 @@ services:
       - "5432:5432"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_PostgreSql.sql:/docker-entrypoint-initdb.d/create_database.sql
+
+  #----------------------------------------------------------------------------
+  # SQL Server Container
+  # https://hub.docker.com/_/microsoft-mssql-server
+  # Commands:
+  #   /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $MSSQL_SA_PASSWORD -d master -i /docker-entrypoint-initdb.d/create_database.sql
+  #   /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $MSSQL_SA_PASSWORD -d Chinook
+  #----------------------------------------------------------------------------
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     platform: linux/amd64
@@ -73,4 +113,3 @@ services:
       - ./ChinookDatabase/DataSources/Chinook_SqlServer.sql:/docker-entrypoint-initdb.d/create_database.sql
     # command:
     #   - /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $MSSQL_SA_PASSWORD -d master -i /docker-entrypoint-initdb.d/create_database.sql
-    
