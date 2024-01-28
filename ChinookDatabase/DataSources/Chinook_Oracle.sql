@@ -11,6 +11,7 @@
 /*******************************************************************************
    Drop database if it exists
 ********************************************************************************/
+alter session set "_ORACLE_SCRIPT"=true;
 DROP USER chinook CASCADE;
 
 
@@ -18,7 +19,7 @@ DROP USER chinook CASCADE;
    Create database
 ********************************************************************************/
 CREATE USER chinook
-IDENTIFIED BY p4ssw0rd
+IDENTIFIED BY chinook
 DEFAULT TABLESPACE users
 TEMPORARY TABLESPACE temp
 QUOTA 10M ON users;
@@ -31,7 +32,7 @@ GRANT create view TO chinook;
 
 
 
-conn chinook/p4ssw0rd
+conn chinook/chinook
 
 
 /*******************************************************************************

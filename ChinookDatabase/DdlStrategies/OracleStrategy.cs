@@ -38,7 +38,7 @@ namespace ChinookDatabase.DdlStrategies
             _ => "error_" + column.DataType
         };
 
-        public override string WriteDropDatabase(string databaseName) => $"DROP USER {databaseName.ToLower()} CASCADE;";
+        public override string WriteDropDatabase(string databaseName) => $"alter session set \"_ORACLE_SCRIPT\"=true;\r\nDROP USER {databaseName.ToLower()} CASCADE;";
 
         public override string WriteCreateDatabase(string databaseName)
         {
@@ -46,7 +46,7 @@ namespace ChinookDatabase.DdlStrategies
             var builder = new StringBuilder();
 
             builder.AppendFormat("CREATE USER {0}\r\n", name)
-                .AppendFormat("IDENTIFIED BY p4ssw0rd\r\n")
+                .AppendFormat("IDENTIFIED BY {0}\r\n", name)
                 .AppendFormat("DEFAULT TABLESPACE users\r\n")
                 .AppendFormat("TEMPORARY TABLESPACE temp\r\n")
                 .AppendFormat("QUOTA 10M ON users;\r\n\r\n")
@@ -59,7 +59,7 @@ namespace ChinookDatabase.DdlStrategies
             return builder.ToString();
         }
 
-        public override string WriteUseDatabase(string databaseName) => $"conn {databaseName.ToLower()}/p4ssw0rd";
+        public override string WriteUseDatabase(string databaseName) => $"conn {databaseName.ToLower()}/{databaseName.ToLower()}";
 
         public override string WriteForeignKeyDeleteAction(ForeignKeyConstraint foreignKeyConstraint) => foreignKeyConstraint.DeleteRule switch
         {
