@@ -11,27 +11,27 @@
 /*******************************************************************************
    Drop database if it exists
 ********************************************************************************/
-DROP USER chinook CASCADE;
+DROP USER c##chinook CASCADE;
 
 
 /*******************************************************************************
    Create database
 ********************************************************************************/
-CREATE USER chinook
-IDENTIFIED BY p4ssw0rd
+CREATE USER c##chinook
+IDENTIFIED BY chinook
 DEFAULT TABLESPACE users
 TEMPORARY TABLESPACE temp
 QUOTA 10M ON users;
 
-GRANT connect to chinook;
-GRANT resource to chinook;
-GRANT create session TO chinook;
-GRANT create table TO chinook;
-GRANT create view TO chinook;
+GRANT connect to c##chinook;
+GRANT resource to c##chinook;
+GRANT create session TO c##chinook;
+GRANT create table TO c##chinook;
+GRANT create view TO c##chinook;
 
 
 
-conn chinook/p4ssw0rd
+conn c##chinook/chinook
 
 
 /*******************************************************************************
