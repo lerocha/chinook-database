@@ -1,8 +1,8 @@
 ﻿
-Chinook Database 1.4.2
+Chinook Database 1.4.3
 * This is a sample database available in multiple formats: SQL scripts for multiple database vendors, embeded database files, and XML format.
 * The Chinook data model is available [here|Chinook_Schema].
-* ChinookDatabase1.4.2_CompleteVersion.zip is a complete package for all supported databases/data sources. There are also packages for each specific data source.
+* ChinookDatabase1.4.3_CompleteVersion.zip is a complete package for all supported databases/data sources. There are also packages for each specific data source.
 !! Supported Database Servers
 * [url:DB2|http://www-01.ibm.com/software/data/db2/express/]
 * [url:MySQL|http://www.mysql.com/]
