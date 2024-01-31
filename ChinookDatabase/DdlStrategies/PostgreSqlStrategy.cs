@@ -25,6 +25,8 @@ namespace ChinookDatabase.DdlStrategies
 
         public override string FormatName(string name) => ToSnakeCase(name);
 
+        public override string FormatCase(string text) => ToSnakeCase(text);
+
         public override string FormatPrimaryKey(string name) => $"{ToSnakeCase(name)}_pkey";
 
         public override string FormatForeignKey(string table, string column) => $"{ToSnakeCase(table)}_{ToSnakeCase(column)}_fkey";
