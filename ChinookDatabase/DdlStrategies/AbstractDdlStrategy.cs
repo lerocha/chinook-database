@@ -36,6 +36,8 @@ namespace ChinookDatabase.DdlStrategies
 
         public virtual string FormatName(string name) => $"[{name}]";
 
+        public virtual string FormatCase(string text) => text;
+
         public virtual string FormatPrimaryKey(string name) => FormatName($"PK_{name}");
 
         public virtual string FormatForeignKey(string table, string column) => FormatName($"FK_{table}{column}");

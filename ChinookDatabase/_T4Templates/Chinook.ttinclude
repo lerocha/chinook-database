@@ -6287,6 +6287,8 @@
 
         public virtual string FormatName(string name) => $"[{name}]";
 
+        public virtual string FormatCase(string text) => text;
+
         public virtual string FormatPrimaryKey(string name) => FormatName($"PK_{name}");
 
         public virtual string FormatForeignKey(string table, string column) => FormatName($"FK_{table}{column}");
@@ -6434,6 +6436,7 @@
         #region Methods used to build SQL commands.
 
         string FormatName(string name);
+        string FormatCase(string text);
         string FormatPrimaryKey(string name);
         string FormatForeignKey(string table, string column);
         string FormatForeignKeyIndex(string table, string column);
@@ -6613,6 +6616,8 @@
         }
 
         public override string FormatName(string name) => ToSnakeCase(name);
+
+        public override string FormatCase(string text) => ToSnakeCase(text);
 
         public override string FormatPrimaryKey(string name) => $"{ToSnakeCase(name)}_pkey";
 

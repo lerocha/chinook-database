@@ -251,7 +251,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 		foreach (DataColumn col in table.Columns)
 		{
 			string expected = DataSetHelper.GetExpectedValue(col, table.Rows[num][col.ColumnName].ToString());
-#>            Assert.Equal(<#= expected #>, row["<#= col.ColumnName #>"].ToString());
+#>            Assert.Equal(<#= expected #>, row["<#= option.Strategy.FormatCase(col.ColumnName) #>"].ToString());
 <#
 		} // foreach column
 #>        }
@@ -286,7 +286,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 			foreach (DataColumn col in ds.Tables["Customer"].Columns)
 			{
 				string expected = DataSetHelper.GetExpectedValue(col, ds.Tables["Customer"].Rows[i][col.ColumnName].ToString());
-#>            Assert.Equal(<#= expected #>, row["<#= col.ColumnName #>"].ToString());
+#>            Assert.Equal(<#= expected #>, row["<#= option.Strategy.FormatCase(col.ColumnName) #>"].ToString());
 <#
 			}
 #>
