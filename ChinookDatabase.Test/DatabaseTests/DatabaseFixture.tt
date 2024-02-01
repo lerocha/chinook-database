@@ -204,7 +204,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), string.Format("The total field of InvoiceId={0} does not match its invoice lines.", row["InvoiceId"]));
+                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), $"The total field of InvoiceId={row["<#= option.Strategy.FormatCase("InvoiceId") #>"]} does not match its invoice lines.");
             }
         }
 <#

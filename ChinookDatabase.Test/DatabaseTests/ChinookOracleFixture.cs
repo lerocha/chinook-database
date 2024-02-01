@@ -103,7 +103,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), string.Format("The total field of InvoiceId={0} does not match its invoice lines.", row["InvoiceId"]));
+                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), $"The total field of InvoiceId={row["InvoiceId"]} does not match its invoice lines.");
             }
         }
 
@@ -290,8 +290,8 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.Equal("Laura", row["FirstName"].ToString());
             Assert.Equal("IT Staff", row["Title"].ToString());
             Assert.Equal("6", row["ReportsTo"].ToString());
-            Assert.Equal("1/9/1968 12:00:00 AM", row["BirthDate"].ToString());
-            Assert.Equal("3/4/2004 12:00:00 AM", row["HireDate"].ToString());
+            Assert.Equal(DateTime.Parse("1/9/1968 12:00:00 AM").ToString(), row["BirthDate"].ToString());
+            Assert.Equal(DateTime.Parse("3/4/2004 12:00:00 AM").ToString(), row["HireDate"].ToString());
             Assert.Equal("923 7 ST NW", row["Address"].ToString());
             Assert.Equal("Lethbridge", row["City"].ToString());
             Assert.Equal("AB", row["State"].ToString());
@@ -369,7 +369,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 			// Assert that the last record has the proper information.            
             Assert.Equal("412", row["InvoiceId"].ToString());
             Assert.Equal("58", row["CustomerId"].ToString());
-            Assert.Equal("12/22/2025 12:00:00 AM", row["InvoiceDate"].ToString());
+            Assert.Equal(DateTime.Parse("12/22/2025 12:00:00 AM").ToString(), row["InvoiceDate"].ToString());
             Assert.Equal("12,Community Centre", row["BillingAddress"].ToString());
             Assert.Equal("Delhi", row["BillingCity"].ToString());
             Assert.Equal("", row["BillingState"].ToString());

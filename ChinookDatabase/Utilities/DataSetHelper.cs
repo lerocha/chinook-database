@@ -63,9 +63,10 @@ namespace ChinookDatabase.Utilities
             return string.Empty;
         }
 
-        public static string GetExpectedValue(DataColumn col, string value)
+        public static string GetExpectedValue(DataColumn column, string value) => column.DataType.ToString() switch
         {
-	        return $"\"{value}\"";
-        }
+            "System.DateTime" => $"DateTime.Parse(\"{value}\").ToString()",
+            _ => $"\"{value}\""
+        };
     }
 }
