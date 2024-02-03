@@ -91,7 +91,8 @@ using Microsoft.Extensions.Configuration;
 
 <#
     FileInfo thisFile = new FileInfo(Host.TemplateFile);
-    var json = File.ReadAllText(thisFile.DirectoryName + @"\..\..\ChinookDatabase\DataSources\ChinookData.json");
+    var path = Path.Combine(thisFile.DirectoryName, "..", "..", "ChinookDatabase", "DataSources", "ChinookData.json");
+    var json = File.ReadAllText(path);
     var ds = JsonConvert.DeserializeObject<ChinookDataSet>(json);
 #>
 namespace ChinookDatabase.Test.DatabaseTests
