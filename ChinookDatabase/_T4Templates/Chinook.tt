@@ -29,7 +29,7 @@
 <# 
 	// Set options here
 	var options = new {
-		Path = Path.GetDirectoryName(Host.TemplateFile) + @"\..",
+		Path = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), ".."),
 		SearchPattern = "*.cs",
 	};
 

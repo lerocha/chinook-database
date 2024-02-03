@@ -9,7 +9,7 @@ var options = new
 	DatabaseName = "Chinook",
 	PopulateDatabase = true,
 	Version = DataSetHelper.GetVersionNumber(),
-	DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), @"_Xml\ChinookData.xml"),
+	DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "_Xml", "ChinookData.xml"),
 	DdlStrategies = new IDdlStrategy[] 
 							{
 								new SqlServerStrategy { IsIdentityEnabled = false, Encoding = Encoding.Unicode },
