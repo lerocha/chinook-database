@@ -1,7 +1,7 @@
 ﻿<#@ template language="C#" debug="true" hostSpecific="true" #>
 <#@ output extension=".txt" #>
-<#@ include file="..\_T4Templates\Chinook.ttinclude"#>
-<#@ include file="..\_T4Templates\Manager.ttinclude"#>
+<#@ include file="../_T4Templates/Chinook.ttinclude"#>
+<#@ include file="../_T4Templates/Manager.ttinclude"#>
 <#
 
 var options = new 
