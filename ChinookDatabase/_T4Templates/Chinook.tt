@@ -3,7 +3,6 @@
 <#@ assembly name="System.Core"#>
 <#@ assembly name="System.Data"#>
 <#@ assembly name="System.Data.DataSetExtensions.dll"#>
-<#@ assembly name="System.Data.Linq"#>
 <#@ assembly name="EnvDTE"#>
 <#@ assembly name="System.Xml"#>
 <#@ assembly name="System.Xml.Linq"#>
@@ -14,8 +13,6 @@
 <#@ import namespace="System.Collections.Generic"#>
 <#@ import namespace="System.Diagnostics" #>
 <#@ import namespace="System.Data"#>
-<#@ import namespace="System.Data.Linq"#>
-<#@ import namespace="System.Data.Linq.Mapping"#>
 <#@ import namespace="System.Globalization"#>
 <#@ import namespace="System.IO"#>
 <#@ import namespace="System.Linq"#>
