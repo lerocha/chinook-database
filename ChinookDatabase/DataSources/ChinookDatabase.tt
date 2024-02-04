@@ -1,5 +1,5 @@
 ﻿<#@ template language="C#" debug="true" hostSpecific="true" #>
-<#@ output extension=".txt" #>
+<#@ output extension=".txt" encoding="utf-8"#>
 <#@ include file="../_T4Templates/Chinook.ttinclude"#>
 <#@ include file="../_T4Templates/Manager.ttinclude"#>
 <#

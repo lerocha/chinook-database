@@ -1,5 +1,5 @@
 ﻿<#@ template hostspecific="True"#>
-<#@ output extension=".ttinclude"#>
+<#@ output extension=".ttinclude" encoding="utf-8"#>
 <#@ assembly name="System.Core"#>
 <#@ assembly name="System.Data"#>
 <#@ assembly name="System.Data.DataSetExtensions.dll"#>

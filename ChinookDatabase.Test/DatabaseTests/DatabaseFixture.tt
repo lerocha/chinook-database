@@ -1,5 +1,5 @@
 ﻿<#@ template hostspecific="True"#>
-<#@ output extension="cs" #>
+<#@ output extension="cs" encoding="utf-8"#>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
