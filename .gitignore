@@ -22,3 +22,4 @@ _ReSharper.*
 .DS_Store
 .idea/
 .vs/
+EnvDTE.dll

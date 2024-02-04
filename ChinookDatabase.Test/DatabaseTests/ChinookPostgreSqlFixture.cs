@@ -290,8 +290,8 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.Equal("Laura", row["first_name"].ToString());
             Assert.Equal("IT Staff", row["title"].ToString());
             Assert.Equal("6", row["reports_to"].ToString());
-            Assert.Equal(DateTime.Parse("1/9/1968 12:00:00 AM").ToString(), row["birth_date"].ToString());
-            Assert.Equal(DateTime.Parse("3/4/2004 12:00:00 AM").ToString(), row["hire_date"].ToString());
+            Assert.Equal(DateTime.Parse("1/9/1968 12:00:00 AM").ToString(), row["birth_date"].ToString());
+            Assert.Equal(DateTime.Parse("3/4/2004 12:00:00 AM").ToString(), row["hire_date"].ToString());
             Assert.Equal("923 7 ST NW", row["address"].ToString());
             Assert.Equal("Lethbridge", row["city"].ToString());
             Assert.Equal("AB", row["state"].ToString());
@@ -369,7 +369,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 			// Assert that the last record has the proper information.            
             Assert.Equal("412", row["invoice_id"].ToString());
             Assert.Equal("58", row["customer_id"].ToString());
-            Assert.Equal(DateTime.Parse("12/22/2025 12:00:00 AM").ToString(), row["invoice_date"].ToString());
+            Assert.Equal(DateTime.Parse("12/22/2025 12:00:00 AM").ToString(), row["invoice_date"].ToString());
             Assert.Equal("12,Community Centre", row["billing_address"].ToString());
             Assert.Equal("Delhi", row["billing_city"].ToString());
             Assert.Equal("", row["billing_state"].ToString());

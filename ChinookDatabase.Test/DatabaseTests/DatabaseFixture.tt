@@ -1,11 +1,11 @@
 ﻿<#@ template hostspecific="True"#>
-<#@ output extension="cs" #>
+<#@ output extension="cs" encoding="utf-8"#>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Text.RegularExpressions" #>
-<#@ include file="..\..\ChinookDatabase\_T4Templates\Chinook.ttinclude" #>
-<#@ include file="..\..\ChinookDatabase\_T4Templates\Manager.ttinclude" #>
+<#@ include file="../../ChinookDatabase/_T4Templates/Chinook.ttinclude" #>
+<#@ include file="../../ChinookDatabase/_T4Templates/Manager.ttinclude" #>
 <#
 var options = new [] {
 						new Option
