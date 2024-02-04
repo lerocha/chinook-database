@@ -87,7 +87,7 @@
 		output.AppendLine("\n//------------------------------------------------------------------------------");
 		output.AppendLine("// Filename: " + file.Name);
 		output.AppendLine("//------------------------------------------------------------------------------\n");
-		lines = File.ReadAllLines(file.FullName);
+		lines = File.ReadAllLines(file.FullName, Encoding.UTF8);
 		foreach (string line in lines)
 		{
 			if (!line.StartsWith("using") &&
