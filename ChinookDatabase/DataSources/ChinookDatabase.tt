@@ -285,7 +285,7 @@ CREATE INDEX <#= ifkName #> ON <#= strategy.GetFullyQualifiedName(fromTableName)
             foreach (DataColumn col in table.Columns)
             {
                 string value = row[col.ColumnName].ToString();
-                if ((col.AutoIncrement && strategy.PrimaryKeyStrategy == PrimaryKeyStrategy.Identity) || value.Length==0) continue;
+                if ((col.AutoIncrement && strategy.PrimaryKeyStrategy != PrimaryKeyStrategy.None) || value.Length==0) continue;
 				
                 if (col.DataType == typeof(DateTime))
                 {
@@ -453,8 +453,13 @@ public class OutputFile {
 
 private static string GetFileName(IDdlStrategy strategy, string extension)
 {
-	var suffix = (strategy.PrimaryKeyStrategy == PrimaryKeyStrategy.Identity ? "_AutoIncrementPKs" : string.Empty);
-	return string.Format("Chinook_{0}{1}.{2}", strategy.Name, suffix, extension);
+	var suffix = strategy.PrimaryKeyStrategy switch {
+		PrimaryKeyStrategy.Identity => "_AutoIncrementPKs",
+		PrimaryKeyStrategy.Serial => "_SerialPKs",
+		_ => string.Empty
+		};
+
+	return $"Chinook_{strategy.Name}{suffix}.{extension}";
 }
 
 private static string GetValues(IEnumerable<string> values, char delimiter)
