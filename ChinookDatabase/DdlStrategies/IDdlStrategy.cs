@@ -19,7 +19,7 @@ namespace ChinookDatabase.DdlStrategies
 
         KeyDefinition PrimaryKeyDef { get; set; }
         KeyDefinition ForeignKeyDef { get; set; }
-        bool IsIdentityEnabled { get; set; }
+        public PrimaryKeyStrategy PrimaryKeyStrategy { get; set; }
         bool IsReCreateDatabaseEnabled { get; set; }
         string CommandLineFormat { get; set; }
         Encoding Encoding { get; set; }

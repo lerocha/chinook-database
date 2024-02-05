@@ -29,7 +29,7 @@ namespace ChinookDatabase.DdlStrategies
 
         public KeyDefinition PrimaryKeyDef { get; set; }
         public KeyDefinition ForeignKeyDef { get; set; }
-        public bool IsIdentityEnabled { get; set; }
+        public PrimaryKeyStrategy PrimaryKeyStrategy { get; set; }
         public bool IsReCreateDatabaseEnabled { get; set; }
         public string CommandLineFormat { get; set; }
         public Encoding Encoding { get; set; }
@@ -90,7 +90,7 @@ namespace ChinookDatabase.DdlStrategies
         {
             var notnull = (column.AllowDBNull ? "" : "NOT NULL");
             var isPrimaryKey = column.Table?.PrimaryKey.Length == 1 && column.Table?.PrimaryKey.Contains(column) == true;
-            var identity = IsIdentityEnabled && isPrimaryKey ? Identity : String.Empty;
+            var identity = (PrimaryKeyStrategy == PrimaryKeyStrategy.Identity) && isPrimaryKey ? Identity : String.Empty;
             return string.Format("{0} {1} {2} {3}",
                                  FormatName(column.ColumnName),
                                  GetStoreType(column),

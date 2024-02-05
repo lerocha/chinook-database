@@ -12,18 +12,18 @@ var options = new
 	DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "_Xml", "ChinookData.xml"),
 	DdlStrategies = new IDdlStrategy[] 
 							{
-								new SqlServerStrategy { IsIdentityEnabled = false, Encoding = Encoding.Unicode },
-								new SqlServerStrategy { IsIdentityEnabled = true, Encoding = Encoding.Unicode },
-								new SqlServerCompactStrategy { IsIdentityEnabled = false },
-								new SqlServerCompactStrategy { IsIdentityEnabled = true },
-								new SqliteStrategy { IsIdentityEnabled = false },
-								new SqliteStrategy { IsIdentityEnabled = true, PrimaryKeyDef = KeyDefinition.OnCreateTableColumn },
-								new MySqlStrategy { IsIdentityEnabled = false },
-								new MySqlStrategy { IsIdentityEnabled = true },
-								new OracleStrategy { IsIdentityEnabled = false, Encoding = Encoding.UTF8 },
-								new PostgreSqlStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default },
-								new PostgreSqlStrategy { IsIdentityEnabled = true, Encoding = Encoding.Default },
-								new Db2Strategy { IsIdentityEnabled = false, Encoding = Encoding.Default }
+								new SqlServerStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.Unicode },
+								new SqlServerStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity, Encoding = Encoding.Unicode },
+								new SqlServerCompactStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None },
+								new SqlServerCompactStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity },
+								new SqliteStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None },
+								new SqliteStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity, PrimaryKeyDef = KeyDefinition.OnCreateTableColumn },
+								new MySqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None },
+								new MySqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity },
+								new OracleStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.UTF8 },
+								new PostgreSqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.Default },
+								new PostgreSqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity, Encoding = Encoding.Default },
+								new Db2Strategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.Default }
 						   	},
 	OutputFiles = new List<OutputFile>()
 };
@@ -44,7 +44,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 	var filename = GetFileName(strategy, strategy.ScriptFileExtension);
 	fileManager.StartNewFile(filename, strategy.Encoding);
 
-	var details = (strategy.IsIdentityEnabled ? "Auto incremented primary keys." : string.Empty);
+	var details = (strategy.PrimaryKeyStrategy == PrimaryKeyStrategy.Identity ? "Auto incremented primary keys." : string.Empty);
 	
 	// Add the script file to the package list.
 	options.OutputFiles.Add(new OutputFile { Name = filename, Package = strategy.Name, Description = "SQL script to create the Chinook database. " + details });
@@ -285,7 +285,7 @@ CREATE INDEX <#= ifkName #> ON <#= strategy.GetFullyQualifiedName(fromTableName)
             foreach (DataColumn col in table.Columns)
             {
                 string value = row[col.ColumnName].ToString();
-                if ((col.AutoIncrement && strategy.IsIdentityEnabled) || value.Length==0) continue;
+                if ((col.AutoIncrement && strategy.PrimaryKeyStrategy == PrimaryKeyStrategy.Identity) || value.Length==0) continue;
 				
                 if (col.DataType == typeof(DateTime))
                 {
@@ -453,7 +453,7 @@ public class OutputFile {
 
 private static string GetFileName(IDdlStrategy strategy, string extension)
 {
-	var suffix = (strategy.IsIdentityEnabled ? "_AutoIncrementPKs" : string.Empty);
+	var suffix = (strategy.PrimaryKeyStrategy == PrimaryKeyStrategy.Identity ? "_AutoIncrementPKs" : string.Empty);
 	return string.Format("Chinook_{0}{1}.{2}", strategy.Name, suffix, extension);
 }
 
