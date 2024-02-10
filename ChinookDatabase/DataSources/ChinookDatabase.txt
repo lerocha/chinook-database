@@ -29,6 +29,7 @@ This is the list of files included in the complete version.
 | Oracle | {"CreateOracle.bat"} | Batch file to create the Chinook database. |
 | PostgreSql | {"Chinook_PostgreSql.sql"} | SQL script to create the Chinook database.  |
 | PostgreSql | {"Chinook_PostgreSql_AutoIncrementPKs.sql"} | SQL script to create the Chinook database. Auto incremented primary keys. |
+| PostgreSql | {"Chinook_PostgreSql_SerialPKs.sql"} | SQL script to create the Chinook database.  |
 | PostgreSql | {"CreatePostgreSql.bat"} | Batch file to create the Chinook database. |
 | Sqlite | {"Chinook_Sqlite.sql"} | SQL script to create the Chinook database.  |
 | Sqlite | {"Chinook_Sqlite.sqlite"} | Chinook database file.  |

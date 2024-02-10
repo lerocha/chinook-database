@@ -23,6 +23,7 @@ var options = new
 								new OracleStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.UTF8 },
 								new PostgreSqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.Default },
 								new PostgreSqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity, Encoding = Encoding.Default },
+								new PostgreSqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Serial, Encoding = Encoding.Default },
 								new Db2Strategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.Default }
 						   	},
 	OutputFiles = new List<OutputFile>()

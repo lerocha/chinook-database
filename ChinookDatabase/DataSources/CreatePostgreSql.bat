@@ -18,12 +18,14 @@ echo Options:
 echo.
 echo 1. Run Chinook_PostgreSql.sql
 echo 2. Run Chinook_PostgreSql_AutoIncrementPKs.sql
-echo 3. Exit
+echo 3. Run Chinook_PostgreSql_SerialPKs.sql
+echo 4. Exit
 echo.
 choice /c 123
 if (%ERRORLEVEL%)==(1) set SQLFILE=Chinook_PostgreSql.sql
 if (%ERRORLEVEL%)==(2) set SQLFILE=Chinook_PostgreSql_AutoIncrementPKs.sql
-if (%ERRORLEVEL%)==(3) goto END
+if (%ERRORLEVEL%)==(3) set SQLFILE=Chinook_PostgreSql_SerialPKs.sql
+if (%ERRORLEVEL%)==(4) goto END
 
 :RUNSQL
 echo.
