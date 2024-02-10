@@ -30,7 +30,7 @@ sqlite3 -init Chinook_Sqlite_AutoIncrementPKs.sql Chinook_Sqlite_AutoIncrementPK
 echo.
 
 rem echo Chinook_SqlServerCompact.sql
-rem sqlcecmd d "Data Source=.\Chinook_SqlServerCompact.sdf" e create
+rem sqlcecmd -d "Data Source=.\Chinook_SqlServerCompact.sdf" -e create
 rem echo.
 
 echo Chinook_PostgreSql.sql
@@ -38,13 +38,6 @@ SET "PGOPTIONS=-c client_min_messages=WARNING"
 dropdb --if-exists -U postgres Chinook
 createdb -U postgres Chinook
 psql -f Chinook_PostgreSql.sql -q Chinook postgres
-echo.
-
-echo Chinook_PostgreSql_CaseInsensitive.sql
-SET "PGOPTIONS=-c client_min_messages=WARNING"
-dropdb --if-exists -U postgres Chinook
-createdb -U postgres Chinook
-psql -f Chinook_PostgreSql_CaseInsensitive.sql -q Chinook postgres
 echo.
 
 echo Chinook_PostgreSql_SerialPKs.sql
