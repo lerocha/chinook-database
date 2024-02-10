@@ -42,6 +42,7 @@
 //          MySqlStrategy.cs
 //          OracleStrategy.cs
 //          PostgreSqlStrategy.cs
+//          PrimaryKeyStrategy.cs
 //          SqliteStrategy.cs
 //          SqlServerCompactStrategy.cs
 //          SqlServerStrategy.cs
@@ -6278,7 +6279,7 @@
 
         public KeyDefinition PrimaryKeyDef { get; set; }
         public KeyDefinition ForeignKeyDef { get; set; }
-        public bool IsIdentityEnabled { get; set; }
+        public PrimaryKeyStrategy PrimaryKeyStrategy { get; set; }
         public bool IsReCreateDatabaseEnabled { get; set; }
         public string CommandLineFormat { get; set; }
         public Encoding Encoding { get; set; }
@@ -6337,12 +6338,13 @@
 
         public virtual string WriteCreateColumn(DataColumn column)
         {
-            var notnull = (column.AllowDBNull ? "" : "NOT NULL");
             var isPrimaryKey = column.Table?.PrimaryKey.Length == 1 && column.Table?.PrimaryKey.Contains(column) == true;
-            var identity = IsIdentityEnabled && isPrimaryKey ? Identity : String.Empty;
+            var type = isPrimaryKey && (PrimaryKeyStrategy == PrimaryKeyStrategy.Serial) ? "SERIAL" : GetStoreType(column);
+            var notnull = (column.AllowDBNull ? "" : "NOT NULL");
+            var identity = (PrimaryKeyStrategy == PrimaryKeyStrategy.Identity) && isPrimaryKey ? Identity : String.Empty;
             return string.Format("{0} {1} {2} {3}",
                                  FormatName(column.ColumnName),
-                                 GetStoreType(column),
+                                 type,
                                  notnull, identity).Trim();
         }
 
@@ -6424,7 +6426,7 @@
 
         KeyDefinition PrimaryKeyDef { get; set; }
         KeyDefinition ForeignKeyDef { get; set; }
-        bool IsIdentityEnabled { get; set; }
+        public PrimaryKeyStrategy PrimaryKeyStrategy { get; set; }
         bool IsReCreateDatabaseEnabled { get; set; }
         string CommandLineFormat { get; set; }
         Encoding Encoding { get; set; }
@@ -6636,6 +6638,17 @@
     }
 
 //------------------------------------------------------------------------------
+// Filename: PrimaryKeyStrategy.cs
+//------------------------------------------------------------------------------
+
+    public enum PrimaryKeyStrategy
+    {
+        None,
+        Identity,
+        Serial
+    }
+
+//------------------------------------------------------------------------------
 // Filename: SqliteStrategy.cs
 //------------------------------------------------------------------------------
 
@@ -6672,7 +6685,7 @@
         {
             var notnull = (column.AllowDBNull ? "" : "NOT NULL");
             var isPrimaryKey = column.Table?.PrimaryKey.Length == 1 && column.Table?.PrimaryKey.Contains(column) == true;
-            var identity = IsIdentityEnabled && isPrimaryKey ? Identity : String.Empty;
+            var identity = (PrimaryKeyStrategy == PrimaryKeyStrategy.Identity) && isPrimaryKey ? Identity : String.Empty;
             return string.Format("{0} {1} {2} {3}",
                                  FormatName(column.ColumnName),
                                  GetStoreType(column),
