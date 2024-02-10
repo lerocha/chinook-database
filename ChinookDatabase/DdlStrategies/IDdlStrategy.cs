@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Metadata.Edm;
+﻿using System.Data;
 using System.Text;
 
 namespace ChinookDatabase.DdlStrategies
@@ -31,27 +29,28 @@ namespace ChinookDatabase.DdlStrategies
         #region Methods used to build SQL commands.
 
         string FormatName(string name);
+        string FormatCase(string text);
+        string FormatPrimaryKey(string name);
+        string FormatForeignKey(string table, string column);
+        string FormatForeignKeyIndex(string table, string column);
         string FormatStringValue(string value);
         string FormatDateValue(string date);
-        string GetFullyQualifiedName(string schema, string name);
-        string GetStoreType(EdmProperty property);
-        string GetIdentity(EdmProperty property, Version targetVersion);
-        string GetClustered(StoreItemCollection store, EntityType entityType);
-        string GetForeignKeyConstraintName(ReferentialConstraint constraint);
-        string GetColumns(IEnumerable<EdmProperty> properties, char delimiter);
-
+        string GetFullyQualifiedName(string name);
+        string GetStoreType(DataColumn column);
+        string GetClustered(DataTable table);
+        string GetColumns(IEnumerable<String> keys, char delimiter);
         #endregion
 
         #region Methods used to write full SQL commands.
 
         string WriteDropDatabase(string databaseName);
-        string WriteDropTable(EntitySet entitySet);
-        string WriteDropForeignKey(AssociationSet associationSet);
+        string WriteDropTable(string tableName);
+        string WriteDropForeignKey(string tableName, string columnName);
         string WriteCreateDatabase(string databaseName);
         string WriteUseDatabase(string databaseName);
-        string WriteCreateColumn(EdmProperty property, Version targetVersion);
-        string WriteForeignKeyDeleteAction(ReferentialConstraint refConstraint);
-        string WriteForeignKeyUpdateAction(ReferentialConstraint refConstraint);
+        string WriteCreateColumn(DataColumn column);
+        string WriteForeignKeyDeleteAction(ForeignKeyConstraint foreignKeyConstraint);
+        string WriteForeignKeyUpdateAction(ForeignKeyConstraint foreignKeyConstraint);
         string WriteExecuteCommand();
         string WriteFinishCommit();
 

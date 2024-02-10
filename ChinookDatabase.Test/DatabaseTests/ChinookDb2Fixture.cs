@@ -1,23 +1,18 @@
-﻿/*******************************************************************************
- * Chinook Database - Version 1.4
+/*******************************************************************************
+ * Chinook Database - Version 1.4.3
  * Description: Test fixture for Chinook database.
  * DB Server: Db2
  * Author: Luis Rocha
- * License: http://www.codeplex.com/ChinookDatabase/license
+ * License: https://github.com/lerocha/chinook-database/blob/master/LICENSE.md
  * 
  * IMPORTANT: In order to run these test fixtures, you will need to:
  *            1. Run the generated SQL script to create the database to be tested.
  *            2. Verify that app.config has the proper connection string (user/password).
  ********************************************************************************/
-using System;
-using System.Configuration;
-using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
-using System.Linq;
 using Xunit;
-using Xunit.Extensions;
-using IBM.Data.DB2;
+using IBM.Data.DB2.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace ChinookDatabase.Test.DatabaseTests
 {
@@ -36,22 +31,14 @@ namespace ChinookDatabase.Test.DatabaseTests
         protected DB2Connection GetConnection(string connectionName)
         {
             // Creates an ADO.NET connection to the database, if not created yet.
-            if (!Connections.ContainsKey(connectionName))
+            if (Connections.ContainsKey(connectionName))
             {
-                var section = (ConnectionStringsSection)ConfigurationManager.GetSection("connectionStrings");
-
-                foreach (var entry in section.ConnectionStrings.Cast<ConnectionStringSettings>()
-                                                                .Where(entry => entry.Name == connectionName))
-                {
-                    Connections[connectionName] = new DB2Connection(entry.ConnectionString);
-                    break;
-                }
-
-                // If we failed to create a connection, then throw an exception.
-                if (!Connections.ContainsKey(connectionName))
-                    throw new ApplicationException("There is no connection string defined in app.config file.");
+                return Connections[connectionName];
             }
 
+            var config = new ConfigurationBuilder().AddJsonFile("appsettings.test.json").Build();
+            var connectionString = config.GetConnectionString(connectionName) ?? throw new ApplicationException("Cannot find connection string in appsettings.test.json");
+            Connections[connectionName] = new DB2Connection(connectionString);
             return Connections[connectionName];
         }
 
@@ -116,7 +103,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), string.Format("The total field of InvoiceId={0} does not match its invoice lines.", row["InvoiceId"]));
+                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), $"The total field of InvoiceId={row["InvoiceId"]} does not match its invoice lines.");
             }
         }
 
@@ -303,8 +290,8 @@ namespace ChinookDatabase.Test.DatabaseTests
             Assert.Equal("Laura", row["FirstName"].ToString());
             Assert.Equal("IT Staff", row["Title"].ToString());
             Assert.Equal("6", row["ReportsTo"].ToString());
-            Assert.Equal("1/9/1968 12:00:00 AM", row["BirthDate"].ToString());
-            Assert.Equal("3/4/2004 12:00:00 AM", row["HireDate"].ToString());
+            Assert.Equal(DateTime.Parse("1/9/1968 12:00:00 AM").ToString(), row["BirthDate"].ToString());
+            Assert.Equal(DateTime.Parse("3/4/2004 12:00:00 AM").ToString(), row["HireDate"].ToString());
             Assert.Equal("923 7 ST NW", row["Address"].ToString());
             Assert.Equal("Lethbridge", row["City"].ToString());
             Assert.Equal("AB", row["State"].ToString());
@@ -382,7 +369,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 			// Assert that the last record has the proper information.            
             Assert.Equal("412", row["InvoiceId"].ToString());
             Assert.Equal("58", row["CustomerId"].ToString());
-            Assert.Equal("12/22/2013 12:00:00 AM", row["InvoiceDate"].ToString());
+            Assert.Equal(DateTime.Parse("12/22/2025 12:00:00 AM").ToString(), row["InvoiceDate"].ToString());
             Assert.Equal("12,Community Centre", row["BillingAddress"].ToString());
             Assert.Equal("Delhi", row["BillingCity"].ToString());
             Assert.Equal("", row["BillingState"].ToString());

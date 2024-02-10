@@ -21,3 +21,5 @@ _ReSharper.*
 *.nupkg
 .DS_Store
 .idea/
+.vs/
+EnvDTE.dll

@@ -1,12 +1,9 @@
-
-
-Chinook Database 1.4
+Chinook Database 1.4.3
 * This is a sample database available in multiple formats: SQL scripts for multiple database vendors, embeded database files, and XML format.
 * The Chinook data model is available [here|Chinook_Schema].
-* ChinookDatabase1.4_CompleteVersion.zip is a complete package for all supported databases/data sources. There are also packages for each specific data source.
+* ChinookDatabase1.4.3_CompleteVersion.zip is a complete package for all supported databases/data sources. There are also packages for each specific data source.
 !! Supported Database Servers
 * [url:DB2|http://www-01.ibm.com/software/data/db2/express/]
-* [url:EffiProz|http://effiproz.codeplex.com/]
 * [url:MySQL|http://www.mysql.com/]
 * [url:Oracle|http://www.oracle.com/technetwork/database/express-edition/overview/index.html]
 * [url:PostgreSQL|http://www.postgresql.org/]
@@ -25,17 +22,13 @@ This is the list of files included in the complete version.
 || Data Source || File || Description ||
 | Db2 | {"Chinook_Db2.sql"} | SQL script to create the Chinook database.  |
 | Db2 | {"CreateDb2.bat"} | Batch file to create the Chinook database. |
-| EffiProz | {"Chinook_EffiProz.sql"} | SQL script to create the Chinook database.  |
-| EffiProz | {"Chinook_EffiProz_AutoIncrementPKs.sql"} | SQL script to create the Chinook database. Auto incremented primary keys. |
 | MySql | {"Chinook_MySql.sql"} | SQL script to create the Chinook database.  |
 | MySql | {"Chinook_MySql_AutoIncrementPKs.sql"} | SQL script to create the Chinook database. Auto incremented primary keys. |
 | MySql | {"CreateMySql.bat"} | Batch file to create the Chinook database. |
 | Oracle | {"Chinook_Oracle.sql"} | SQL script to create the Chinook database.  |
 | Oracle | {"CreateOracle.bat"} | Batch file to create the Chinook database. |
 | PostgreSql | {"Chinook_PostgreSql.sql"} | SQL script to create the Chinook database.  |
-| PostgreSql | {"Chinook_PostgreSql_CaseInsensitive.sql"} | SQL script to create the Chinook database. Case-insensitive identifiers. |
-| PostgreSql | {"Chinook_PostgreSql_SerialPKs.sql"} | SQL script to create the Chinook database. Serial primary keys. |
-| PostgreSql | {"Chinook_PostgreSql_SerialPKs_CaseInsensitive.sql"} | SQL script to create the Chinook database. Serial primary keys and case-insensitive identifiers. |
+| PostgreSql | {"Chinook_PostgreSql_AutoIncrementPKs.sql"} | SQL script to create the Chinook database. Auto incremented primary keys. |
 | PostgreSql | {"CreatePostgreSql.bat"} | Batch file to create the Chinook database. |
 | Sqlite | {"Chinook_Sqlite.sql"} | SQL script to create the Chinook database.  |
 | Sqlite | {"Chinook_Sqlite.sqlite"} | Chinook database file.  |

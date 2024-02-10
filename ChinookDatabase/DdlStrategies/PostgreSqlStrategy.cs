@@ -1,11 +1,13 @@
-﻿using System.Data.Metadata.Edm;
+﻿using System.Data;
 using System.Text;
-using Microsoft.Data.Entity.Design.DatabaseGeneration;
+using Newtonsoft.Json.Serialization;
 
 namespace ChinookDatabase.DdlStrategies
 {
     public class PostgreSqlStrategy : AbstractDdlStrategy
     {
+        private static readonly SnakeCaseNamingStrategy snakeCaseNamingStrategy = new();
+
         public PostgreSqlStrategy()
         {
             var builder = new StringBuilder();
@@ -16,31 +18,30 @@ namespace ChinookDatabase.DdlStrategies
 				.AppendLine("psql -f {0} -q Chinook postgres");
 
             Name = "PostgreSql";
+            Identity = "GENERATED ALWAYS AS IDENTITY";
             IsReCreateDatabaseEnabled = true;
             CommandLineFormat = builder.ToString();
         }
 
-        public override string FormatName(string name)
-        {
-            return string.Format("\"{0}\"", name);
-        }
+        public override string FormatName(string name) => ToSnakeCase(name);
 
-        public override string GetFullyQualifiedName(string schema, string name)
-        {
-            return FormatName(name);
-        }
+        public override string FormatCase(string text) => ToSnakeCase(text);
 
-        public override string GetStoreType(EdmProperty property)
+        public override string FormatPrimaryKey(string name) => $"{ToSnakeCase(name)}_pkey";
+
+        public override string FormatForeignKey(string table, string column) => $"{ToSnakeCase(table)}_{ToSnakeCase(column)}_fkey";
+
+        public override string FormatForeignKeyIndex(string table, string column) => $"{ToSnakeCase(table)}_{ToSnakeCase(column)}_idx";
+
+        public override string GetStoreType(DataColumn column) => column.DataType.ToString() switch
         {
-            switch (property.TypeUsage.EdmType.Name)
-            {
-                case "datetime":
-                    return "TIMESTAMP";
-                case "nvarchar":
-                    return property.ToStoreType().Replace("nvarchar", "VARCHAR");
-                default:
-                    return base.GetStoreType(property);
-            }
-        }
+            "System.String" => $"VARCHAR({column.MaxLength})",
+            "System.Int32" => "INT",
+            "System.Decimal" => "NUMERIC(10,2)",
+            "System.DateTime" => "TIMESTAMP",
+            _ => "error_" + column.DataType
+        };
+
+        private static string ToSnakeCase(string text) => snakeCaseNamingStrategy.GetPropertyName(text, false);
     }
 }
