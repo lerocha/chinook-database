@@ -12,18 +12,19 @@ var options = new
 	DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "_Xml", "ChinookData.xml"),
 	DdlStrategies = new IDdlStrategy[] 
 							{
-								new SqlServerStrategy { IsIdentityEnabled = false, Encoding = Encoding.Unicode },
-								new SqlServerStrategy { IsIdentityEnabled = true, Encoding = Encoding.Unicode },
-								new SqlServerCompactStrategy { IsIdentityEnabled = false },
-								new SqlServerCompactStrategy { IsIdentityEnabled = true },
-								new SqliteStrategy { IsIdentityEnabled = false },
-								new SqliteStrategy { IsIdentityEnabled = true, PrimaryKeyDef = KeyDefinition.OnCreateTableColumn },
-								new MySqlStrategy { IsIdentityEnabled = false },
-								new MySqlStrategy { IsIdentityEnabled = true },
-								new OracleStrategy { IsIdentityEnabled = false, Encoding = Encoding.UTF8 },
-								new PostgreSqlStrategy { IsIdentityEnabled = false, Encoding = Encoding.Default },
-								new PostgreSqlStrategy { IsIdentityEnabled = true, Encoding = Encoding.Default },
-								new Db2Strategy { IsIdentityEnabled = false, Encoding = Encoding.Default }
+								new SqlServerStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.Unicode },
+								new SqlServerStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity, Encoding = Encoding.Unicode },
+								new SqlServerCompactStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None },
+								new SqlServerCompactStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity },
+								new SqliteStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None },
+								new SqliteStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity, PrimaryKeyDef = KeyDefinition.OnCreateTableColumn },
+								new MySqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None },
+								new MySqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity },
+								new OracleStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.UTF8 },
+								new PostgreSqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.Default },
+								new PostgreSqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity, Encoding = Encoding.Default },
+								new PostgreSqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Serial, Encoding = Encoding.Default },
+								new Db2Strategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.Default }
 						   	},
 	OutputFiles = new List<OutputFile>()
 };
@@ -44,7 +45,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 	var filename = GetFileName(strategy, strategy.ScriptFileExtension);
 	fileManager.StartNewFile(filename, strategy.Encoding);
 
-	var details = (strategy.IsIdentityEnabled ? "Auto incremented primary keys." : string.Empty);
+	var details = (strategy.PrimaryKeyStrategy == PrimaryKeyStrategy.Identity ? "Auto incremented primary keys." : string.Empty);
 	
 	// Add the script file to the package list.
 	options.OutputFiles.Add(new OutputFile { Name = filename, Package = strategy.Name, Description = "SQL script to create the Chinook database. " + details });
@@ -285,7 +286,7 @@ CREATE INDEX <#= ifkName #> ON <#= strategy.GetFullyQualifiedName(fromTableName)
             foreach (DataColumn col in table.Columns)
             {
                 string value = row[col.ColumnName].ToString();
-                if ((col.AutoIncrement && strategy.IsIdentityEnabled) || value.Length==0) continue;
+                if ((col.AutoIncrement && strategy.PrimaryKeyStrategy != PrimaryKeyStrategy.None) || value.Length==0) continue;
 				
                 if (col.DataType == typeof(DateTime))
                 {
@@ -383,35 +384,6 @@ set SQLFILE=
 	}
 }	// foreach options.DdlStrategies
 
-//************************************************************************
-// Start of Package file.
-//************************************************************************
-fileManager.StartNewFile("Package.bat", Encoding.ASCII);
-#>
-@echo off
-set rootDir=%1
-if (%rootDir%)==() set rootDir=%cd%
-if exist %rootDir%\Packages\. del %rootDir%\Packages\*.* /q
-if not exist %rootDir%\Packages mkdir %rootDir%\Packages
-
-<#
-var allfiles = options.OutputFiles.Select(o => o.Name);
-var completePackageFile = string.Format("ChinookDatabase{0}_CompleteVersion.zip", options.Version);
-#>
-"C:\Program Files\7-Zip\7z.exe" a %rootDir%\Packages<#=@"\" + completePackageFile#> <#=GetValues(allfiles, ' ')#> _Xml\ChinookData.xml
-<#
-foreach (var package in options.OutputFiles.Select(o=>o.Package).Distinct())
-{
-    var files = from item in options.OutputFiles where item.Package == package select item.Name;
-#>
-"C:\Program Files\7-Zip\7z.exe" a %rootDir%\Packages\ChinookDatabase<#=options.Version#>_<#=package#>.zip <#=GetValues(files, ' ')#>
-<#
-}
-//************************************************************************
-// End of Package file.
-//************************************************************************
-fileManager.EndBlock();
-	
 fileManager.Process(true);
 
 // Add files that were not generated here, but will be part of the release.
@@ -419,29 +391,11 @@ options.OutputFiles.Add(new OutputFile { Name = "ChinookData.xml",
 										 Package = "XML", 
 										 Description = "XML data used to generate the Chinook database SQL scripts." });#>
 Chinook Database <#= options.Version #>
-* This is a sample database available in multiple formats: SQL scripts for multiple database vendors, embeded database files, and XML format.
-* The Chinook data model is available [here|Chinook_Schema].
-* <#=completePackageFile#> is a complete package for all supported databases/data sources. There are also packages for each specific data source.
-!! Supported Database Servers
-* [url:DB2|http://www-01.ibm.com/software/data/db2/express/]
-* [url:MySQL|http://www.mysql.com/]
-* [url:Oracle|http://www.oracle.com/technetwork/database/express-edition/overview/index.html]
-* [url:PostgreSQL|http://www.postgresql.org/]
-* [url:SQL Server|http://www.microsoft.com/sqlserver/]
-* [url:SQL Server Compact|http://www.microsoft.com/sqlserver/2008/en/us/compact.aspx]
-* [url:SQLite|http://www.sqlite.org/]
-!! Issues Resolved
-* [workitem:29374]
-* [workitem:29375]
-* [workitem:29377]
-* [workitem:29378]
-!! Installation
-* [How do I create the Chinook Database?|Create_Databases]
-!! Package Content
-This is the list of files included in the complete version.
+
+This is the list of generated files.
 || Data Source || File || Description ||
 <#	foreach (var file in options.OutputFiles.OrderBy(o=>o.Package)) { #>
-| <#= file.Package #> | {"<#= file.Name #>"} | <#= file.Description #> |
+| <#= file.Package #> | "<#= file.Name #>" | <#= file.Description #> |
 <#	} #>
 <#+ 
 
@@ -453,8 +407,13 @@ public class OutputFile {
 
 private static string GetFileName(IDdlStrategy strategy, string extension)
 {
-	var suffix = (strategy.IsIdentityEnabled ? "_AutoIncrementPKs" : string.Empty);
-	return string.Format("Chinook_{0}{1}.{2}", strategy.Name, suffix, extension);
+	var suffix = strategy.PrimaryKeyStrategy switch {
+		PrimaryKeyStrategy.Identity => "_AutoIncrementPKs",
+		PrimaryKeyStrategy.Serial => "_SerialPKs",
+		_ => string.Empty
+		};
+
+	return $"Chinook_{strategy.Name}{suffix}.{extension}";
 }
 
 private static string GetValues(IEnumerable<string> values, char delimiter)
