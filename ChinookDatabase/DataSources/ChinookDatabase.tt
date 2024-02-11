@@ -269,47 +269,59 @@ CREATE INDEX <#= ifkName #> ON <#= strategy.GetFullyQualifiedName(fromTableName)
    Populate Tables
 ********************************************************************************/
 <#
-    var sbFields = new StringBuilder();
+    var maxRows = 1000;
     var sbValues = new StringBuilder();
 	char delimiter = ',';
 
 	foreach (DataTable table in ds.Tables)
 	{
 		var tableName = strategy.GetFullyQualifiedName(table.TableName);
-#>
-<#
-        foreach (DataRow row in table.Rows)
+
+		var columns = table.Columns.Cast<DataColumn>()
+			.Where(col => !col.AutoIncrement || strategy.PrimaryKeyStrategy == PrimaryKeyStrategy.None)
+			.ToList();
+		
+		var fields = string.Join($"{delimiter} ", columns
+			.Select(col => $"{strategy.FormatName(col.ColumnName)}")
+			.ToList());
+
+		for (var i = 0; i < table.Rows.Count; i++)
         {
-            sbFields.Length = 0;
+            var row = table.Rows[i];
             sbValues.Length = 0;
-			
-            foreach (DataColumn col in table.Columns)
+
+            foreach (var col in columns)
             {
-                string value = row[col.ColumnName].ToString();
-                if ((col.AutoIncrement && strategy.PrimaryKeyStrategy != PrimaryKeyStrategy.None) || value.Length==0) continue;
-				
-                if (col.DataType == typeof(DateTime))
+                var value = row[col.ColumnName].ToString();
+                if (value.Length == 0 && col.AllowDBNull)
+                {
+	                value = "NULL";
+                }
+                else if (col.DataType == typeof(DateTime))
                 {
                     value = strategy.FormatDateValue(value);
                 }
-                else if (col.DataType == typeof(String))
+                else if (col.DataType == typeof(string))
                 {
                     value = strategy.FormatStringValue(value);
                 }
 				
                 sbValues.AppendFormat("{0}{1} ", value, delimiter);
-                sbFields.AppendFormat("{0}{1} ", strategy.FormatName(col.ColumnName), delimiter);
             }
 
-            var fields = sbFields.ToString().Trim().TrimEnd(delimiter);
             var values = sbValues.ToString().Trim().TrimEnd(delimiter);
-#>
-<#= string.Format("INSERT INTO {0} ({1}) VALUES ({2});", tableName, fields, values) #>
-<#
-        }	// foreach DataRow
+            var terminator = (i == table.Rows.Count - 1 || (i > 0 && (i + 1) % maxRows == 0)) ? ";" : ",";
+			if (i % maxRows == 0)
+            {
 #>
 
+<#= $"INSERT INTO {tableName} ({fields}) VALUES" #>
 <#
+            }
+#>
+<#= $"    ({values}){terminator}" #>
+<#
+        }	// foreach DataRow
     }	// foreach DataTable
 #>
 <#= strategy.WriteFinishCommit() #>
