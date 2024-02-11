@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Chinook Database - Version 1.4.3
+ * Chinook Database - Version 1.4.4
  * Description: Test fixture for Chinook database.
  * DB Server: SqlServer
  * Author: Luis Rocha
