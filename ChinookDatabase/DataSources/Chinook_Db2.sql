@@ -1,6 +1,6 @@
 
 /*******************************************************************************
-   Chinook Database - Version 1.4.4
+   Chinook Database - Version 1.4.5
    Script: Chinook_Db2.sql
    Description: Creates and populates the Chinook database.
    DB Server: Db2

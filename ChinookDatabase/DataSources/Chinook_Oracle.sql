@@ -1,6 +1,6 @@
 
 /*******************************************************************************
-   Chinook Database - Version 1.4.4
+   Chinook Database - Version 1.4.5
    Script: Chinook_Oracle.sql
    Description: Creates and populates the Chinook database.
    DB Server: Oracle
