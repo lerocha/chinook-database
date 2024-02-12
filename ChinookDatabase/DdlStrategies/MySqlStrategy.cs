@@ -23,7 +23,7 @@ namespace ChinookDatabase.DdlStrategies
             _ => "error_" + column.DataType
         };
 
-        public override string WriteDropDatabase(string databaseName) => string.Format("DROP DATABASE IF EXISTS {0};", FormatName(databaseName));
+        public override string WriteDropDatabase(string databaseName) => $"DROP DATABASE IF EXISTS {FormatName(databaseName)};";
 
         public override string WriteDropTable(string tableName) => $"DROP TABLE IF EXISTS {FormatName(tableName)};";
 

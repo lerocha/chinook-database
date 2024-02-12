@@ -1,4 +1,4 @@
-Chinook Database 1.4.4
+Chinook Database 1.4.5
 
 This is the list of generated files.
 || Data Source || File || Description ||

@@ -42,6 +42,12 @@ namespace ChinookDatabase.DdlStrategies
             _ => "error_" + column.DataType
         };
 
+        public override string WriteDropDatabase(string databaseName) => $"DROP DATABASE IF EXISTS {FormatName(databaseName)};";
+
+        public override string WriteCreateDatabase(string databaseName) => $"CREATE DATABASE {FormatName(databaseName)};";
+
+        public override string WriteUseDatabase(string databaseName) => $"\\c {FormatName(databaseName)};";
+
         private static string ToSnakeCase(string text) => snakeCaseNamingStrategy.GetPropertyName(text, false);
     }
 }

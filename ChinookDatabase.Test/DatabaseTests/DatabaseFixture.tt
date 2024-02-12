@@ -54,7 +54,7 @@ var options = new [] {
 							ConnectionClass = "NpgsqlConnection",
 							AdapterClass = "NpgsqlDataAdapter",
 							Namespace = "Npgsql",
-							ConnectionNames = new[] {"Chinook_PostgreSql"}
+							ConnectionNames = new[] {"Chinook_PostgreSql", "Chinook_PostgreSql_AutoIncrement", "Chinook_PostgreSql_Serial"}
 						},
 						new Option 
 						{
