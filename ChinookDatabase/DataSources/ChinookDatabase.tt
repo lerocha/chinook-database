@@ -42,6 +42,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 	//************************************************************************
 	// Start of SQL file.
 	//************************************************************************
+	var databaseName = GetDatabaseName(strategy, options.DatabaseName);
 	var filename = GetFileName(strategy, strategy.ScriptFileExtension);
 	fileManager.StartNewFile(filename, strategy.Encoding);
 
@@ -75,7 +76,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 <#
 	if (strategy.IsReCreateDatabaseEnabled)
 	{
-		var dropdb = strategy.WriteDropDatabase(options.DatabaseName);
+		var dropdb = strategy.WriteDropDatabase(databaseName);
 		if (!string.IsNullOrEmpty(dropdb)) 
 		{
 #>
@@ -88,7 +89,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 <#
 		}
 		
-		var createdb = strategy.WriteCreateDatabase(options.DatabaseName);
+		var createdb = strategy.WriteCreateDatabase(databaseName);
 		if (!string.IsNullOrEmpty(createdb))
 		{
 #>
@@ -101,7 +102,7 @@ foreach (IDdlStrategy strategy in options.DdlStrategies)
 <#
 		}
 		
-		var usedb = strategy.WriteUseDatabase(options.DatabaseName);
+		var usedb = strategy.WriteUseDatabase(databaseName);
 		if (!string.IsNullOrEmpty(usedb))
 		{
 #>
@@ -415,6 +416,17 @@ public class OutputFile {
 	public string Name { get; set; }
 	public string Package { get; set; }
 	public string Description { get; set; }
+}
+
+private static string GetDatabaseName(IDdlStrategy strategy, string name)
+{
+	var suffix = strategy.PrimaryKeyStrategy switch {
+		PrimaryKeyStrategy.Identity => "_AutoIncrement",
+		PrimaryKeyStrategy.Serial => "_Serial",
+		_ => string.Empty
+		};
+
+	return $"{name}{suffix}";
 }
 
 private static string GetFileName(IDdlStrategy strategy, string extension)

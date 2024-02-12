@@ -52,7 +52,8 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/create_database.sql
+      - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/Chinook_MySql.sql
+      - ./ChinookDatabase/DataSources/Chinook_MySql_AutoIncrementPKs.sql:/docker-entrypoint-initdb.d/Chinook_MySql_AutoIncrementPKs.sql
 
   #----------------------------------------------------------------------------
   # Oracle Container
@@ -87,11 +88,13 @@ services:
     environment:
       POSTGRES_USER: chinook
       POSTGRES_PASSWORD: chinook
-      POSTGRES_DB: chinook
+      POSTGRES_DB: chinook_db
     ports:
       - "5432:5432"
     volumes:
-      - ./ChinookDatabase/DataSources/Chinook_PostgreSql.sql:/docker-entrypoint-initdb.d/create_database.sql
+      - ./ChinookDatabase/DataSources/Chinook_PostgreSql.sql:/docker-entrypoint-initdb.d/Chinook_PostgreSql.sql
+      - ./ChinookDatabase/DataSources/Chinook_PostgreSql_AutoIncrementPKs.sql:/docker-entrypoint-initdb.d/Chinook_PostgreSql_AutoIncrementPKs.sql
+      - ./ChinookDatabase/DataSources/Chinook_PostgreSql_SerialPKs.sql:/docker-entrypoint-initdb.d/Chinook_PostgreSql_SerialPKs.sql
 
   #----------------------------------------------------------------------------
   # SQL Server Container

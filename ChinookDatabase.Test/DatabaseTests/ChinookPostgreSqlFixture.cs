@@ -86,6 +86,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void AllInvoicesMustHaveInvoiceLines(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT count(invoice_id) FROM invoice WHERE invoice_id NOT IN (SELECT invoice_id FROM invoice_line GROUP BY invoice_id)");
@@ -97,6 +99,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void InvoiceTotalMustMatchSumOfInvoiceLines(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT invoice.invoice_id, SUM(invoice_line.unit_price * invoice_line.quantity) AS CalculatedTotal, invoice.total AS Total FROM invoice_line INNER JOIN invoice ON invoice_line.invoice_id = invoice.invoice_id GROUP BY invoice.invoice_id, invoice.total");
@@ -112,6 +116,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void GenreTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM genre");
@@ -123,6 +129,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void GenreLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM genre ORDER BY genre_id");
@@ -141,6 +149,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void MediaTypeTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM media_type");
@@ -152,6 +162,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void MediaTypeLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM media_type ORDER BY media_type_id");
@@ -170,6 +182,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void ArtistTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM artist");
@@ -181,6 +195,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void ArtistLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM artist ORDER BY artist_id");
@@ -199,6 +215,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void AlbumTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM album");
@@ -210,6 +228,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void AlbumLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM album ORDER BY album_id");
@@ -229,6 +249,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void TrackTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM track");
@@ -240,6 +262,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void TrackLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM track ORDER BY track_id");
@@ -265,6 +289,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void EmployeeTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM employee");
@@ -276,6 +302,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void EmployeeLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM employee ORDER BY employee_id");
@@ -307,6 +335,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer");
@@ -318,6 +348,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer ORDER BY customer_id");
@@ -347,6 +379,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void InvoiceTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM invoice");
@@ -358,6 +392,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void InvoiceLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM invoice ORDER BY invoice_id");
@@ -383,6 +419,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void InvoiceLineTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM invoice_line");
@@ -394,6 +432,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void InvoiceLineLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM invoice_line ORDER BY invoice_line_id");
@@ -415,6 +455,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void PlaylistTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM playlist");
@@ -426,6 +468,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void PlaylistLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM playlist ORDER BY playlist_id");
@@ -444,6 +488,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void PlaylistTrackTableShouldBePopulated(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM playlist_track");
@@ -455,6 +501,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void PlaylistTrackLastRecordHasProperInfo(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM playlist_track ORDER BY playlist_id, track_id");
@@ -473,6 +521,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId01HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 1");
@@ -499,6 +549,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId02HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 2");
@@ -525,6 +577,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId03HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 3");
@@ -551,6 +605,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId04HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 4");
@@ -577,6 +633,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId05HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 5");
@@ -603,6 +661,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId06HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 6");
@@ -629,6 +689,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId07HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 7");
@@ -655,6 +717,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId08HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 8");
@@ -681,6 +745,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId09HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 9");
@@ -707,6 +773,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId10HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 10");
@@ -733,6 +801,8 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// </summary>
         [Theory]
 		[InlineData("Chinook_PostgreSql")]
+		[InlineData("Chinook_PostgreSql_AutoIncrement")]
+		[InlineData("Chinook_PostgreSql_Serial")]
         public void CustomerId11HasProperUnicodeCharacters(string connectionName)
         {
             var dataSet = ExecuteQuery(connectionName, "SELECT * FROM customer WHERE customer_id = 11");
