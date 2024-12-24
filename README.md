@@ -15,6 +15,8 @@ Chinook is a sample database available for SQL Server, Oracle, MySQL, etc. It ca
 ### Download
 Download the SQL scripts from the [latest release](../../releases) assets. One or more SQL script files are provided for each database vendor supported. You can run these SQL scripts with your preferred database tool.
 
+_Update: Check out the [Netflix Sample Database](https://github.com/lerocha/netflixdb), a sample database with movies and TV shows based on the data from the Netflix Engagement Report and the Netflix Global Top 10 weekly list._
+
 ### Data Model
 
 The Chinook data model represents a digital media store, including tables for artists, albums, media tracks, invoices and customers.
