@@ -43,7 +43,7 @@ services:
   #----------------------------------------------------------------------------
   mysql:
     container_name: mysql
-    image: mysql:latest
+    image: mysql:8.0.33
     environment:
       MYSQL_USER: chinook
       MYSQL_PASSWORD: chinook
@@ -55,7 +55,7 @@ services:
       - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/Chinook_MySql.sql
       - ./ChinookDatabase/DataSources/Chinook_MySql_AutoIncrementPKs.sql:/docker-entrypoint-initdb.d/Chinook_MySql_AutoIncrementPKs.sql
       - ./ChinookDatabase/DataSources/Chinook_MySql_InitCdcUser.sql:/docker-entrypoint-initdb.d/Chinook_MySql_InitCdcUser.sql
-    command: --log-bin=mysql-bin --server-id=1 --binlog-format=ROW --binlog-row-image=FULL --binlog-expire-logs-seconds=604800
+    command: --log-bin=mysql-bin --server-id=1 --binlog-format=ROW --binlog-row-image=FULL --binlog-expire-logs-seconds=604800 --default-authentication-plugin=mysql_native_password
 
   #----------------------------------------------------------------------------
   # MariaDB Container
