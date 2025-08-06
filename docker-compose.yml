@@ -55,7 +55,7 @@ services:
       - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/Chinook_MySql.sql
       - ./ChinookDatabase/DataSources/Chinook_MySql_AutoIncrementPKs.sql:/docker-entrypoint-initdb.d/Chinook_MySql_AutoIncrementPKs.sql
       - ./ChinookDatabase/DataSources/Chinook_MySql_InitCdcUser.sql:/docker-entrypoint-initdb.d/Chinook_MySql_InitCdcUser.sql
-    command: --log-bin=mysql-bin --server-id=1 --binlog-format=ROW --binlog-row-image=FULL --expire-logs-days=7
+    command: --log-bin=mysql-bin --server-id=1 --binlog-format=ROW --binlog-row-image=FULL --binlog-expire-logs-seconds=604800
 
   #----------------------------------------------------------------------------
   # MariaDB Container
@@ -77,7 +77,7 @@ services:
       - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/Chinook_MySql.sql
       - ./ChinookDatabase/DataSources/Chinook_MySql_AutoIncrementPKs.sql:/docker-entrypoint-initdb.d/Chinook_MySql_AutoIncrementPKs.sql
       - ./ChinookDatabase/DataSources/Chinook_MySql_InitCdcUser.sql:/docker-entrypoint-initdb.d/Chinook_MySql_InitCdcUser.sql
-    command: --log-bin=mysql-bin --server-id=2 --binlog-format=ROW --binlog-row-image=FULL --expire-logs-days=7
+    command: --log-bin=mysql-bin --server-id=2 --binlog-format=ROW --binlog-row-image=FULL --binlog-expire-logs-seconds=604800
 
   #----------------------------------------------------------------------------
   # Oracle Container
