@@ -6,6 +6,7 @@ Chinook is a sample database available for SQL Server, Oracle, MySQL, etc. It ca
 
 * DB2
 * MySQL
+* MariaDB
 * Oracle
 * PostgreSQL
 * SQL Server
@@ -32,14 +33,3 @@ Sales information is auto generated using random data for a four year period.
 ### Why the name Chinook?
 
 The name of this sample database was based on the Northwind database. Chinooks are winds in the interior West of North America, where the Canadian Prairies and Great Plains meet various mountain ranges. Chinooks are most prevalent over southern Alberta in Canada. Chinook is a good name choice for a database that intents to be an alternative to Northwind.
-
-### Development
-
-System Requirements:
-* [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/vs/community/) (make sure to select `Visual Studio extension development` with the `Text Template Transformation` option during installation)
-* [.NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-
-Notes:
-* The SQL scripts are auto-generated using [Text Template Transformation](https://learn.microsoft.com/en-us/visualstudio/modeling/code-generation-and-t4-text-templates?view=vs-2022).
-* The `ChinookDataSet.xsd` file contains the schema definition, `ChinookData.json` contains the data, and the `*.tt` files are the text templates that are used to generate all SQL scripts.
-* You can build the solution using any IDE (Visual Studio, Rider) or using `dotnet build` in any OS since I just migrated it to .NET 8, but to auto-generate the SQL scripts we still need Visual Studio. I will update here once I find a good way to auto-generate the scripts by using tools like [dotnet-t4](https://www.nuget.org/packages/dotnet-t4/).

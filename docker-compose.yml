@@ -1,4 +1,3 @@
-version: '3.8'
 name: chinook
 services:
   
@@ -32,7 +31,7 @@ services:
       ETCD_USERNAME:
       ETCD_PASSWORD:
     ports:
-      - "50000:50000"
+      - "${DB2_PORT:-50000}:50000"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_Db2.sql:/docker-entrypoint-initdb.d/create_database.sql
   
@@ -43,6 +42,7 @@ services:
   #   mysql -u chinook -p Chinook
   #----------------------------------------------------------------------------
   mysql:
+    container_name: mysql
     image: mysql:latest
     environment:
       MYSQL_USER: chinook
@@ -50,10 +50,34 @@ services:
       MYSQL_ROOT_PASSWORD: chinook
       MYSQL_DATABASE: Chinook
     ports:
-      - "3306:3306"
+      - "${MYSQL_PORT:-3306}:3306"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/Chinook_MySql.sql
       - ./ChinookDatabase/DataSources/Chinook_MySql_AutoIncrementPKs.sql:/docker-entrypoint-initdb.d/Chinook_MySql_AutoIncrementPKs.sql
+      - ./Chinook_MySql_InitCdcUser.sql:/docker-entrypoint-initdb.d/Chinook_MySql_InitCdcUser.sql
+    command: --log-bin=mysql-bin --server-id=1 --binlog-format=ROW --binlog-row-image=FULL --expire-logs-days=7
+
+  #----------------------------------------------------------------------------
+  # MariaDB Container
+  # https://hub.docker.com/_/mariadb
+  # Commands:
+  #   mysql -u chinook -p Chinook
+  #----------------------------------------------------------------------------
+  mariadb:
+    container_name: mariadb
+    image: mariadb:latest
+    environment:
+      MARIADB_USER: chinook
+      MARIADB_PASSWORD: chinook
+      MARIADB_ROOT_PASSWORD: chinook
+      MARIADB_DATABASE: Chinook
+    ports:
+      - "${MARIA_DB_PORT:-3306}:3306"
+    volumes:
+      - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/Chinook_MySql.sql
+      - ./ChinookDatabase/DataSources/Chinook_MySql_AutoIncrementPKs.sql:/docker-entrypoint-initdb.d/Chinook_MySql_AutoIncrementPKs.sql
+      - ./ChinookDatabase/DataSources/Chinook_MySql_InitCdcUser.sql:/docker-entrypoint-initdb.d/Chinook_MySql_InitCdcUser.sql
+    command: --log-bin=mysql-bin --server-id=2 --binlog-format=ROW --binlog-row-image=FULL --expire-logs-days=7
 
   #----------------------------------------------------------------------------
   # Oracle Container
@@ -71,7 +95,7 @@ services:
       APP_USER: chinook
       APP_USER_PASSWORD: chinook
     ports:
-      - "1521:1521"
+      - "${ORACLE_PORT:-1521}:1521"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_Oracle.sql:/container-entrypoint-initdb.d/create_database.sql
     # command:
@@ -90,7 +114,7 @@ services:
       POSTGRES_PASSWORD: chinook
       POSTGRES_DB: chinook_db
     ports:
-      - "5432:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_PostgreSql.sql:/docker-entrypoint-initdb.d/Chinook_PostgreSql.sql
       - ./ChinookDatabase/DataSources/Chinook_PostgreSql_AutoIncrementPKs.sql:/docker-entrypoint-initdb.d/Chinook_PostgreSql_AutoIncrementPKs.sql
@@ -111,7 +135,7 @@ services:
       MSSQL_SA_PASSWORD: Test123!
       MSSQL_PID: Developer
     ports:
-      - "1433:1433"
+      - "${SQLSERVER_PORT:-1433}:1433"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_SqlServer.sql:/docker-entrypoint-initdb.d/create_database.sql
     # command:
