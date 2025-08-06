@@ -13,11 +13,6 @@ Chinook is a sample database available for SQL Server, Oracle, MySQL, etc. It ca
 * SQL Server Compact
 * SQLite
 
-### Download
-Download the SQL scripts from the [latest release](../../releases) assets. One or more SQL script files are provided for each database vendor supported. You can run these SQL scripts with your preferred database tool.
-
-_Update: Check out the [Netflix Sample Database](https://github.com/lerocha/netflixdb), a sample database with movies and TV shows based on the data from the Netflix Engagement Report and the Netflix Global Top 10 weekly list._
-
 ### Data Model
 
 The Chinook data model represents a digital media store, including tables for artists, albums, media tracks, invoices and customers.
@@ -33,3 +28,13 @@ Sales information is auto generated using random data for a four year period.
 ### Why the name Chinook?
 
 The name of this sample database was based on the Northwind database. Chinooks are winds in the interior West of North America, where the Canadian Prairies and Great Plains meet various mountain ranges. Chinooks are most prevalent over southern Alberta in Canada. Chinook is a good name choice for a database that intents to be an alternative to Northwind.
+
+### Development
+
+System Requirements:
+* [Docker](https://www.docker.com/)
+
+Usage:
+* `<DB_ENV_NAME>=<DB_PORT> docker compose -f docker-compose.yml create <DB_NAME>` - to create the database container
+* `docker start <DB_NAME>` - to start the database container
+* `docker logs <DB_NAME>` - to check the database container logs
