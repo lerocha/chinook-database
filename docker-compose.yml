@@ -54,7 +54,7 @@ services:
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_MySql.sql:/docker-entrypoint-initdb.d/Chinook_MySql.sql
       - ./ChinookDatabase/DataSources/Chinook_MySql_AutoIncrementPKs.sql:/docker-entrypoint-initdb.d/Chinook_MySql_AutoIncrementPKs.sql
-      - ./Chinook_MySql_InitCdcUser.sql:/docker-entrypoint-initdb.d/Chinook_MySql_InitCdcUser.sql
+      - ./ChinookDatabase/DataSources/Chinook_MySql_InitCdcUser.sql:/docker-entrypoint-initdb.d/Chinook_MySql_InitCdcUser.sql
     command: --log-bin=mysql-bin --server-id=1 --binlog-format=ROW --binlog-row-image=FULL --expire-logs-days=7
 
   #----------------------------------------------------------------------------
