@@ -55,4 +55,39 @@
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
+  <!-- T4 Template Generation with dotnet-t4 tool -->
+  <PropertyGroup>
+    <NewtonsoftJsonDll>$(NuGetPackageRoot)newtonsoft.json\13.0.3\lib\net6.0\Newtonsoft.Json.dll</NewtonsoftJsonDll>
+    <VisualStudioInteropDll>$(NuGetPackageRoot)microsoft.visualstudio.interop\17.14.40260\lib\net8.0\Microsoft.VisualStudio.Interop.dll</VisualStudioInteropDll>
+  </PropertyGroup>
+
+  <!-- Generate T4 templates before build -->
+  <Target Name="GenerateT4Templates" BeforeTargets="BeforeBuild">
+    <Message Text="Generating T4 templates..." Importance="high" />
+
+    <!-- Generate Chinook.ttinclude first -->
+    <Exec Command="t4 -r=&quot;$(NewtonsoftJsonDll)&quot; _T4Templates/Chinook.tt"
+          ContinueOnError="false"
+          WorkingDirectory="$(MSBuildProjectDirectory)" />
+
+    <!-- Generate ChinookDatabase SQL scripts -->
+    <Exec Command="t4 -r=&quot;$(NewtonsoftJsonDll)&quot; -r=&quot;$(VisualStudioInteropDll)&quot; DataSources/ChinookDatabase.tt"
+          ContinueOnError="false"
+          WorkingDirectory="$(MSBuildProjectDirectory)" />
+
+    <Message Text="T4 templates generated successfully" Importance="high" />
+  </Target>
+
+  <!-- Check if t4 tool is available -->
+  <Target Name="CheckT4Tool" BeforeTargets="GenerateT4Templates">
+    <Exec Command="t4 --help"
+          ContinueOnError="true"
+          IgnoreExitCode="true">
+      <Output TaskParameter="ExitCode" PropertyName="T4ExitCode" />
+    </Exec>
+
+    <Error Text="T4 command line tool not found. Please install it with: dotnet tool install -g dotnet-t4"
+           Condition="$(T4ExitCode) != 0" />
+  </Target>
+
 </Project>

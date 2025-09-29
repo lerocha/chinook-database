@@ -36,11 +36,10 @@ The name of this sample database was based on the Northwind database. Chinooks a
 ### Development
 
 System Requirements:
-* [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/vs/community/) (make sure to select `Visual Studio extension development` with the `Text Template Transformation` option during installation)
 * [.NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-* dotnet-t4 (command-line tool for processing T4 templates): `dotnet tool install --global dotnet-t4 --version 3.0.0`
+* dotnet-t4 (command-line tool for processing T4 templates): `dotnet tool install --global dotnet-t4`
 
 Notes:
 * The SQL scripts are auto-generated using [Text Template Transformation](https://learn.microsoft.com/en-us/visualstudio/modeling/code-generation-and-t4-text-templates?view=vs-2022).
 * The `ChinookDataSet.xsd` file contains the schema definition, `ChinookData.json` contains the data, and the `*.tt` files are the text templates that are used to generate all SQL scripts.
-* You can build the solution using any IDE (Visual Studio, Rider) or using `dotnet build` in any OS since I just migrated it to .NET 8, but to auto-generate the SQL scripts we still need Visual Studio or use the [generate-t4.sh](./generate-t4.sh) script that uses the [dotnet-t4](https://www.nuget.org/packages/dotnet-t4/) tool.
+* You can build the solution using any IDE (Visual Studio Community Edition, Visual Studio Code, Jetbrains Rider) or using `dotnet build` in any OS (macOS, Linux, Windows).

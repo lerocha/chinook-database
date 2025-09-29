@@ -5,6 +5,13 @@
 # Prerequisites:
 #   - t4 command line tool installed
 #   - NuGet packages restored (dotnet restore)
+#
+# Note: Line endings are automatically normalized by Git using .gitattributes
+# This ensures consistent line endings across Windows, macOS, and Linux
+#
+# Important: Since T4 generation is now integrated into dotnet build,
+# you can simply run 'dotnet build' instead of this script.
+# This script is provided for manual T4 generation if needed.
 
 set -e  # Exit on any error
 
@@ -51,7 +58,7 @@ else
 fi
 
 echo -e "${YELLOW}Step 2: Generating ChinookDatabase SQL scripts...${NC}"
-t4 -r="$NEWTONSOFT_JSON" ChinookDatabase/DataSources/ChinookDatabase.tt
+t4 -r="$NEWTONSOFT_JSON" -r="$VISUALSTUDIO_INTEROP" ChinookDatabase/DataSources/ChinookDatabase.tt
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✓ ChinookDatabase SQL scripts generated successfully${NC}"
 else
