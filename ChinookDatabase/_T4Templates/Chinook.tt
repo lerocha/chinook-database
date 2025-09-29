@@ -3,10 +3,8 @@
 <#@ assembly name="System.Core"#>
 <#@ assembly name="System.Data"#>
 <#@ assembly name="System.Data.DataSetExtensions.dll"#>
-<#@ assembly name="EnvDTE"#>
 <#@ assembly name="System.Xml"#>
 <#@ assembly name="System.Xml.Linq"#>
-<#@ assembly name="Newtonsoft.Json"#>
 <#@ import namespace="System"#>
 <#@ import namespace="System.CodeDom"#>
 <#@ import namespace="System.CodeDom.Compiler"#>
@@ -23,7 +21,7 @@
 <#@ import namespace="System.Xml.XPath"#>
 <#@ import namespace="Newtonsoft.Json"#>
 <#@ import namespace="Newtonsoft.Json.Serialization"#>
-<# 
+<#
 	// Set options here
 	var options = new {
 		Path = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), ".."),

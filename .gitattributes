@@ -1,0 +1,37 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.cs text
+*.tt text
+*.ttinclude text
+*.sql text
+*.json text
+*.xml text
+*.md text
+*.txt text
+*.config text
+*.csproj text
+*.sln text
+*.yml text
+*.yaml text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.bat text eol=crlf
+
+# Declare files that will always have LF line endings on checkout.
+*.sh text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.dll binary
+*.exe binary
+*.zip binary
+*.7z binary
+*.tar binary
+*.gz binary
