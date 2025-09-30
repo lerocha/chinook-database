@@ -71,7 +71,7 @@
 
   <!-- Check if t4 tool is available -->
   <Target Name="CheckT4Tool" BeforeTargets="GenerateT4Templates">
-    <Exec Command="t4 --help"
+    <Exec Command="echo dotnet-t4 is installed | t4 -o -"
           ContinueOnError="true"
           IgnoreExitCode="true">
       <Output TaskParameter="ExitCode" PropertyName="T4ExitCode" />
