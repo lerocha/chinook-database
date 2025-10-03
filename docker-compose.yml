@@ -64,18 +64,12 @@ services:
   #----------------------------------------------------------------------------
   oracle:
     image: gvenzl/oracle-xe:18-slim
-    # image: container-registry.oracle.com/database/express:latest
-    platform: linux/amd64
     environment:
       ORACLE_PASSWORD: Test123!
-      APP_USER: chinook
-      APP_USER_PASSWORD: chinook
     ports:
       - "1521:1521"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_Oracle.sql:/container-entrypoint-initdb.d/create_database.sql
-    # command:
-    #   - sqlplus -S / as sysdba @ create_database.sql
 
   #----------------------------------------------------------------------------
   # PostgreSQL Container
@@ -114,5 +108,5 @@ services:
       - "1433:1433"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_SqlServer.sql:/docker-entrypoint-initdb.d/create_database.sql
-    # command:
-    #   - /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $MSSQL_SA_PASSWORD -d master -i /docker-entrypoint-initdb.d/create_database.sql
+    #command:
+    #  - /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $MSSQL_SA_PASSWORD -d master -i /docker-entrypoint-initdb.d/create_database.sql
