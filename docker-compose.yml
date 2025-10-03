@@ -63,9 +63,11 @@ services:
   #   sqlplus -S / as sysdba @ /container-entrypoint-initdb.d/create_database.sql
   #----------------------------------------------------------------------------
   oracle:
-    image: gvenzl/oracle-xe:18-slim
+    image: gvenzl/oracle-free:23-slim-faststart
     environment:
       ORACLE_PASSWORD: Test123!
+      APP_USER: chinook
+      APP_USER_PASSWORD: chinook
     ports:
       - "1521:1521"
     volumes:

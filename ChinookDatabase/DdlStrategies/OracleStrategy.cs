@@ -38,28 +38,20 @@ namespace ChinookDatabase.DdlStrategies
             _ => "error_" + column.DataType
         };
 
-        public override string WriteDropDatabase(string databaseName) => $"DROP USER {GetUsername(databaseName)} CASCADE;";
+        public override string WriteDropDatabase(string databaseName) => string.Empty; // User created by container
 
         public override string WriteCreateDatabase(string databaseName)
         {
+            // Grant necessary privileges to the APP_USER created by container
             var username = GetUsername(databaseName);
             var builder = new StringBuilder();
-
-            builder.AppendFormat("CREATE USER {0}\r\n", username)
-                .AppendFormat("IDENTIFIED BY {0}\r\n", GetPassword(databaseName))
-                .AppendFormat("DEFAULT TABLESPACE users\r\n")
-                .AppendFormat("TEMPORARY TABLESPACE temp\r\n")
-                .AppendFormat("QUOTA 10M ON users;\r\n\r\n")
-                .AppendFormat("GRANT connect to {0};\r\n", username)
-                .AppendFormat("GRANT resource to {0};\r\n", username)
-                .AppendFormat("GRANT create session TO {0};\r\n", username)
-                .AppendFormat("GRANT create table TO {0};\r\n", username)
-                .AppendFormat("GRANT create view TO {0};\r\n", username);
-
+            builder.AppendFormat("GRANT UNLIMITED TABLESPACE TO {0};\r\n", username)
+                .AppendFormat("GRANT CREATE TABLE TO {0};\r\n", username)
+                .AppendFormat("GRANT CREATE VIEW TO {0};\r\n", username);
             return builder.ToString();
         }
 
-        public override string WriteUseDatabase(string databaseName) => $"conn {GetUsername(databaseName)}/{GetPassword(databaseName)}";
+        public override string WriteUseDatabase(string databaseName) => $"CONNECT {GetUsername(databaseName)}/{GetPassword(databaseName)}@FREEPDB1;\r\n";
 
         public override string WriteForeignKeyDeleteAction(ForeignKeyConstraint foreignKeyConstraint) => foreignKeyConstraint.DeleteRule switch
         {
@@ -71,7 +63,7 @@ namespace ChinookDatabase.DdlStrategies
 
         public override string WriteFinishCommit() => "commit;\r\nexit;";
 
-        private static string GetUsername(String databaseName) => $"c##{databaseName.ToLower()}";
+        private static string GetUsername(String databaseName) => databaseName.ToLower();
         private static string GetPassword(String databaseName) => databaseName.ToLower();
     }
 
