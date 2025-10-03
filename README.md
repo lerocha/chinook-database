@@ -36,7 +36,7 @@ The name of this sample database was based on the Northwind database. Chinooks a
 ### Development
 
 System Requirements:
-* [.NET 9](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+* [.NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 * dotnet-t4 (command-line tool for processing T4 templates): `dotnet tool install --global dotnet-t4`
 
 Notes:
