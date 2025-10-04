@@ -30,6 +30,9 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <returns>A connection object for this specific database.</returns>
         protected SQLiteConnection GetConnection(string connectionName)
         {
+            var currentPlatform = System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier;
+            var skipPlatforms = new[] { "osx-arm64" };
+            Skip.If(skipPlatforms.Contains(currentPlatform), $"Skipped on {currentPlatform} - native libraries not available");
             // Creates an ADO.NET connection to the database, if not created yet.
             if (Connections.ContainsKey(connectionName))
             {
@@ -84,7 +87,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void AllInvoicesMustHaveInvoiceLines(string connectionName)
@@ -96,7 +99,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Asserts that invoice total matches sum of invoice lines.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void InvoiceTotalMustMatchSumOfInvoiceLines(string connectionName)
@@ -114,7 +117,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Genre table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void GenreTableShouldBePopulated(string connectionName)
@@ -126,7 +129,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Genre table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void GenreLastRecordHasProperInfo(string connectionName)
@@ -145,7 +148,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the MediaType table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void MediaTypeTableShouldBePopulated(string connectionName)
@@ -157,7 +160,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of MediaType table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void MediaTypeLastRecordHasProperInfo(string connectionName)
@@ -176,7 +179,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Artist table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void ArtistTableShouldBePopulated(string connectionName)
@@ -188,7 +191,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Artist table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void ArtistLastRecordHasProperInfo(string connectionName)
@@ -207,7 +210,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Album table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void AlbumTableShouldBePopulated(string connectionName)
@@ -219,7 +222,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Album table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void AlbumLastRecordHasProperInfo(string connectionName)
@@ -239,7 +242,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Track table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void TrackTableShouldBePopulated(string connectionName)
@@ -251,7 +254,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Track table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void TrackLastRecordHasProperInfo(string connectionName)
@@ -277,7 +280,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Employee table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void EmployeeTableShouldBePopulated(string connectionName)
@@ -289,7 +292,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Employee table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void EmployeeLastRecordHasProperInfo(string connectionName)
@@ -321,7 +324,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Customer table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerTableShouldBePopulated(string connectionName)
@@ -333,7 +336,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Customer table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerLastRecordHasProperInfo(string connectionName)
@@ -363,7 +366,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Invoice table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void InvoiceTableShouldBePopulated(string connectionName)
@@ -375,7 +378,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Invoice table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void InvoiceLastRecordHasProperInfo(string connectionName)
@@ -401,7 +404,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the InvoiceLine table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void InvoiceLineTableShouldBePopulated(string connectionName)
@@ -413,7 +416,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of InvoiceLine table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void InvoiceLineLastRecordHasProperInfo(string connectionName)
@@ -435,7 +438,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Playlist table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void PlaylistTableShouldBePopulated(string connectionName)
@@ -447,7 +450,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Playlist table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void PlaylistLastRecordHasProperInfo(string connectionName)
@@ -466,7 +469,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the PlaylistTrack table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void PlaylistTrackTableShouldBePopulated(string connectionName)
@@ -478,7 +481,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of PlaylistTrack table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void PlaylistTrackLastRecordHasProperInfo(string connectionName)
@@ -497,7 +500,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId01HasProperUnicodeCharacters(string connectionName)
@@ -524,7 +527,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId02HasProperUnicodeCharacters(string connectionName)
@@ -551,7 +554,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId03HasProperUnicodeCharacters(string connectionName)
@@ -578,7 +581,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId04HasProperUnicodeCharacters(string connectionName)
@@ -605,7 +608,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId05HasProperUnicodeCharacters(string connectionName)
@@ -632,7 +635,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId06HasProperUnicodeCharacters(string connectionName)
@@ -659,7 +662,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId07HasProperUnicodeCharacters(string connectionName)
@@ -686,7 +689,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId08HasProperUnicodeCharacters(string connectionName)
@@ -713,7 +716,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId09HasProperUnicodeCharacters(string connectionName)
@@ -740,7 +743,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId10HasProperUnicodeCharacters(string connectionName)
@@ -767,7 +770,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Sqlite")]
 		[InlineData("Chinook_Sqlite_AutoIncrement")]
         public void CustomerId11HasProperUnicodeCharacters(string connectionName)

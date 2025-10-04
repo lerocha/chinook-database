@@ -24,13 +24,14 @@ var options = new [] {
 							Namespace = "MySql.Data.MySqlClient",
 							ConnectionNames = new[] {"Chinook_MySql", "Chinook_MySql_AutoIncrement"}
 						},
-						new Option 
+						new Option
 						{
 							Strategy = new SqliteStrategy(),
 							ConnectionClass = "SQLiteConnection",
 							AdapterClass = "SQLiteDataAdapter",
 							Namespace = "System.Data.SQLite",
-							ConnectionNames = new[] {"Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement"}
+							ConnectionNames = new[] {"Chinook_Sqlite", "Chinook_Sqlite_AutoIncrement"},
+							SkipOnPlatforms = new[] {"osx-arm64"}
 						},
 						new Option 
 						{
@@ -48,13 +49,14 @@ var options = new [] {
 							Namespace = "Npgsql",
 							ConnectionNames = new[] {"Chinook_PostgreSql", "Chinook_PostgreSql_AutoIncrement", "Chinook_PostgreSql_Serial"}
 						},
-						new Option 
+						new Option
 						{
 							Strategy = new Db2Strategy(),
 							ConnectionClass = "DB2Connection",
 							AdapterClass = "DB2DataAdapter",
 							Namespace = "IBM.Data.DB2.Core",
-							ConnectionNames = new[] {"Chinook_Db2"}
+							ConnectionNames = new[] {"Chinook_Db2"},
+							SkipOnPlatforms = new[] {"osx-arm64"}
 						}
 					};
 
@@ -103,6 +105,11 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <returns>A connection object for this specific database.</returns>
         protected <#= option.ConnectionClass #> GetConnection(string connectionName)
         {
+<# if (option.SkipOnPlatforms != null && option.SkipOnPlatforms.Count > 0) { #>
+            var currentPlatform = System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier;
+            var skipPlatforms = new[] { <#= string.Join(", ", option.SkipOnPlatforms.Select(p => $"\"{p}\"")) #> };
+            Skip.If(skipPlatforms.Contains(currentPlatform), $"Skipped on {currentPlatform} - native libraries not available");
+<# } #>
             // Creates an ADO.NET connection to the database, if not created yet.
             if (Connections.ContainsKey(connectionName))
             {
@@ -174,7 +181,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 <# foreach(var connectionName in option.ConnectionNames) {#>
 		[InlineData("<#= connectionName #>")]
 <# } #>
@@ -187,7 +194,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Asserts that invoice total matches sum of invoice lines.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 <# foreach(var connectionName in option.ConnectionNames) {#>
 		[InlineData("<#= connectionName #>")]
 <# } #>
@@ -215,7 +222,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the <#= table.TableName #> table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 <# foreach(var connectionName in option.ConnectionNames) {#>
 		[InlineData("<#= connectionName #>")]
 <# } #>
@@ -228,7 +235,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of <#= table.TableName #> table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 <# foreach(var connectionName in option.ConnectionNames) {#>
 		[InlineData("<#= connectionName #>")]
 <# } #>
@@ -267,7 +274,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 <# foreach(var connectionName in option.ConnectionNames) {#>
 		[InlineData("<#= connectionName #>")]
 <# } #>
@@ -315,12 +322,13 @@ namespace ChinookDatabase.Test.DatabaseTests
 		public string AdapterClass { get; set; }
 		public string Namespace { get; set; }
 		public IList<string> ConnectionNames { get; set; }
-		
+		public IList<string> SkipOnPlatforms { get; set; }
+
 		public string GetConnectionValues()
 		{
 			return GetValues(ConnectionNames, ',');
 		}
-		
+
 		public string GetClassName()
 		{
 			return string.Format("Chinook{0}Fixture", Strategy.Name);

@@ -21,6 +21,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Xunit.SkippableFact" Version="1.5.23" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,23 +61,18 @@
     <Message Text="Generating test T4 templates..." Importance="high" />
 
     <!-- Generate DatabaseFixture test files -->
-    <Exec Command="t4 -r=&quot;$(NewtonsoftJsonDll)&quot; -r=&quot;$(VisualStudioInteropDll)&quot; DatabaseFixture.tt"
-          ContinueOnError="false"
-          WorkingDirectory="$(MSBuildProjectDirectory)/DatabaseTests" />
+    <Exec Command="t4 -r=&quot;$(NewtonsoftJsonDll)&quot; -r=&quot;$(VisualStudioInteropDll)&quot; DatabaseFixture.tt" ContinueOnError="false" WorkingDirectory="$(MSBuildProjectDirectory)/DatabaseTests" />
 
     <Message Text="Test T4 templates generated successfully" Importance="high" />
   </Target>
 
   <!-- Check if t4 tool is available -->
   <Target Name="CheckT4Tool" BeforeTargets="GenerateT4Templates">
-    <Exec Command="echo dotnet-t4 is installed | t4 -o -"
-          ContinueOnError="true"
-          IgnoreExitCode="true">
+    <Exec Command="echo dotnet-t4 is installed | t4 -o -" ContinueOnError="true" IgnoreExitCode="true">
       <Output TaskParameter="ExitCode" PropertyName="T4ExitCode" />
     </Exec>
 
-    <Error Text="T4 command line tool not found. Please install it with: dotnet tool install -g dotnet-t4"
-           Condition="$(T4ExitCode) != 0" />
+    <Error Text="T4 command line tool not found. Please install it with: dotnet tool install -g dotnet-t4" Condition="$(T4ExitCode) != 0" />
   </Target>
 
 </Project>

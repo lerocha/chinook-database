@@ -84,7 +84,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Asserts that all invoices contain invoice lines.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void AllInvoicesMustHaveInvoiceLines(string connectionName)
         {
@@ -95,7 +95,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Asserts that invoice total matches sum of invoice lines.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void InvoiceTotalMustMatchSumOfInvoiceLines(string connectionName)
         {
@@ -112,7 +112,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Genre table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void GenreTableShouldBePopulated(string connectionName)
         {
@@ -123,7 +123,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Genre table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void GenreLastRecordHasProperInfo(string connectionName)
         {
@@ -141,7 +141,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the MediaType table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void MediaTypeTableShouldBePopulated(string connectionName)
         {
@@ -152,7 +152,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of MediaType table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void MediaTypeLastRecordHasProperInfo(string connectionName)
         {
@@ -170,7 +170,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Artist table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void ArtistTableShouldBePopulated(string connectionName)
         {
@@ -181,7 +181,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Artist table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void ArtistLastRecordHasProperInfo(string connectionName)
         {
@@ -199,7 +199,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Album table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void AlbumTableShouldBePopulated(string connectionName)
         {
@@ -210,7 +210,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Album table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void AlbumLastRecordHasProperInfo(string connectionName)
         {
@@ -229,7 +229,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Track table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void TrackTableShouldBePopulated(string connectionName)
         {
@@ -240,7 +240,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Track table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void TrackLastRecordHasProperInfo(string connectionName)
         {
@@ -265,7 +265,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Employee table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void EmployeeTableShouldBePopulated(string connectionName)
         {
@@ -276,7 +276,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Employee table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void EmployeeLastRecordHasProperInfo(string connectionName)
         {
@@ -307,7 +307,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Customer table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerTableShouldBePopulated(string connectionName)
         {
@@ -318,7 +318,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Customer table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerLastRecordHasProperInfo(string connectionName)
         {
@@ -347,7 +347,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Invoice table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void InvoiceTableShouldBePopulated(string connectionName)
         {
@@ -358,7 +358,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Invoice table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void InvoiceLastRecordHasProperInfo(string connectionName)
         {
@@ -383,7 +383,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the InvoiceLine table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void InvoiceLineTableShouldBePopulated(string connectionName)
         {
@@ -394,7 +394,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of InvoiceLine table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void InvoiceLineLastRecordHasProperInfo(string connectionName)
         {
@@ -415,7 +415,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Playlist table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void PlaylistTableShouldBePopulated(string connectionName)
         {
@@ -426,7 +426,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of Playlist table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void PlaylistLastRecordHasProperInfo(string connectionName)
         {
@@ -444,7 +444,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the PlaylistTrack table was populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void PlaylistTrackTableShouldBePopulated(string connectionName)
         {
@@ -455,7 +455,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that last record of PlaylistTrack table has the proper information.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void PlaylistTrackLastRecordHasProperInfo(string connectionName)
         {
@@ -473,7 +473,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId01HasProperUnicodeCharacters(string connectionName)
         {
@@ -499,7 +499,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId02HasProperUnicodeCharacters(string connectionName)
         {
@@ -525,7 +525,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId03HasProperUnicodeCharacters(string connectionName)
         {
@@ -551,7 +551,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId04HasProperUnicodeCharacters(string connectionName)
         {
@@ -577,7 +577,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId05HasProperUnicodeCharacters(string connectionName)
         {
@@ -603,7 +603,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId06HasProperUnicodeCharacters(string connectionName)
         {
@@ -629,7 +629,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId07HasProperUnicodeCharacters(string connectionName)
         {
@@ -655,7 +655,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId08HasProperUnicodeCharacters(string connectionName)
         {
@@ -681,7 +681,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId09HasProperUnicodeCharacters(string connectionName)
         {
@@ -707,7 +707,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId10HasProperUnicodeCharacters(string connectionName)
         {
@@ -733,7 +733,7 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <summary>
         /// Verifies that the Unicode characters are populated properly.
         /// </summary>
-        [Theory]
+        [SkippableTheory]
 		[InlineData("Chinook_Oracle")]
         public void CustomerId11HasProperUnicodeCharacters(string connectionName)
         {
