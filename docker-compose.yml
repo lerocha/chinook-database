@@ -35,6 +35,8 @@ services:
       - "50000:50000"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_Db2.sql:/docker-entrypoint-initdb.d/create_database.sql
+    # Note: DB2 does not auto-run scripts. Manual initialization required:
+    # docker exec chinook-db2-1 su - chinook -c "db2 connect to Chinook && db2 -tf /docker-entrypoint-initdb.d/create_database.sql"
   
   #----------------------------------------------------------------------------
   # MySQL Container
@@ -109,6 +111,21 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - ./ChinookDatabase/DataSources/Chinook_SqlServer.sql:/docker-entrypoint-initdb.d/create_database.sql
-    #command:
-    #  - /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P $MSSQL_SA_PASSWORD -d master -i /docker-entrypoint-initdb.d/create_database.sql
+      - ./ChinookDatabase/DataSources/Chinook_SqlServer.sql:/scripts/Chinook_SqlServer.sql
+      - ./ChinookDatabase/DataSources/Chinook_SqlServer_AutoIncrementPKs.sql:/scripts/Chinook_SqlServer_AutoIncrementPKs.sql
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Test123!", "-C", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+    command: >
+      bash -c '
+      /opt/mssql/bin/sqlservr &
+      until /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -C -Q "SELECT 1" > /dev/null 2>&1; do sleep 2; done;
+      /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -C -Q "CREATE DATABASE Chinook";
+      /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -d Chinook -C -i /scripts/Chinook_SqlServer.sql;
+      /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -C -Q "CREATE DATABASE Chinook_AutoIncrement";
+      /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -d Chinook_AutoIncrement -C -i /scripts/Chinook_SqlServer_AutoIncrementPKs.sql;
+      wait
+      '
