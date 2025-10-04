@@ -9,7 +9,6 @@ Chinook is a sample database available for SQL Server, Oracle, MySQL, etc. It ca
 * Oracle
 * PostgreSQL
 * SQL Server
-* SQL Server Compact
 * SQLite
 
 ### Download

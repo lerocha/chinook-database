@@ -10,12 +10,10 @@ var options = new
 	PopulateDatabase = true,
 	Version = DataSetHelper.GetVersionNumber(),
 	DataSource = Path.Combine(Path.GetDirectoryName(Host.TemplateFile), "_Xml", "ChinookData.xml"),
-	DdlStrategies = new IDdlStrategy[] 
+	DdlStrategies = new IDdlStrategy[]
 							{
 								new SqlServerStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None, Encoding = Encoding.Unicode },
 								new SqlServerStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity, Encoding = Encoding.Unicode },
-								new SqlServerCompactStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None },
-								new SqlServerCompactStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity },
 								new SqliteStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None },
 								new SqliteStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.Identity, PrimaryKeyDef = KeyDefinition.OnCreateTableColumn },
 								new MySqlStrategy { PrimaryKeyStrategy = PrimaryKeyStrategy.None },

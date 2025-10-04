@@ -18,14 +18,6 @@ var options = new [] {
 						},
 						new Option 
 						{
-							Strategy = new SqlServerCompactStrategy(),
-							ConnectionClass = "SqlCeConnection",
-							AdapterClass = "SqlCeDataAdapter",
-							Namespace = "System.Data.SqlServerCe",
-							ConnectionNames = new[] {"Chinook_SqlServerCompact", "Chinook_SqlServerCompact_AutoIncrement"}
-						},
-						new Option 
-						{
 							Strategy = new MySqlStrategy(),
 							ConnectionClass = "MySqlConnection",
 							AdapterClass = "MySqlDataAdapter",
