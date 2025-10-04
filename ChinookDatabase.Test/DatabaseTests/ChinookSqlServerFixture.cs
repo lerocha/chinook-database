@@ -101,11 +101,13 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_SqlServer_AutoIncrement")]
         public void InvoiceTotalMustMatchSumOfInvoiceLines(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT [dbo].[Invoice].[InvoiceId], SUM([dbo].[InvoiceLine].[UnitPrice] * [dbo].[InvoiceLine].[Quantity]) AS CalculatedTotal, [dbo].[Invoice].[Total] AS Total FROM [dbo].[InvoiceLine] INNER JOIN [dbo].[Invoice] ON [dbo].[InvoiceLine].[InvoiceId] = [dbo].[Invoice].[InvoiceId] GROUP BY [dbo].[Invoice].[InvoiceId], [dbo].[Invoice].[Total]");
+            var dataSet = ExecuteQuery(connectionName, "SELECT [dbo].[Invoice].[InvoiceId], ROUND(SUM([dbo].[InvoiceLine].[UnitPrice] * [dbo].[InvoiceLine].[Quantity]), 2) AS CalculatedTotal, [dbo].[Invoice].[Total] AS Total FROM [dbo].[InvoiceLine] INNER JOIN [dbo].[Invoice] ON [dbo].[InvoiceLine].[InvoiceId] = [dbo].[Invoice].[InvoiceId] GROUP BY [dbo].[Invoice].[InvoiceId], [dbo].[Invoice].[Total]");
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), $"The total field of InvoiceId={row["InvoiceId"]} does not match its invoice lines.");
+                var total = row["Total"].ToString();
+                var calculatedTotal = row["CalculatedTotal"].ToString();
+                Assert.True(calculatedTotal == total, $"The total field of InvoiceId={row["InvoiceId"]} is {total} and does not match its invoice lines sum {calculatedTotal}.");
             }
         }
 

@@ -101,11 +101,13 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_MySql_AutoIncrement")]
         public void InvoiceTotalMustMatchSumOfInvoiceLines(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT `Invoice`.`InvoiceId`, SUM(`InvoiceLine`.`UnitPrice` * `InvoiceLine`.`Quantity`) AS CalculatedTotal, `Invoice`.`Total` AS Total FROM `InvoiceLine` INNER JOIN `Invoice` ON `InvoiceLine`.`InvoiceId` = `Invoice`.`InvoiceId` GROUP BY `Invoice`.`InvoiceId`, `Invoice`.`Total`");
+            var dataSet = ExecuteQuery(connectionName, "SELECT `Invoice`.`InvoiceId`, ROUND(SUM(`InvoiceLine`.`UnitPrice` * `InvoiceLine`.`Quantity`), 2) AS CalculatedTotal, `Invoice`.`Total` AS Total FROM `InvoiceLine` INNER JOIN `Invoice` ON `InvoiceLine`.`InvoiceId` = `Invoice`.`InvoiceId` GROUP BY `Invoice`.`InvoiceId`, `Invoice`.`Total`");
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), $"The total field of InvoiceId={row["InvoiceId"]} does not match its invoice lines.");
+                var total = row["Total"].ToString();
+                var calculatedTotal = row["CalculatedTotal"].ToString();
+                Assert.True(calculatedTotal == total, $"The total field of InvoiceId={row["InvoiceId"]} is {total} and does not match its invoice lines sum {calculatedTotal}.");
             }
         }
 

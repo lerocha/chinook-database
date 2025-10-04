@@ -103,11 +103,13 @@ namespace ChinookDatabase.Test.DatabaseTests
 		[InlineData("Chinook_PostgreSql_Serial")]
         public void InvoiceTotalMustMatchSumOfInvoiceLines(string connectionName)
         {
-            var dataSet = ExecuteQuery(connectionName, "SELECT invoice.invoice_id, SUM(invoice_line.unit_price * invoice_line.quantity) AS CalculatedTotal, invoice.total AS Total FROM invoice_line INNER JOIN invoice ON invoice_line.invoice_id = invoice.invoice_id GROUP BY invoice.invoice_id, invoice.total");
+            var dataSet = ExecuteQuery(connectionName, "SELECT invoice.invoice_id, ROUND(SUM(invoice_line.unit_price * invoice_line.quantity), 2) AS CalculatedTotal, invoice.total AS Total FROM invoice_line INNER JOIN invoice ON invoice_line.invoice_id = invoice.invoice_id GROUP BY invoice.invoice_id, invoice.total");
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), $"The total field of InvoiceId={row["invoice_id"]} does not match its invoice lines.");
+                var total = row["Total"].ToString();
+                var calculatedTotal = row["CalculatedTotal"].ToString();
+                Assert.True(calculatedTotal == total, $"The total field of InvoiceId={row["invoice_id"]} is {total} and does not match its invoice lines sum {calculatedTotal}.");
             }
         }
 

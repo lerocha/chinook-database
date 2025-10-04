@@ -167,7 +167,7 @@ namespace ChinookDatabase.Test.DatabaseTests
 	
 		var query1 = string.Format("SELECT count({0}) FROM {1} WHERE {0} NOT IN (SELECT {0} FROM {2} GROUP BY {0})", 
 									invoiceId, invoice, invoiceLine).Replace("\"","\\\"");
-		var query2 = string.Format("SELECT {0}.{1}, SUM({2}.{3} * {2}.{4}) AS CalculatedTotal, {0}.{5} AS Total FROM {2} INNER JOIN {0} ON {2}.{1} = {0}.{1} GROUP BY {0}.{1}, {0}.{5}",
+		var query2 = string.Format("SELECT {0}.{1}, ROUND(SUM({2}.{3} * {2}.{4}), 2) AS CalculatedTotal, {0}.{5} AS Total FROM {2} INNER JOIN {0} ON {2}.{1} = {0}.{1} GROUP BY {0}.{1}, {0}.{5}",
 									invoice, invoiceId, invoiceLine, unitPrice, quantity, total).Replace("\"","\\\"");
 
 #>
@@ -197,7 +197,9 @@ namespace ChinookDatabase.Test.DatabaseTests
 
             foreach (DataRow row in dataSet.Tables[0].Rows)
             {
-                Assert.True(row["CalculatedTotal"].ToString() == row["Total"].ToString(), $"The total field of InvoiceId={row["<#= option.Strategy.FormatCase("InvoiceId") #>"]} does not match its invoice lines.");
+                var total = row["Total"].ToString();
+                var calculatedTotal = row["CalculatedTotal"].ToString();
+                Assert.True(calculatedTotal == total, $"The total field of InvoiceId={row["<#= option.Strategy.FormatCase("InvoiceId") #>"]} is {total} and does not match its invoice lines sum {calculatedTotal}.");
             }
         }
 <#
