@@ -5,11 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run Tests",
+            "name": "Build Solution",
             "type": "dotnet",
             "request": "launch",
             "projectPath": "${workspaceFolder}/ChinookDatabase.Test/ChinookDatabase.Test.csproj",
             "preLaunchTask": "build"
+        },
+        {
+            "name": "Run Tests",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/ChinookDatabase.Test/ChinookDatabase.Test.csproj",
+            "preLaunchTask": "test"
         }
     ]
 }
