@@ -54,9 +54,8 @@ var options = new [] {
 							Strategy = new Db2Strategy(),
 							ConnectionClass = "DB2Connection",
 							AdapterClass = "DB2DataAdapter",
-							Namespace = "IBM.Data.DB2.Core",
-							ConnectionNames = new[] {"Chinook_Db2"},
-							SkipOnPlatforms = new[] {"osx-arm64"}
+							Namespace = "IBM.Data.Db2",
+							ConnectionNames = new[] {"Chinook_Db2"}
 						}
 					};
 

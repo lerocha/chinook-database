@@ -11,7 +11,7 @@
  ********************************************************************************/
 using System.Data;
 using Xunit;
-using IBM.Data.DB2.Core;
+using IBM.Data.Db2;
 using Microsoft.Extensions.Configuration;
 
 namespace ChinookDatabase.Test.DatabaseTests
@@ -30,9 +30,6 @@ namespace ChinookDatabase.Test.DatabaseTests
         /// <returns>A connection object for this specific database.</returns>
         protected DB2Connection GetConnection(string connectionName)
         {
-            var currentPlatform = System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier;
-            var skipPlatforms = new[] { "osx-arm64" };
-            Skip.If(skipPlatforms.Contains(currentPlatform), $"Skipped on {currentPlatform} - native libraries not available");
             // Creates an ADO.NET connection to the database, if not created yet.
             if (Connections.ContainsKey(connectionName))
             {
