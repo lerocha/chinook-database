@@ -88,4 +88,21 @@
     <Error Text="T4 command line tool not found. Please install it with: dotnet tool install -g dotnet-t4" Condition="$(T4ExitCode) != 0" />
   </Target>
 
+  <!-- Create symlinks for DB2 native libraries on Linux -->
+  <Target Name="CreateDb2NativeLibrarySymlinks" AfterTargets="Build" Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+    <Message Text="Creating symlinks for DB2 native libraries on Linux..." Importance="high" />
+
+    <PropertyGroup>
+      <NativeLibPath>$(OutputPath)runtimes/linux-x64/native</NativeLibPath>
+      <CliDriverLibPath>$(OutputPath)clidriver/lib</CliDriverLibPath>
+    </PropertyGroup>
+
+    <!-- Create symlinks if clidriver exists -->
+    <Exec Command="test -d &quot;$(CliDriverLibPath)&quot; &amp;&amp; mkdir -p &quot;$(NativeLibPath)&quot; &amp;&amp; ln -sf ../../../clidriver/lib/libdb2.so &quot;$(NativeLibPath)/libdb2.so&quot; &amp;&amp; ln -sf ../../../clidriver/lib/libdb2clixml4c.so &quot;$(NativeLibPath)/libdb2clixml4c.so&quot; &amp;&amp; ln -sf ../../../clidriver/lib/libDB2xml4c.so &quot;$(NativeLibPath)/libDB2xml4c.so&quot; || true"
+              ContinueOnError="true"
+              IgnoreExitCode="false" />
+
+    <Message Text="DB2 native library symlinks created successfully" Importance="high" />
+  </Target>
+
 </Project>
