@@ -31,19 +31,13 @@ services:
       - "50000:50000"
     volumes:
       - ./ChinookDatabase/DataSources/Chinook_Db2.sql:/scripts/Chinook_Db2.sql
+      - ./docker/init-db2.sh:/var/custom/init-db2.sh
     healthcheck:
       test: ["CMD", "su", "-", "chinook", "-c", "db2 connect to Chinook"]
       interval: 10s
       timeout: 5s
       retries: 60
       start_period: 120s
-    command: >
-      bash -c '
-      /var/db2_setup/lib/setup_db2_instance.sh &
-      until su - chinook -c "db2 connect to Chinook" > /dev/null 2>&1; do sleep 5; done;
-      su - chinook -c "db2 connect to Chinook && db2 -tf /scripts/Chinook_Db2.sql";
-      tail -f /dev/null
-      '
   
   #----------------------------------------------------------------------------
   # MySQL Container
