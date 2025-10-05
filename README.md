@@ -36,9 +36,22 @@ The name of this sample database was based on the Northwind database. Chinooks a
 
 System Requirements:
 * [.NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-* dotnet-t4 (command-line tool for processing T4 templates): `dotnet tool install --global dotnet-t4`
+* [dotnet-t4](https://www.nuget.org/packages/dotnet-t4/) (command-line tool for processing T4 templates): `dotnet tool install --global dotnet-t4`
 
 Notes:
+* You only need the `dotnet` and `dotnet-t4` tools to build and generate the scripts in any OS (macOS, Linux, or Windows).
+* If you need an IDE, you can use [Visual Studio Code](https://code.visualstudio.com) and install the recommended plugins. Alternatively, you can also use JetBrains Rider or Visual Studio Community Edition (Windows only).
 * The SQL scripts are auto-generated using [Text Template Transformation](https://learn.microsoft.com/en-us/visualstudio/modeling/code-generation-and-t4-text-templates?view=vs-2022).
 * The `ChinookDataSet.xsd` file contains the schema definition, `ChinookData.json` contains the data, and the `*.tt` files are the text templates that are used to generate all SQL scripts.
-* You can build the solution using any IDE (Visual Studio Community Edition, Visual Studio Code, Jetbrains Rider) or using `dotnet build` in any OS (macOS, Linux, Windows).
+
+Build, auto-generate the SQL scripts, and testing:
+```bash
+# Build and generate the SQL scripts.
+dotnet build
+
+# Start the local databases to test the generated scripts.
+docker compose up -d
+
+# Run all the tests.
+dotnet test
+```
