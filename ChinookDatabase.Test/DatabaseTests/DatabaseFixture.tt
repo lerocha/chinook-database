@@ -13,7 +13,7 @@ var options = new [] {
 							Strategy = new SqlServerStrategy(),
 							ConnectionClass = "SqlConnection",
 							AdapterClass = "SqlDataAdapter",
-							Namespace = "System.Data.SqlClient",
+							Namespace = "Microsoft.Data.SqlClient",
 							ConnectionNames = new[] {"Chinook_SqlServer", "Chinook_SqlServer_AutoIncrement"}
 						},
 						new Option 
